@@ -13,3 +13,6 @@ whisper.cpp
 
 # Built web editor bundle and preview media (node editor/build.mjs).
 editor/dist
+
+# Interview proxies (symlink to the local working folder, not versioned).
+public/interviews
