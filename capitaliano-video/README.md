@@ -54,6 +54,24 @@ node scripts/transcribe.mjs          # или: node scripts/transcribe.mjs large
 - Субтитры: каждое предложение отдельно, фраза гаснет до начала следующей, место субтитров
   следует за раскладкой.
 
+## Веб-редактор
+
+`editor/` — страница с живым превью (Remotion Player) и формами для блоков, опубликована как
+артефакт claude.ai. Сохранённые там правки лежат в его базе (`project/beats`); перенос в код:
+
+```bash
+node scripts/apply-edits.mjs beats.json   # JSON из базы редактора → src/beats.ts
+npm run editor                            # пересобрать editor/dist/editor.js
+```
+
+Превью берёт облегчённое видео (лимит артефакта — 15 МБ на файл) и звук из `editor/dist/`:
+
+```bash
+ffmpeg -i public/speaker.mp4 -vf scale=540:-2 -c:v libx264 -b:v 750k -maxrate 900k -bufsize 1500k \
+  -c:a aac -b:a 64k -ac 1 -movflags +faststart editor/dist/speaker.mp4
+cp public/speaker-audio.wav editor/dist/
+```
+
 ## Превью и рендер
 
 ```bash

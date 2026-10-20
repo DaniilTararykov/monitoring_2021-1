@@ -15,6 +15,7 @@
     "@remotion/install-whisper-cpp": "4.0.537",
     "@remotion/media": "4.0.537",
     "@remotion/media-utils": "4.0.537",
+    "@remotion/player": "4.0.537",
     "mediabunny": "1.61.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -23,7 +24,9 @@
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.537",
     "@types/react": "19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@types/web": "0.0.166",
+    "esbuild": "^0.28.1",
     "eslint": "10.12.0",
     "prettier": "3.8.1",
     "typescript": "5.9.3"
@@ -32,7 +35,8 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc && tsc -p editor/tsconfig.json",
+    "editor": "node editor/build.mjs"
   },
   "allowScripts": {
     "esbuild": false

@@ -10,3 +10,6 @@ out
 public/speaker.mp4
 public/speaker-audio.wav
 whisper.cpp
+
+# Built web editor bundle and preview media (node editor/build.mjs).
+editor/dist

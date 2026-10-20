@@ -1,0 +1,260 @@
+<title>Редактор ролика Capitaliano</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  /* Layout: preview pinned on the left (stacked on phones), beat list on the right, save bar at the bottom. */
+  :root {
+    --bg: #fffcf9;
+    --surface: #ffffff;
+    --fg: #1e1e1e;
+    --muted: #5d665f;
+    --line: #e4e0d8;
+    --accent: #2f8d4f;
+    --accent-ink: #1b5e34;
+    --accent-soft: #e5f2e9;
+    --warn: #a15c00;
+    --bad: #dc2626;
+    --font-ui: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141714;
+      --surface: #1d211e;
+      --fg: #eef0ec;
+      --muted: #a3aba4;
+      --line: #2f3530;
+      --accent: #45b36a;
+      --accent-ink: #8fd9a6;
+      --accent-soft: #1f3226;
+      --warn: #f0b04a;
+      --bad: #f87171;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141714;
+    --surface: #1d211e;
+    --fg: #eef0ec;
+    --muted: #a3aba4;
+    --line: #2f3530;
+    --accent: #45b36a;
+    --accent-ink: #8fd9a6;
+    --accent-soft: #1f3226;
+    --warn: #f0b04a;
+    --bad: #f87171;
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .app {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 16px 140px;
+  }
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+    padding-bottom: 16px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  h2 {
+    margin: 0;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .status {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .status.ok { color: var(--accent-ink); border-color: var(--accent); }
+  .status.warn { color: var(--warn); }
+  .status.bad { color: var(--bad); }
+  .status.muted { color: var(--muted); }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .preview {
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .player-wrap {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #000;
+  }
+  .now {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+  }
+  .beats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .hint {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  ol {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .beat {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .beat.active { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+  .beat-head {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 4px 12px;
+    padding: 12px 14px;
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .beat-head .time { color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+  .chip {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+  .chip.kind { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+  .summary {
+    grid-column: 1 / -1;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+  }
+  .beat-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px 14px 16px;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .field-label { font-size: 12px; font-weight: 500; color: var(--muted); }
+  input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    box-sizing: border-box;
+    font: inherit;
+    font-size: 16px;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  textarea { resize: vertical; }
+  .stepper { display: grid; grid-template-columns: 36px minmax(0, 1fr) 36px; gap: 4px; }
+  .stepper button { padding: 8px 0; }
+  .stepper input { text-align: center; font-family: var(--font-mono); padding-inline: 4px; appearance: textfield; -moz-appearance: textfield; }
+  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  button {
+    font: inherit;
+    font-weight: 500;
+    color: var(--accent-ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .check { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  .check input { width: 18px; height: 18px; accent-color: var(--accent); }
+  .link-danger { align-self: flex-start; color: var(--bad); border-color: transparent; padding-left: 0; background: none; }
+  .confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .danger { background: var(--bad); color: #fff; border-color: var(--bad); }
+  .savebar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    padding-top: 12px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    z-index: 5;
+  }
+  .savebar p { margin: 0; flex: 1 1 260px; font-size: 13px; color: var(--muted); }
+  .primary { background: var(--accent); color: #fff; border-color: var(--accent); padding: 10px 18px; font-weight: 700; }
+  .primary:disabled { opacity: 0.45; cursor: default; }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    .preview { position: static; align-items: center; }
+    .player-wrap { width: min(100%, 300px); }
+    .now { width: min(100%, 300px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto; }
+  }
+</style>
+<div id="root">
+  <div class="app"><p class="hint">Загружаю редактор и превью…</p></div>
+</div>
+<script>window.remotion_staticBase = ".";</script>
+<script src="./editor.js"></script>
