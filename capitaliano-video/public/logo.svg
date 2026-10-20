@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="72" viewBox="0 0 420 72">
+  <!-- Placeholder wordmark: replace with the official logo.svg / logo.png -->
+  <circle cx="36" cy="36" r="30" fill="rgb(47,141,79)"/>
+  <text x="36" y="49" text-anchor="middle" font-family="Inter Tight, Arial, sans-serif" font-weight="700" font-size="38" fill="#fff">C</text>
+  <text x="82" y="50" font-family="Inter Tight, Arial, sans-serif" font-weight="700" font-size="44" letter-spacing="-1.3" fill="#1B5E34">Capitaliano</text>
+</svg>
