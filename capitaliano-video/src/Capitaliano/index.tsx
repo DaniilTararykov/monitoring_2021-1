@@ -19,16 +19,15 @@ import {
   TELEGRAM_BLUE,
   TIGHT_TRACKING,
 } from "./brand";
-import { Beat, Beats, cameraAt, VIDEO_BOX_HEIGHT } from "./Beats";
+import { Beat, Beats, cameraAt } from "./Beats";
 import { Captions } from "./Captions";
-import { Waveform } from "./Waveform";
+import { sceneAt } from "./Layouts";
+import { Aura, Cloud, Equalizer, useVoice } from "./Voice";
 
 export type CapitalianoProps = {
   videoSrc: string;
   audioSrc: string;
   captionsSrc: string;
-  // How many px of the 9:16 speaker video to crop off the top.
-  videoOffsetY: number;
   beats: Beat[];
 };
 
@@ -57,58 +56,64 @@ export const Capitaliano: React.FC<CapitalianoProps> = ({
   videoSrc,
   audioSrc,
   captionsSrc,
-  videoOffsetY,
   beats,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const camera = cameraAt(beats, frame / fps);
+  const scene = sceneAt(beats, frame / fps);
+  const levels = useVoice(audioSrc);
+  const videoScale = scene.scale * camera.scale;
+  const fadeIn = interpolate(frame, [0, 0.8 * fps], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: COLORS.cream }}>
-      {/* Bottom half: speaker video with slow alternating camera moves */}
+    <AbsoluteFill
+      style={{
+        backgroundColor: COLORS.cream,
+        backgroundImage: `radial-gradient(${COLORS.dot} 2.5px, transparent 2.5px)`,
+        backgroundSize: "36px 36px",
+        backgroundPosition: "18px 18px",
+      }}
+    >
+      {/* Speaker video; its frame morphs between split, circle and full */}
       <div
         style={{
           position: "absolute",
-          top: FRAME.videoTop,
-          left: 0,
-          width: FRAME.width,
-          height: VIDEO_BOX_HEIGHT,
+          left: scene.x,
+          top: scene.y,
+          width: scene.w,
+          height: scene.h,
+          borderRadius: scene.radius,
           overflow: "hidden",
+          boxShadow: `0 30px 80px rgba(27, 94, 52, ${0.25 * scene.circle})`,
         }}
       >
-        <div
+        <Video
+          name="Speaker"
+          src={staticFile(videoSrc)}
+          objectFit="cover"
           style={{
             position: "absolute",
-            inset: 0,
-            transformOrigin: "50% 45%",
-            scale: camera.scale,
-            translate: `${camera.x}px 0px`,
+            left: scene.faceX - scene.faceSourceX * videoScale + camera.x,
+            top: scene.faceY - scene.faceSourceY * videoScale,
+            width: FRAME.width * videoScale,
+            height: FRAME.height * videoScale,
           }}
-        >
-          <Video
-            name="Speaker"
-            src={staticFile(videoSrc)}
-            objectFit="cover"
-            style={{
-              position: "absolute",
-              top: -videoOffsetY,
-              left: 0,
-              width: FRAME.width,
-              height: FRAME.width * (16 / 9),
-            }}
-          />
-        </div>
+        />
       </div>
 
-      {/* Fade-blur over the seam between graphic zone and video */}
+      {/* Split: fade-blur over the seam between graphic zone and video */}
       <div
         style={{
           position: "absolute",
-          top: FRAME.videoTop,
+          top: scene.y,
           left: 0,
           width: FRAME.width,
           height: FRAME.seamHeight,
+          opacity: scene.split,
           backdropFilter: "blur(28px)",
           maskImage:
             "linear-gradient(180deg, black 0%, black 35%, transparent 100%)",
@@ -117,20 +122,35 @@ export const Capitaliano: React.FC<CapitalianoProps> = ({
         }}
       />
 
-      {/* Top half: graphic zone on cream with a dot grid */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: FRAME.width,
-          height: FRAME.videoTop,
-          backgroundColor: COLORS.cream,
-          backgroundImage: `radial-gradient(${COLORS.dot} 2.5px, transparent 2.5px)`,
-          backgroundSize: "36px 36px",
-          backgroundPosition: "18px 18px",
-        }}
-      />
+      {/* Circle: rotating ring and audio aura */}
+      {scene.circle > 0.01 ? (
+        <div style={{ position: "absolute", inset: 0, opacity: scene.circle }}>
+          <Aura
+            levels={levels}
+            cx={scene.x + scene.w / 2}
+            cy={scene.y + scene.h / 2}
+            r={scene.w / 2}
+          />
+        </div>
+      ) : null}
+
+      {/* Full: soft top fade under the header and a voice cloud at the bottom */}
+      {scene.full > 0.01 ? (
+        <div style={{ position: "absolute", inset: 0, opacity: scene.full }}>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 460,
+              background:
+                "linear-gradient(180deg, rgb(255, 252, 249) 0%, rgba(255, 252, 249, 0.85) 45%, rgba(255, 252, 249, 0) 100%)",
+            }}
+          />
+          <Cloud levels={levels} />
+        </div>
+      ) : null}
 
       {/* Header: fades in only */}
       <div
@@ -143,10 +163,7 @@ export const Capitaliano: React.FC<CapitalianoProps> = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          opacity: interpolate(frame, [0, 0.8 * fps], [0, 1], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          }),
+          opacity: fadeIn,
         }}
       >
         <Img name="Logo" src={staticFile("logo.png")} style={{ height: 78 }} />
@@ -179,13 +196,10 @@ export const Capitaliano: React.FC<CapitalianoProps> = ({
           height: SLOTS.equalizer.height,
           left: SAFE.left,
           right: SAFE.right,
-          opacity: interpolate(frame, [0, 0.8 * fps], [0, 1], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          }),
+          opacity: Math.min(fadeIn, scene.split),
         }}
       >
-        <Waveform audioSrc={audioSrc} />
+        <Equalizer levels={levels} height={SLOTS.equalizer.height} />
       </div>
 
       <Beats beats={beats} />

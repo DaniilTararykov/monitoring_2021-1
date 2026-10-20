@@ -7,14 +7,14 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { FRAME, SAFE, SLOTS } from "./brand";
 import { Graphic, GraphicView } from "./Graphics";
+import { GRAPHIC_REGION, Layout, TRANSITION_SEC } from "./Layouts";
 
 export type Beat = {
   fromSec: number;
   durationSec: number;
-  // "a" = upper slot (captions go to slot B), "b" = lower slot (captions go up).
-  slot: "a" | "b";
+  // Scene layout for this beat; see Layouts.ts.
+  layout: Layout;
   graphic: Graphic;
   // Replace the entrance sound with an accent "ding".
   accent?: boolean;
@@ -70,7 +70,10 @@ const BeatView: React.FC<{
         filter: entrance === "slide" ? `blur(${(1 - enter) * 14}px)` : "none",
       }}
     >
-      <GraphicView graphic={beat.graphic} compact={beat.slot === "b"} />
+      <GraphicView
+        graphic={beat.graphic}
+        compact={GRAPHIC_REGION[beat.layout].compact}
+      />
     </div>
   );
 };
@@ -82,7 +85,12 @@ export const Beats: React.FC<{ beats: Beat[] }> = ({ beats }) => {
     <>
       {beats.map((beat, i) => {
         const entrance = ENTRANCES[i % ENTRANCES.length];
-        const slot = SLOTS[beat.slot];
+        const region = GRAPHIC_REGION[beat.layout];
+        // Let the scene finish morphing before the graphic flies in.
+        const delay =
+          i > 0 && beats[i - 1].layout !== beat.layout
+            ? Math.round(TRANSITION_SEC * fps)
+            : 0;
         const durationInFrames = Math.max(
           1,
           Math.round(beat.durationSec * fps),
@@ -91,17 +99,17 @@ export const Beats: React.FC<{ beats: Beat[] }> = ({ beats }) => {
           <Sequence
             key={i}
             name={`Beat ${i + 1}: ${beat.graphic.kind}`}
-            from={Math.round(beat.fromSec * fps)}
-            durationInFrames={durationInFrames}
+            from={Math.round(beat.fromSec * fps) + delay}
+            durationInFrames={durationInFrames - delay}
             layout="none"
           >
             <div
               style={{
                 position: "absolute",
-                top: slot.top,
-                height: slot.height,
-                left: SAFE.left,
-                right: SAFE.right,
+                top: region.top,
+                height: region.height,
+                left: region.left,
+                right: region.right,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -110,7 +118,7 @@ export const Beats: React.FC<{ beats: Beat[] }> = ({ beats }) => {
               <BeatView
                 beat={beat}
                 entrance={entrance}
-                durationInFrames={durationInFrames}
+                durationInFrames={durationInFrames - delay}
               />
             </div>
             <Audio
@@ -125,11 +133,6 @@ export const Beats: React.FC<{ beats: Beat[] }> = ({ beats }) => {
     </>
   );
 };
-
-export const beatAt = (beats: Beat[], timeSec: number): Beat | null =>
-  beats.find(
-    (b) => timeSec >= b.fromSec && timeSec < b.fromSec + b.durationSec,
-  ) ?? null;
 
 // Slow camera moves on the speaker video, one per beat, cycling
 // push-in → drift → pull-out so consecutive moves differ and stay continuous.
@@ -166,5 +169,3 @@ export const cameraAt = (
   }
   return state;
 };
-
-export const VIDEO_BOX_HEIGHT = FRAME.height - FRAME.videoTop;

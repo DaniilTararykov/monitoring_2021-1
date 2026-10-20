@@ -81,14 +81,14 @@ const CardView: React.FC<{ g: CardGraphic; compact: boolean }> = ({
       <div
         style={{
           position: "relative",
-          padding: compact ? "26px 44px" : "32px 48px",
+          padding: compact ? "22px 40px" : "32px 48px",
           borderRadius: 32,
           backgroundColor: isGreen ? COLORS.green : COLORS.white,
           color: isGreen ? COLORS.white : COLORS.darkGreen,
           boxShadow: "0 20px 50px rgba(27, 94, 52, 0.16)",
           fontFamily: INTER_TIGHT,
           fontWeight: 700,
-          fontSize: compact ? 58 : 66,
+          fontSize: compact ? 52 : 66,
           lineHeight: 1.08,
           letterSpacing: TIGHT_TRACKING,
           textAlign: "center",

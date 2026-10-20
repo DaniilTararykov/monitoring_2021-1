@@ -16,12 +16,11 @@ export const RemotionRoot: React.FC = () => {
           videoSrc: "speaker.mp4",
           audioSrc: "speaker-audio.wav",
           captionsSrc: "captions.json",
-          videoOffsetY: 260,
           beats: [
             {
               fromSec: 0.2,
               durationSec: 6.0,
-              slot: "a",
+              layout: "split-a",
               graphic: {
                 kind: "stat",
                 value: 30,
@@ -32,7 +31,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 6.3,
               durationSec: 2.9,
-              slot: "b",
+              layout: "circle-top",
               graphic: {
                 kind: "card",
                 text: "Часть 2 · студенческие визы",
@@ -42,7 +41,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 9.3,
               durationSec: 4.4,
-              slot: "a",
+              layout: "circle-bottom",
               graphic: {
                 kind: "card",
                 text: "Артём, старший куратор Capitaliano",
@@ -52,7 +51,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 13.8,
               durationSec: 2.2,
-              slot: "a",
+              layout: "circle-bottom",
               graphic: {
                 kind: "stat",
                 value: 100,
@@ -63,7 +62,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 16.0,
               durationSec: 4.7,
-              slot: "b",
+              layout: "full",
               graphic: {
                 kind: "card",
                 text: "Только личный опыт",
@@ -73,7 +72,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 20.7,
               durationSec: 8.1,
-              slot: "a",
+              layout: "split-a",
               graphic: {
                 kind: "compare",
                 good: {
@@ -90,7 +89,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 28.9,
               durationSec: 5.6,
-              slot: "a",
+              layout: "circle-bottom",
               graphic: {
                 kind: "card",
                 text: "Желание иммигрировать?",
@@ -101,7 +100,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 34.5,
               durationSec: 6.5,
-              slot: "b",
+              layout: "split-b",
               graphic: {
                 kind: "card",
                 text: "Возраст — не причина отказа",
@@ -111,7 +110,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 41.0,
               durationSec: 2.5,
-              slot: "a",
+              layout: "split-a",
               graphic: {
                 kind: "steps",
                 active: 0,
@@ -121,7 +120,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 43.5,
               durationSec: 8.0,
-              slot: "a",
+              layout: "split-a",
               graphic: {
                 kind: "steps",
                 active: 1,
@@ -131,7 +130,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 51.5,
               durationSec: 9.5,
-              slot: "b",
+              layout: "full",
               graphic: {
                 kind: "card",
                 text: "Резкая смена специальности",
@@ -141,7 +140,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 61.0,
               durationSec: 3.0,
-              slot: "a",
+              layout: "circle-bottom",
               graphic: {
                 kind: "steps",
                 active: 2,
@@ -151,7 +150,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 64.0,
               durationSec: 5.8,
-              slot: "a",
+              layout: "circle-bottom",
               graphic: {
                 kind: "meter",
                 label: "Перерыв в учёбе",
@@ -161,7 +160,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 69.8,
               durationSec: 2.5,
-              slot: "a",
+              layout: "split-a",
               graphic: {
                 kind: "steps",
                 active: 3,
@@ -171,7 +170,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 72.3,
               durationSec: 8.8,
-              slot: "a",
+              layout: "split-a",
               graphic: {
                 kind: "card",
                 text: "Опыт — всегда плюс",
@@ -183,7 +182,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 81.1,
               durationSec: 7.6,
-              slot: "b",
+              layout: "circle-top",
               graphic: {
                 kind: "card",
                 text: "Нет логики — риск отказа",
@@ -193,7 +192,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 88.7,
               durationSec: 6.3,
-              slot: "a",
+              layout: "circle-bottom",
               graphic: {
                 kind: "stat",
                 valueText: "35 и 40",
@@ -204,7 +203,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 95.0,
               durationSec: 9.5,
-              slot: "a",
+              layout: "split-a",
               graphic: {
                 kind: "card",
                 text: "Готовьтесь к визе тщательнее, чем к поступлению",
@@ -214,7 +213,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 104.6,
               durationSec: 2.5,
-              slot: "b",
+              layout: "full",
               graphic: {
                 kind: "card",
                 text: "Сохраните видео",
@@ -225,7 +224,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 107.1,
               durationSec: 6.9,
-              slot: "a",
+              layout: "split-b",
               graphic: {
                 kind: "card",
                 text: "Подавались в 30+? Расскажите в комментариях",
@@ -235,7 +234,7 @@ export const RemotionRoot: React.FC = () => {
             {
               fromSec: 114.0,
               durationSec: 11.4,
-              slot: "a",
+              layout: "circle-bottom",
               graphic: {
                 kind: "card",
                 text: "Дальше: волна отказов этого года",

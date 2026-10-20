@@ -11,15 +11,21 @@ import {
 } from "remotion";
 import { createTikTokStyleCaptions } from "@remotion/captions";
 import type { Caption, TikTokPage } from "@remotion/captions";
-import { Beat, beatAt } from "./Beats";
-import { COLORS, INTER_TIGHT, SAFE, SLOTS, TIGHT_TRACKING } from "./brand";
+import { Beat } from "./Beats";
+import { COLORS, INTER_TIGHT, TIGHT_TRACKING } from "./brand";
+import { CAPTION_REGION, layoutAt } from "./Layouts";
 
-const SWITCH_CAPTIONS_EVERY_MS = 1200;
+const SWITCH_CAPTIONS_EVERY_MS = 1000;
+// Words a beat start lands just after still belong to the new layout.
+const LAYOUT_LOOKAHEAD_SEC = 0.3;
 
-const CaptionPage: React.FC<{ page: TikTokPage; large: boolean }> = ({
-  page,
-  large,
-}) => {
+const FADE_FRAMES = 5;
+
+const CaptionPage: React.FC<{
+  page: TikTokPage;
+  fontSize: number;
+  durationInFrames: number;
+}> = ({ page, fontSize, durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const absoluteTimeMs = page.startMs + (frame / fps) * 1000;
@@ -32,10 +38,10 @@ const CaptionPage: React.FC<{ page: TikTokPage; large: boolean }> = ({
         justifyContent: "center",
         alignItems: "center",
         rowGap: 8,
-        maxWidth: 940,
+        maxWidth: "100%",
         fontFamily: INTER_TIGHT,
         fontWeight: 700,
-        fontSize: large ? 76 : 62,
+        fontSize,
         lineHeight: 1.1,
         letterSpacing: TIGHT_TRACKING,
         scale: interpolate(frame, [0, 0.2 * fps], [0.92, 1], {
@@ -43,6 +49,13 @@ const CaptionPage: React.FC<{ page: TikTokPage; large: boolean }> = ({
           extrapolateRight: "clamp",
           easing: Easing.bezier(0.16, 1, 0.3, 1),
         }),
+        // Fade in and fully out before the next phrase starts.
+        opacity: interpolate(
+          frame,
+          [0, FADE_FRAMES, durationInFrames - FADE_FRAMES, durationInFrames],
+          [0, 1, 1, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+        ),
       }}
     >
       {page.tokens.map((token, i) => {
@@ -66,9 +79,8 @@ const CaptionPage: React.FC<{ page: TikTokPage; large: boolean }> = ({
   );
 };
 
-// Word-by-word subtitles with a green pill on the active word.
-// Captions sit on the cream zone in slot B, or move up to slot A while a
-// beat occupies slot B.
+// Word-by-word subtitles with a green pill on the active word. Each sentence
+// gets its own pages, and the caption region follows the beat's layout.
 export const Captions: React.FC<{ captionsSrc: string; beats: Beat[] }> = ({
   captionsSrc,
   beats,
@@ -97,10 +109,22 @@ export const Captions: React.FC<{ captionsSrc: string; beats: Beat[] }> = ({
       return [];
     }
     return createTikTokStyleCaptions({
-      captions,
+      // Never let a page run across the end of a sentence or a layout change.
+      captions: captions.map((c, i) => {
+        const next = captions[i + 1];
+        const layoutChanges =
+          next !== undefined &&
+          layoutAt(beats, c.startMs / 1000 + LAYOUT_LOOKAHEAD_SEC) !==
+            layoutAt(beats, next.startMs / 1000 + LAYOUT_LOOKAHEAD_SEC);
+        return {
+          ...c,
+          pageBreakAfter:
+            c.pageBreakAfter || /[.?!…]$/.test(c.text.trim()) || layoutChanges,
+        };
+      }),
       combineTokensWithinMilliseconds: SWITCH_CAPTIONS_EVERY_MS,
     }).pages;
-  }, [captions]);
+  }, [captions, beats]);
 
   return (
     <AbsoluteFill>
@@ -116,8 +140,10 @@ export const Captions: React.FC<{ captionsSrc: string; beats: Beat[] }> = ({
         if (endFrame - startFrame <= 0) {
           return null;
         }
-        const up = beatAt(beats, page.startMs / 1000)?.slot === "b";
-        const slot = up ? SLOTS.a : SLOTS.b;
+        const region =
+          CAPTION_REGION[
+            layoutAt(beats, page.startMs / 1000 + LAYOUT_LOOKAHEAD_SEC)
+          ];
         return (
           <Sequence
             key={index}
@@ -128,16 +154,20 @@ export const Captions: React.FC<{ captionsSrc: string; beats: Beat[] }> = ({
             <div
               style={{
                 position: "absolute",
-                top: slot.top,
-                height: slot.height,
-                left: SAFE.left,
-                right: SAFE.right,
+                top: region.top,
+                height: region.height,
+                left: region.left,
+                right: region.right,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <CaptionPage page={page} large={up} />
+              <CaptionPage
+                page={page}
+                fontSize={region.fontSize}
+                durationInFrames={endFrame - startFrame}
+              />
             </div>
           </Sequence>
         );

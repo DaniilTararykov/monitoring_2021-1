@@ -54,13 +54,10 @@ export const SAFE = {
   right: 55,
 };
 
-// Vertical slots of the cream graphic zone.
+// Fixed rows of the cream graphic zone; per-layout regions live in Layouts.ts.
 export const SLOTS = {
   header: { top: 260, height: 80 },
   equalizer: { top: 370, height: 80 },
-  // Graphics usually live in slot A with captions in slot B; a beat can swap them.
-  a: { top: 480, height: 290 },
-  b: { top: 790, height: 160 },
 };
 
 export const TELEGRAM_BLUE = "#2AABEE";
