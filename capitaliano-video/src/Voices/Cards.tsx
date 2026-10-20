@@ -118,14 +118,13 @@ export const MythCard: React.FC<{ text: string; index: number }> = ({
       </div>
       <div
         style={{
-          position: "relative",
           padding: "40px 48px",
           borderRadius: 40,
           backgroundColor: COLORS.white,
           boxShadow: "0 24px 60px rgba(27, 94, 52, 0.16)",
           fontSize: 80,
           fontWeight: 700,
-          lineHeight: 1.06,
+          lineHeight: 1.12,
           color: COLORS.darkGray,
           textWrap: "balance",
           scale: interpolate(frame, [0, 0.4 * fps], [0.85, 1], {
@@ -134,21 +133,19 @@ export const MythCard: React.FC<{ text: string; index: number }> = ({
           }),
         }}
       >
-        {text}
-        <div
+        {/* A red line through every line of text, drawn left to right. */}
+        <span
           style={{
-            position: "absolute",
-            left: 30,
-            right: 30,
-            top: "50%",
-            height: 12,
-            borderRadius: 6,
-            backgroundColor: COLORS.red,
-            rotate: "-5deg",
-            transformOrigin: "left center",
-            scale: `${interpolate(frame, [0.9 * fps, 1.25 * fps], [0, 1], { ...clamp, easing: Easing.bezier(0.33, 1, 0.68, 1) })} 1`,
+            backgroundImage: `linear-gradient(${COLORS.red}, ${COLORS.red})`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "0 58%",
+            backgroundSize: `${interpolate(frame, [0.9 * fps, 1.3 * fps], [0, 100], { ...clamp, easing: Easing.bezier(0.33, 1, 0.68, 1) })}% 10px`,
+            boxDecorationBreak: "clone",
+            WebkitBoxDecorationBreak: "clone",
           }}
-        />
+        >
+          {text}
+        </span>
       </div>
     </CardFrame>
   );

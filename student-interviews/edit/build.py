@@ -16,7 +16,7 @@ STUDENTS = {
     "NA": {"face": [615, 690], "file": "IMG_9002", "name": "Настя", "age": "22", "from": "Москва", "uni": "Università Cattolica", "program": "Management in Art", "city": "Милан"},
     "MA": {"face": [525, 820], "file": "IMG_9003", "name": "Маргарита", "age": "24", "from": "Алматы", "uni": "Università Cattolica", "program": "Art Management", "city": "Милан"},
     "LI": {"face": [585, 865], "file": "IMG_9005", "name": "Лия", "age": "24", "from": "Набережные Челны", "uni": "Politecnico di Torino", "program": "Architecture Construction City", "city": "Турин"},
-    "EV": {"face": [500, 805], "file": "IMG_9014", "name": "Евдокия", "age": "21", "from": "Королёв", "uni": "IULM", "program": "Corporate Communication & PR", "city": "Милан"},
+    "EV": {"face": [470, 975], "file": "IMG_9014", "name": "Евдокия", "age": "21", "from": "Королёв", "uni": "IULM", "program": "Corporate Communication & PR", "city": "Милан"},
 }
 
 # Recognition fixes: whole-word replacements, then per-word overrides keyed by
@@ -59,8 +59,8 @@ VIDEOS = {
         {"end": "Хотите так же? Начните с консультации", "dur": 3.2},
     ]},
     "Q1": {"format": "question", "title": "Что сказали родители?", "question": "Что сказали родители, когда узнали про Италию?", "items": [
-        {"student": "EV", "ranges": [(229.94, 230.42)], "hook": True},
-        {"title": "Что сказали родители, когда узнали про Италию?", "dur": 2.0},
+        {"title": "Что сказали родители, когда узнали про Италию?", "dur": 2.2},
+        {"student": "EV", "ranges": [(229.94, 230.42)], "bubbleLead": 0.5},
         {"student": "AI", "ranges": [(210.98, 215.24)]},
         {"student": "SE", "ranges": [(109.52, 111.56)]},
         {"student": "DA", "ranges": [(101.34, 105.28)]},

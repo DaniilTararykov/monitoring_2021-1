@@ -121,7 +121,18 @@ export const Voices: React.FC<VoicesProps> = ({ data, mediaBase }) => {
       })}
 
       <VoiceCaptions captions={data.captions} hidden={hidden} />
-      <Header />
+      {data.items.map((it, i) =>
+        it.kind === "end" ? null : (
+          <Sequence
+            key={`header-${i}`}
+            from={sec(it.start)}
+            durationInFrames={Math.max(1, sec(it.end) - sec(it.start))}
+            layout="none"
+          >
+            <Header fadeIn={i === 0} />
+          </Sequence>
+        ),
+      )}
 
       {/* Wipes over every change of speaker or card */}
       {data.items.map((it, i) =>

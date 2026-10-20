@@ -99,11 +99,16 @@ export const VoiceCaptions: React.FC<{
           return null;
         }
         const next = pages[i + 1];
+        // Never run into a card or the passport that comes next.
+        const nextHidden = Math.min(
+          ...hidden.map(([a]) => a).filter((a) => a > start),
+        );
         const from = Math.round(start * fps);
         const end = Math.round(
           Math.min(
             next ? (next.startMs / 1000) * fps : Infinity,
             ((page.startMs + page.durationMs) / 1000 + 0.35) * fps,
+            nextHidden * fps,
           ),
         );
         if (end - from <= 0) {

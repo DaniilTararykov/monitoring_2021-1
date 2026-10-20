@@ -35,12 +35,14 @@ export const TelegramIcon: React.FC<{ size: number }> = ({ size }) => (
 );
 
 // Logo and handle over a soft cream fade, so they read over sky and street.
-export const Header: React.FC = () => {
+export const Header: React.FC<{ fadeIn: boolean }> = ({ fadeIn }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
     <AbsoluteFill
-      style={{ opacity: interpolate(frame, [0, 0.6 * fps], [0, 1], clamp) }}
+      style={{
+        opacity: fadeIn ? interpolate(frame, [0, 0.6 * fps], [0, 1], clamp) : 1,
+      }}
     >
       <div
         style={{
@@ -410,18 +412,26 @@ export const FacesStrip: React.FC<{
         <div
           style={{
             position: "absolute",
-            top: 112,
+            top: 116,
             left: 0,
             right: 0,
-            textAlign: "center",
-            fontFamily: CURSIVE,
-            fontWeight: 700,
-            fontSize: 48,
-            color: COLORS.white,
-            textShadow: "0 3px 14px rgba(0, 0, 0, 0.45)",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          {names[active]}
+          <div
+            style={{
+              padding: "6px 22px",
+              borderRadius: 999,
+              backgroundColor: COLORS.white,
+              boxShadow: "0 8px 22px rgba(0, 0, 0, 0.18)",
+              fontWeight: 700,
+              fontSize: 36,
+              color: COLORS.darkGreen,
+            }}
+          >
+            {names[active]}
+          </div>
         </div>
       ) : null}
     </div>
