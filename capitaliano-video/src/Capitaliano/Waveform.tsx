@@ -3,7 +3,7 @@ import { staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { COLORS } from "./brand";
 
 const BAR_COUNT = 48;
-const MAX_BAR_HEIGHT = 120;
+const MAX_BAR_HEIGHT = 80;
 const MIN_DB = -75;
 const MAX_DB = -20;
 

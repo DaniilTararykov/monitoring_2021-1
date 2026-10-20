@@ -11,11 +11,15 @@ import {
 } from "remotion";
 import { createTikTokStyleCaptions } from "@remotion/captions";
 import type { Caption, TikTokPage } from "@remotion/captions";
-import { COLORS, INTER_TIGHT, TIGHT_TRACKING } from "./brand";
+import { Beat, beatAt } from "./Beats";
+import { COLORS, INTER_TIGHT, SAFE, SLOTS, TIGHT_TRACKING } from "./brand";
 
 const SWITCH_CAPTIONS_EVERY_MS = 1200;
 
-const CaptionPage: React.FC<{ page: TikTokPage }> = ({ page }) => {
+const CaptionPage: React.FC<{ page: TikTokPage; large: boolean }> = ({
+  page,
+  large,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const absoluteTimeMs = page.startMs + (frame / fps) * 1000;
@@ -28,10 +32,10 @@ const CaptionPage: React.FC<{ page: TikTokPage }> = ({ page }) => {
         justifyContent: "center",
         alignItems: "center",
         rowGap: 8,
-        maxWidth: 920,
+        maxWidth: 940,
         fontFamily: INTER_TIGHT,
         fontWeight: 700,
-        fontSize: 68,
+        fontSize: large ? 76 : 62,
         lineHeight: 1.1,
         letterSpacing: TIGHT_TRACKING,
         scale: interpolate(frame, [0, 0.2 * fps], [0.92, 1], {
@@ -51,8 +55,7 @@ const CaptionPage: React.FC<{ page: TikTokPage }> = ({ page }) => {
               padding: "4px 16px",
               borderRadius: 18,
               backgroundColor: isActive ? COLORS.green : "transparent",
-              color: COLORS.white,
-              textShadow: isActive ? "none" : "0 4px 18px rgba(0, 0, 0, 0.55)",
+              color: isActive ? COLORS.white : COLORS.darkGray,
             }}
           >
             {token.text.trim()}
@@ -64,8 +67,11 @@ const CaptionPage: React.FC<{ page: TikTokPage }> = ({ page }) => {
 };
 
 // Word-by-word subtitles with a green pill on the active word.
-export const Captions: React.FC<{ captionsSrc: string }> = ({
+// Captions sit on the cream zone in slot B, or move up to slot A while a
+// beat occupies slot B.
+export const Captions: React.FC<{ captionsSrc: string; beats: Beat[] }> = ({
   captionsSrc,
+  beats,
 }) => {
   const { fps } = useVideoConfig();
   const [captions, setCaptions] = useState<Caption[] | null>(null);
@@ -110,20 +116,29 @@ export const Captions: React.FC<{ captionsSrc: string }> = ({
         if (endFrame - startFrame <= 0) {
           return null;
         }
+        const up = beatAt(beats, page.startMs / 1000)?.slot === "b";
+        const slot = up ? SLOTS.a : SLOTS.b;
         return (
           <Sequence
             key={index}
             from={startFrame}
             durationInFrames={endFrame - startFrame}
-            layout="absolute-fill"
-            style={{
-              top: 1660,
-              height: 180,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            layout="none"
           >
-            <CaptionPage page={page} />
+            <div
+              style={{
+                position: "absolute",
+                top: slot.top,
+                height: slot.height,
+                left: SAFE.left,
+                right: SAFE.right,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CaptionPage page={page} large={up} />
+            </div>
           </Sequence>
         );
       })}

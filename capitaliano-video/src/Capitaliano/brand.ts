@@ -40,15 +40,29 @@ for (const weight of ["400", "500", "700"]) {
 export const CURSIVE = "Caveat";
 loadSubsets(CURSIVE, "caveat", "700");
 
-// 9:16 frame skeleton.
+// 9:16 frame skeleton, laid out inside the Instagram Reels safe zone:
+// 250px top, 420px bottom, 70px left, 55px right (193px right below y=1110).
 export const FRAME = {
   width: 1080,
   height: 1920,
-  // Graphic zone occupies the top half; the speaker video starts slightly
-  // above the middle so the fade-blur can cover the seam.
-  graphicZoneHeight: 960,
-  videoTop: 820,
-  seamHeight: 280,
+  videoTop: 960,
+  seamHeight: 200,
 };
+
+export const SAFE = {
+  left: 70,
+  right: 55,
+};
+
+// Vertical slots of the cream graphic zone.
+export const SLOTS = {
+  header: { top: 260, height: 80 },
+  equalizer: { top: 370, height: 80 },
+  // Graphics usually live in slot A with captions in slot B; a beat can swap them.
+  a: { top: 480, height: 290 },
+  b: { top: 790, height: 160 },
+};
+
+export const TELEGRAM_BLUE = "#2AABEE";
 
 export const TIGHT_TRACKING = "-0.03em";

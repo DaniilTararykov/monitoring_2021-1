@@ -4,12 +4,23 @@ import {
   AbsoluteFill,
   CalculateMetadataFunction,
   Img,
+  interpolate,
   Interactive,
   staticFile,
+  useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
-import { COLORS, FRAME, INTER_TIGHT, TIGHT_TRACKING } from "./brand";
+import {
+  COLORS,
+  FRAME,
+  INTER_TIGHT,
+  SAFE,
+  SLOTS,
+  TELEGRAM_BLUE,
+  TIGHT_TRACKING,
+} from "./brand";
+import { Beat, Beats, cameraAt, VIDEO_BOX_HEIGHT } from "./Beats";
 import { Captions } from "./Captions";
-import { Card, Cards } from "./Cards";
 import { Waveform } from "./Waveform";
 
 export type CapitalianoProps = {
@@ -18,7 +29,7 @@ export type CapitalianoProps = {
   captionsSrc: string;
   // How many px of the 9:16 speaker video to crop off the top.
   videoOffsetY: number;
-  cards: Card[];
+  beats: Beat[];
 };
 
 export const calculateCapitalianoMetadata: CalculateMetadataFunction<
@@ -32,38 +43,62 @@ export const calculateCapitalianoMetadata: CalculateMetadataFunction<
   return { durationInFrames: Math.ceil(durationInSeconds * 30) };
 };
 
+const TelegramIcon: React.FC = () => (
+  <svg width={44} height={44} viewBox="0 0 24 24">
+    <circle cx={12} cy={12} r={12} fill={TELEGRAM_BLUE} />
+    <path
+      d="M5.4 11.8l11.2-4.3c.5-.2 1 .1.8.9l-1.9 8.9c-.1.6-.5.8-1 .5l-2.9-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-2.9 5.4-4.9c.2-.2 0-.3-.4-.1l-6.6 4.2-2.9-.9c-.6-.2-.6-.6.1-.9z"
+      fill="#FFFFFF"
+    />
+  </svg>
+);
+
 export const Capitaliano: React.FC<CapitalianoProps> = ({
   videoSrc,
   audioSrc,
   captionsSrc,
   videoOffsetY,
-  cards,
+  beats,
 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const camera = cameraAt(beats, frame / fps);
+
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.cream }}>
-      {/* Bottom half: speaker video, cropped so the face sits below the seam */}
+      {/* Bottom half: speaker video with slow alternating camera moves */}
       <div
         style={{
           position: "absolute",
           top: FRAME.videoTop,
           left: 0,
           width: FRAME.width,
-          height: FRAME.height - FRAME.videoTop,
+          height: VIDEO_BOX_HEIGHT,
           overflow: "hidden",
         }}
       >
-        <Video
-          name="Speaker"
-          src={staticFile(videoSrc)}
-          objectFit="cover"
+        <div
           style={{
             position: "absolute",
-            top: -videoOffsetY,
-            left: 0,
-            width: FRAME.width,
-            height: FRAME.width * (16 / 9),
+            inset: 0,
+            transformOrigin: "50% 45%",
+            scale: camera.scale,
+            translate: `${camera.x}px 0px`,
           }}
-        />
+        >
+          <Video
+            name="Speaker"
+            src={staticFile(videoSrc)}
+            objectFit="cover"
+            style={{
+              position: "absolute",
+              top: -videoOffsetY,
+              left: 0,
+              width: FRAME.width,
+              height: FRAME.width * (16 / 9),
+            }}
+          />
+        </div>
       </div>
 
       {/* Fade-blur over the seam between graphic zone and video */}
@@ -95,59 +130,66 @@ export const Capitaliano: React.FC<CapitalianoProps> = ({
           backgroundSize: "36px 36px",
           backgroundPosition: "18px 18px",
         }}
+      />
+
+      {/* Header: fades in only */}
+      <div
+        style={{
+          position: "absolute",
+          top: SLOTS.header.top,
+          height: SLOTS.header.height,
+          left: SAFE.left,
+          right: SAFE.right,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          opacity: interpolate(frame, [0, 0.8 * fps], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          }),
+        }}
       >
-        <div
+        <Img name="Logo" src={staticFile("logo.png")} style={{ height: 78 }} />
+        <Interactive.Div
+          name="Handle"
           style={{
-            position: "absolute",
-            top: 100,
-            left: 80,
-            right: 80,
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
+            gap: 12,
+            padding: "10px 26px 10px 12px",
+            borderRadius: 999,
+            backgroundColor: "#FFFFFF",
+            boxShadow: "0 10px 30px rgba(27, 94, 52, 0.12)",
+            color: "#1B5E34",
+            fontFamily: INTER_TIGHT,
+            fontWeight: 500,
+            fontSize: 38,
+            letterSpacing: TIGHT_TRACKING,
           }}
         >
-          <Img
-            name="Logo"
-            src={staticFile("logo.svg")}
-            style={{ height: 72 }}
-          />
-          <Interactive.Div
-            name="Handle"
-            style={{
-              padding: "14px 28px",
-              borderRadius: 999,
-              backgroundColor: "#FFFFFF",
-              boxShadow: "0 10px 30px rgba(27, 94, 52, 0.14)",
-              color: "#1B5E34",
-              fontFamily: INTER_TIGHT,
-              fontWeight: 500,
-              fontSize: 40,
-              letterSpacing: TIGHT_TRACKING,
-            }}
-          >
-            @capitaliano.info
-          </Interactive.Div>
-        </div>
-
-        <div
-          style={{
-            position: "absolute",
-            top: 220,
-            left: 80,
-            right: 80,
-            height: 420,
-          }}
-        >
-          <Cards cards={cards} />
-        </div>
-
-        <div style={{ position: "absolute", top: 650, left: 80, right: 80 }}>
-          <Waveform audioSrc={audioSrc} />
-        </div>
+          <TelegramIcon />
+          @capitaliano.info
+        </Interactive.Div>
       </div>
 
-      <Captions captionsSrc={captionsSrc} />
+      <div
+        style={{
+          position: "absolute",
+          top: SLOTS.equalizer.top,
+          height: SLOTS.equalizer.height,
+          left: SAFE.left,
+          right: SAFE.right,
+          opacity: interpolate(frame, [0, 0.8 * fps], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          }),
+        }}
+      >
+        <Waveform audioSrc={audioSrc} />
+      </div>
+
+      <Beats beats={beats} />
+      <Captions captionsSrc={captionsSrc} beats={beats} />
     </AbsoluteFill>
   );
 };
