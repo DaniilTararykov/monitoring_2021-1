@@ -7,8 +7,12 @@ proxy, out = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
 out.mkdir(parents=True, exist_ok=True)
 SIZE = 420
 for sid, st in STUDENTS.items():
+    src = proxy / f"{st['file']}.mp4"
+    if not src.exists():
+        print(sid, "skipped: no proxy yet")
+        continue
     x, y = st["face"]
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", "20", "-i", str(proxy / f"{st['file']}.mp4"),
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", "20", "-i", str(src),
                     "-frames:v", "1", "-vf", f"crop={SIZE}:{SIZE}:{x - SIZE // 2}:{y - SIZE // 2},scale=200:200",
                     str(out / f"{sid}.jpg")], check=True)
     print(sid)
