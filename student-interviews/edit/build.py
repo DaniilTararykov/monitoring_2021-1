@@ -14,7 +14,7 @@ STUDENTS = {
     "DA": {"face": [535, 775], "file": "IMG_8997", "name": "Данил", "age": "25", "from": "Екатеринбург", "uni": "UNIBO", "program": "Архитектурная инженерия", "city": "Болонья"},
     "PO": {"face": [500, 865], "file": "IMG_9001", "name": "Полина", "age": "25", "from": "Пермь", "uni": "Bocconi", "program": "Global Law", "city": "Милан"},
     "NA": {"face": [615, 690], "file": "IMG_9002", "name": "Настя", "age": "22", "from": "Москва", "uni": "Università Cattolica", "program": "Management in Art", "city": "Милан"},
-    "MA": {"face": [560, 825], "file": "IMG_9003", "name": "Маргарита", "age": "24", "from": "Алматы", "uni": "Università Cattolica", "program": "Art Management", "city": "Милан"},
+    "MA": {"face": [525, 820], "file": "IMG_9003", "name": "Маргарита", "age": "24", "from": "Алматы", "uni": "Università Cattolica", "program": "Art Management", "city": "Милан"},
     "LI": {"face": [585, 865], "file": "IMG_9005", "name": "Лия", "age": "24", "from": "Набережные Челны", "uni": "Politecnico di Torino", "program": "Architecture Construction City", "city": "Турин"},
     "EV": {"face": [500, 805], "file": "IMG_9014", "name": "Евдокия", "age": "21", "from": "Королёв", "uni": "IULM", "program": "Corporate Communication & PR", "city": "Милан"},
 }
