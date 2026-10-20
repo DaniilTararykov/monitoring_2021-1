@@ -16,6 +16,8 @@ export type CapitalianoProps = {
   videoSrc: string;
   audioSrc: string;
   captionsSrc: string;
+  // How many px of the 9:16 speaker video to crop off the top.
+  videoOffsetY: number;
   cards: Card[];
 };
 
@@ -34,23 +36,35 @@ export const Capitaliano: React.FC<CapitalianoProps> = ({
   videoSrc,
   audioSrc,
   captionsSrc,
+  videoOffsetY,
   cards,
 }) => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.cream }}>
-      {/* Bottom half: speaker video */}
-      <Video
-        name="Speaker"
-        src={staticFile(videoSrc)}
-        objectFit="cover"
+      {/* Bottom half: speaker video, cropped so the face sits below the seam */}
+      <div
         style={{
           position: "absolute",
           top: FRAME.videoTop,
           left: 0,
           width: FRAME.width,
           height: FRAME.height - FRAME.videoTop,
+          overflow: "hidden",
         }}
-      />
+      >
+        <Video
+          name="Speaker"
+          src={staticFile(videoSrc)}
+          objectFit="cover"
+          style={{
+            position: "absolute",
+            top: -videoOffsetY,
+            left: 0,
+            width: FRAME.width,
+            height: FRAME.width * (16 / 9),
+          }}
+        />
+      </div>
 
       {/* Fade-blur over the seam between graphic zone and video */}
       <div

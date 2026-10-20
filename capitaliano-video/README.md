@@ -14,11 +14,13 @@ npm i
 # 1. Исходник (.mov из Google Drive) → public/speaker.mp4 + public/speaker-audio.wav
 scripts/prepare.sh /path/to/source.mov
 # 2. Пословные субтитры (Whisper, русский) → public/captions.json
+#    Для текущего ролика они уже готовы и вычитаны вручную.
 node scripts/transcribe.mjs          # или: node scripts/transcribe.mjs large-v3
 # 3. Логотип: замените public/logo.svg на официальный (сейчас там временный wordmark)
 ```
 
 Длительность композиции берётся из длины `speaker.mp4` автоматически.
+`videoOffsetY` — сколько пикселей срезать сверху у видео спикера, чтобы лицо оказалось под стыком.
 
 ## Карточки
 

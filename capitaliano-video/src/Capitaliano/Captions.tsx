@@ -31,7 +31,7 @@ const CaptionPage: React.FC<{ page: TikTokPage }> = ({ page }) => {
         maxWidth: 920,
         fontFamily: INTER_TIGHT,
         fontWeight: 700,
-        fontSize: 76,
+        fontSize: 68,
         lineHeight: 1.1,
         letterSpacing: TIGHT_TRACKING,
         scale: interpolate(frame, [0, 0.2 * fps], [0.92, 1], {
@@ -117,8 +117,8 @@ export const Captions: React.FC<{ captionsSrc: string }> = ({
             durationInFrames={endFrame - startFrame}
             layout="absolute-fill"
             style={{
-              top: 1340,
-              height: 320,
+              top: 1660,
+              height: 180,
               justifyContent: "center",
               alignItems: "center",
             }}
