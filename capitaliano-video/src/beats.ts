@@ -78,9 +78,9 @@ export const BEATS: Beat[] = [
     layout: "circle-bottom",
     graphic: {
       kind: "card",
-      text: "Желание иммигрировать?",
+      text: "Учёба или переезд?",
       variant: "white",
-      note: "проверяют особенно тщательно",
+      note: "консул ищет интерес к учёбе",
     },
   },
   {

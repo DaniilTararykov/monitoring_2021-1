@@ -69,9 +69,10 @@ const circle = (cy: number, r: number): Geometry => ({
   w: 2 * r,
   h: 2 * r,
   radius: r,
-  scale: 0.6,
+  // Head and shoulders: the narrowest crop that still fills the circle.
+  scale: 0.5,
   faceX: r,
-  faceY: r,
+  faceY: r * 0.85,
   split: 0,
   circle: 1,
   full: 0,
