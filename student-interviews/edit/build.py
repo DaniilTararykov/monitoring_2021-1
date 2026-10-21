@@ -14,7 +14,7 @@ STUDENTS = {
     "EM": {"face": [475, 960], "file": "IMG_8994", "name": "Эмиль", "age": "23", "from": "Москва", "uni": "Università Cattolica", "program": "Global Business Management", "city": "Пьяченца", "level": "Магистратура"},
     "SE": {"face": [510, 985], "file": "IMG_8995", "name": "Семён", "age": "24", "from": "Санкт-Петербург", "uni": "UNIMI", "program": "Law and Sustainable Development", "city": "Милан", "level": "Магистратура"},
     "DA": {"face": [535, 775], "file": "IMG_8997", "name": "Данил", "age": "25", "from": "Екатеринбург", "uni": "UNIBO", "program": "Архитектурная инженерия", "city": "Болонья", "level": "Магистратура"},
-    "PO": {"face": [500, 865], "file": "IMG_9001", "name": "Полина", "age": "25", "from": "Пермь", "uni": "Bocconi", "program": "Global Law", "city": "Милан", "level": "Бакалавриат"},
+    "PO": {"face": [500, 865], "file": "IMG_9001", "name": "Полина", "age": "25", "from": "Пермь", "uni": "Bocconi", "program": "Global Law", "city": "Милан", "level": "Магистратура"},
     "NA": {"face": [615, 690], "file": "IMG_9002", "name": "Настя", "age": "22", "from": "Москва", "uni": "Università Cattolica", "program": "Management in Art", "city": "Милан", "level": "Магистратура"},
     "MA": {"face": [525, 820], "file": "IMG_9003", "name": "Маргарита", "age": "24", "from": "Алматы", "uni": "Università Cattolica", "program": "Art Management", "city": "Милан", "level": "Магистратура"},
     "LI": {"face": [585, 865], "file": "IMG_9005", "name": "Лия", "age": "24", "from": "Набережные Челны", "uni": "Politecnico di Torino", "program": "Architecture Construction City", "city": "Турин", "level": "Магистратура"},
