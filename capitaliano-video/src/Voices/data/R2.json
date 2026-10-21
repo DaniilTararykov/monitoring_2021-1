@@ -1,0 +1,708 @@
+{
+  "id": "R2",
+  "format": "reviews",
+  "title": "Что студенты говорят о Capitaliano",
+  "question": null,
+  "durationSec": 37.82,
+  "durationInFrames": 1135,
+  "students": {
+    "EA": {
+      "face": [650, 1085],
+      "file": "IMG_8996",
+      "name": "Ева",
+      "age": "22",
+      "from": "Москва",
+      "uni": "UNIMI",
+      "program": "Law and Sustainable Development",
+      "city": "Милан",
+      "female": true,
+      "avatar": "photos/EA-avatar.jpg",
+      "photo": "photos/EA-passport.jpg"
+    },
+    "DA": {
+      "face": [535, 775],
+      "file": "IMG_8997",
+      "name": "Данил",
+      "age": "25",
+      "from": "Екатеринбург",
+      "uni": "UNIBO",
+      "program": "Архитектурная инженерия",
+      "city": "Болонья",
+      "female": false,
+      "avatar": "photos/DA-avatar.jpg",
+      "photo": "photos/DA-passport.jpg"
+    },
+    "EV": {
+      "face": [470, 975],
+      "file": "IMG_9014",
+      "name": "Евдокия",
+      "age": "21",
+      "from": "Королёв",
+      "uni": "IULM",
+      "program": "Corporate Communication & PR",
+      "city": "Милан",
+      "female": true,
+      "avatar": "photos/EV-avatar.jpg",
+      "photo": "photos/EV-passport.jpg"
+    },
+    "PO": {
+      "face": [500, 865],
+      "file": "IMG_9001",
+      "name": "Полина",
+      "age": "25",
+      "from": "Пермь",
+      "uni": "Bocconi",
+      "program": "Global Law",
+      "city": "Милан",
+      "female": true,
+      "avatar": "photos/PO-avatar.jpg",
+      "photo": "photos/PO-passport.jpg"
+    }
+  },
+  "order": ["EA", "DA", "EV", "PO"],
+  "segments": [
+    {
+      "src": "IMG_8996.mp4",
+      "from": 49.96,
+      "to": 56.74,
+      "at": 2.2,
+      "student": "EA",
+      "item": 1,
+      "cut": "start"
+    },
+    {
+      "src": "IMG_8997.mp4",
+      "from": 45.56,
+      "to": 49.08,
+      "at": 8.98,
+      "student": "DA",
+      "item": 2,
+      "cut": "switch"
+    },
+    {
+      "src": "IMG_9014.mp4",
+      "from": 64.86,
+      "to": 67.32,
+      "at": 12.5,
+      "student": "EV",
+      "item": 3,
+      "cut": "switch"
+    },
+    {
+      "src": "IMG_9014.mp4",
+      "from": 67.62,
+      "to": 67.84,
+      "at": 14.96,
+      "student": "EV",
+      "item": 3,
+      "cut": "jump"
+    },
+    {
+      "src": "IMG_9014.mp4",
+      "from": 68.66,
+      "to": 69.62,
+      "at": 15.18,
+      "student": "EV",
+      "item": 3,
+      "cut": "jump"
+    },
+    {
+      "src": "IMG_9014.mp4",
+      "from": 70.0,
+      "to": 71.4,
+      "at": 16.14,
+      "student": "EV",
+      "item": 3,
+      "cut": "jump"
+    },
+    {
+      "src": "IMG_9014.mp4",
+      "from": 72.42,
+      "to": 76.2,
+      "at": 17.54,
+      "student": "EV",
+      "item": 3,
+      "cut": "jump"
+    },
+    {
+      "src": "IMG_9001.mp4",
+      "from": 51.56,
+      "to": 60.5,
+      "at": 21.32,
+      "student": "PO",
+      "item": 4,
+      "cut": "switch"
+    },
+    {
+      "src": "IMG_9001.mp4",
+      "from": 78.14,
+      "to": 82.1,
+      "at": 30.26,
+      "student": "PO",
+      "item": 4,
+      "cut": "jump"
+    }
+  ],
+  "items": [
+    {
+      "kind": "title",
+      "text": "Что студенты говорят о Capitaliano",
+      "start": 0.0,
+      "end": 2.2
+    },
+    {
+      "kind": "clip",
+      "student": "EA",
+      "start": 2.2,
+      "end": 8.98
+    },
+    {
+      "kind": "clip",
+      "student": "DA",
+      "start": 8.98,
+      "end": 12.5
+    },
+    {
+      "kind": "clip",
+      "student": "EV",
+      "start": 12.5,
+      "end": 21.32
+    },
+    {
+      "kind": "clip",
+      "student": "PO",
+      "start": 21.32,
+      "end": 34.22
+    },
+    {
+      "kind": "end",
+      "text": "Стань следующим студентом Capitaliano",
+      "start": 34.22,
+      "end": 37.82
+    }
+  ],
+  "captions": [
+    {
+      "text": " Могу",
+      "startMs": 2200,
+      "endMs": 2360,
+      "timestampMs": 2280,
+      "confidence": 0.74
+    },
+    {
+      "text": " сказать,",
+      "startMs": 2360,
+      "endMs": 2560,
+      "timestampMs": 2460,
+      "confidence": 1.0
+    },
+    {
+      "text": " что",
+      "startMs": 2620,
+      "endMs": 2720,
+      "timestampMs": 2670,
+      "confidence": 1.0
+    },
+    {
+      "text": " это",
+      "startMs": 2720,
+      "endMs": 2840,
+      "timestampMs": 2780,
+      "confidence": 1.0
+    },
+    {
+      "text": " был",
+      "startMs": 2840,
+      "endMs": 3000,
+      "timestampMs": 2920,
+      "confidence": 0.76
+    },
+    {
+      "text": " 100%",
+      "startMs": 3000,
+      "endMs": 3680,
+      "timestampMs": 3090,
+      "confidence": 0.97
+    },
+    {
+      "text": " максимально",
+      "startMs": 3680,
+      "endMs": 4620,
+      "timestampMs": 4150,
+      "confidence": 1.0
+    },
+    {
+      "text": " позитивный",
+      "startMs": 4620,
+      "endMs": 5060,
+      "timestampMs": 4840,
+      "confidence": 1.0
+    },
+    {
+      "text": " опыт,",
+      "startMs": 5060,
+      "endMs": 5280,
+      "timestampMs": 5170,
+      "confidence": 1.0
+    },
+    {
+      "text": " который",
+      "startMs": 5520,
+      "endMs": 5720,
+      "timestampMs": 5620,
+      "confidence": 0.99
+    },
+    {
+      "text": " у",
+      "startMs": 5720,
+      "endMs": 5800,
+      "timestampMs": 5760,
+      "confidence": 1.0
+    },
+    {
+      "text": " меня",
+      "startMs": 5800,
+      "endMs": 5880,
+      "timestampMs": 5840,
+      "confidence": 1.0
+    },
+    {
+      "text": " когда-либо",
+      "startMs": 5880,
+      "endMs": 6240,
+      "timestampMs": 5970,
+      "confidence": 1.0
+    },
+    {
+      "text": " был",
+      "startMs": 6240,
+      "endMs": 6460,
+      "timestampMs": 6350,
+      "confidence": 1.0
+    },
+    {
+      "text": " с",
+      "startMs": 6460,
+      "endMs": 6800,
+      "timestampMs": 6630,
+      "confidence": 0.91
+    },
+    {
+      "text": " работой",
+      "startMs": 6800,
+      "endMs": 7100,
+      "timestampMs": 6950,
+      "confidence": 0.99
+    },
+    {
+      "text": " в",
+      "startMs": 7100,
+      "endMs": 7200,
+      "timestampMs": 7150,
+      "confidence": 0.99
+    },
+    {
+      "text": " целом",
+      "startMs": 7200,
+      "endMs": 7340,
+      "timestampMs": 7270,
+      "confidence": 0.99
+    },
+    {
+      "text": " в",
+      "startMs": 7340,
+      "endMs": 7420,
+      "timestampMs": 7380,
+      "confidence": 0.98
+    },
+    {
+      "text": " таких",
+      "startMs": 7420,
+      "endMs": 7540,
+      "timestampMs": 7480,
+      "confidence": 0.99
+    },
+    {
+      "text": " агентствах.",
+      "startMs": 7540,
+      "endMs": 8380,
+      "timestampMs": 7960,
+      "confidence": 1.0,
+      "pageBreakAfter": true
+    },
+    {
+      "text": " Ребята",
+      "startMs": 9200,
+      "endMs": 9640,
+      "timestampMs": 9420,
+      "confidence": 1.0
+    },
+    {
+      "text": " молодцы.",
+      "startMs": 9640,
+      "endMs": 10160,
+      "timestampMs": 9900,
+      "confidence": 1.0
+    },
+    {
+      "text": " Всех",
+      "startMs": 10560,
+      "endMs": 11120,
+      "timestampMs": 10840,
+      "confidence": 1.0
+    },
+    {
+      "text": " целую,",
+      "startMs": 11120,
+      "endMs": 11460,
+      "timestampMs": 11290,
+      "confidence": 1.0
+    },
+    {
+      "text": " всех",
+      "startMs": 11580,
+      "endMs": 11720,
+      "timestampMs": 11650,
+      "confidence": 1.0
+    },
+    {
+      "text": " люблю.",
+      "startMs": 11720,
+      "endMs": 12040,
+      "timestampMs": 11880,
+      "confidence": 1.0,
+      "pageBreakAfter": true
+    },
+    {
+      "text": " И",
+      "startMs": 12800,
+      "endMs": 13320,
+      "timestampMs": 13060,
+      "confidence": 1.0
+    },
+    {
+      "text": " когда",
+      "startMs": 13320,
+      "endMs": 13640,
+      "timestampMs": 13480,
+      "confidence": 1.0
+    },
+    {
+      "text": " я",
+      "startMs": 13640,
+      "endMs": 14160,
+      "timestampMs": 13900,
+      "confidence": 1.0
+    },
+    {
+      "text": " увидела,",
+      "startMs": 14160,
+      "endMs": 14840,
+      "timestampMs": 14500,
+      "confidence": 1.0
+    },
+    {
+      "text": " что",
+      "startMs": 15020,
+      "endMs": 15180,
+      "timestampMs": 15100,
+      "confidence": 1.0
+    },
+    {
+      "text": " открылось",
+      "startMs": 15240,
+      "endMs": 15580,
+      "timestampMs": 15410,
+      "confidence": 0.9
+    },
+    {
+      "text": " агентство,",
+      "startMs": 15580,
+      "endMs": 16140,
+      "timestampMs": 15860,
+      "confidence": 1.0
+    },
+    {
+      "text": " я",
+      "startMs": 16200,
+      "endMs": 16280,
+      "timestampMs": 16240,
+      "confidence": 1.0
+    },
+    {
+      "text": " вообще",
+      "startMs": 16280,
+      "endMs": 16500,
+      "timestampMs": 16390,
+      "confidence": 1.0
+    },
+    {
+      "text": " долго",
+      "startMs": 16500,
+      "endMs": 16720,
+      "timestampMs": 16610,
+      "confidence": 1.0
+    },
+    {
+      "text": " не",
+      "startMs": 16720,
+      "endMs": 16900,
+      "timestampMs": 16810,
+      "confidence": 1.0
+    },
+    {
+      "text": " думала,",
+      "startMs": 16900,
+      "endMs": 17400,
+      "timestampMs": 17150,
+      "confidence": 1.0
+    },
+    {
+      "text": " как-то",
+      "startMs": 17540,
+      "endMs": 18260,
+      "timestampMs": 17810,
+      "confidence": 1.0
+    },
+    {
+      "text": " сердце",
+      "startMs": 18260,
+      "endMs": 18820,
+      "timestampMs": 18540,
+      "confidence": 1.0
+    },
+    {
+      "text": " подсказало,",
+      "startMs": 18820,
+      "endMs": 19380,
+      "timestampMs": 19100,
+      "confidence": 0.88
+    },
+    {
+      "text": " что",
+      "startMs": 19460,
+      "endMs": 19680,
+      "timestampMs": 19570,
+      "confidence": 1.0
+    },
+    {
+      "text": " надо",
+      "startMs": 19680,
+      "endMs": 20380,
+      "timestampMs": 20030,
+      "confidence": 1.0
+    },
+    {
+      "text": " туда.",
+      "startMs": 20380,
+      "endMs": 20720,
+      "timestampMs": 20550,
+      "confidence": 1.0,
+      "pageBreakAfter": true
+    },
+    {
+      "text": " Всё",
+      "startMs": 21620,
+      "endMs": 22400,
+      "timestampMs": 22010,
+      "confidence": 0.12
+    },
+    {
+      "text": " очень",
+      "startMs": 22400,
+      "endMs": 23080,
+      "timestampMs": 22740,
+      "confidence": 1.0
+    },
+    {
+      "text": " понравилось,",
+      "startMs": 23080,
+      "endMs": 24080,
+      "timestampMs": 23580,
+      "confidence": 0.99
+    },
+    {
+      "text": " даже",
+      "startMs": 24080,
+      "endMs": 24460,
+      "timestampMs": 24270,
+      "confidence": 0.13
+    },
+    {
+      "text": " я",
+      "startMs": 24460,
+      "endMs": 24760,
+      "timestampMs": 24610,
+      "confidence": 0.94
+    },
+    {
+      "text": " бы",
+      "startMs": 24760,
+      "endMs": 24880,
+      "timestampMs": 24820,
+      "confidence": 1.0
+    },
+    {
+      "text": " сказала",
+      "startMs": 24880,
+      "endMs": 25200,
+      "timestampMs": 25040,
+      "confidence": 0.98
+    },
+    {
+      "text": " слишком,",
+      "startMs": 25200,
+      "endMs": 25680,
+      "timestampMs": 25440,
+      "confidence": 0.99
+    },
+    {
+      "text": " что",
+      "startMs": 25680,
+      "endMs": 26420,
+      "timestampMs": 26050,
+      "confidence": 0.96
+    },
+    {
+      "text": " на",
+      "startMs": 26420,
+      "endMs": 26540,
+      "timestampMs": 26480,
+      "confidence": 0.93
+    },
+    {
+      "text": " следующий",
+      "startMs": 26540,
+      "endMs": 27000,
+      "timestampMs": 26770,
+      "confidence": 1.0
+    },
+    {
+      "text": " год",
+      "startMs": 27000,
+      "endMs": 27180,
+      "timestampMs": 27090,
+      "confidence": 0.99
+    },
+    {
+      "text": " мне",
+      "startMs": 27180,
+      "endMs": 27340,
+      "timestampMs": 27260,
+      "confidence": 0.99
+    },
+    {
+      "text": " тоже",
+      "startMs": 27340,
+      "endMs": 27620,
+      "timestampMs": 27480,
+      "confidence": 1.0
+    },
+    {
+      "text": " хотелось",
+      "startMs": 27620,
+      "endMs": 28300,
+      "timestampMs": 27960,
+      "confidence": 1.0
+    },
+    {
+      "text": " бы",
+      "startMs": 28300,
+      "endMs": 28420,
+      "timestampMs": 28360,
+      "confidence": 0.98
+    },
+    {
+      "text": " снова",
+      "startMs": 28420,
+      "endMs": 28780,
+      "timestampMs": 28600,
+      "confidence": 1.0
+    },
+    {
+      "text": " взять",
+      "startMs": 28780,
+      "endMs": 29520,
+      "timestampMs": 29150,
+      "confidence": 1.0
+    },
+    {
+      "text": " вашу",
+      "startMs": 29520,
+      "endMs": 29900,
+      "timestampMs": 29710,
+      "confidence": 1.0
+    },
+    {
+      "text": " помощь.",
+      "startMs": 29900,
+      "endMs": 30260,
+      "timestampMs": 30080,
+      "confidence": 0.98
+    },
+    {
+      "text": " И",
+      "startMs": 30260,
+      "endMs": 30480,
+      "timestampMs": 30370,
+      "confidence": 0.29
+    },
+    {
+      "text": " если",
+      "startMs": 30480,
+      "endMs": 30800,
+      "timestampMs": 30640,
+      "confidence": 1.0
+    },
+    {
+      "text": " дальше",
+      "startMs": 30800,
+      "endMs": 31680,
+      "timestampMs": 31240,
+      "confidence": 0.99
+    },
+    {
+      "text": " куда-то",
+      "startMs": 31680,
+      "endMs": 32220,
+      "timestampMs": 31880,
+      "confidence": 0.75
+    },
+    {
+      "text": " поступать,",
+      "startMs": 32220,
+      "endMs": 32820,
+      "timestampMs": 32520,
+      "confidence": 1.0
+    },
+    {
+      "text": " то",
+      "startMs": 32920,
+      "endMs": 33040,
+      "timestampMs": 32980,
+      "confidence": 1.0
+    },
+    {
+      "text": " только",
+      "startMs": 33040,
+      "endMs": 33380,
+      "timestampMs": 33210,
+      "confidence": 1.0
+    },
+    {
+      "text": " с",
+      "startMs": 33380,
+      "endMs": 33940,
+      "timestampMs": 33660,
+      "confidence": 1.0
+    },
+    {
+      "text": " вами.",
+      "startMs": 33940,
+      "endMs": 34220,
+      "timestampMs": 34080,
+      "confidence": 0.99,
+      "pageBreakAfter": true
+    }
+  ]
+}

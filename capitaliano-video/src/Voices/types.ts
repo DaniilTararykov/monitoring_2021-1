@@ -12,6 +12,10 @@ export type StudentInfo = {
   uni: string;
   program: string;
   city: string;
+  female: boolean;
+  // Paths inside the media folder.
+  avatar: string;
+  photo: string | null;
 };
 
 export type Segment = {
@@ -49,7 +53,7 @@ export type Item =
 
 export type VoicesData = {
   id: string;
-  format: "story" | "question" | "myths";
+  format: "story" | "question" | "reviews" | "myths";
   title: string;
   question: string | null;
   durationSec: number;

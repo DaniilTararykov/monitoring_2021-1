@@ -34,7 +34,8 @@ export const TelegramIcon: React.FC<{ size: number }> = ({ size }) => (
   </svg>
 );
 
-// Logo and handle over a soft cream fade, so they read over sky and street.
+// Logo over a soft cream fade, so it reads over sky and street. The Telegram
+// handle only appears on the end card.
 export const Header: React.FC<{ fadeIn: boolean }> = ({ fadeIn }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -68,32 +69,12 @@ export const Header: React.FC<{ fadeIn: boolean }> = ({ fadeIn }) => {
         }}
       >
         <Img src={staticFile("logo.png")} style={{ height: 70 }} />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            padding: "10px 26px 10px 12px",
-            borderRadius: 999,
-            backgroundColor: COLORS.white,
-            boxShadow: "0 10px 30px rgba(27, 94, 52, 0.14)",
-            color: COLORS.darkGreen,
-            fontFamily: INTER_TIGHT,
-            fontWeight: 500,
-            fontSize: 36,
-            letterSpacing: TIGHT_TRACKING,
-          }}
-        >
-          <TelegramIcon size={42} />
-          @capitaliano.info
-        </div>
       </div>
     </AbsoluteFill>
   );
 };
 
-// The interviewer's question as a message from Capitaliano: typing dots,
-// then the text.
+// The interviewer's question as a chat message: typing dots, then the text.
 export const QuestionBubble: React.FC<{ text: string; top?: number }> = ({
   text,
   top = 372,
@@ -141,11 +122,8 @@ export const QuestionBubble: React.FC<{ text: string; top?: number }> = ({
           letterSpacing: TIGHT_TRACKING,
         }}
       >
-        <div style={{ fontSize: 28, fontWeight: 700, color: COLORS.green }}>
-          Capitaliano
-        </div>
         {typing ? (
-          <div style={{ display: "flex", gap: 10, padding: "16px 4px 6px" }}>
+          <div style={{ display: "flex", gap: 10, padding: "18px 4px" }}>
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
@@ -212,9 +190,12 @@ const ItalyMap: React.FC<{ city: string; width: number }> = ({
   );
 };
 
-// Student "passport": name, age and home, university and programme, the
-// university city on a map of Italy, and a VISTO stamp.
-export const Passport: React.FC<{ student: StudentInfo }> = ({ student }) => {
+// Student "passport": photo, name, age and home, university and programme,
+// the university city on a map of Italy, and a VISTO stamp.
+export const Passport: React.FC<{
+  student: StudentInfo;
+  mediaBase: string;
+}> = ({ student, mediaBase }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stampAt = 0.9 * fps;
@@ -222,53 +203,98 @@ export const Passport: React.FC<{ student: StudentInfo }> = ({ student }) => {
     <div
       style={{
         position: "absolute",
-        top: 1130,
+        top: 1170,
         left: 70,
         right: 193,
-        padding: "30px 34px",
+        padding: 24,
         borderRadius: 36,
         backgroundColor: COLORS.cream,
         boxShadow: "0 24px 60px rgba(0, 0, 0, 0.22)",
         display: "flex",
         gap: 24,
-        alignItems: "center",
+        alignItems: "stretch",
         fontFamily: INTER_TIGHT,
         letterSpacing: TIGHT_TRACKING,
         opacity: interpolate(frame, [0, 6], [0, 1], clamp),
         translate: `0px ${interpolate(frame, [0, 0.5 * fps], [120, 0], { ...clamp, easing: ease })}px`,
       }}
     >
+      {student.photo ? (
+        <div style={{ position: "relative", flexShrink: 0 }}>
+          <Img
+            src={staticFile(`${mediaBase}/${student.photo}`)}
+            style={{
+              width: 200,
+              height: 266,
+              objectFit: "cover",
+              borderRadius: 20,
+              display: "block",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              right: -26,
+              bottom: 14,
+              padding: "6px 14px",
+              border: `4px solid ${COLORS.red}`,
+              borderRadius: 12,
+              color: COLORS.red,
+              backgroundColor: "rgba(255, 252, 249, 0.85)",
+              fontWeight: 700,
+              fontSize: 28,
+              letterSpacing: "0.12em",
+              rotate: "-14deg",
+              opacity: interpolate(
+                frame,
+                [stampAt, stampAt + 3],
+                [0, 0.95],
+                clamp,
+              ),
+              scale: interpolate(
+                frame,
+                [stampAt, stampAt + 0.25 * fps],
+                [1.8, 1],
+                { ...clamp, easing: Easing.bezier(0.3, 1.4, 0.6, 1) },
+              ),
+            }}
+          >
+            VISTO
+          </div>
+        </div>
+      ) : null}
       <div
         style={{
           flex: 1,
           minWidth: 0,
           display: "flex",
           flexDirection: "column",
-          gap: 6,
+          gap: 4,
+          justifyContent: "center",
         }}
       >
         <div
           style={{
-            fontSize: 24,
+            fontSize: 22,
             fontWeight: 500,
             color: COLORS.green,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
           }}
         >
-          Студент Capitaliano
+          {student.female ? "Студентка" : "Студент"}
         </div>
         <div
           style={{
-            fontSize: 66,
+            fontSize: 58,
             fontWeight: 700,
             color: COLORS.darkGreen,
-            lineHeight: 1,
+            lineHeight: 1.02,
           }}
         >
           {student.name}
         </div>
-        <div style={{ fontSize: 32, fontWeight: 500, color: COLORS.darkGray }}>
+        <div style={{ fontSize: 28, fontWeight: 500, color: COLORS.darkGray }}>
           {student.age} · {student.from}
         </div>
         <div
@@ -278,12 +304,12 @@ export const Passport: React.FC<{ student: StudentInfo }> = ({ student }) => {
             margin: "8px 0",
           }}
         />
-        <div style={{ fontSize: 34, fontWeight: 700, color: COLORS.darkGray }}>
+        <div style={{ fontSize: 30, fontWeight: 700, color: COLORS.darkGray }}>
           {student.uni}
         </div>
         <div
           style={{
-            fontSize: 28,
+            fontSize: 24,
             fontWeight: 500,
             color: COLORS.darkGray,
             opacity: 0.8,
@@ -294,65 +320,38 @@ export const Passport: React.FC<{ student: StudentInfo }> = ({ student }) => {
       </div>
       <div
         style={{
-          position: "relative",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <ItalyMap city={student.city} width={170} />
+        <ItalyMap city={student.city} width={118} />
         <div
           style={{
             fontFamily: CURSIVE,
             fontWeight: 700,
-            fontSize: 40,
+            fontSize: 34,
             color: COLORS.red,
             transform: "skewX(-15deg)",
-            marginTop: -6,
+            marginTop: -4,
           }}
         >
           {student.city}
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: -26,
-            right: -30,
-            padding: "6px 14px",
-            border: `4px solid ${COLORS.red}`,
-            borderRadius: 12,
-            color: COLORS.red,
-            fontWeight: 700,
-            fontSize: 30,
-            letterSpacing: "0.12em",
-            rotate: "-14deg",
-            opacity: interpolate(
-              frame,
-              [stampAt, stampAt + 3],
-              [0, 0.9],
-              clamp,
-            ),
-            scale: interpolate(
-              frame,
-              [stampAt, stampAt + 0.25 * fps],
-              [1.8, 1],
-              { ...clamp, easing: Easing.bezier(0.3, 1.4, 0.6, 1) },
-            ),
-          }}
-        >
-          VISTO
         </div>
       </div>
     </div>
   );
 };
 
-// Round avatars of everyone in a question video, the current speaker raised.
+// Round avatars of everyone in a question or review video, the current
+// speaker raised.
 export const FacesStrip: React.FC<{
   order: string[];
   active: string | null;
-  names: Record<string, string>;
-}> = ({ order, active, names }) => {
+  students: Record<string, StudentInfo>;
+  mediaBase: string;
+}> = ({ order, active, students, mediaBase }) => {
   const index = active ? order.indexOf(active) : -1;
   return (
     <div
@@ -374,8 +373,8 @@ export const FacesStrip: React.FC<{
           <div
             key={sid}
             style={{
-              width: on ? 96 : 70,
-              height: on ? 96 : 70,
+              width: on ? 86 : 62,
+              height: on ? 86 : 62,
               borderRadius: "50%",
               overflow: "hidden",
               border: `${on ? 5 : 3}px solid ${on ? COLORS.green : COLORS.white}`,
@@ -385,7 +384,7 @@ export const FacesStrip: React.FC<{
             }}
           >
             <Img
-              src={staticFile(`interviews/avatars/${sid}.jpg`)}
+              src={staticFile(`${mediaBase}/${students[sid].avatar}`)}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
@@ -430,7 +429,7 @@ export const FacesStrip: React.FC<{
               color: COLORS.darkGreen,
             }}
           >
-            {names[active]}
+            {students[active].name}
           </div>
         </div>
       ) : null}

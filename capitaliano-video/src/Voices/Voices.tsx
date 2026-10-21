@@ -25,6 +25,7 @@ const BUBBLE_SEC = 2.8;
 const KICKER: Record<VoicesData["format"], string> = {
   story: "история студента",
   question: "вопрос студентам",
+  reviews: "отзывы студентов",
   myths: "разбираем",
 };
 
@@ -51,9 +52,6 @@ const changesScene = (prev: Item, item: Item) =>
 export const Voices: React.FC<VoicesProps> = ({ data, mediaBase }) => {
   const { fps } = useVideoConfig();
   const sec = (s: number) => Math.round(s * fps);
-  const names = Object.fromEntries(
-    Object.entries(data.students).map(([id, s]) => [id, s.name]),
-  );
   const hidden = data.items
     .filter((it) => it.kind !== "clip" || it.passport)
     .map((it): [number, number] => [it.start, it.end]);
@@ -82,11 +80,12 @@ export const Voices: React.FC<VoicesProps> = ({ data, mediaBase }) => {
               layout="none"
               name={`Item ${i + 1}`}
             >
-              {data.format === "question" ? (
+              {data.format === "question" || data.format === "reviews" ? (
                 <FacesStrip
                   order={data.order}
                   active={it.student}
-                  names={names}
+                  students={data.students}
+                  mediaBase={mediaBase}
                 />
               ) : null}
               {it.bubble ? (
@@ -95,7 +94,10 @@ export const Voices: React.FC<VoicesProps> = ({ data, mediaBase }) => {
                 </Sequence>
               ) : null}
               {it.passport ? (
-                <Passport student={data.students[it.student]} />
+                <Passport
+                  student={data.students[it.student]}
+                  mediaBase={mediaBase}
+                />
               ) : null}
               {it.truth ? <TruthChip text={it.truth} /> : null}
             </Sequence>
