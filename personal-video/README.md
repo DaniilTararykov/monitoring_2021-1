@@ -1,22 +1,25 @@
-# Haus of Danik · «Вторая жизнь сундука»
+# Haus of Danik · сундук: с помойки — в гостиную
 
-Reels 9:16 (1080×1920, 30 fps, ~73 s) about restoring a street-found trunk.
-Remotion project; all timing lives in `src/edit.json` (shots, voice-over,
-SFX, chapters, tags, titles, music sections).
+Reels 9:16 (1080×1920, 30 fps, ~56 s) about restoring a street-found trunk.
+
+The story lives in `src/story.json`: every line has its text, the shots that
+play under it (cut on spoken words), SFX cues and emphasised words.
+`scripts/build_edit.py` turns it into the frame-level `src/edit.json` that
+Remotion renders.
 
 ## Pipeline
 
 ```bash
-# 1. Graded working copy of the source (CapCut rough cut from Google Drive)
+# 1. Natural-look 1080x1920 working copy of the source (CapCut rough cut)
 scripts/prep_footage.sh path/to/copy_A9A2F14B-….mov
 
-# 2. Voice-over with the cloned voice (XTTS-v2, CPU) — 3 takes per line
-#    refs: 10–12 s clean chunks of Danik's own speech
-COQUI_TOS_AGREED=1 TAKES=3 python scripts/xtts_synth.py voiceover/lines.json takes/ ref1.wav ref2.wav …
-#    pick the most intelligible take, clean it, export word timings
-python scripts/pick_takes.py voiceover/lines.json takes/ public/vo
+# 2. Edit from the story. Without a voice-over, word timings follow a
+#    natural speaking pace (captions-only cut). With a recording, pass the
+#    per-line word timings: {"<line index>": {"dur": s, "words": [{s, e}, …]}}
+#    and put the line audio in public/vo/line_<index>.wav.
+python scripts/build_edit.py src/story.json src/edit.json [public/vo/words.json]
 
-# 3. Sound: procedural SFX + music bed that follows edit.json and ducks under the VO
+# 3. Sound: procedural SFX + music bed that follows the edit
 python scripts/make_sfx.py public/sfx
 python scripts/make_music.py src/edit.json public/vo/words.json public/music.wav
 
@@ -24,14 +27,13 @@ python scripts/make_music.py src/edit.json public/vo/words.json public/music.wav
 npm run render   # -> out/chest-reel.mp4
 ```
 
-Python deps: `faster-whisper soundfile numpy` (steps 2–3), `coqui-tts torch==2.8 torchaudio==2.8` (XTTS).
+Python deps: `numpy` (SFX/music), `faster-whisper soundfile` (voice timing).
+`scripts/xtts_synth.py` / `pick_takes.py` are the earlier voice-clone
+experiment (pilot v1), kept for reference.
 
-When `ELEVENLABS_API_KEY` is available, step 2 can be swapped for an
-ElevenLabs voice clone; `pick_takes.py` and everything after stay the same.
+## Look
 
-## Style
-
-- walnut `#1A1410` plates · linen `#E9DFD0` text · brass `#C8A15A` accent
-- Cormorant Garamond (titles, subtitles) · JetBrains Mono (chapter marks, tags)
-- warm grade, film grain, soft vignette
+- natural colour, no grain or vignette — native Reels feel
+- captions: Montserrat ExtraBold, white, 1–3 words, centred; key words in gold `#F2C75C`
+- opening title: Cormorant Garamond italic
 - Reels safe zone: top 250 px, bottom 420 px, right 120 px

@@ -66,7 +66,7 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
   }
 
   return (
-    <AbsoluteFill style={{ backgroundColor: C.walnut }}>
+    <AbsoluteFill style={{ backgroundColor: C.shade }}>
       <AbsoluteFill
         style={{
           opacity,
@@ -84,5 +84,5 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
 export const Flash: React.FC = () => {
   const frame = useCurrentFrame();
   const o = interpolate(frame, [0, 7], [0.95, 0], { extrapolateRight: "clamp", easing: Easing.out(Easing.quad) });
-  return <AbsoluteFill style={{ backgroundColor: C.linen, opacity: o, mixBlendMode: "screen" }} />;
+  return <AbsoluteFill style={{ backgroundColor: C.white, opacity: o, mixBlendMode: "screen" }} />;
 };
