@@ -18,6 +18,8 @@ import Q6 from "./Q6.json";
 import Q7 from "./Q7.json";
 import Q8 from "./Q8.json";
 import Q9 from "./Q9.json";
+import Q10 from "./Q10.json";
+import Q11 from "./Q11.json";
 import R1 from "./R1.json";
 import R2 from "./R2.json";
 import R3 from "./R3.json";
@@ -46,6 +48,8 @@ export const VOICES_DATA: VoicesData[] = [
   Q7 as VoicesData,
   Q8 as VoicesData,
   Q9 as VoicesData,
+  Q10 as VoicesData,
+  Q11 as VoicesData,
   R1 as VoicesData,
   R2 as VoicesData,
   R3 as VoicesData,
