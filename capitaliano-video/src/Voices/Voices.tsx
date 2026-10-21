@@ -116,11 +116,15 @@ export const Voices: React.FC<VoicesProps> = ({ data, mediaBase }) => {
             name={`Card ${i + 1}`}
           >
             {it.kind === "title" ? (
-              <TitleCard text={it.text} kicker={KICKER[data.format]} />
+              <TitleCard
+                text={it.text}
+                kicker={KICKER[data.format]}
+                marco={it.marco}
+              />
             ) : it.kind === "myth" ? (
               <MythCard text={it.text} index={mythNumber(i)} />
             ) : (
-              <EndCard text={it.text} />
+              <EndCard text={it.text} marco={it.marco} />
             )}
           </Sequence>
         );

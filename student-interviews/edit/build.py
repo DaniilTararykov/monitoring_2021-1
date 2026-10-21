@@ -10,16 +10,16 @@ HEAD, TAIL = 0.30, 0.60  # more room where an answer starts and ends, so no one 
 # "face": approximate face centre in the 1080×1920 proxy (camera origin, avatars).
 FEMALE = {"AI", "PO", "NA", "MA", "LI", "EV", "EA"}
 STUDENTS = {
-    "AI": {"face": [475, 1000], "file": "IMG_8993", "name": "Айка", "age": "23", "from": "Кыргызстан", "uni": "IULM", "program": "Fashion Communication & Luxury Strategies", "city": "Милан"},
-    "EM": {"face": [475, 960], "file": "IMG_8994", "name": "Эмиль", "age": "23", "from": "Москва", "uni": "Università Cattolica", "program": "Global Business Management", "city": "Пьяченца"},
-    "SE": {"face": [510, 985], "file": "IMG_8995", "name": "Семён", "age": "24", "from": "Санкт-Петербург", "uni": "UNIMI", "program": "Law and Sustainable Development", "city": "Милан"},
-    "DA": {"face": [535, 775], "file": "IMG_8997", "name": "Данил", "age": "25", "from": "Екатеринбург", "uni": "UNIBO", "program": "Архитектурная инженерия", "city": "Болонья"},
-    "PO": {"face": [500, 865], "file": "IMG_9001", "name": "Полина", "age": "25", "from": "Пермь", "uni": "Bocconi", "program": "Global Law", "city": "Милан"},
-    "NA": {"face": [615, 690], "file": "IMG_9002", "name": "Настя", "age": "22", "from": "Москва", "uni": "Università Cattolica", "program": "Management in Art", "city": "Милан"},
-    "MA": {"face": [525, 820], "file": "IMG_9003", "name": "Маргарита", "age": "24", "from": "Алматы", "uni": "Università Cattolica", "program": "Art Management", "city": "Милан"},
-    "LI": {"face": [585, 865], "file": "IMG_9005", "name": "Лия", "age": "24", "from": "Набережные Челны", "uni": "Politecnico di Torino", "program": "Architecture Construction City", "city": "Турин"},
-    "EA": {"face": [650, 1085], "file": "IMG_8996", "name": "Ева", "age": "22", "from": "Москва", "uni": "UNIMI", "program": "Law and Sustainable Development", "city": "Милан"},
-    "EV": {"face": [470, 975], "file": "IMG_9014", "name": "Евдокия", "age": "21", "from": "Королёв", "uni": "IULM", "program": "Corporate Communication & PR", "city": "Милан"},
+    "AI": {"face": [475, 1000], "file": "IMG_8993", "name": "Айка", "age": "23", "from": "Кыргызстан", "uni": "IULM", "program": "Fashion Communication & Luxury Strategies", "city": "Милан", "level": "Магистратура"},
+    "EM": {"face": [475, 960], "file": "IMG_8994", "name": "Эмиль", "age": "23", "from": "Москва", "uni": "Università Cattolica", "program": "Global Business Management", "city": "Пьяченца", "level": "Магистратура"},
+    "SE": {"face": [510, 985], "file": "IMG_8995", "name": "Семён", "age": "24", "from": "Санкт-Петербург", "uni": "UNIMI", "program": "Law and Sustainable Development", "city": "Милан", "level": "Магистратура"},
+    "DA": {"face": [535, 775], "file": "IMG_8997", "name": "Данил", "age": "25", "from": "Екатеринбург", "uni": "UNIBO", "program": "Архитектурная инженерия", "city": "Болонья", "level": "Магистратура"},
+    "PO": {"face": [500, 865], "file": "IMG_9001", "name": "Полина", "age": "25", "from": "Пермь", "uni": "Bocconi", "program": "Global Law", "city": "Милан", "level": "Бакалавриат"},
+    "NA": {"face": [615, 690], "file": "IMG_9002", "name": "Настя", "age": "22", "from": "Москва", "uni": "Università Cattolica", "program": "Management in Art", "city": "Милан", "level": "Магистратура"},
+    "MA": {"face": [525, 820], "file": "IMG_9003", "name": "Маргарита", "age": "24", "from": "Алматы", "uni": "Università Cattolica", "program": "Art Management", "city": "Милан", "level": "Магистратура"},
+    "LI": {"face": [585, 865], "file": "IMG_9005", "name": "Лия", "age": "24", "from": "Набережные Челны", "uni": "Politecnico di Torino", "program": "Architecture Construction City", "city": "Турин", "level": "Магистратура"},
+    "EA": {"face": [650, 1085], "file": "IMG_8996", "name": "Ева", "age": "22", "from": "Москва", "uni": "UNIMI", "program": "Law and Sustainable Development", "city": "Милан", "level": "Магистратура"},
+    "EV": {"face": [470, 975], "file": "IMG_9014", "name": "Евдокия", "age": "21", "from": "Королёв", "uni": "IULM", "program": "Corporate Communication & PR", "city": "Милан", "level": "Бакалавриат"},
 }
 
 # Recognition fixes: whole-word replacements, then per-word overrides keyed by
@@ -37,6 +37,8 @@ WORD_FIX = {
     "объемное,": "объёмное,", "Российском": "российском",
 }
 WORD_AT = {
+    ("IMG_8994", 81.00): "раза.", ("IMG_9014", 146.44): "Всем", ("IMG_8996", 96.16): "всё",
+    ("IMG_9002", 81.44): "поступить.",
     ("IMG_9002", 79.64): "", ("IMG_9002", 79.72): "впопыхах.", ("IMG_9002", 78.06): "всё",
     ("IMG_9003", 129.94): "всё", ("IMG_9003", 128.58): "«визу", ("IMG_9003", 130.60): "сложно».",
     ("IMG_9003", 131.18): "Но", ("IMG_9003", 125.04): "Очень",
@@ -74,12 +76,12 @@ WORD_AT = {
     ("IMG_8994", 77.92): "всё", ("IMG_8994", 78.12): "пройдёт", ("IMG_8994", 81.00): "раза.", ("IMG_8994", 83.80): "людьми.",
     ("IMG_9001", 89.26): "всё", ("IMG_9001", 89.44): "заранее.", ("IMG_9001", 94.58): "стипендию.", ("IMG_9001", 100.62): "волну,",
     ("IMG_9001", 101.00): "максимум",
-    ("IMG_9003", 76.76): "пораньше.", ("IMG_9003", 78.20): "Я", ("IMG_9003", 79.46): "поздно,", ("IMG_9003", 84.38): "волнительными.",
+    ("IMG_9003", 76.76): "пораньше.", ("IMG_9003", 78.20): "Я", ("IMG_9003", 79.46): "поздно,", ("IMG_9003", 84.38): "волнительными,",
     ("IMG_8994", 118.34): "бы:", ("IMG_8994", 118.64): "всё", ("IMG_8993", 201.64): "и",
     ("IMG_9002", 120.82): "всё", ("IMG_9002", 127.40): "чём", ("IMG_9014", 217.62): "нервничать.", ("IMG_9014", 222.88): "",
     ("IMG_8994", 102.76, "нервотрепка"): "нервотрёпка,", ("IMG_8994", 104.16): "всё",
     ("IMG_8993", 132.20): "бояться.", ("IMG_8993", 139.64): "Если", ("IMG_8993", 143.98): "опыт.", ("IMG_8993", 146.24): "В", ("IMG_8993", 150.76): "всё",
-    ("IMG_9014", 118.50): "стоят.", ("IMG_9014", 140.88): "Зато", ("IMG_9014", 145.36): "жизнь.", ("IMG_9014", 148.42): "Не", ("IMG_9014", 149.02): "ничего:",
+    ("IMG_9014", 118.50): "стоят.", ("IMG_9014", 140.88): "Зато", ("IMG_9014", 145.36): "жизнь.", ("IMG_9014", 148.42): "не", ("IMG_9014", 149.02): "ничего:",
     ("IMG_9002", 54.44): "доступ.", ("IMG_8996", 71.74): "открыт:", ("IMG_9005", 76.10): "Всё",
     ("IMG_9014", 69.06): "агентство,",
     ("IMG_9001", 51.86): "Всё", ("IMG_9001", 53.32): "понравилось,", ("IMG_9001", 55.44): "слишком,", ("IMG_9001", 60.14): "помощь.",
@@ -156,12 +158,14 @@ def build(vid, spec, tdir, photos):
     t = 0.0
     segments, captions, items_out = [], [], []
     prev_student = None
-    items = spec["items"] + [{"end": spec["cta"], "dur": 3.6}]
+    items = spec["items"] + [{"end": spec["cta"], "dur": 3.6, "marco": spec.get("endMarco")}]
     for idx, it in enumerate(items):
         if "student" not in it:
             kind = "end" if "end" in it else ("myth" if "myth" in it else "title")
             items_out.append({"kind": kind, "text": it.get("end") or it.get("myth") or it.get("title"),
                               "start": round(t, 3), "end": round(t + it["dur"], 3)})
+            if it.get("marco"):
+                items_out[-1]["marco"] = it["marco"]
             t += it["dur"]
             prev_student = None
             continue

@@ -14,6 +14,7 @@ import {
   TIGHT_TRACKING,
 } from "../Capitaliano/brand";
 import { TelegramIcon } from "./Overlays";
+import type { MarcoPose } from "./types";
 
 const clamp = {
   extrapolateLeft: "clamp",
@@ -22,15 +23,15 @@ const clamp = {
 
 const ease = Easing.bezier(0.16, 1, 0.3, 1);
 
+const Dots: React.CSSProperties = {
+  backgroundColor: COLORS.cream,
+  backgroundImage: `radial-gradient(${COLORS.dot} 2.5px, transparent 2.5px)`,
+  backgroundSize: "36px 36px",
+  backgroundPosition: "18px 18px",
+};
+
 const CardFrame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AbsoluteFill
-    style={{
-      backgroundColor: COLORS.cream,
-      backgroundImage: `radial-gradient(${COLORS.dot} 2.5px, transparent 2.5px)`,
-      backgroundSize: "36px 36px",
-      backgroundPosition: "18px 18px",
-    }}
-  >
+  <AbsoluteFill style={Dots}>
     <div
       style={{
         position: "absolute",
@@ -68,29 +69,187 @@ const Kicker: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </div>
 );
 
-export const TitleCard: React.FC<{ text: string; kicker: string }> = ({
-  text,
-  kicker,
+// Marco, the mascot: a cut-out standing on the bottom edge of the frame.
+const MARCO: Record<MarcoPose, { width: number; height: number }> = {
+  point: { width: 929, height: 1004 },
+  present: { width: 937, height: 1004 },
+  notebook: { width: 563, height: 985 },
+  peace: { width: 736, height: 986 },
+  open: { width: 971, height: 990 },
+};
+
+const Marco: React.FC<{ pose: MarcoPose; height: number; delay?: number }> = ({
+  pose,
+  height,
+  delay = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const f = frame - delay * fps;
+  const rise = interpolate(f, [0, 0.55 * fps], [height * 0.45, 0], {
+    ...clamp,
+    easing: Easing.bezier(0.34, 1.4, 0.64, 1),
+  });
+  const width = (MARCO[pose].width / MARCO[pose].height) * height;
   return (
-    <CardFrame>
-      <Kicker>{kicker}</Kicker>
+    <Img
+      src={staticFile(`marco/${pose}.png`)}
+      style={{
+        position: "absolute",
+        bottom: -8,
+        left: (1080 - width) / 2,
+        width,
+        height,
+        transformOrigin: "50% 100%",
+        translate: `0px ${rise + Math.sin(f / 9) * 4}px`,
+        rotate: `${Math.sin(f / 14) * 1.2}deg`,
+        opacity: interpolate(f, [0, 4], [0, 1], clamp),
+      }}
+    />
+  );
+};
+
+const MarcoTag: React.FC = () => (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+      padding: "8px 20px 8px 10px",
+      borderRadius: 999,
+      backgroundColor: COLORS.cream,
+      color: COLORS.darkGreen,
+      fontWeight: 700,
+      fontSize: 28,
+      letterSpacing: "0.01em",
+    }}
+  >
+    <div
+      style={{
+        width: 30,
+        height: 30,
+        borderRadius: "50%",
+        backgroundColor: COLORS.red,
+        color: COLORS.white,
+        fontSize: 18,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      AI
+    </div>
+    Марко · нейропомощник
+  </div>
+);
+
+export const TitleCard: React.FC<{
+  text: string;
+  kicker: string;
+  marco?: MarcoPose;
+}> = ({ text, kicker, marco }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  if (!marco) {
+    return (
+      <CardFrame>
+        <Kicker>{kicker}</Kicker>
+        <div
+          style={{
+            fontSize: 92,
+            fontWeight: 700,
+            lineHeight: 1.04,
+            color: COLORS.darkGreen,
+            textWrap: "balance",
+            translate: `0px ${interpolate(frame, [0, 0.5 * fps], [60, 0], { ...clamp, easing: ease })}px`,
+            opacity: interpolate(frame, [0, 8], [0, 1], clamp),
+          }}
+        >
+          {text}
+        </div>
+      </CardFrame>
+    );
+  }
+  // Marco asks the question in a speech bubble.
+  const pop = interpolate(frame, [0.15 * fps, 0.5 * fps], [0.6, 1], {
+    ...clamp,
+    easing: Easing.bezier(0.34, 1.56, 0.64, 1),
+  });
+  return (
+    <AbsoluteFill
+      style={{
+        ...Dots,
+        fontFamily: INTER_TIGHT,
+        letterSpacing: TIGHT_TRACKING,
+      }}
+    >
+      <Marco pose={marco} height={marco === "notebook" ? 960 : 880} />
       <div
         style={{
-          fontSize: 92,
-          fontWeight: 700,
-          lineHeight: 1.04,
-          color: COLORS.darkGreen,
-          textWrap: "balance",
-          translate: `0px ${interpolate(frame, [0, 0.5 * fps], [60, 0], { ...clamp, easing: ease })}px`,
+          position: "absolute",
+          top: 372,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
           opacity: interpolate(frame, [0, 8], [0, 1], clamp),
         }}
       >
-        {text}
+        <Kicker>{kicker}</Kicker>
       </div>
-    </CardFrame>
+      <div
+        style={{
+          position: "absolute",
+          top: 470,
+          left: 80,
+          right: 80,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 22,
+          padding: "44px 46px 30px",
+          borderRadius: 48,
+          backgroundColor: COLORS.white,
+          boxShadow: "0 24px 60px rgba(27, 94, 52, 0.18)",
+          textAlign: "center",
+          transformOrigin: "50% 120%",
+          scale: pop,
+          opacity: interpolate(
+            frame,
+            [0.15 * fps, 0.15 * fps + 5],
+            [0, 1],
+            clamp,
+          ),
+        }}
+      >
+        <div
+          style={{
+            fontSize: 76,
+            fontWeight: 700,
+            lineHeight: 1.06,
+            color: COLORS.darkGreen,
+            textWrap: "balance",
+          }}
+        >
+          {text}
+        </div>
+        <MarcoTag />
+        {/* Tail pointing down at Marco */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: -30,
+            left: "50%",
+            marginLeft: -30,
+            width: 0,
+            height: 0,
+            borderLeft: "30px solid transparent",
+            borderRight: "30px solid transparent",
+            borderTop: `34px solid ${COLORS.white}`,
+          }}
+        />
+      </div>
+    </AbsoluteFill>
   );
 };
 
@@ -151,15 +310,18 @@ export const MythCard: React.FC<{ text: string; index: number }> = ({
   );
 };
 
-export const EndCard: React.FC<{ text: string }> = ({ text }) => {
+export const EndCard: React.FC<{ text: string; marco?: MarcoPose }> = ({
+  text,
+  marco,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  return (
-    <CardFrame>
+  const content = (
+    <>
       <Img
         src={staticFile("logo.png")}
         style={{
-          width: 720,
+          width: marco ? 640 : 720,
           opacity: interpolate(frame, [0, 8], [0, 1], clamp),
           scale: interpolate(frame, [0, 0.5 * fps], [0.9, 1], {
             ...clamp,
@@ -169,7 +331,7 @@ export const EndCard: React.FC<{ text: string }> = ({ text }) => {
       />
       <div
         style={{
-          fontSize: 64,
+          fontSize: marco ? 60 : 64,
           fontWeight: 700,
           lineHeight: 1.1,
           color: COLORS.darkGreen,
@@ -197,6 +359,35 @@ export const EndCard: React.FC<{ text: string }> = ({ text }) => {
         <TelegramIcon size={56} />
         @capitaliano.info
       </div>
-    </CardFrame>
+    </>
+  );
+  if (!marco) {
+    return <CardFrame>{content}</CardFrame>;
+  }
+  return (
+    <AbsoluteFill
+      style={{
+        ...Dots,
+        fontFamily: INTER_TIGHT,
+        letterSpacing: TIGHT_TRACKING,
+      }}
+    >
+      <Marco pose={marco} height={860} delay={0.2} />
+      <div
+        style={{
+          position: "absolute",
+          top: 290,
+          left: 90,
+          right: 90,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 30,
+          textAlign: "center",
+        }}
+      >
+        {content}
+      </div>
+    </AbsoluteFill>
   );
 };

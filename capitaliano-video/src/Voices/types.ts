@@ -12,11 +12,15 @@ export type StudentInfo = {
   uni: string;
   program: string;
   city: string;
+  // "Бакалавриат" or "Магистратура".
+  level: string;
   female: boolean;
   // Paths inside the media folder.
   avatar: string;
   photo: string | null;
 };
+
+export type MarcoPose = "point" | "present" | "notebook" | "peace" | "open";
 
 export type Segment = {
   src: string;
@@ -47,6 +51,8 @@ export type Item =
   | {
       kind: "title" | "myth" | "end";
       text: string;
+      // Pose of Marco, the mascot, shown on the card.
+      marco?: MarcoPose;
       start: number;
       end: number;
     };

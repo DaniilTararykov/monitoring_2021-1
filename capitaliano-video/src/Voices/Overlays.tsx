@@ -411,25 +411,54 @@ export const FacesStrip: React.FC<{
         <div
           style={{
             position: "absolute",
-            top: 116,
+            top: 112,
             left: 0,
             right: 0,
             display: "flex",
             justifyContent: "center",
           }}
         >
+          {/* Name and university on the left, degree on the right. */}
           <div
             style={{
-              padding: "6px 22px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 28,
+              minWidth: 640,
+              padding: "8px 8px 8px 26px",
               borderRadius: 999,
               backgroundColor: COLORS.white,
               boxShadow: "0 8px 22px rgba(0, 0, 0, 0.18)",
-              fontWeight: 700,
-              fontSize: 36,
-              color: COLORS.darkGreen,
+              whiteSpace: "nowrap",
             }}
           >
-            {students[active].name} · {students[active].uni}
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: 34,
+                color: COLORS.darkGreen,
+              }}
+            >
+              {students[active].name}
+              <span style={{ fontWeight: 600, color: COLORS.darkGray }}>
+                {" "}
+                · {students[active].uni}
+              </span>
+            </div>
+            <div
+              style={{
+                padding: "6px 18px",
+                borderRadius: 999,
+                backgroundColor: COLORS.green,
+                color: COLORS.white,
+                fontWeight: 700,
+                fontSize: 26,
+                letterSpacing: "0.02em",
+              }}
+            >
+              {students[active].level}
+            </div>
           </div>
         </div>
       ) : null}
