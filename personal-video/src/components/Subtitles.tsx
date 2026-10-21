@@ -1,6 +1,6 @@
 import React from "react";
 import { Easing, interpolate, useCurrentFrame } from "remotion";
-import { C, SAFE, SERIF } from "../theme";
+import { C, SAFE, SANS } from "../theme";
 import { edit, FPS, Word, words } from "../edit";
 
 type Page = { words: Word[]; start: number; end: number };
@@ -48,11 +48,11 @@ export const Subtitles: React.FC = () => {
         position: "absolute",
         left: SAFE.left,
         right: SAFE.right,
-        bottom: SAFE.bottom + 70,
+        bottom: SAFE.bottom + 160,
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
-        columnGap: 24,
+        columnGap: 18,
         rowGap: 0,
         transform: `scale(${pop})`,
         opacity: o,
@@ -61,7 +61,6 @@ export const Subtitles: React.FC = () => {
       {page.words.map((w, i) => {
         const next = page.words[i + 1];
         const active = t >= w.s && t < (next ? next.s : page.end);
-        const spoken = t >= w.s;
         const bar = active
           ? interpolate((t - w.s) * FPS, [0, 4], [0, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) })
           : 0;
@@ -69,30 +68,19 @@ export const Subtitles: React.FC = () => {
           <span
             key={i}
             style={{
-              position: "relative",
-              fontFamily: SERIF,
-              fontWeight: 700,
-              fontSize: 96,
-              lineHeight: 1.12,
-              color: C.linen,
-              opacity: spoken ? 1 : 0.6,
-              textShadow: "0 4px 22px rgba(0,0,0,0.8), 0 0 3px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,0.7)",
+              fontFamily: SANS,
+              fontWeight: 800,
+              fontSize: 70,
+              lineHeight: 1.15,
+              color: active ? C.pop : C.white,
+              transform: `scale(${1 + bar * 0.06})`,
+              display: "inline-block",
+              WebkitTextStroke: "10px rgba(0,0,0,0.85)",
+              paintOrder: "stroke fill",
+              textShadow: "0 4px 14px rgba(0,0,0,0.45)",
             }}
           >
             {w.w}
-            <span
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 4,
-                height: 7,
-                background: C.brass,
-                transform: `scaleX(${bar})`,
-                transformOrigin: "left",
-                boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
-              }}
-            />
           </span>
         );
       })}

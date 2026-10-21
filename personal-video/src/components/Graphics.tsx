@@ -1,132 +1,127 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
-import { C, MONO, SAFE, SERIF } from "../theme";
+import { C, SAFE, SANS } from "../theme";
 import { f } from "../edit";
 
-const plate: React.CSSProperties = {
-  background: "rgba(26,20,16,0.82)",
-  padding: "14px 22px 14px 20px",
+/** Solid native-Reels plate: white bold caps on a flat colour block. */
+const plate = (bg: string, color: string, size: number): React.CSSProperties => ({
+  background: bg,
+  color,
+  fontFamily: SANS,
+  fontWeight: 700,
+  fontSize: size,
+  textTransform: "uppercase",
+  letterSpacing: "0.01em",
+  lineHeight: 1.1,
+  padding: `${size * 0.26}px ${size * 0.4}px`,
   display: "inline-flex",
   alignItems: "center",
-  gap: 16,
-  fontFamily: MONO,
-  color: C.linen,
-  letterSpacing: "0.18em",
+  gap: size * 0.3,
   whiteSpace: "nowrap",
-};
+});
 
-const useInOut = (dur: number, out = 6) => {
+/** Pop in with a slight overshoot, cut out. */
+const usePop = (dur: number) => {
   const frame = useCurrentFrame();
   const n = f(dur);
-  const o = interpolate(frame, [0, 4, n - out, n], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const y = interpolate(frame, [n - out, n], [0, -16], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  return { frame, o, y };
+  const s = interpolate(frame, [0, 5], [0.6, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.back(2.2)) });
+  const o = interpolate(frame, [0, 2, n - 2, n], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  return { frame, s, o };
 };
-
-/** Typed-on mono text. */
-const typed = (text: string, frame: number, start: number, perChar = 1.2) =>
-  text.slice(0, Math.max(0, Math.floor((frame - start) / perChar)));
 
 export const Chapter: React.FC<{ dur: number; num: string; name: string }> = ({ dur, num, name }) => {
-  const { frame, o, y } = useInOut(dur);
-  const rule = interpolate(frame, [0, 8], [0, 56], { extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  const { s, o } = usePop(dur);
   return (
-    <div style={{ position: "absolute", top: SAFE.top + 30, left: SAFE.left, opacity: o, transform: `translateY(${y}px)` }}>
-      <div style={{ ...plate, fontSize: 36 }}>
-        <span style={{ color: C.brass }}>{num}</span>
-        <span style={{ width: rule, height: 3, background: C.brass, display: "inline-block" }} />
-        <span>{typed(name, frame, 4)}</span>
+    <div style={{ position: "absolute", top: SAFE.top + 30, left: SAFE.left, opacity: o, transform: `scale(${s})`, transformOrigin: "left center" }}>
+      <div style={plate(C.plate, C.white, 44)}>
+        <span>{Number(num)}. {name}</span>
       </div>
     </div>
   );
 };
-
-const RewindIcon: React.FC = () => (
-  <svg width="40" height="26" viewBox="0 0 40 26">
-    <polygon points="20,0 20,26 0,13" fill={C.brass} />
-    <polygon points="40,0 40,26 20,13" fill={C.brass} />
-  </svg>
-);
 
 export const Tag: React.FC<{ dur: number; text: string; rec?: boolean; offset?: number }> = ({ dur, text, rec, offset = 0 }) => {
-  const { frame, o, y } = useInOut(dur);
-  const rewind = text.startsWith("◀◀");
-  const label = rewind ? text.replace("◀◀", "").trim() : text;
+  const { frame, s, o } = usePop(dur);
+  const label = text.replace("◀◀", "⏪").trim();
   const blink = Math.floor(frame / 9) % 2 === 0;
   return (
-    <div style={{ position: "absolute", top: SAFE.top + 30 + offset, left: SAFE.left, opacity: o, transform: `translateY(${y}px)` }}>
-      <div style={{ ...plate, fontSize: 30 }}>
-        {rec ? <span style={{ width: 18, height: 18, borderRadius: 9, background: C.brass, opacity: blink ? 1 : 0.25 }} /> : null}
-        {rewind ? <RewindIcon /> : null}
-        <span>{typed(label, frame, 2, 1)}</span>
+    <div
+      style={{ position: "absolute", top: SAFE.top + 30 + offset * 1.1, left: SAFE.left, opacity: o, transform: `scale(${s})`, transformOrigin: "left center" }}
+    >
+      <div style={plate(C.white, C.ink, 36)}>
+        {rec ? <span style={{ width: 20, height: 20, borderRadius: 10, background: "#E5262A", opacity: blink ? 1 : 0.3 }} /> : null}
+        <span>{label.startsWith("⏪") ? label.replace("⏪", "").trim() : label}</span>
       </div>
     </div>
   );
 };
 
-/** Big serif title, top of frame; the second line is italic brass. */
+/** Hook / outro title: one plate per line, stacked and centred. */
 export const Title: React.FC<{ dur: number; lines: string[]; outro?: boolean }> = ({ dur, lines, outro }) => {
-  const { frame, o } = useInOut(dur, outro ? 1 : 8);
+  const frame = useCurrentFrame();
+  const n = f(dur);
+  const o = interpolate(frame, [n - 2, n], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
-    <>
-    <AbsoluteFill
+    <div
       style={{
+        position: "absolute",
+        top: SAFE.top + (outro ? 60 : 110),
+        left: SAFE.left,
+        right: SAFE.right,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 0,
         opacity: o,
-        background: "linear-gradient(180deg, rgba(14,9,5,0.72) 0%, rgba(14,9,5,0.45) 35%, transparent 55%)",
       }}
-    />
-    <div style={{ position: "absolute", top: SAFE.top + (outro ? 50 : 120), left: SAFE.left, right: SAFE.right, opacity: o }}>
+    >
       {lines.map((line, i) => {
-        const p = interpolate(frame, [i * 5, i * 5 + 12], [0, 1], {
+        const s = interpolate(frame, [i * 3, i * 3 + 5], [0.5, 1], {
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
-          easing: Easing.out(Easing.cubic),
+          easing: Easing.out(Easing.back(2.2)),
         });
         return (
-          <div key={i} style={{ overflow: "hidden", lineHeight: 1.0, paddingBottom: 10 }}>
-            <div
-              style={{
-                transform: `translateY(${(1 - p) * 110}%)`,
-                fontFamily: SERIF,
-                fontSize: 132,
-                fontWeight: i === 1 ? 600 : 700,
-                fontStyle: i === 1 ? "italic" : "normal",
-                color: i === 1 ? C.brass : C.linen,
-                textShadow: "0 4px 24px rgba(0,0,0,0.75), 0 1px 4px rgba(0,0,0,0.6)",
-              }}
-            >
-              {line}
-            </div>
+          <div key={i} style={{ transform: `scale(${s})`, opacity: frame >= i * 3 ? 1 : 0 }}>
+            <div style={plate(i === 1 ? C.white : C.plate, i === 1 ? C.plate : C.white, 76)}>{line}</div>
           </div>
         );
       })}
       {outro ? <Handle start={f(3.2)} /> : null}
     </div>
-    </>
   );
 };
 
 const Handle: React.FC<{ start: number }> = ({ start }) => {
   const frame = useCurrentFrame();
-  const o = interpolate(frame, [start, start + 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const o = interpolate(frame, [start, start + 6], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
-    <div style={{ marginTop: 34, opacity: o, fontFamily: MONO, fontSize: 32, letterSpacing: "0.2em", color: C.linen }}>
-      <span style={{ color: C.brass }}>—</span> @hausofdanik
+    <div
+      style={{
+        marginTop: 22,
+        opacity: o,
+        fontFamily: SANS,
+        fontWeight: 700,
+        fontSize: 40,
+        color: C.white,
+        textShadow: "0 2px 10px rgba(0,0,0,0.6)",
+      }}
+    >
+      @hausofdanik
     </div>
   );
 };
 
-/** "+12 Ч" drying time-lapse counter. */
+/** "+12 часов" drying time-lapse counter. */
 export const Counter: React.FC<{ dur: number; to: number }> = ({ dur, to }) => {
-  const { frame, o } = useInOut(dur, 5);
+  const { frame, s, o } = usePop(dur);
   const n = f(dur);
   const v = Math.round(interpolate(frame, [0, n - 8], [0, to], { extrapolateRight: "clamp", easing: Easing.in(Easing.quad) }));
-  const pop = frame > n - 9 ? interpolate(frame, [n - 9, n - 5], [1.15, 1], { extrapolateRight: "clamp" }) : 1;
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity: o }}>
-      <div style={{ ...plate, flexDirection: "column", gap: 4, padding: "26px 44px", transform: `scale(${pop})` }}>
-        <span style={{ fontSize: 30, color: C.brass, letterSpacing: "0.3em" }}>СУШКА</span>
-        <span style={{ fontSize: 120, letterSpacing: "0.04em" }}>+{String(v).padStart(2, "0")} Ч</span>
+      <div style={{ transform: `scale(${s})`, display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={plate(C.white, C.plate, 44)}>сушка</div>
+        <div style={{ ...plate(C.plate, C.white, 110), fontWeight: 800 }}>+{v} ч</div>
       </div>
     </AbsoluteFill>
   );

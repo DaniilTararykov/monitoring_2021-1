@@ -1,6 +1,6 @@
 import React from "react";
-import { AbsoluteFill, Easing, Img, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame } from "remotion";
-import { C, MONO, SAFE } from "../theme";
+import { AbsoluteFill, Easing, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame } from "remotion";
+import { C, SAFE, SANS } from "../theme";
 import { f, FPS } from "../edit";
 
 const FOOTAGE = staticFile("footage.mp4");
@@ -66,12 +66,13 @@ export const BeforeAfter: React.FC<{ dur: number; before: number; after: number 
         position: "absolute",
         top: SAFE.top + 40,
         [side]: side === "left" ? SAFE.left : SAFE.right + 20,
-        fontFamily: MONO,
-        fontSize: 34,
-        letterSpacing: "0.3em",
-        color: C.linen,
-        background: "rgba(26,20,16,0.78)",
-        padding: "12px 20px",
+        fontFamily: SANS,
+        fontWeight: 700,
+        fontSize: 44,
+        textTransform: "uppercase",
+        color: text === "ДО" ? C.ink : C.white,
+        background: text === "ДО" ? C.white : C.plate,
+        padding: "12px 18px",
         opacity: o * labelO,
       }}
     >
@@ -96,8 +97,8 @@ export const BeforeAfter: React.FC<{ dur: number; before: number; after: number 
           left: `${pos}%`,
           width: 6,
           marginLeft: -3,
-          background: C.brass,
-          boxShadow: `0 0 30px ${C.brass}`,
+          background: C.white,
+          boxShadow: "0 0 20px rgba(0,0,0,0.4)",
         }}
       />
       {label("ДО", "left", pos > 30 ? 1 : pos / 30)}
@@ -106,23 +107,5 @@ export const BeforeAfter: React.FC<{ dur: number; before: number; after: number 
   );
 };
 
-/** Film grain + soft vignette over everything. */
-export const FilmLook: React.FC = () => {
-  const frame = useCurrentFrame();
-  const g = (frame % 8) + 1;
-  return (
-    <>
-      <AbsoluteFill
-        style={{
-          background: "radial-gradient(ellipse 75% 65% at 50% 48%, transparent 55%, rgba(14,9,5,0.55) 100%)",
-        }}
-      />
-      {/* Soft scrim under the subtitles, no plate. */}
-      <AbsoluteFill style={{ background: "linear-gradient(180deg, transparent 52%, rgba(14,9,5,0.5) 72%, rgba(14,9,5,0.35) 100%)" }} />
-      <Img
-        src={staticFile(`grain/g${g}.png`)}
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", mixBlendMode: "overlay", opacity: 0.22 }}
-      />
-    </>
-  );
-};
+/** v1 film look (grain + vignette) was dropped for the native Reels style. */
+export const FilmLook: React.FC = () => null;
