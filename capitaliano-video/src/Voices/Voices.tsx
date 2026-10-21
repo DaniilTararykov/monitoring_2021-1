@@ -6,6 +6,7 @@ import { EndCard, MythCard, TitleCard } from "./Cards";
 import {
   FacesStrip,
   Header,
+  NameTag,
   Passport,
   QuestionBubble,
   TruthChip,
@@ -100,6 +101,9 @@ export const Voices: React.FC<VoicesProps> = ({ data, mediaBase }) => {
                 />
               ) : null}
               {it.truth ? <TruthChip text={it.truth} /> : null}
+              {it.truth ? (
+                <NameTag student={data.students[it.student]} top={492} />
+              ) : null}
             </Sequence>
           );
         }

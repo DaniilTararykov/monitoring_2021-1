@@ -429,7 +429,7 @@ export const FacesStrip: React.FC<{
               color: COLORS.darkGreen,
             }}
           >
-            {students[active].name}
+            {students[active].name} · {students[active].uni}
           </div>
         </div>
       ) : null}
@@ -490,3 +490,35 @@ export const TruthChip: React.FC<{ text: string }> = ({ text }) => {
     </div>
   );
 };
+
+// Who is speaking, for videos without the faces strip.
+export const NameTag: React.FC<{ student: StudentInfo; top: number }> = ({
+  student,
+  top,
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      top,
+      left: 70,
+      right: 55,
+      display: "flex",
+      justifyContent: "center",
+    }}
+  >
+    <div
+      style={{
+        padding: "6px 22px",
+        borderRadius: 999,
+        backgroundColor: COLORS.white,
+        boxShadow: "0 8px 22px rgba(0, 0, 0, 0.18)",
+        fontFamily: INTER_TIGHT,
+        fontWeight: 700,
+        fontSize: 34,
+        color: COLORS.darkGreen,
+      }}
+    >
+      {student.name} · {student.uni}
+    </div>
+  </div>
+);
