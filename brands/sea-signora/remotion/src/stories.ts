@@ -169,7 +169,7 @@ export const stories: Story[] = [
     rubric: 'On the menu (список)',
     music: 'slow-sunday',
     musicFrom: 4,
-    scenes: [{src: 'ss_156.jpg', frames: 10 * S, fx: 50, shift: 640, zoom: 'in'}],
+    scenes: [{src: 'ss_156.jpg', frames: 10 * S, fx: 50, shift: 520, zoom: 'in'}],
     overlay: {
       position: 'top',
       blocks: [
@@ -335,7 +335,7 @@ export const stories: Story[] = [
     musicFrom: 12,
     scenes: [
       {
-        src: 'ss_55.jpg', frames: 10 * S, fx: 40, zoom: 'in',
+        src: 'ss_4.jpg', frames: 10 * S, fx: 50, zoom: 'in',
         overlay: {
           position: 'bottom', delay: 14,
           blocks: [
@@ -360,7 +360,7 @@ export const stories: Story[] = [
     scenes: [
       {src: 'ss_59.jpg', frames: 66, fx: 50, zoom: 'in'},
       {src: 'ss_85.jpg', frames: 66, fx: 45, zoom: 'out'},
-      {src: 'ss_103.jpg', frames: 66, fx: 50, zoom: 'in'},
+      {src: 'ss_106.jpg', frames: 66, fx: 50, zoom: 'in'},
       {src: 'ss_162.jpg', frames: 72, fx: 50, zoom: 'out'},
     ],
     overlay: {position: 'top', anim: 'static', blocks: [{t: 'headline', text: 'Sunday in Brera'}, {t: 'sub', text: 'lunch 12:30-15:30'}]},

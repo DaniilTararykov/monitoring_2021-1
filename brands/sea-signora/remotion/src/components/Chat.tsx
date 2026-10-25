@@ -10,7 +10,7 @@ const pop = (frame: number, at: number) =>
 
 export const Chat: React.FC<{pairs: ChatPair[]; step: number}> = ({pairs, step}) => {
   const frame = useCurrentFrame();
-  const rowH = 340;
+  const rowH = 290;
   const label: React.CSSProperties = {fontFamily: fonts.display, fontSize: 46, color: colors.night, opacity: 0.8};
   return (
     <AbsoluteFill style={{background: colors.olive}}>
@@ -28,7 +28,7 @@ export const Chat: React.FC<{pairs: ChatPair[]; step: number}> = ({pairs, step})
           <React.Fragment key={i}>
             <div
               style={{
-                position: 'absolute', left: 70, top: top + 110, transform: `scale(${q})`, transformOrigin: 'left center',
+                position: 'absolute', left: 70, top: top + 100, transform: `scale(${q})`, transformOrigin: 'left center',
                 background: '#4A4943', color: colors.ivory, fontFamily: fonts.mono, fontWeight: 500, fontSize: 30,
                 padding: '18px 30px', borderRadius: 40, maxWidth: 520,
               }}
@@ -37,7 +37,7 @@ export const Chat: React.FC<{pairs: ChatPair[]; step: number}> = ({pairs, step})
             </div>
             <div
               style={{
-                position: 'absolute', right: 80, top, width: 290, height: 290, borderRadius: 26, overflow: 'hidden',
+                position: 'absolute', right: 80, top, width: 260, height: 260, borderRadius: 26, overflow: 'hidden',
                 transform: `scale(${a}) rotate(${(1 - a) * -8}deg)`, boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
               }}
             >
