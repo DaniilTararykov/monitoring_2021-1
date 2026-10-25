@@ -1,0 +1,13 @@
+# Heavy files stay out of git: sources, proxies, renders
+remotion/node_modules/
+remotion/public/photos/
+remotion/out/
+remotion/build/
+sources/
+renders/
+*.mov
+*.MOV
+*.mp4
+*.zip
+*.heic
+*.HEIC
