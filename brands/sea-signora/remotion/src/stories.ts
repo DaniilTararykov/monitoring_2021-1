@@ -429,11 +429,11 @@ export const stories: Story[] = [
         {t: 'headline', text: 'Tomorrow', size: 96},
         {t: 'sub', text: 'sea, signora × dim sum milano'},
         {t: 'rule'},
-        {t: 'sub', text: 'a cantonese evening in brera\n2 november · 19:00'},
+        {t: 'sub', text: 'a cantonese evening\nfrom 19:00'}, // client 26.10: no date, no "in Brera" on screen
       ],
     },
     cta: {label: 'book your table', color: 'orange'},
-    caption: 'Tomorrow: Sea, Signora × Dim Sum Milano. A Cantonese evening in Brera, from 19:00.',
+    caption: 'Tomorrow: Sea, Signora × Dim Sum Milano. A Cantonese evening, from 19:00.',
     hashtags: ['#seasignora', '#dimsummilano', '#brera', '#milanoevents'],
     ctaVariants: ['book your table', 'secure your spot', 'reserve'],
   },
