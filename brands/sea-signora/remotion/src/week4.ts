@@ -176,7 +176,11 @@ export const week4: Story[] = [
   // ───────────────────────── Thu 29.10
   {
     id: 'W4-4thu-v1-blackout-tonight', day: 'Thu 29.10', rubric: 'Событие · единственное касание', music: 'noir-jazz',
-    scenes: [v('candles-red', 5.5), {src: 'reel/candle-light.mp4', start: 2.6, frames: 4 * S}],
+    // framed in a window so the link chip sits on night, not on the candle label
+    scenes: [
+      v('candles-red', 5.5, {window: {top: 470, bottom: 520, side: 64}}),
+      {src: 'reel/candle-light.mp4', start: 2.6, frames: 4 * S, window: {top: 470, bottom: 520, side: 64}, fy: 30},
+    ],
     overlay: top(kick('tonight from 19:00'), H('Blackout Night'), sub('by candlelight · the candle cluub')),
     cta: {label: 'secure your spot', color: 'orange'},
     caption: 'Tonight the lights go down: Blackout Night by candlelight with the candle cluub, from 19:00.',
