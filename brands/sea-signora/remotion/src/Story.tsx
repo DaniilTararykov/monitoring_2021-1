@@ -63,7 +63,7 @@ export const StoryVideo: React.FC<{story: StoryT; guides?: boolean; frozen?: boo
       {story.overlay ? (
         <>
           {story.overlay.position === 'center' ? <AbsoluteFill style={{background: colors.night, opacity: 0.55}} /> : null}
-          <Scrim top={g.top} bottom={g.bottom || !!story.cta} />
+          <Scrim top={g.top && story.overlay.y === undefined} bottom={g.bottom || !!story.cta} />
           <OverlayView o={story.overlay} />
         </>
       ) : story.cta && !story.chat ? (
