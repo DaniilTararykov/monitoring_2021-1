@@ -11,7 +11,7 @@ export type Block =
   | {t: 'list'; items: string[]}
   | {t: 'rule'} // thin orange divider under a headline
   | {t: 'gap'; px: number}
-  | {t: 'giant'; text: string; size?: number; color?: 'ivory' | 'orange' | 'olive'} // bold: one huge word
+  | {t: 'giant'; text: string; size?: number; color?: 'ivory' | 'orange' | 'olive'; raw?: boolean} // bold: one huge word (raw = keep ':' in times like 19:00)
   | {t: 'kicker'; text: string}; // tiny mono label above a giant/headline (e.g. "N°1", "ACT II")
 
 export type Overlay = {
@@ -34,6 +34,8 @@ export type Scene = {
   fx?: number; // focus point, % of width (object-position x)
   fy?: number; // focus point, % of height
   zoom?: 'in' | 'out' | 'none'; // photos are static by default; Ken Burns only in 2–3 stories per pack
+  rot?: number; // degrees, + = clockwise: levels the horizon (the cover scale for it is added automatically)
+  scale?: number; // static crop-in (1.15 = 15% tighter) around fx/fy for a cleaner composition
   shift?: number; // px: push the photo down to leave a dark band for text on top
   overlay?: Overlay; // text that belongs only to this scene
 };

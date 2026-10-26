@@ -10,6 +10,7 @@ import {StoryVideo, storyFrames} from './Story';
 import {stories} from './stories';
 import {pack2} from './pack2';
 import {pack3} from './pack3';
+import {week4} from './week4';
 import type {Story} from './types';
 
 const Story: React.FC<{story: Story; guides?: boolean}> = (p) => <StoryVideo {...p} />;
@@ -35,7 +36,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
     <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />
     <Composition id="TwoRecipes-card" component={RecipeCard} durationInFrames={Math.round(RECIPE_CARD_S * 30)} fps={30} width={1080} height={1920} />
-    {[...stories, ...pack2, ...pack3].map((s) => (
+    {[...stories, ...pack2, ...pack3, ...week4].map((s) => (
       <Composition
         key={s.id}
         id={`S${s.id}`}

@@ -1,9 +1,10 @@
 // Export on-screen texts + post captions for every story to ../stories-week.md
-// usage: node --experimental-strip-types scripts/export-copy.mjs [out.md]
+// usage: node --experimental-strip-types scripts/export-copy.mjs [out.md] [src module] [export name]
+//   e.g. scripts/export-copy.mjs ../stories-week4.md src/week4.ts week4
 import fs from 'node:fs';
 import path from 'node:path';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
-const {stories} = await import(path.join(root, 'src/stories.ts'));
+const stories = (await import(path.join(root, process.argv[3] ?? 'src/stories.ts')))[process.argv[4] ?? 'stories'];
 const txt = (b) =>
   b.t === 'headline' ? b.text.replace(/\n/g, ' ').toUpperCase()
   : b.t === 'wordmark' ? (b.text ?? 'Sea, Signora')
@@ -12,6 +13,7 @@ const txt = (b) =>
   : b.t === 'review' ? `«${b.text.replace(/\n+/g, ' ')}»${b.author ? ' — ' + b.author : ''}`
   : b.t === 'list' ? b.items.map((i) => '— ' + i.toUpperCase()).join(' / ')
   : b.t === 'hours' ? '[часы работы]'
+  : b.t === 'giant' || b.t === 'kicker' ? b.text.toUpperCase()
   : b.t === 'stars' ? '★★★★★' : null;
 const lines = ['# Sea, Signora — сторис на неделю', ''];
 let day = '';

@@ -105,7 +105,7 @@ export const BlockView: React.FC<{b: Block; align: 'center' | 'left'}> = ({b, al
     case 'giant':
       return (
         <p style={{...display, fontSize: Math.min(b.size ?? 140, 150), lineHeight: 0.95, letterSpacing: 1, color: b.color ? colors[b.color] : colors.ivory}}>
-          {clean(b.text)}
+          {b.raw ? b.text : clean(b.text)}
         </p>
       );
     case 'kicker':

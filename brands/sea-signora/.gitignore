@@ -14,3 +14,4 @@ renders/
 remotion/public/videos/
 remotion/public/music/ref-*
 remotion/public/music/final-*
+remotion/scripts/*.tmp.mjs

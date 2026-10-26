@@ -13,13 +13,18 @@ export const Photo: React.FC<{scene: Scene}> = ({scene}) => {
   const z = scene.zoom ?? 'none';
   const p = frame / Math.max(1, scene.frames);
   const k = motion.kenBurnsScale;
-  const scale = z === 'in' ? 1 + k * p : z === 'out' ? 1 + k * (1 - p) : 1;
   const shift = scene.shift ?? 0;
   const isVideo = scene.src.endsWith('.mp4');
   const w = scene.window;
+  // levelling: rotate, then scale up just enough that no corner of the box shows
+  const bw = w ? 1080 - 2 * w.side : 1080;
+  const bh = w ? 1920 - w.top - w.bottom : 1920;
+  const r = (Math.abs(scene.rot ?? 0) * Math.PI) / 180;
+  const cover = Math.max((bw * Math.cos(r) + bh * Math.sin(r)) / bw, (bw * Math.sin(r) + bh * Math.cos(r)) / bh);
+  const kb = z === 'in' ? 1 + k * p : z === 'out' ? 1 + k * (1 - p) : 1;
   const media: React.CSSProperties = {
     width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${fx}% ${fy}%`,
-    transform: `scale(${scale})`, transformOrigin: `${fx}% ${fy}%`,
+    transform: `scale(${kb * (scene.scale ?? 1)})`, transformOrigin: `${fx}% ${fy}%`,
     filter: grade.filter,
   };
   const box: React.CSSProperties = w
@@ -28,17 +33,20 @@ export const Photo: React.FC<{scene: Scene}> = ({scene}) => {
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: colors.night}}>
       <AbsoluteFill style={box}>
-        {isVideo ? (
-          <OffthreadVideo
-            src={staticFile(`videos/${scene.src}`)}
-            startFrom={Math.round((scene.start ?? 0) * fps)}
-            playbackRate={scene.rate ?? 1}
-            muted
-            style={media}
-          />
-        ) : (
-          <Img src={staticFile(`photos/${scene.src}`)} style={media} />
-        )}
+        {/* rotation about the box centre (+ cover scale); the crop-in / Ken Burns happens inside, around fx/fy */}
+        <AbsoluteFill style={{transform: scene.rot ? `rotate(${scene.rot}deg) scale(${cover})` : undefined}}>
+          {isVideo ? (
+            <OffthreadVideo
+              src={staticFile(`videos/${scene.src}`)}
+              startFrom={Math.round((scene.start ?? 0) * fps)}
+              playbackRate={scene.rate ?? 1}
+              muted
+              style={media}
+            />
+          ) : (
+            <Img src={staticFile(`photos/${scene.src}`)} style={media} />
+          )}
+        </AbsoluteFill>
         <AbsoluteFill style={{background: grade.warmth, mixBlendMode: 'soft-light'}} />
         <AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,${grade.vignette}) 100%)`}} />
       </AbsoluteFill>
