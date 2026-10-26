@@ -12,7 +12,7 @@ export type Block =
   | {t: 'rule'} // thin orange divider under a headline
   | {t: 'gap'; px: number}
   | {t: 'giant'; text: string; size?: number; color?: 'ivory' | 'orange' | 'olive'; raw?: boolean} // bold: one huge word (raw = keep ':' in times like 19:00)
-  | {t: 'kicker'; text: string; color?: 'orange'}; // tiny mono label above a giant/headline (e.g. "N°1", "ACT II"); orange = teaser for the next story/day
+  | {t: 'kicker'; text: string; color?: 'orange' | 'night'}; // tiny mono label above a giant/headline (e.g. "N°1", "ACT II"); orange = teaser for the next story/day
 
 export type Overlay = {
   position: 'top' | 'bottom' | 'center';
