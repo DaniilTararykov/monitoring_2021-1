@@ -10,10 +10,13 @@ loadBrandFonts();
 // the last shot holds to the end of the track.
 //   npx remotion render EditorReel out/x.mp4 --props=config.json
 
-export type EditorClip = {clip: string; start: number; fy?: number};
+// rot (deg, + = clockwise) levels the horizon; zoom/fx/fy crop in; the cover scale for rot is added automatically.
+export type EditorClip = {clip: string; start: number; fy?: number; fx?: number; rot?: number; zoom?: number};
 export type EditorConfig = {
   name: string; mode: 'split' | 'seq'; title: string; titleFont: 'display' | 'serif';
   music: string; beatsPerCut: number; secPerCut?: number; grade: boolean; shots: {a: EditorClip; b?: EditorClip}[];
+  // final-render options (not set by the editor): explicit beat grid + audio file, no fades/drift, stronger grade
+  beats?: number[]; audio?: string; fades?: boolean; drift?: number; gradeAmount?: number; film?: boolean;
 };
 
 export const TRACKS: Record<string, {dur: number; beats: number[]}> = {
@@ -26,26 +29,52 @@ const fr = (s: number) => Math.round(s * FPS);
 const src = (id: string) => `videos/reel/${id}.mp4`;
 
 // Every shot has the same length (N beats, or N seconds with music "none"); the track loops if shorter.
-const noMusic = (c: EditorConfig) => !TRACKS[c.music];
+const noMusic = (c: EditorConfig) => !c.beats && !TRACKS[c.music];
 const interval = (b: number[]) => (b[b.length - 1] - b[0]) / (b.length - 1);
 export const cutAt = (c: EditorConfig, i: number) => {
   if (i <= 0) return 0;
   if (noMusic(c)) return i * (c.secPerCut || 2);
-  const b = TRACKS[c.music].beats;
+  const b = c.beats ?? TRACKS[c.music].beats;
   const k = i * c.beatsPerCut - 1;
   return k < b.length ? b[k] : b[b.length - 1] + (k - b.length + 1) * interval(b);
 };
 export const editorDuration = (c: EditorConfig) => fr(cutAt(c, c.shots.length));
 
-const Shot: React.FC<{c: EditorClip; len: number; fy: boolean; graded: boolean}> = ({c, len, fy, graded}) => {
+// Grade scaled from the brand tokens: amount 1 = tokens.grade, 1.3 = 30% stronger.
+const gradeFilter = (a: number, film: boolean) =>
+  a === 1 && !film ? grade.filter
+    : `contrast(${1 + 0.08 * a}) brightness(${1 - 0.07 * a}) saturate(${1 - 0.1 * a}) sepia(${0.12 * a})${film ? ' url(#film)' : ''}`;
+
+// Film look: gently lifted blacks, rolled-off highlights, warm highlights / slightly cool-olive shadows.
+const FilmDefs: React.FC = () => (
+  <svg width="0" height="0" style={{position: 'absolute'}}>
+    <filter id="film" colorInterpolationFilters="sRGB">
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0.035 0.2 0.47 0.76 0.97" />
+        <feFuncG type="table" tableValues="0.04 0.21 0.47 0.74 0.95" />
+        <feFuncB type="table" tableValues="0.05 0.21 0.45 0.7 0.9" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
+);
+
+const Shot: React.FC<{c: EditorClip; len: number; fy: boolean; graded: boolean; cfg: EditorConfig}> = ({c, len, fy, graded, cfg}) => {
   const f = useCurrentFrame();
-  const p = fy ? c.fy ?? 50 : 50;
+  const py = fy || cfg.film ? c.fy ?? 50 : 50;
+  const px = c.fx ?? 50;
+  const rot = c.rot ?? 0;
+  const r = (Math.abs(rot) * Math.PI) / 180;
+  const cover = Math.cos(r) + (1920 / 1080) * Math.sin(r); // keeps the corners filled when rotated
+  const drift = cfg.drift ?? 0.04;
+  const scale = (c.zoom ?? 1) * cover * (1 + drift * (f / Math.max(1, len)));
+  const a = cfg.gradeAmount ?? 1;
   return (
     <AbsoluteFill style={{overflow: 'hidden'}}>
       <OffthreadVideo src={staticFile(src(c.clip))} startFrom={fr(c.start)} muted
-        style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `50% ${p}%`,
-          transform: `scale(${1 + 0.04 * (f / Math.max(1, len))})`, transformOrigin: `50% ${p}%`, filter: graded ? grade.filter : undefined}} />
-      {graded ? <AbsoluteFill style={{background: grade.warmth, mixBlendMode: 'soft-light'}} /> : null}
+        style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${px}% ${py}%`,
+          transform: `rotate(${rot}deg) scale(${scale})`, transformOrigin: `${px}% ${py}%`, filter: graded ? gradeFilter(a, !!cfg.film) : undefined}} />
+      {graded ? <AbsoluteFill style={{background: `rgba(120, 60, 20, ${0.1 * a})`, mixBlendMode: 'soft-light'}} /> : null}
+      {graded && cfg.film ? <AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,${Math.min(0.7, grade.vignette * a)}) 100%)`}} /> : null}
     </AbsoluteFill>
   );
 };
@@ -58,9 +87,10 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
   const titleStyle: React.CSSProperties = config.titleFont === 'serif'
     ? {fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 52}
     : {fontFamily: fonts.display, textTransform: 'uppercase', fontSize: split ? 54 : 58, letterSpacing: 1};
-  const fade = interpolate(f, [0, 8, total - 14, total - 1], [1, 0, 0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const fade = config.fades === false ? 0 : interpolate(f, [0, 8, total - 14, total - 1], [1, 0, 0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{background: colors.night}}>
+      {config.film ? <FilmDefs /> : null}
       {starts.map((s, i) => {
         const from = fr(s);
         const to = i === starts.length - 1 ? total : fr(starts[i + 1]);
@@ -69,11 +99,11 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
           <Sequence key={i} from={from} durationInFrames={Math.max(1, to - from)}>
             {split ? (
               <>
-                <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 958, overflow: 'hidden'}}><Shot c={sh.a} len={to - from} fy graded={config.grade} /></div>
-                <div style={{position: 'absolute', left: 0, right: 0, top: 962, height: 958, overflow: 'hidden'}}><Shot c={sh.b ?? sh.a} len={to - from} fy graded={config.grade} /></div>
+                <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 958, overflow: 'hidden'}}><Shot c={sh.a} len={to - from} fy graded={config.grade} cfg={config} /></div>
+                <div style={{position: 'absolute', left: 0, right: 0, top: 962, height: 958, overflow: 'hidden'}}><Shot c={sh.b ?? sh.a} len={to - from} fy graded={config.grade} cfg={config} /></div>
               </>
             ) : (
-              <Shot c={sh.a} len={to - from} fy={false} graded={config.grade} />
+              <Shot c={sh.a} len={to - from} fy={false} graded={config.grade} cfg={config} />
             )}
           </Sequence>
         );
@@ -81,7 +111,10 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
       {split ? (
         <div style={{position: 'absolute', left: 0, right: 0, top: 850, height: 220, background: 'linear-gradient(to bottom, rgba(11,11,11,0) 0%, rgba(11,11,11,0.5) 50%, rgba(11,11,11,0) 100%)'}} />
       ) : (
-        <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 620, background: 'linear-gradient(to bottom, rgba(11,11,11,0.75) 0%, rgba(11,11,11,0.35) 55%, rgba(11,11,11,0) 100%)'}} />
+        config.fades === false
+          // final cut: a small, soft shade just behind the title
+          ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 520, background: 'linear-gradient(to bottom, rgba(11,11,11,0.62) 0%, rgba(11,11,11,0.38) 45%, rgba(11,11,11,0) 100%)'}} />
+          : <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 620, background: 'linear-gradient(to bottom, rgba(11,11,11,0.75) 0%, rgba(11,11,11,0.35) 55%, rgba(11,11,11,0) 100%)'}} />
       )}
       {config.title ? (
         <div style={{position: 'absolute', left: 40, right: 40, top: split ? 960 - 36 : safe.top + 30, textAlign: 'center', color: colors.ivory, textShadow: '0 1px 14px rgba(0,0,0,0.6)', ...titleStyle}}>
@@ -89,7 +122,8 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
         </div>
       ) : null}
       <AbsoluteFill style={{background: colors.night, opacity: fade}} />
-      {noMusic(config) ? null : <Audio src={staticFile(`music/${config.music}.mp3`)} loop />}
+      {config.audio ? <Audio src={staticFile(`music/${config.audio}`)} />
+        : noMusic(config) ? null : <Audio src={staticFile(`music/${config.music}.mp3`)} loop />}
     </AbsoluteFill>
   );
 };
