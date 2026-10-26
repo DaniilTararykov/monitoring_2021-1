@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Audio, OffthreadVideo, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
 import {colors, fonts, grade, safe} from '../../tokens';
 import {loadBrandFonts} from './fonts';
 
@@ -17,6 +17,8 @@ export type EditorConfig = {
   music: string; beatsPerCut: number; secPerCut?: number; grade: boolean; shots: {a: EditorClip; b?: EditorClip}[];
   // final-render options (not set by the editor): explicit beat grid + audio file, no fades/drift, stronger grade
   beats?: number[]; audio?: string; fades?: boolean; drift?: number; gradeAmount?: number; film?: boolean;
+  // optional ending: the only transition — the last shot fades into the poster, which holds `hold` s
+  poster?: {src: string; fade: number; hold: number};
 };
 
 export const TRACKS: Record<string, {dur: number; beats: number[]}> = {
@@ -38,7 +40,7 @@ export const cutAt = (c: EditorConfig, i: number) => {
   const k = i * c.beatsPerCut - 1;
   return k < b.length ? b[k] : b[b.length - 1] + (k - b.length + 1) * interval(b);
 };
-export const editorDuration = (c: EditorConfig) => fr(cutAt(c, c.shots.length));
+export const editorDuration = (c: EditorConfig) => fr(cutAt(c, c.shots.length) + (c.poster ? c.poster.hold + c.poster.fade : 0));
 
 // Grade scaled from the brand tokens: amount 1 = tokens.grade, 1.3 = 30% stronger.
 const gradeFilter = (a: number, film: boolean) =>
@@ -83,6 +85,9 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
   const f = useCurrentFrame();
   const total = editorDuration(config);
   const starts = config.shots.map((_, i) => cutAt(config, i));
+  const shotsEnd = fr(cutAt(config, config.shots.length));
+  const p = config.poster;
+  const posterO = p ? interpolate(f, [shotsEnd, shotsEnd + fr(p.fade)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}) : 0;
   const split = config.mode === 'split';
   const titleStyle: React.CSSProperties = config.titleFont === 'serif'
     ? {fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 52}
@@ -93,7 +98,7 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
       {config.film ? <FilmDefs /> : null}
       {starts.map((s, i) => {
         const from = fr(s);
-        const to = i === starts.length - 1 ? total : fr(starts[i + 1]);
+        const to = i === starts.length - 1 ? (p ? shotsEnd + fr(p.fade) : total) : fr(starts[i + 1]);
         const sh = config.shots[i];
         return (
           <Sequence key={i} from={from} durationInFrames={Math.max(1, to - from)}>
@@ -120,6 +125,11 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
         <div style={{position: 'absolute', left: 40, right: 40, top: split ? 960 - 36 : safe.top + 30, textAlign: 'center', color: colors.ivory, textShadow: '0 1px 14px rgba(0,0,0,0.6)', ...titleStyle}}>
           {config.title}
         </div>
+      ) : null}
+      {p ? (
+        <AbsoluteFill style={{opacity: posterO}}>
+          <Img src={staticFile(p.src)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        </AbsoluteFill>
       ) : null}
       <AbsoluteFill style={{background: colors.night, opacity: fade}} />
       {config.audio ? <Audio src={staticFile(`music/${config.audio}`)} />
