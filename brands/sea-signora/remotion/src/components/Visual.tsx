@@ -1,34 +1,45 @@
 import React from 'react';
-import {AbsoluteFill, Easing, Img, interpolate, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Img, OffthreadVideo, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {colors, fonts, motion, scrim, type} from '../../../tokens';
 import type {Cta, Scene} from '../types';
 
-// Full-bleed photo, cropped to 9:16 around a focus point, with a slow Ken Burns drift.
+// Full-bleed photo or video, cropped to 9:16 around a focus point.
+// Photos are static unless `zoom` is set; videos play from `start` at `rate`.
 export const Photo: React.FC<{scene: Scene}> = ({scene}) => {
   const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
   const fx = scene.fx ?? 50;
   const fy = scene.fy ?? 50;
-  const z = scene.zoom ?? 'in';
+  const z = scene.zoom ?? 'none';
   const p = frame / Math.max(1, scene.frames);
   const k = motion.kenBurnsScale;
   const scale = z === 'in' ? 1 + k * p : z === 'out' ? 1 + k * (1 - p) : 1;
   const shift = scene.shift ?? 0;
+  const isVideo = scene.src.endsWith('.mp4');
+  const w = scene.window;
+  const media: React.CSSProperties = {
+    width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${fx}% ${fy}%`,
+    transform: `scale(${scale})`, transformOrigin: `${fx}% ${fy}%`,
+  };
+  const box: React.CSSProperties = w
+    ? {top: w.top, bottom: w.bottom, left: w.side, right: w.side, overflow: 'hidden'}
+    : {top: shift, height: 1920, overflow: 'hidden'};
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: colors.night}}>
-      <AbsoluteFill style={{top: shift, height: 1920, overflow: 'hidden'}}>
-      <Img
-        src={staticFile(`photos/${scene.src}`)}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: `${fx}% ${fy}%`,
-          transform: `scale(${scale})`,
-          transformOrigin: `${fx}% ${fy}%`,
-        }}
-      />
+      <AbsoluteFill style={box}>
+        {isVideo ? (
+          <OffthreadVideo
+            src={staticFile(`videos/${scene.src}`)}
+            startFrom={Math.round((scene.start ?? 0) * fps)}
+            playbackRate={scene.rate ?? 1}
+            muted
+            style={media}
+          />
+        ) : (
+          <Img src={staticFile(`photos/${scene.src}`)} style={media} />
+        )}
       </AbsoluteFill>
-      {shift > 0 ? (
+      {shift > 0 && !w ? (
         <div
           style={{
             position: 'absolute', left: 0, right: 0, top: shift - 2, height: 260,
@@ -73,22 +84,12 @@ const LinkIcon: React.FC<{size: number; color: string}> = ({size, color}) => (
   </svg>
 );
 
-// Link-sticker look-alike. When publishing, put the real Instagram link sticker over it.
+// Link-sticker look-alike. NEVER animated: the real Instagram link sticker is placed
+// exactly on top of it when publishing, so it must sit still from the first frame.
 export const Chip: React.FC<{cta: Cta}> = ({cta}) => {
-  const frame = useCurrentFrame();
-  const from = cta.from ?? 20;
-  const p = interpolate(frame, [from, from + motion.textFadeFrames], [0, 1], {
-    extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic),
-  });
   const bg = cta.color === 'olive' ? colors.olive : colors.orange;
   return (
-    <div
-      style={{
-        position: 'absolute', left: 0, right: 0, bottom: cta.y ?? 400,
-        display: 'flex', justifyContent: 'center', opacity: p,
-        transform: `translateY(${(1 - p) * motion.textRisePx}px)`,
-      }}
-    >
+    <div style={{position: 'absolute', left: 0, right: 0, bottom: cta.y ?? 400, display: 'flex', justifyContent: 'center'}}>
       <div
         style={{
           background: bg, borderRadius: 22, padding: '20px 34px', display: 'flex', alignItems: 'center', gap: 14,

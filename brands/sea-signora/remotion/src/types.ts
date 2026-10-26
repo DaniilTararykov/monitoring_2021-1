@@ -10,10 +10,13 @@ export type Block =
   | {t: 'hours'; mode?: 'split' | 'compact' | 'weekend'}
   | {t: 'list'; items: string[]}
   | {t: 'rule'} // thin orange divider under a headline
-  | {t: 'gap'; px: number};
+  | {t: 'gap'; px: number}
+  | {t: 'giant'; text: string; size?: number; color?: 'ivory' | 'orange' | 'olive'} // bold: one huge word
+  | {t: 'kicker'; text: string}; // tiny mono label above a giant/headline (e.g. "N°1", "ACT II")
 
 export type Overlay = {
   position: 'top' | 'bottom' | 'center';
+  y?: number; // explicit top offset in px (overrides position anchor)
   blocks: Block[];
   align?: 'center' | 'left';
   // Frame the overlay starts appearing (relative to its scene / story). Default 4.
@@ -23,11 +26,14 @@ export type Overlay = {
 };
 
 export type Scene = {
-  src: string; // file in public/photos
+  src: string; // photo in public/photos, or video in public/videos (.mp4)
   frames: number;
+  start?: number; // video: seconds into the clip
+  rate?: number; // video: playback rate (0.5 = slow motion, needs 60 fps proxy)
+  window?: {top: number; bottom: number; side: number}; // cinematic inset frame on night background
   fx?: number; // focus point, % of width (object-position x)
   fy?: number; // focus point, % of height
-  zoom?: 'in' | 'out' | 'none';
+  zoom?: 'in' | 'out' | 'none'; // photos are static by default; Ken Burns only in 2–3 stories per pack
   shift?: number; // px: push the photo down to leave a dark band for text on top
   overlay?: Overlay; // text that belongs only to this scene
 };
@@ -35,7 +41,6 @@ export type Scene = {
 export type Cta = {
   label: string;
   color?: 'orange' | 'olive';
-  from?: number; // frame it appears, default 20
   y?: number; // px from the bottom edge of the frame, default 400 (above the 340 px safe zone)
 };
 
@@ -45,9 +50,10 @@ export type Story = {
   id: string; // e.g. "01-mon-we-are-open"
   day: string; // e.g. "Mon 26.10"
   rubric: string;
-  music: 'warm-lounge' | 'brera-night' | 'slow-sunday';
+  music: string; // file name (no extension) in public/music
   musicFrom?: number; // seconds into the track
   scenes: Scene[];
+  transition?: 'cut' | 'fade'; // between scenes; default hard cut
   overlay?: Overlay; // persistent over all scenes
   cta?: Cta;
   chat?: ChatPair[]; // "Your problem / Our solution" template (olive background, no photo scenes)

@@ -99,6 +99,16 @@ export const BlockView: React.FC<{b: Block; align: 'center' | 'left'}> = ({b, al
       return <div style={{width: 330, height: 3, background: colors.orange}} />;
     case 'gap':
       return <div style={{height: b.px}} />;
+    case 'giant':
+      return (
+        <p style={{...display, fontSize: b.size ?? 260, lineHeight: 0.86, letterSpacing: -2, color: b.color ? colors[b.color] : colors.ivory}}>
+          {b.text}
+        </p>
+      );
+    case 'kicker':
+      return (
+        <p style={{...mono, fontWeight: 500, textTransform: 'uppercase', fontSize: 26, letterSpacing: 6, opacity: 0.85}}>{b.text}</p>
+      );
   }
 };
 
@@ -108,6 +118,8 @@ const gapBefore = (prev: Block | undefined, cur: Block) => {
   if (cur.t === 'gap' || prev.t === 'gap') return 0;
   if ((prev.t === 'headline' || prev.t === 'wordmark') && (cur.t === 'sub' || cur.t === 'note')) return 10;
   if (prev.t === 'headline' && cur.t === 'headline') return 0;
+  if (prev.t === 'kicker') return 14;
+  if (prev.t === 'giant' && (cur.t === 'sub' || cur.t === 'note')) return 22;
   if (cur.t === 'rule' || prev.t === 'rule') return 26;
   if (cur.t === 'review' || prev.t === 'stars') return 40;
   return 30;
@@ -118,7 +130,9 @@ export const OverlayView: React.FC<{o: Overlay}> = ({o}) => {
   const align = o.align ?? 'center';
   const delay = o.delay ?? 4;
   const pos: React.CSSProperties =
-    o.position === 'top'
+    o.y !== undefined
+      ? {top: o.y}
+      : o.position === 'top'
       ? {top: safe.top + 20}
       : o.position === 'bottom'
         ? {bottom: safe.bottom + 40}

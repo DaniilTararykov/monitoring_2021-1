@@ -39,7 +39,7 @@ export const StoryVideo: React.FC<{story: StoryT; guides?: boolean; frozen?: boo
     const from = cursor;
     cursor += sc.frames;
     // overlap each new scene a little so it can crossfade over the previous one
-    const overlap = i === 0 ? 0 : motion.crossfadeFrames;
+    const overlap = i === 0 || story.transition !== 'fade' ? 0 : motion.crossfadeFrames;
     const sScrim = needsScrim(sc.overlay);
     return (
       <Sequence key={i} from={from - overlap} durationInFrames={sc.frames + overlap}>
