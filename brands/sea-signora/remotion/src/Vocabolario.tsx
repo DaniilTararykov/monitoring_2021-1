@@ -97,7 +97,8 @@ const ENTRIES: Entry[] = [
     m: {photo: 's7_093', size: S7, focus: [475, 760]}, frames: 1},
   {id: 'W5-4thu-2v-aragosta', bg: 'white', shape: 'oval', word: 'Aragosta', read: 'a·ra·gó·sta', pos: 'noun', def: 'on the menu and on our shirts',
     m: {video: 'lobster-shirt', size: V, focus: [240, 1100], zoom: 2.25, start: s(3.8)}, frames: s(4)},
-  {id: 'W5-4thu-3p-bistecca', bg: 'green', shape: 'circle', word: 'Bistecca', read: 'bi·stéc·ca', pos: 'noun', def: 'tomahawk dry-aged 45 days with osetra caviar',
+  {id: 'W5-4thu-3p-tomahawk', bg: 'green', shape: 'circle', // the new dish, as a «new on the menu» card (client 26.10)
+    info: {label: 'new on the menu', title: 'Tomahawk', line: 'scotch beef dry-aged 45 days · bavarian style', meta: 'osetra black caviar · pomegranate demi-glace'},
     m: {photo: 'tomahawk', size: [960, 1280], focus: [520, 700]}, frames: 1},
   // Fri 30.10 — the mirror above the room, a guest reading the menu; Strong Breeze on the bar book
   {id: 'W5-5fri-1v-riflesso', bg: 'green', shape: 'rect', word: 'Riflesso', read: 'ri·flès·so', pos: 'noun', def: 'the room in the mirror on a friday night',

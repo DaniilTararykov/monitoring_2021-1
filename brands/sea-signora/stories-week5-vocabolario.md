@@ -16,7 +16,7 @@ kitchen lights up at 19:00.» Hashtags: #seasignora #brera #milanofood #finedini
 | 06 | Wed 28.10 | white | arch | Servito | the moment the plate lands | video: a waiter sets plates down |
 | 07 | Thu 29.10 | orange | pill | Dolce | a sweet ending poured slowly | photo: sauce poured over dessert |
 | 08 | Thu 29.10 | white | oval | Aragosta | on the menu and on our shirts | video: the waiter's lobster shirt |
-| 08b | Thu 29.10 | green | circle | Bistecca | tomahawk dry-aged 45 days with osetra caviar | photo: the Tomahawk (new) |
+| 08b | Thu 29.10 | green | circle | Tomahawk (label «new on the menu») | scotch beef dry-aged 45 days · bavarian style / osetra black caviar · pomegranate demi-glace | photo: the Tomahawk — caption: New on the menu: Tomahawk. Scotch beef dry-aged 45 days, Bavarian style, Osetra black caviar and pomegranate demi-glace. |
 | 09 | Fri 30.10 | green | rect | Riflesso | the room in the mirror on a friday night | video: the mirror above the room |
 | 10 | Fri 30.10 | orange | oval | Aperitivo | strong breeze from our bar book | photo: Strong Breeze |
 | 11 | Sat 31.10 | white | circle | Tavola | set for you at via fiori chiari 32 | video: the set table |
