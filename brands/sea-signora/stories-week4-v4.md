@@ -14,11 +14,11 @@ The chef will see you now. Every night from 19:00.
 - **Варианты призыва:** reserve · book a table
 
 ### W4B-1mon-2p-mise-en-place · Сервис · до прихода гостей · 6.0 с
-- **На экране:** MISE EN PLACE / YOUR TABLE, BEFORE YOU ARRIVE / TOMORROW · FRONT ROW
+- **На экране:** MISE EN PLACE / EVERYTHING IN ITS PLACE · ESPECIALLY YOU / TOMORROW · FRONT ROW
 - **Фото:** w4/mise-en-place.jpg · музыка: none
 
 ```
-Mise en place: your table, set before you arrive. Tomorrow, front row.
+Mise en place: everything in its place, especially you. Tomorrow, front row.
 
 #seasignora #miseenplace #hospitality #brera
 ```
@@ -27,12 +27,12 @@ Mise en place: your table, set before you arrive. Tomorrow, front row.
 ## Tue 27.10
 
 ### W4B-2tue-1v-front-row · Открытая кухня · театр · 6.0 с
-- **На экране:** FRONT ROW / THE OPEN KITCHEN IS THE SHOW
+- **На экране:** FRONT ROW / THE KITCHEN HAS NO BACKSTAGE
 - **Стикер-ссылка:** «book a table» (поставь настоящий link-стикер на место плашки)
 - **Фото:** w4/front-row.mp4 · музыка: none
 
 ```
-Front row seats: the open kitchen is the show.
+Front row seats. Our kitchen has no backstage — everything happens in front of you.
 
 #seasignora #openkitchen #brera #milanofood
 ```
@@ -101,22 +101,22 @@ In the dark, taste gets louder. Tomorrow, the view from the bar.
 ## Fri 30.10
 
 ### W4B-5fri-1v-seen-from-the-bar · Бар · подсмотрено · 5.6 с
-- **На экране:** SEEN FROM THE BAR / FRIDAY, BETWEEN THE BOTTLES
+- **На экране:** SEEN FROM THE BAR / WE ALWAYS KNOW WHEN YOUR GLASS IS EMPTY
 - **Фото:** w4/seen-from-bar.mp4 · музыка: none
 
 ```
-Friday, seen from the bar.
+Seen from the bar: we always know when your glass is empty.
 
 #seasignora #bar #fridaynight #brera
 ```
 - **Варианты призыва:** reserve · experience Sea, Signora
 
 ### W4B-5fri-2p-velvet-hour · Атмосфера · красный бархат · 6.0 с
-- **На экране:** VELVET HOUR / CHANDELIERS ON · FROM 19:00 / TOMORROW · BRING EVERYONE
+- **На экране:** VELVET HOUR / WHEN BRERA SLOWS DOWN / TOMORROW · BRING EVERYONE
 - **Фото:** w4/red-chandelier.jpg · музыка: none
 
 ```
-Velvet hour: chandeliers on, from 19:00. Tomorrow, bring everyone.
+Velvet hour: when Brera slows down. Tomorrow, bring everyone.
 
 #seasignora #brera #milanonight #interiordesign
 ```

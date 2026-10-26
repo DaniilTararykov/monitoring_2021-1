@@ -35,8 +35,8 @@ export const week4b: Story[] = [
   {
     id: 'W4B-1mon-2p-mise-en-place', day: 'Mon 26.10', rubric: 'Сервис · до прихода гостей', music: silent,
     scenes: [ph('mise-en-place', 6)],
-    overlay: bottom(H('Mise en place'), sub('your table, before you arrive'), ...next('front row')),
-    caption: 'Mise en place: your table, set before you arrive. Tomorrow, front row.',
+    overlay: bottom(H('Mise en place'), sub('everything in its place · especially you'), ...next('front row')),
+    caption: 'Mise en place: everything in its place, especially you. Tomorrow, front row.',
     hashtags: ['#seasignora', '#miseenplace', '#hospitality', '#brera'], ctaVariants: ['reserve', 'book a table'],
   },
 
@@ -44,9 +44,9 @@ export const week4b: Story[] = [
   {
     id: 'W4B-2tue-1v-front-row', day: 'Tue 27.10', rubric: 'Открытая кухня · театр', music: silent,
     scenes: [v('front-row', 6)],
-    overlay: top(H('Front row'), sub('the open kitchen is the show')),
+    overlay: top(H('Front row'), sub('the kitchen has no backstage')),
     cta: {label: 'book a table', color: 'orange'},
-    caption: 'Front row seats: the open kitchen is the show.',
+    caption: 'Front row seats. Our kitchen has no backstage — everything happens in front of you.',
     hashtags: ['#seasignora', '#openkitchen', '#brera', '#milanofood'], ctaVariants: ['book a table', 'reserve'],
   },
   {
@@ -94,15 +94,15 @@ export const week4b: Story[] = [
   {
     id: 'W4B-5fri-1v-seen-from-the-bar', day: 'Fri 30.10', rubric: 'Бар · подсмотрено', music: silent,
     scenes: [v('seen-from-bar', 5.6)],
-    overlay: top(H('Seen from the bar'), sub('friday, between the bottles')),
-    caption: 'Friday, seen from the bar.',
+    overlay: top(H('Seen from the bar'), sub('we always know when your glass is empty')),
+    caption: 'Seen from the bar: we always know when your glass is empty.',
     hashtags: ['#seasignora', '#bar', '#fridaynight', '#brera'], ctaVariants: ['reserve', 'experience Sea, Signora'],
   },
   {
     id: 'W4B-5fri-2p-velvet-hour', day: 'Fri 30.10', rubric: 'Атмосфера · красный бархат', music: silent,
     scenes: [ph('red-chandelier', 6)],
-    overlay: bottom(giant('Velvet hour', 118), sub('chandeliers on · from 19:00'), ...next('bring everyone')),
-    caption: 'Velvet hour: chandeliers on, from 19:00. Tomorrow, bring everyone.',
+    overlay: bottom(giant('Velvet hour', 118), sub('when brera slows down'), ...next('bring everyone')),
+    caption: 'Velvet hour: when Brera slows down. Tomorrow, bring everyone.',
     hashtags: ['#seasignora', '#brera', '#milanonight', '#interiordesign'], ctaVariants: ['reserve', 'secure your table'],
   },
 
