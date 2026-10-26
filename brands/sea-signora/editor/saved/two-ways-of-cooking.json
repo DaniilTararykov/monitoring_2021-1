@@ -189,5 +189,6 @@
   "hold": 4
  },
  "sub": "getting ready for blackout night",
- "rate": 1.35
+ "rate": 1.35,
+ "shade": 0.85
 }

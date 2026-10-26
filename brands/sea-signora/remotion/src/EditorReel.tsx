@@ -17,7 +17,7 @@ export type EditorConfig = {
   name: string; mode: 'split' | 'seq'; title: string; titleFont: 'display' | 'serif'; sub?: string; // sub: small mono line under the title
   music: string; beatsPerCut: number; secPerCut?: number; grade: boolean; shots: {a: EditorClip; b?: EditorClip}[];
   // final-render options (not set by the editor): explicit beat grid + audio file, no fades/drift, stronger grade
-  beats?: number[]; audio?: string; rate?: number; fades?: boolean; drift?: number; gradeAmount?: number; film?: boolean;
+  beats?: number[]; audio?: string; rate?: number; shade?: number; // shade: top darkening behind the title (default 0.62) fades?: boolean; drift?: number; gradeAmount?: number; film?: boolean;
   // optional ending: the last shot fades into the poster (fade 0 = straight cut), which holds `hold` s
   poster?: {src: string; fade: number; hold: number};
 };
@@ -119,13 +119,13 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
       ) : (
         config.fades === false
           // final cut: a small, soft shade just behind the title
-          ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 520, background: 'linear-gradient(to bottom, rgba(11,11,11,0.62) 0%, rgba(11,11,11,0.38) 45%, rgba(11,11,11,0) 100%)'}} />
+          ? <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: config.shade ? 640 : 520, background: `linear-gradient(to bottom, rgba(11,11,11,${config.shade ?? 0.62}) 0%, rgba(11,11,11,${(config.shade ?? 0.62) * 0.62}) 45%, rgba(11,11,11,0) 100%)`}} />
           : <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 620, background: 'linear-gradient(to bottom, rgba(11,11,11,0.75) 0%, rgba(11,11,11,0.35) 55%, rgba(11,11,11,0) 100%)'}} />
       )}
       {config.title ? (
         <div style={{position: 'absolute', left: 40, right: 40, top: split ? 960 - 36 : safe.top + 30, textAlign: 'center', color: colors.ivory, textShadow: '0 1px 14px rgba(0,0,0,0.6)', ...titleStyle}}>
           {config.title}
-          {config.sub ? <div style={{fontFamily: fonts.mono, fontStyle: 'normal', fontWeight: 500, fontSize: 22, letterSpacing: 5, textTransform: 'uppercase', marginTop: 12, opacity: 0.92}}>{config.sub}</div> : null}
+          {config.sub ? <div style={{fontFamily: fonts.mono, fontStyle: 'normal', fontWeight: 500, fontSize: 22, letterSpacing: 3, textTransform: 'uppercase', marginTop: 10, opacity: 0.92}}>{config.sub}</div> : null}
         </div>
       ) : null}
       {p ? (
