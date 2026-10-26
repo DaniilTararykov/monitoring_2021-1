@@ -12,3 +12,4 @@ renders/
 *.heic
 *.HEIC
 remotion/public/videos/
+remotion/public/music/ref-*
