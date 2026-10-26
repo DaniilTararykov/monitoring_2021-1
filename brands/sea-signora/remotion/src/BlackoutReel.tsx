@@ -10,7 +10,7 @@ loadBrandFonts();
 // the same passion, precision and recipe. Top: the kitchen. Bottom: the candle.
 // Each pair shows the SAME step of the two recipes; both halves cut together, on the beat.
 // No pop-ins, no punch zooms: calm split like the reference, slow drift inside the shot.
-// End: the last pair dissolves into blur and the event poster comes out of it.
+// End: a match lights the Holy Shell candle (full frame), it dissolves into blur and the poster comes out of it.
 
 export const FPS = 30;
 // beats of the reference track (≈96 BPM), seconds
@@ -22,17 +22,21 @@ const fr = (s: number) => Math.round(s * FPS);
 type Clip = {src: string; start: number; rate?: number; fy?: number};
 type Pair = {top: Clip; bottom: Clip; text: string};
 
-// one pair every 3 beats; the last pair holds longer and dissolves into the poster
+// 7 pairs, one every 2 beats (~1.3 s) — rhythm of the references; then the candle is lit
+// (full frame), it dissolves into blur and the poster resolves out of it.
 const PAIRS: Pair[] = [
-  {top: {src: 'IMG_0647.mp4', start: 1.3}, bottom: {src: 'IMG_0763.mp4', start: 2.6}, text: 'two recipes of one evening'},
+  {top: {src: 'IMG_0639.mp4', start: 3.9}, bottom: {src: 'IMG_0749.mp4', start: 14.6, fy: 40}, text: 'two recipes'},
+  {top: {src: 'IMG_0658.mp4', start: 3.6}, bottom: {src: 'IMG_0745.mp4', start: 11.6, fy: 40}, text: 'one evening'},
+  {top: {src: 'IMG_0647.mp4', start: 1.3}, bottom: {src: 'IMG_0763.mp4', start: 2.6}, text: 'the selection'},
   {top: {src: 'IMG_0706.mp4', start: 3.2}, bottom: {src: 'IMG_0762.mp4', start: 3.5}, text: 'the heat'},
   {top: {src: 'IMG_0654.mp4', start: 1.5}, bottom: {src: 'IMG_0747.mp4', start: 0.2}, text: 'the pour'},
   {top: {src: 'IMG_0702.mp4', start: 10.6}, bottom: {src: 'IMG_0772.mp4', start: 4.3}, text: 'the precision'},
   {top: {src: 'IMG_0711.mp4', start: 0.3}, bottom: {src: 'IMG_0776.mp4', start: 0}, text: 'the finish'},
 ];
-const CUTS = [0, B[2], B[5], B[8], B[11]]; // pair i starts here
-const POSTER_AT = B[15]; // poster fully in; the last pair is blurred out by then
-const LAST_PAIR_END = B[15];
+const CUTS = [0, B[1], B[3], B[5], B[7], B[9], B[11]]; // pair i starts here
+const LIGHT_AT = B[13]; // full-frame: the candle is lit with a match
+const LIGHT_START = 2.6; // seconds into candle-light.mp4 (match comes in at ~2.8 s)
+const LAST_PAIR_END = LIGHT_AT;
 
 const Half: React.FC<{c: Clip; len: number}> = ({c, len}) => {
   const f = useCurrentFrame();
@@ -54,11 +58,11 @@ const Half: React.FC<{c: Clip; len: number}> = ({c, len}) => {
 export const BlackoutReel: React.FC<{withAudio?: boolean}> = ({withAudio = true}) => {
   const f = useCurrentFrame();
   // dissolve: the last pair blurs and dims, the poster resolves out of the blur
-  const blurOut = interpolate(f, [fr(B[13]), fr(B[15])], [0, 24], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const dimOut = interpolate(f, [fr(B[13]), fr(B[15])], [1, 0.55], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const posterO = interpolate(f, [fr(B[14]), fr(B[15]) + 6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const posterBlur = interpolate(f, [fr(B[14]), fr(B[16])], [24, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const posterScale = interpolate(f, [fr(B[14]), fr(DURATION_S)], [1.08, 1.0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const blurOut = interpolate(f, [fr(B[15]), fr(B[16])], [0, 24], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const dimOut = interpolate(f, [fr(B[15]), fr(B[16])], [1, 0.55], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const posterO = interpolate(f, [fr(B[15]) + 6, fr(B[16]) + 6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const posterBlur = interpolate(f, [fr(B[15]) + 6, fr(B[17])], [24, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const posterScale = interpolate(f, [fr(B[15]), fr(DURATION_S)], [1.08, 1.0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const end = interpolate(f, [fr(DURATION_S) - 12, fr(DURATION_S) - 1], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
 
   const idx = CUTS.findIndex((c, i) => f >= fr(c) && f < fr(CUTS[i + 1] ?? LAST_PAIR_END + 99));
@@ -69,7 +73,7 @@ export const BlackoutReel: React.FC<{withAudio?: boolean}> = ({withAudio = true}
       <AbsoluteFill style={{filter: `blur(${blurOut}px) brightness(${dimOut})`}}>
         {PAIRS.map((p, i) => {
           const from = fr(CUTS[i]);
-          const to = i === PAIRS.length - 1 ? fr(POSTER_AT) + 20 : fr(CUTS[i + 1]);
+          const to = i === PAIRS.length - 1 ? fr(LAST_PAIR_END) : fr(CUTS[i + 1]);
           return (
             <Sequence key={i} from={from} durationInFrames={to - from}>
               <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 960, overflow: 'hidden'}}>
@@ -82,9 +86,12 @@ export const BlackoutReel: React.FC<{withAudio?: boolean}> = ({withAudio = true}
           );
         })}
         {/* soft shade along the seam so the italic caption reads without a plate */}
-        <div style={{position: 'absolute', left: 0, right: 0, top: 960 - 90, height: 180,
-          background: 'linear-gradient(to bottom, rgba(11,11,11,0) 0%, rgba(11,11,11,0.35) 50%, rgba(11,11,11,0) 100%)'}} />
-        {idx >= 0 ? (
+        {f < fr(LIGHT_AT) ? <div style={{position: 'absolute', left: 0, right: 0, top: 960 - 90, height: 180,
+          background: 'linear-gradient(to bottom, rgba(11,11,11,0) 0%, rgba(11,11,11,0.35) 50%, rgba(11,11,11,0) 100%)'}} /> : null}
+        <Sequence from={fr(LIGHT_AT)} durationInFrames={fr(DURATION_S) - fr(LIGHT_AT)}>
+          <Half c={{src: 'candle-light.mp4', start: LIGHT_START}} len={fr(DURATION_S) - fr(LIGHT_AT)} />
+        </Sequence>
+        {idx >= 0 && f < fr(LIGHT_AT) ? (
           <div style={{position: 'absolute', left: 0, right: 0, top: 960 - 30, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: capIn}}>
             <span style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 40, color: colors.ivory, letterSpacing: 0.5,
               textShadow: '0 1px 12px rgba(0,0,0,0.55)'}}>
@@ -94,7 +101,7 @@ export const BlackoutReel: React.FC<{withAudio?: boolean}> = ({withAudio = true}
         ) : null}
       </AbsoluteFill>
 
-      <Sequence from={fr(B[14])}>
+      <Sequence from={fr(B[15])}>
         <AbsoluteFill style={{opacity: posterO, filter: `blur(${posterBlur}px)`}}>
           <Img src={staticFile('photos/blackout-poster.jpg')} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${posterScale})`}} />
         </AbsoluteFill>
