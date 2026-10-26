@@ -9,8 +9,9 @@ loadBrandFonts();
 // One recipe, written once, cooked twice. Each step is a rhyme: the dish does it, then the candle does
 // the same verb. The shot sits in an editorial window on night; under it the step number + verb stays
 // for the whole step and only "the dish / the candle" switches. Step 07 is the evening itself, and the
-// only transition in the video is the slow fade from the lit candle into the Blackout Night poster.
-// No grade (client, 26.10), hard cuts on the beat (2 beats a shot, finale 4).
+// evening plays out with footage from the last Blackout Night (candles lit, the room by the aquarium), and the
+// only transition in the video is the slow fade from that room into the poster of the same room.
+// No grade (client, 26.10), hard cuts on the beat (2 beats a shot). Step numbers in brand orange.
 
 const FPS = 30;
 const fr = (s: number) => Math.round(s * FPS);
@@ -21,11 +22,13 @@ const LOOP = 10.937 - 0.743;
 const BEATS = [0, 1, 2].flatMap((k) => BASE.map((b) => b + k * LOOP));
 const beat = (i: number) => (i <= 0 ? 0 : BEATS[i - 1]);
 
-type Shot = {clip: string; start: number; fy: number; who: string};
-type Step = {n: string; verb: string; shots: [Shot, Shot]};
-const s = (clip: string, start: number, fy: number, who: string): Shot => ({clip, start, fy, who});
+type Shot = {clip: string; start: number; fy: number; who: string; rate?: number};
+type Step = {n: string; verb: string; shots: Shot[]};
+const s = (clip: string, start: number, fy: number, who: string, rate?: number): Shot => ({clip, start, fy, who, rate});
 const DISH = 'the dish';
 const CANDLE = 'the candle';
+const NIGHT = 'blackout night';
+// blackout-past.mp4: the client's edit from the last Blackout Night — 0 guests · 1.43 the room · 2.77 a glass · 3.97 candelabra · 5.17 glasses
 
 export const STEPS: Step[] = [
   {n: '', verb: 'two hands', shots: [s('IMG_0684', 0.55, 60, 'the chef'), s('IMG_0764', 5.72, 69, 'the candle maker')]},
@@ -35,11 +38,14 @@ export const STEPS: Step[] = [
   {n: '04', verb: 'stir', shots: [s('IMG_0696', 6.88, 62, DISH), s('IMG_0762', 5, 75, CANDLE)]},
   {n: '05', verb: 'pour', shots: [s('IMG_0655', 8.08, 73, DISH), s('IMG_0767', 11.13, 30, CANDLE)]},
   {n: '06', verb: 'place', shots: [s('IMG_0637', 5.3, 60, DISH), s('IMG_0754', 5.9, 55, CANDLE)]},
-  {n: '07', verb: 'the evening', shots: [s('IMG_0709', 2.7, 74, DISH), s('candle-light', 3.575, 58, CANDLE)]},
+  {n: '07', verb: 'the evening', shots: [
+    s('IMG_0709', 2.7, 74, DISH), s('candle-light', 3.575, 58, CANDLE),
+    s('blackout-past', 3.97, 60, NIGHT, 0.95), s('blackout-past', 5.17, 55, NIGHT, 0.68),
+    s('blackout-past', 0, 55, NIGHT), s('blackout-past', 1.44, 45, NIGHT, 0.65)]},
 ];
 
 const BEATS_PER_SHOT = 2;
-const FINALE_BEATS = 4;
+const FINALE_BEATS = 2;
 const SHOTS = STEPS.flatMap((st) => st.shots.map((sh) => ({...sh, step: st})));
 const CUTS = SHOTS.map((_, i) => beat(i * BEATS_PER_SHOT));
 const SHOTS_END = beat((SHOTS.length - 1) * BEATS_PER_SHOT + FINALE_BEATS);
@@ -59,8 +65,8 @@ export const RecipeCard: React.FC = () => {
   return (
     <AbsoluteFill style={{background: colors.night}}>
       <div style={{position: 'absolute', top: safe.top + 8, left: 0, right: 0, textAlign: 'center', fontFamily: fonts.mono,
-        fontSize: 19, letterSpacing: 5, color: colors.ivory, opacity: 0.6, textTransform: 'uppercase'}}>
-        Sea, Signora × the candle cluub
+        fontSize: 20, letterSpacing: 5, color: 'rgba(248,246,245,0.75)', textTransform: 'uppercase', whiteSpace: 'pre'}}>
+        Sea, Signora<span style={{color: colors.orange}}>  |  </span>Blackout Night<span style={{color: colors.orange}}>  |  </span>29/10
       </div>
       <div style={{position: 'absolute', top: safe.top + 46, left: 0, right: 0, textAlign: 'center', fontFamily: fonts.display,
         fontSize: 50, letterSpacing: 1, color: colors.ivory, textTransform: 'uppercase'}}>
@@ -73,7 +79,7 @@ export const RecipeCard: React.FC = () => {
           const to = i === SHOTS.length - 1 ? end + fr(FADE) : fr(CUTS[i + 1]);
           return (
             <Sequence key={i} from={from} durationInFrames={to - from}>
-              <OffthreadVideo src={staticFile(`videos/reel/${sh.clip}.mp4`)} startFrom={fr(sh.start)} muted
+              <OffthreadVideo src={staticFile(`videos/reel/${sh.clip}.mp4`)} startFrom={fr(sh.start)} playbackRate={sh.rate ?? 1} muted
                 style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `50% ${sh.fy}%`}} />
             </Sequence>
           );
@@ -81,11 +87,11 @@ export const RecipeCard: React.FC = () => {
       </div>
 
       <div style={{position: 'absolute', top: WIN.top + WIN.height + 22, left: 0, right: 0, textAlign: 'center', color: colors.ivory}}>
-        <span style={{fontFamily: fonts.display, fontSize: 44, opacity: 0.55, marginRight: cur.step.n ? 22 : 0}}>{cur.step.n}</span>
+        <span style={{fontFamily: fonts.display, fontSize: 46, color: colors.orange, marginRight: cur.step.n ? 22 : 0}}>{cur.step.n}</span>
         <span style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 46}}>{cur.step.verb}</span>
       </div>
       <div style={{position: 'absolute', top: WIN.top + WIN.height + 84, left: 0, right: 0, textAlign: 'center', fontFamily: fonts.mono,
-        fontSize: 19, letterSpacing: 5, color: colors.ivory, opacity: 0.6, textTransform: 'uppercase'}}>
+        fontSize: 19, letterSpacing: 5, textTransform: 'uppercase', ...(cur.who === NIGHT ? {color: colors.orange} : {color: colors.ivory, opacity: 0.6})}}>
         {cur.who}
       </div>
 
