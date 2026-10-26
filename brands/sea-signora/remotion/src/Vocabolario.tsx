@@ -31,7 +31,10 @@ const SHAPES: Record<Shape, {w: number; h: number; radius: string}> = {
 };
 
 type Media = {photo?: string; video?: string; size: [number, number]; focus: [number, number]; zoom?: number; rate?: number; start?: number};
-type Entry = {id: string; bg: Bg; shape: Shape; word: string; read: string; pos: string; def: string; m: Media; frames: number; cta?: {label: string; color: 'orange' | 'olive'}};
+// a dictionary entry (word, reading, part of speech, one line) — or, for events, the same layout with the event info
+type Info = {label: string; title: string; line: string; meta: string};
+type Entry = {id: string; bg: Bg; shape: Shape; word?: string; read?: string; pos?: string; def?: string; info?: Info;
+  m: Media; frames: number; cta?: {label: string; color: 'orange' | 'olive'}};
 
 // the media covers the shape, scaled `zoom` × over cover, with the focus point as close to the centre as the edges allow
 const place = (w: number, h: number, m: Media): React.CSSProperties => {
@@ -50,7 +53,7 @@ const EntryView: React.FC<{e: Entry}> = ({e}) => {
     <AbsoluteFill style={{background: c.bg}}>
       <div style={{position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', color: c.ink}}>
         <div style={{fontFamily: fonts.display, fontSize: 36, letterSpacing: 1}}>Sea, Signora</div>
-        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 15, letterSpacing: 6, textTransform: 'uppercase', marginTop: 8, color: c.accent}}>vocabolario</div>
+        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 15, letterSpacing: 6, textTransform: 'uppercase', marginTop: 8, color: c.accent}}>{e.info ? e.info.label : 'vocabolario'}</div>
       </div>
       <div style={{position: 'absolute', left: 540 - sh.w / 2, top: CY - sh.h / 2 + 20, width: sh.w, height: sh.h, overflow: 'hidden', borderRadius: sh.radius}}>
         {e.m.photo
@@ -58,11 +61,11 @@ const EntryView: React.FC<{e: Entry}> = ({e}) => {
           : <OffthreadVideo src={staticFile(`videos/w5/${e.m.video}.mp4`)} muted playbackRate={e.m.rate ?? 1} startFrom={e.m.start ?? 0} style={style} />}
       </div>
       <div style={{position: 'absolute', left: 60, right: 60, top: 1330, textAlign: 'center', color: c.ink}}>
-        <div style={{fontFamily: fonts.display, fontSize: 66, textTransform: 'uppercase', letterSpacing: 2, lineHeight: 1}}>{e.word}</div>
+        <div style={{fontFamily: fonts.display, fontSize: e.info ? 60 : 66, textTransform: 'uppercase', letterSpacing: 2, lineHeight: 1}}>{e.info ? e.info.title : e.word}</div>
         <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 30, marginTop: 12}}>
-          {e.read} <span style={{color: c.accent}}>·</span> {e.pos}
+          {e.info ? e.info.line : <>{e.read} <span style={{color: c.accent}}>·</span> {e.pos}</>}
         </div>
-        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 21, letterSpacing: 3, textTransform: 'uppercase', marginTop: 16}}>{e.def}</div>
+        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 21, letterSpacing: 3, textTransform: 'uppercase', marginTop: 16}}>{e.info ? e.info.meta : e.def}</div>
       </div>
       {e.cta ? <Chip cta={{...e.cta, y: 1920 - (CY + sh.h / 2 + 20) + 40}} /> : null}
     </AbsoluteFill>
@@ -100,10 +103,10 @@ const ENTRIES: Entry[] = [
   {id: 'W5-5fri-1v-riflesso', bg: 'green', shape: 'rect', word: 'Riflesso', read: 'ri·flès·so', pos: 'noun', def: 'the room in the mirror on a friday night',
     m: {video: 'mirror-menu', size: V, focus: [540, 900], start: s(4.3), rate: 0.4}, frames: s(4.5)},
   {id: 'W5-5fri-2p-aperitivo', bg: 'orange', shape: 'oval', word: 'Aperitivo', read: 'a·pe·ri·tí·vo', pos: 'noun', def: 'strong breeze from our bar book',
-    m: {photo: 's7_116', size: [1001, 1500], focus: [350, 760], zoom: 1.4}, frames: 1, cta: {label: 'reserve', color: 'orange'}},
+    m: {photo: 's7_116', size: [1001, 1500], focus: [350, 760], zoom: 1.4}, frames: 1},
   // Sat 31.10 — the set table, dried flowers and the round flower mural; plates held through the red curtain
   {id: 'W5-6sat-1v-tavola', bg: 'white', shape: 'circle', word: 'Tavola', read: 'tà·vo·la', pos: 'noun', def: 'set for you at via fiori chiari 32',
-    m: {video: 'table-set', size: V, focus: [540, 900], start: s(3.5), rate: 0.55}, frames: s(6), cta: {label: 'make a reservation', color: 'olive'}},
+    m: {video: 'table-set', size: V, focus: [540, 900], start: s(3.5), rate: 0.55}, frames: s(6)},
   {id: 'W5-6sat-2p-sipario', bg: 'green', shape: 'arch', word: 'Sipario', read: 'si·pà·rio', pos: 'noun', def: 'the curtain rises every night at 19:00',
     m: {photo: 's8_073', size: S8, focus: [1045, 1650]}, frames: 1},
   // Sun 01.11 — dried flowers and a seed head on green marble; the red dessert
@@ -111,10 +114,14 @@ const ENTRIES: Entry[] = [
     m: {video: 'natura-morta', size: V, focus: [528, 800], zoom: 1.15, rate: 0.6}, frames: s(6)},
   {id: 'W5-7sun-2p-fine', bg: 'white', shape: 'rect', word: 'Fine', read: 'fí·ne', pos: 'noun', def: 'the end of the week not of dessert',
     m: {photo: 's7_105', size: [1200, 1500], focus: [600, 640], zoom: 1.15}, frames: 1},
-  // event (client 26.10): Blackout Night — candles, a plate and a glass from the event's photo set. The Dim Sum night
-  // keeps its announcement format: stories.ts «25-sun-dimsum-tomorrow», rendered as a still for Sun 01.11
-  {id: 'W5-4thu-4p-blackout-buio', bg: 'orange', shape: 'pill', word: 'Buio', read: 'bù·io', pos: 'noun', def: 'blackout night 29/10 · dinner by candlelight',
-    m: {photo: 'blackout-candles', size: [2200, 3300], focus: [1210, 1650], zoom: 1.1}, frames: 1},
+  // events (client 26.10): same design, event info instead of the dictionary entry. Blackout Night — candles, a plate and a
+  // glass from the event's photo set; Dim Sum Milano — the dumplings from the client's own story, cropped below its title
+  {id: 'W5-4thu-4p-blackout-night', bg: 'orange', shape: 'pill',
+    info: {label: 'tonight', title: 'Blackout Night', line: 'dinner by candlelight', meta: '29/10 · from 19:00'},
+    m: {photo: 'blackout-candles', size: [2200, 3300], focus: [1210, 1650], zoom: 1.1}, frames: 1, cta: {label: 'secure your spot', color: 'orange'}},
+  {id: 'W5-7sun-3p-dim-sum-milano', bg: 'green', shape: 'circle',
+    info: {label: 'tomorrow', title: '× Dim Sum Milano', line: 'a cantonese evening', meta: 'from 19:00 · ravioli di gambero piccante'},
+    m: {photo: 'dimsum-ravioli', size: [720, 1280], focus: [276, 852]}, frames: 1, cta: {label: 'book your table', color: 'orange'}},
 ];
 
 export const VOCABOLARIO = ENTRIES.map((e) => ({id: e.id, frames: e.frames, component: () => <EntryView e={e} />}));
