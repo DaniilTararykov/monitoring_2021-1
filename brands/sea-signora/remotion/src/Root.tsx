@@ -14,7 +14,9 @@ const Story: React.FC<{story: Story; guides?: boolean}> = (p) => <StoryVideo {..
 export const RemotionRoot: React.FC = () => (
   <>
     <Composition id="BrandSheet" component={BrandSheet} durationInFrames={300} fps={video.fps} width={2600} height={1500} />
-    <Composition id="BlackoutReel" component={BlackoutReel} durationInFrames={Math.round(DURATION_S * FPS)} fps={FPS} width={1080} height={1920} defaultProps={{withAudio: true}} />
+    {['a', 'b', 'c', 'd'].map((v) => (
+      <Composition key={v} id={v === 'a' ? 'BlackoutReel' : `BlackoutReel-${v}`} component={BlackoutReel} durationInFrames={Math.round(DURATION_S * FPS)} fps={FPS} width={1080} height={1920} defaultProps={{withAudio: true, variant: v}} />
+    ))}
     {[...stories, ...pack2, ...pack3].map((s) => (
       <Composition
         key={s.id}
