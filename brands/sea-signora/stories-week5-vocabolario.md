@@ -23,3 +23,5 @@ kitchen lights up at 19:00.» Hashtags: #seasignora #brera #milanofood #finedini
 | 12 | Sat 07.11 | green | arch | Sipario | the curtain rises every night at 19:00 | photo: plates through the red curtain |
 | 13 | Sun 08.11 | orange | oval | Domenica | 12:30—15:30 & 19:00—00:00 | video: dried flowers on green marble |
 | 14 | Sun 08.11 | white | rect | Fine | the end of the week not of dessert | photo: the red dessert |
+| ev1 | event | green | circle | Ravioli | di gambero piccante · sea, signora × dim sum milano | photo: the dumplings from the client's Dim Sum story (cropped below its title) — caption: Ravioli di gambero piccante: Sea, Signora × Dim Sum Milano. |
+| ev2 | event | orange | pill | Buio | blackout night · dinner by candlelight | photo: candles, a plate and a glass from Blackout Night — caption: Buio: Blackout Night, dinner by candlelight. |
