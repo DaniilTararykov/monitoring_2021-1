@@ -1,0 +1,146 @@
+{
+ "config": {
+  "beatsPerCut": 4,
+  "grade": true,
+  "mode": "seq",
+  "music": "ref-kitchen-cinematic",
+  "name": "Друг за другом · мой 2",
+  "title": "Two recipes of one evening",
+  "titleFont": "display",
+  "shots": [
+   {
+    "a": {
+     "clip": "IMG_0638",
+     "fy": 50,
+     "start": 2.26
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0746",
+     "fy": 50,
+     "start": 2.07
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0637",
+     "fy": 50,
+     "start": 5.3
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0748",
+     "fy": 50,
+     "start": 33.66
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0655",
+     "fy": 50,
+     "start": 8.08
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0752",
+     "fy": 50,
+     "start": 27.45
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0684",
+     "fy": 50,
+     "start": 0.55
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0764",
+     "fy": 50,
+     "start": 5.72
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0667",
+     "fy": 50,
+     "start": 10.07
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0760",
+     "fy": 50,
+     "start": 0
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0708",
+     "fy": 50,
+     "start": 0.93
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0754",
+     "fy": 50,
+     "start": 5.9
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0762",
+     "fy": 50,
+     "start": 5
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0696",
+     "fy": 50,
+     "start": 6.88
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0772",
+     "fy": 50,
+     "start": 3.63
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0709",
+     "fy": 50,
+     "start": 2.7
+    }
+   },
+   {
+    "a": {
+     "clip": "candle-light",
+     "fy": 50,
+     "start": 0.04
+    }
+   },
+   {
+    "a": {
+     "clip": "IMG_0669",
+     "fy": 50,
+     "start": 2.52
+    }
+   },
+   {
+    "a": {
+     "clip": "candle-light",
+     "fy": 50,
+     "start": 3.57
+    }
+   }
+  ]
+ }
+}
