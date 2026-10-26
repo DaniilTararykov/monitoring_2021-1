@@ -432,7 +432,7 @@ export const stories: Story[] = [
         {t: 'sub', text: 'a cantonese evening\nfrom 19:00'}, // client 26.10: no date, no "in Brera" on screen
       ],
     },
-    cta: {label: 'book your table', color: 'orange'},
+    // client 26.10: no link chip
     caption: 'Tomorrow: Sea, Signora × Dim Sum Milano. A Cantonese evening, from 19:00.',
     hashtags: ['#seasignora', '#dimsummilano', '#brera', '#milanoevents'],
     ctaVariants: ['book your table', 'secure your spot', 'reserve'],
