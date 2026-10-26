@@ -4,174 +4,208 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Spectral:ital,wght@0,400;1,400&display=swap">
 <style>
 @font-face { font-family: "Skanaus"; src: url(data:font/otf;base64,__SKANAUS__) format("opentype"); font-display: swap; }
-/* Layout: editing table — left rail of settings, centre 9:16 monitor, right the shot bench. */
+/* Layout: an editing desk in three steps — 1 base (left), monitor (centre), 2 shots (right, full height), 3 render (left bottom). */
 :root {
-  --night: #0B0B0B; --ink: #161512; --panel: #1C1B17; --line: #34322B;
-  --ivory: #F8F6F5; --muted: #A9A49A; --orange: #E57533; --olive: #9E9E6A; --marble: #1B2F1C; --danger: #D9534F;
+  --night: #0B0B0B; --ink: #151411; --panel: #1C1B17; --raise: #24221D; --line: #35332B;
+  --ivory: #F8F6F5; --muted: #A9A49A; --orange: #E57533; --olive: #9E9E6A; --danger: #E06A5F;
   --display: "Skanaus", "Spectral", Georgia, serif;
   --serif: "Spectral", Georgia, serif;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   color-scheme: dark;
 }
 :root[data-theme="light"], :root[data-theme="dark"] { color-scheme: dark; }
-html, body { height: 100%; }
-body { background: var(--night); color: var(--ivory); font-family: var(--mono); font-size: 13px;
+body { background: var(--night); color: var(--ivory); font-family: var(--mono); font-size: 13px; line-height: 1.45;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
 * { box-sizing: border-box; }
-h1 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 0; letter-spacing: .5px; }
-h2 { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); font-weight: 500; margin: 0 0 10px; }
-.top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; margin-bottom: 16px; }
-.top p { margin: 0; color: var(--muted); max-width: 70ch; }
-.app { display: grid; grid-template-columns: minmax(240px, 300px) minmax(280px, 380px) minmax(0, 1fr); gap: 16px; align-items: start; }
-@media (max-width: 1100px) { .app { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .bench { grid-column: 1 / -1; } }
+h1 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 0; }
+.step { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--ivory); font-weight: 500; }
+.step i { font-style: normal; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--orange); color: var(--night); font-weight: 700; letter-spacing: 0; }
+.sub { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; margin-bottom: 16px; }
+.howto { display: flex; flex-wrap: wrap; gap: 6px 16px; color: var(--muted); font-size: 12px; margin: 0; padding: 0; list-style: none; }
+.howto b { color: var(--orange); font-weight: 700; }
+.app { display: grid; grid-template-columns: minmax(250px, 300px) minmax(260px, 340px) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 1150px) { .app { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .shotsCol { grid-column: 1 / -1; } }
 @media (max-width: 720px) { .app { grid-template-columns: minmax(0, 1fr); } }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; min-width: 0; }
-.stack { display: flex; flex-direction: column; gap: 14px; }
-label.f { display: flex; flex-direction: column; gap: 6px; color: var(--muted); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
-input[type=text], select { background: var(--ink); color: var(--ivory); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font: inherit; font-size: 13px; text-transform: none; letter-spacing: 0; width: 100%; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+input[type=text], input[type=number], select { background: var(--ink); color: var(--ivory); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font: inherit; width: 100%; }
+input[type=number] { width: 92px; text-align: center; font-variant-numeric: tabular-nums; }
 input[type=range] { width: 100%; accent-color: var(--orange); }
 .seg { display: flex; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 3px; }
-.seg button { flex: 1; }
-button { font: inherit; color: var(--ivory); background: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; cursor: pointer; }
-button:hover { border-color: var(--muted); }
-button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
-button.on { background: var(--ivory); color: var(--night); border-color: var(--ivory); }
-button.primary { background: var(--orange); border-color: var(--orange); color: var(--night); font-weight: 700; }
-button.ghost { background: transparent; }
-.hint { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.seg button { flex: 1; border: 0; }
+button { font: inherit; color: var(--ivory); background: var(--raise); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--muted); }
+button:disabled { opacity: .45; cursor: default; }
+button:focus-visible, input:focus-visible, select:focus-visible, .strip:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+button.on { background: var(--ivory); color: var(--night); }
+button.primary { background: var(--orange); border-color: var(--orange); color: var(--night); font-weight: 700; padding: 11px; }
+button.small { padding: 5px 8px; font-size: 12px; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.val { color: var(--ivory); font-variant-numeric: tabular-nums; }
+.row > button { flex: 1 1 auto; }
+.hint { color: var(--muted); font-size: 11.5px; margin: 0; }
+.val { color: var(--orange); font-variant-numeric: tabular-nums; }
+.check { display: flex; gap: 8px; align-items: center; color: var(--muted); }
+.badge { font-size: 10px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.badge.mine { color: var(--olive); border-color: var(--olive); }
 
 /* monitor */
-.monitor { position: relative; width: 100%; max-width: 360px; aspect-ratio: 9 / 16; margin: 0 auto; background: #000; border-radius: 12px; overflow: hidden; }
+.monitor { position: relative; width: 100%; max-width: 320px; aspect-ratio: 9 / 16; margin: 0 auto; background: #000; border-radius: 12px; overflow: hidden; }
 .half { position: absolute; left: 0; right: 0; overflow: hidden; }
 .half video, .full video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .full { position: absolute; inset: 0; }
 .graded video { filter: contrast(1.08) brightness(.93) saturate(.9) sepia(.12); }
-.mtitle { position: absolute; left: 0; right: 0; text-align: center; color: var(--ivory); text-transform: uppercase; font-family: var(--display); font-size: 17px; letter-spacing: .3px; pointer-events: none; text-shadow: 0 1px 8px rgba(0,0,0,.6); padding: 0 10px; }
-.mtitle.serif { font-family: var(--serif); font-style: italic; text-transform: none; font-size: 18px; }
-.safe { position: absolute; left: 0; right: 0; background: rgba(229,117,51,.18); pointer-events: none; }
+.mtitle { position: absolute; left: 0; right: 0; text-align: center; color: var(--ivory); text-transform: uppercase; font-family: var(--display); font-size: 16px; pointer-events: none; text-shadow: 0 1px 8px rgba(0,0,0,.65); padding: 0 10px; }
+.mtitle.serif { font-family: var(--serif); font-style: italic; text-transform: none; font-size: 17px; }
+.safe { position: absolute; left: 0; right: 0; background: rgba(229,117,51,.22); pointer-events: none; }
+.hl { position: absolute; left: 0; right: 0; border: 2px solid var(--orange); pointer-events: none; }
 .transport { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
 .transport .time { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
-.bar { height: 6px; background: var(--ink); border-radius: 3px; margin-top: 8px; position: relative; overflow: hidden; cursor: pointer; }
-.bar i { position: absolute; top: 0; bottom: 0; left: 0; background: var(--orange); }
-.bar b { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.bar { height: 22px; background: var(--ink); border-radius: 6px; margin-top: 10px; position: relative; overflow: hidden; cursor: pointer; display: flex; }
+.bar span { height: 100%; border-right: 1px solid var(--night); background: var(--raise); font-size: 9px; color: var(--muted); display: grid; place-items: center; min-width: 0; overflow: hidden; }
+.bar span.cur { background: #4a2d1b; color: var(--ivory); }
+.bar i { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--orange); }
 
-/* bench */
-.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
-.shot { background: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 6px; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 6px; }
+/* shots */
+.shots { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; }
+.shot { flex: 0 0 86px; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 5px; cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
 .shot.sel { border-color: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
 .shot .thumbs { display: grid; gap: 2px; border-radius: 6px; overflow: hidden; aspect-ratio: 9 / 16; background: #000; }
 .shot .thumbs.split { grid-template-rows: 1fr 1fr; }
 .shot .thumbs video { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 0; }
 .shot .meta { font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
-.edit { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; }
-@media (max-width: 720px) { .edit { grid-template-columns: minmax(0, 1fr); } }
-.scrub { position: relative; width: 100%; max-width: 240px; aspect-ratio: 9 / 16; background: #000; border-radius: 10px; overflow: hidden; margin: 0 auto; }
-.scrub video { width: 100%; height: 100%; object-fit: cover; }
-.cropbox { position: absolute; left: 0; right: 0; border: 2px solid var(--orange); box-shadow: 0 0 0 999px rgba(0,0,0,.55); pointer-events: none; }
-.lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); grid-auto-rows: max-content; align-content: start; gap: 6px; max-height: 360px; overflow-y: auto; padding-right: 4px; }
-.lib button { padding: 0; border-radius: 6px; overflow: hidden; aspect-ratio: 9 / 16; height: auto; width: 100%; display: block; position: relative; background: #000; }
+.shot.bad .meta span:last-child { color: var(--danger); }
+.editor { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 14px; display: grid; grid-template-columns: minmax(150px, 210px) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 720px) { .editor { grid-template-columns: minmax(0, 1fr); } }
+.edhead { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; grid-column: 1 / -1; }
+.edhead h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 22px; }
+.source { position: relative; width: 100%; aspect-ratio: 9 / 16; background: #000; border-radius: 10px; overflow: hidden; }
+.source video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cropbox { position: absolute; left: 0; right: 0; height: 50%; border: 2px solid var(--orange); box-shadow: 0 0 0 999px rgba(0,0,0,.5); cursor: ns-resize; touch-action: none; }
+.cropbox::after { content: "тяни"; position: absolute; right: 4px; top: 4px; font-size: 9px; background: var(--orange); color: var(--night); padding: 1px 5px; border-radius: 4px; }
+.strip { position: relative; height: 64px; border-radius: 8px; overflow: hidden; background: var(--ink); cursor: pointer; touch-action: none; user-select: none; }
+.strip canvas { width: 100%; height: 100%; display: block; }
+.strip .win { position: absolute; top: 0; bottom: 0; border: 3px solid var(--orange); border-radius: 6px; background: rgba(229,117,51,.12); box-shadow: 0 0 0 999px rgba(0,0,0,.5); cursor: grab; }
+.strip .win:active { cursor: grabbing; }
+.strip .ph { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ivory); pointer-events: none; }
+.ticks { display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+.lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); grid-auto-rows: max-content; align-content: start; gap: 6px; max-height: 300px; overflow-y: auto; padding: 2px 4px 2px 2px; }
+.lib button { padding: 0; border-radius: 6px; overflow: hidden; aspect-ratio: 9 / 16; width: 100%; display: block; position: relative; background: #000; border: 0; }
 .lib button.cur { outline: 2px solid var(--orange); outline-offset: 1px; }
 .lib video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-.lib span { position: absolute; left: 3px; bottom: 3px; font-size: 9px; background: rgba(0,0,0,.65); padding: 1px 4px; border-radius: 4px; }
-.status { font-size: 12px; min-height: 18px; }
+.lib span { position: absolute; left: 3px; bottom: 3px; font-size: 9px; background: rgba(0,0,0,.7); padding: 1px 4px; border-radius: 4px; }
+.status { font-size: 12px; min-height: 18px; margin: 0; }
 .status.ok { color: var(--olive); } .status.err { color: var(--danger); }
-.saved { display: flex; flex-direction: column; gap: 6px; }
-.saved div { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 6px; }
-.pill { padding: 1px 8px; border-radius: 999px; font-size: 10px; border: 1px solid var(--line); }
-.pill.done { color: var(--olive); border-color: var(--olive); } .pill.req { color: var(--orange); border-color: var(--orange); }
+.queue { display: flex; flex-direction: column; gap: 6px; }
+.queue div { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 6px; }
+.pill { padding: 1px 8px; border-radius: 999px; font-size: 10px; border: 1px solid var(--orange); color: var(--orange); }
+.pill.done { color: var(--olive); border-color: var(--olive); }
+.confirm { display: flex; gap: 6px; align-items: center; color: var(--danger); font-size: 12px; }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
 </style>
 
 <div class="top">
   <h1>Монтажная</h1>
-  <p>Выбери пресет, поправь кадры и нажми «Отправить на рендер». Финальное видео соберу в полном качестве, со шрифтами и цветокоррекцией бренда.</p>
+  <ol class="howto">
+    <li><b>1</b> выбери основу</li><li><b>2</b> поправь кадры</li><li><b>3</b> отправь на рендер</li>
+  </ol>
 </div>
 
 <div class="app">
-  <!-- settings rail -->
+  <!-- 1 + 3 -->
   <div class="stack">
     <div class="card stack">
-      <h2>Ролик</h2>
-      <label class="f">Пресет<select id="preset"></select></label>
-      <label class="f">Название версии<input id="name" type="text" maxlength="40"></label>
-      <div class="f" style="display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase">Формат
-        <div class="seg" role="group" aria-label="Формат">
-          <button id="m-split" type="button">Сплит</button><button id="m-seq" type="button">Друг за другом</button>
-        </div>
+      <p class="step"><i>1</i>Основа</p>
+      <div class="field"><span class="sub">Пресет</span><select id="preset"></select></div>
+      <div class="row">
+        <button class="small" id="p-save" type="button">Сохранить изменения в пресет</button>
+        <button class="small" id="p-new" type="button">Сохранить как новый</button>
+        <button class="small" id="p-reset" type="button">Вернуть исходный</button>
       </div>
+      <div id="p-confirm"></div>
+      <div class="field"><span class="sub">Название</span><input id="name" type="text" maxlength="40"></div>
+      <div class="field"><span class="sub">Формат</span>
+        <div class="seg" role="group" aria-label="Формат"><button id="m-split" type="button">Сплит</button><button id="m-seq" type="button">Друг за другом</button></div>
+      </div>
+      <div class="field"><span class="sub">Заголовок на всё видео</span><input id="title" type="text" maxlength="60"></div>
+      <div class="seg" role="group" aria-label="Шрифт заголовка"><button id="t-display" type="button">SKANAUS</button><button id="t-serif" type="button"><em>Spectral</em></button></div>
+      <div class="field"><span class="sub">Музыка</span><select id="music"></select></div>
+      <div class="field"><span class="sub">Длина каждого кадра: <span class="val" id="beats-v"></span></span><input id="beats" type="range" min="1" max="10" step="1" aria-label="Длина кадра в долях"></div>
+      <label class="check"><input id="grade" type="checkbox"> тёплая цветокоррекция</label>
+      <label class="check"><input id="safezones" type="checkbox"> показать зоны интерфейса Instagram</label>
     </div>
     <div class="card stack">
-      <h2>Текст и звук</h2>
-      <label class="f">Заголовок на всё видео<input id="title" type="text" maxlength="60"></label>
-      <div class="seg" role="group" aria-label="Шрифт заголовка">
-        <button id="t-display" type="button">Skanaus, капс</button><button id="t-serif" type="button">Spectral, курсив</button>
-      </div>
-      <label class="f">Музыка<select id="music"></select></label>
-      <label class="f">Длина кадра: <span class="val" id="beats-v"></span><input id="beats" type="range" min="1" max="10" step="1"></label>
-      <label class="row" style="color:var(--muted)"><input id="grade" type="checkbox"> тёплая цветокоррекция</label>
-      <label class="row" style="color:var(--muted)"><input id="safezones" type="checkbox"> показать зоны Instagram</label>
-    </div>
-    <div class="card stack">
-      <h2>Рендер</h2>
+      <p class="step"><i>3</i>Рендер</p>
       <button class="primary" id="send" type="button">Отправить на рендер</button>
-      <button class="ghost" id="copy" type="button">Скопировать настройки</button>
-      <div class="status" id="status" role="status"></div>
-      <div class="saved" id="saved"></div>
+      <button id="copy" type="button">Скопировать настройки</button>
+      <p class="status" id="status" role="status"></p>
+      <div class="queue" id="queue"></div>
     </div>
   </div>
 
   <!-- monitor -->
   <div class="card">
-    <h2>Предпросмотр</h2>
+    <p class="sub">Предпросмотр</p>
     <div class="monitor" id="monitor"></div>
-    <div class="bar" id="bar"><i id="prog"></i></div>
+    <div class="bar" id="bar" aria-label="Таймлайн: клик — перейти"></div>
     <div class="transport">
       <button id="play" type="button">▶ Смотреть</button>
-      <button id="restart" type="button" class="ghost">С начала</button>
+      <button id="restart" type="button">⟲ С начала</button>
       <span class="time" id="time">0.0 / 0.0 с</span>
     </div>
-    <p class="hint">Предпросмотр в низком качестве и может чуть запаздывать на склейках. В финальном рендере склейки точно в бит.</p>
+    <p class="hint" style="margin-top:8px">Это черновой предпросмотр. В финальном видео будет полное качество и склейки точно в бит.</p>
   </div>
 
-  <!-- shot bench -->
-  <div class="card bench">
-    <h2>Кадры</h2>
+  <!-- 2 -->
+  <div class="card shotsCol">
+    <p class="step"><i>2</i>Кадры</p>
     <div class="shots" id="shots"></div>
-    <div class="row" style="margin-top:10px">
-      <button id="add" type="button">+ Добавить кадр</button>
-      <button id="dup" type="button">Дублировать</button>
-      <button id="left" type="button">← Раньше</button>
-      <button id="right" type="button">Позже →</button>
-      <button id="del" type="button">Удалить</button>
+    <div class="row" style="margin-top:8px">
+      <button class="small" id="add" type="button">+ Кадр после выбранного</button>
+      <button class="small" id="left" type="button">← Раньше</button>
+      <button class="small" id="right" type="button">Позже →</button>
+      <button class="small" id="del" type="button">Удалить кадр</button>
     </div>
-    <div class="edit" id="edit">
+
+    <div class="editor">
+      <div class="edhead">
+        <h3 id="ed-title">Кадр 1</h3>
+        <div class="seg" id="sidesel" role="group" aria-label="Какая половина"><button id="side-a" type="button">Верх · кухня</button><button id="side-b" type="button">Низ · свеча</button></div>
+      </div>
       <div class="stack">
-        <div class="seg" id="sidesel" role="group" aria-label="Половина кадра">
-          <button id="side-a" type="button">Верх · кухня</button><button id="side-b" type="button">Низ · свеча</button>
-        </div>
-        <div class="scrub" id="scrub"><video id="scrubv" muted playsinline preload="auto"></video><div class="cropbox" id="cropbox"></div></div>
-        <label class="f">Откуда брать: <span class="val" id="start-v"></span><input id="start" type="range" min="0" max="10" step="0.05"></label>
-        <label class="f" id="fy-wrap">Кадрирование по вертикали: <span class="val" id="fy-v"></span><input id="fy" type="range" min="0" max="100" step="1"></label>
-        <button id="playseg" type="button">▶ Проиграть отрезок</button>
+        <span class="sub">Исходник</span>
+        <div class="source" id="source"><video id="srcv" muted playsinline preload="auto"></video><div class="cropbox" id="cropbox" title="Тяни вверх-вниз"></div></div>
+        <p class="hint" id="crop-hint">Оранжевая рамка — то, что попадёт в половину. Тяни её вверх или вниз.</p>
       </div>
       <div class="stack" style="min-width:0">
-        <div class="seg" role="group" aria-label="Фильтр клипов">
-          <button id="f-all" type="button">Все</button><button id="f-k" type="button">Кухня</button><button id="f-c" type="button">Свеча</button>
+        <div class="field">
+          <span class="sub">Отрезок из видео · длина <span class="val" id="len-v"></span></span>
+          <div class="strip" id="strip" tabindex="0" aria-label="Диафильм клипа: перетащи рамку, стрелки двигают на 0,1 с"><canvas id="film" width="960" height="64"></canvas><div class="win" id="win"></div><div class="ph" id="ph" hidden></div></div>
+          <div class="ticks"><span>0 с</span><span id="dur-v"></span></div>
         </div>
-        <div class="lib" id="lib"></div>
-        <p class="hint">Нажми на клип, чтобы поставить его в выбранную половину. Ползунком «Откуда брать» выбери момент. Оранжевая рамка показывает, что попадёт в половину сплита.</p>
+        <div class="row">
+          <span class="sub" style="margin:0">Начало, с</span>
+          <button class="small" id="s-minus" type="button" aria-label="На 0,1 с раньше">−0,1</button>
+          <input id="start" type="number" min="0" step="0.1" aria-label="Секунда начала">
+          <button class="small" id="s-plus" type="button" aria-label="На 0,1 с позже">+0,1</button>
+          <button class="small" id="playseg" type="button">▶ Отрезок</button>
+        </div>
+        <div class="field" id="fy-wrap"><span class="sub">Кадрирование: <span class="val" id="fy-v"></span></span><input id="fy" type="range" min="0" max="100" step="1" aria-label="Кадрирование по вертикали"></div>
+        <div class="field">
+          <span class="sub">Сменить клип</span>
+          <div class="seg" role="group" aria-label="Фильтр клипов"><button id="f-all" type="button">Все</button><button id="f-k" type="button">Кухня</button><button id="f-c" type="button">Свеча</button></div>
+          <div class="lib" id="lib"></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const ASSETS = __ASSETS__;   // clip id -> preview url
-const MUSIC_URLS = __MUSIC__; // track id -> url
-const DURS = {__DURS__};      // clip id -> seconds
-
+const ASSETS = __ASSETS__;
+const MUSIC_URLS = __MUSIC__;
+const DURS = {__DURS__};
 const TRACKS = {
   'ref-two-recipes': {label: 'Спокойный · 96 BPM · 13,4 с', dur: 13.4, beats: [0.743,1.37,1.997,2.647,3.274,3.924,4.551,5.178,5.828,6.455,7.105,7.755,8.382,9.009,9.66,10.286,10.937,11.564,12.214]},
   'ref-art-of-hands': {label: 'The art of hands · 152 BPM · 18,4 с', dur: 18.4, beats: [0.093,0.534,0.952,1.37,1.788,2.206,2.624,3.042,3.46,3.855,4.249,4.644,5.039,5.41,5.805,6.177,6.548,6.989,7.407,7.825,8.22,8.615,9.033,9.404,9.822,10.217,10.612,11.006,11.424,11.819,12.214,12.608,13.003,13.398,13.816,14.211,14.605,15.0,15.395,15.79,16.184,16.579,16.974,17.369]},
@@ -180,7 +214,7 @@ const TRACKS = {
 const isCandle = (id) => id === 'candle-light' || Number(id.slice(4)) >= 745;
 const S = (clip, start, fy = 50) => ({clip, start, fy});
 const TITLE = 'Two recipes of one evening';
-const PRESETS = {
+const BUILTIN = {
   'split1': {name: 'Сплит 1', mode: 'split', title: TITLE, titleFont: 'display', music: 'ref-art-of-hands', beatsPerCut: 6, grade: true, shots: [
     {a: S('IMG_0633',3.9,73), b: S('IMG_0763',2.6,56)}, {a: S('IMG_0696',8.3,62), b: S('IMG_0762',3.5,74)}, {a: S('IMG_0654',1.5,68), b: S('IMG_0747',0.2,34)},
     {a: S('IMG_0702',10.6,68), b: S('IMG_0772',4.3,16)}, {a: S('IMG_0657',2.4,42), b: S('IMG_0751',1.4,66)}, {a: S('IMG_0711',0.3,60), b: S('IMG_0776',0,90)},
@@ -205,141 +239,195 @@ const PRESETS = {
     {a: S('IMG_0693',3.0), b: S('IMG_0764',6.5)}, {a: S('IMG_0654',3.5), b: S('IMG_0766',5.0)}, {a: S('IMG_0700',0), b: S('IMG_0777',4.0)},
     {a: S('IMG_0711',3.5), b: S('IMG_0776',1.5)}, {a: S('IMG_0706',6.2), b: S('candle-light',2.6)}]},
 };
-
-let st = JSON.parse(JSON.stringify(PRESETS.split1));
+const clone = (x) => JSON.parse(JSON.stringify(x));
+let custom = {};                    // saved presets & overrides: id -> config (db or this browser)
+const presets = () => ({...BUILTIN, ...custom});
 let presetId = 'split1';
+let st = clone(BUILTIN.split1);
 let sel = 0, side = 'a', filter = 'all';
 const $ = (id) => document.getElementById(id);
 const url = (clip) => ASSETS[clip] || '';
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const fmt = (n) => n.toFixed(1).replace('.', ',');
 
-// ── timing: shot i starts at beat i*beatsPerCut; last shot holds to the end of the track
-function cuts() {
-  const tr = TRACKS[st.music]; const n = st.shots.length; const out = [];
-  for (let i = 0; i < n; i++) { const k = i * st.beatsPerCut; out.push(i === 0 ? 0 : (k - 1 < tr.beats.length ? tr.beats[k - 1] : null)); }
-  return out;
-}
-function shotLen(i) { const c = cuts(); const tr = TRACKS[st.music]; if (c[i] == null) return 0; const next = c[i + 1]; return (i === st.shots.length - 1 || next == null ? tr.dur : next) - c[i]; }
+// ── timing (same rule as the final render): shot i starts on beat i*beatsPerCut; last shot holds to the end
+function cuts() { const b = TRACKS[st.music].beats; return st.shots.map((_, i) => (i === 0 ? 0 : (b[i * st.beatsPerCut - 1] ?? null))); }
+function shotLen(i) { const c = cuts(); const tr = TRACKS[st.music]; if (c[i] == null) return 0; const n = c[i + 1]; return (i === st.shots.length - 1 || n == null ? tr.dur : n) - c[i]; }
+function bpm() { const b = TRACKS[st.music].beats; return 60 / ((b[b.length - 1] - b[0]) / (b.length - 1)); }
+function cur() { const s = st.shots[sel]; return s ? (st.mode === 'split' ? s[side] : s.a) : null; }
+function clampStart(s) { const d = DURS[s.clip] || 10; const len = Math.min(shotLen(sel) || 1, d); s.start = Math.max(0, Math.min(+s.start || 0, +(d - len).toFixed(2))); }
 
-// ── settings rail
-function fillSelects() {
-  $('preset').innerHTML = Object.entries(PRESETS).map(([k, p]) => `<option value="${k}">${p.name}</option>`).join('');
-  $('music').innerHTML = Object.entries(TRACKS).map(([k, t]) => `<option value="${k}">${t.label}</option>`).join('');
+// ── step 1
+function fillPresets() {
+  $('preset').innerHTML = Object.entries(presets()).map(([k, p]) => `<option value="${k}">${esc(p.name)}${custom[k] ? (BUILTIN[k] ? ' · изменён' : ' · мой') : ''}</option>`).join('');
+  $('preset').value = presetId;
+  $('p-reset').disabled = !(BUILTIN[presetId] && custom[presetId]);
 }
 function syncRail() {
-  $('preset').value = presetId; $('name').value = st.name; $('title').value = st.title; $('music').value = st.music;
-  $('beats').value = st.beatsPerCut; $('grade').checked = st.grade;
+  fillPresets();
+  $('name').value = st.name; $('title').value = st.title; $('music').value = st.music; $('beats').value = st.beatsPerCut; $('grade').checked = st.grade;
   const sec = (60 / bpm()) * st.beatsPerCut;
-  $('beats-v').textContent = `${st.beatsPerCut} ${st.beatsPerCut === 1 ? 'доля' : st.beatsPerCut < 5 ? 'доли' : 'долей'} ≈ ${sec.toFixed(1)} с`;
+  $('beats-v').textContent = `${fmt(sec)} с (${st.beatsPerCut} ${st.beatsPerCut === 1 ? 'доля' : st.beatsPerCut < 5 ? 'доли' : 'долей'})`;
   $('m-split').classList.toggle('on', st.mode === 'split'); $('m-seq').classList.toggle('on', st.mode === 'seq');
   $('t-display').classList.toggle('on', st.titleFont === 'display'); $('t-serif').classList.toggle('on', st.titleFont === 'serif');
 }
-function bpm() { const b = TRACKS[st.music].beats; return 60 / ((b[b.length - 1] - b[0]) / (b.length - 1)); }
 
 // ── monitor
-let vA, vB;
+let vA, vB, clock = 0, playing = false, curShot = -1, lastTs = 0;
+const audio = new Audio();
 function buildMonitor() {
   const m = $('monitor'); m.className = 'monitor' + (st.grade ? ' graded' : '');
-  if (st.mode === 'split') {
-    m.innerHTML = `<div class="half" style="top:0;height:49.9%"><video id="vA" muted playsinline preload="auto"></video></div>
-      <div class="half" style="top:50.1%;bottom:0"><video id="vB" muted playsinline preload="auto"></video></div>
-      <div class="mtitle ${st.titleFont === 'serif' ? 'serif' : ''}" style="top:calc(50% - 12px)">${esc(st.title)}</div>`;
-  } else {
-    m.innerHTML = `<div class="full"><video id="vA" muted playsinline preload="auto"></video></div>
-      <div class="mtitle ${st.titleFont === 'serif' ? 'serif' : ''}" style="top:15%">${esc(st.title)}</div>`;
-  }
+  const tcls = `mtitle ${st.titleFont === 'serif' ? 'serif' : ''}`;
+  m.innerHTML = st.mode === 'split'
+    ? `<div class="half" style="top:0;height:49.8%"><video id="vA" muted playsinline preload="auto"></video></div>
+       <div class="half" style="top:50.2%;bottom:0"><video id="vB" muted playsinline preload="auto"></video></div>
+       <div class="${tcls}" style="top:calc(50% - 11px)">${esc(st.title)}</div><div class="hl" id="hl"></div>`
+    : `<div class="full"><video id="vA" muted playsinline preload="auto"></video></div><div class="${tcls}" style="top:15%">${esc(st.title)}</div>`;
   if ($('safezones').checked) m.insertAdjacentHTML('beforeend', '<div class="safe" style="top:0;height:13%"></div><div class="safe" style="bottom:0;height:17.7%"></div>');
-  vA = $('vA'); vB = $('vB'); curShot = -1; showAt(clock);
-  const tr = TRACKS[st.music]; const bar = $('bar'); bar.querySelectorAll('b').forEach((x) => x.remove());
-  cuts().forEach((c) => { if (c) bar.insertAdjacentHTML('beforeend', `<b style="left:${(c / tr.dur) * 100}%"></b>`); });
+  vA = $('vA'); vB = $('vB'); curShot = -1; showAt(clock, true); buildBar(); markHalf();
 }
-function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c])); }
-function setVid(v, s, offset) {
+function markHalf() { const h = $('hl'); if (!h) return; h.style.top = side === 'a' ? '0' : '50.2%'; h.style.height = '49.8%'; h.hidden = playing; }
+function buildBar() {
+  const tr = TRACKS[st.music]; const c = cuts();
+  $('bar').innerHTML = st.shots.map((_, i) => c[i] == null ? '' : `<span data-i="${i}" style="width:${(shotLen(i) / tr.dur) * 100}%">${i + 1}</span>`).join('') + '<i id="ph2"></i>';
+}
+function setVid(v, s, offset, split) {
   if (!v || !s) return;
-  const u = url(s.clip);
-  v.style.objectPosition = `50% ${st.mode === 'split' ? s.fy ?? 50 : 50}%`;
-  if (v.dataset.clip !== s.clip) { v.dataset.clip = s.clip; v.src = u; }
+  v.style.objectPosition = `50% ${split ? s.fy ?? 50 : 50}%`;
+  if (v.dataset.clip !== s.clip) { v.dataset.clip = s.clip; v.src = url(s.clip); }
   const t = s.start + offset;
-  const seek = () => { try { if (Math.abs(v.currentTime - t) > 0.25) v.currentTime = t; } catch (e) {} };
+  const seek = () => { try { if (Math.abs(v.currentTime - t) > 0.2) v.currentTime = t; } catch (e) {} };
   if (v.readyState >= 1) seek(); else v.addEventListener('loadedmetadata', seek, {once: true});
 }
-
-let clock = 0, playing = false, curShot = -1, lastTs = 0;
-const audio = new Audio();
-function shotAt(t) { const c = cuts(); let i = 0; for (let k = 0; k < c.length; k++) if (c[k] != null && t >= c[k]) i = k; return i; }
-function showAt(t) {
-  const i = shotAt(t); const c = cuts(); const s = st.shots[i]; if (!s) return;
-  const off = t - c[i];
-  if (i !== curShot || !playing) { curShot = i; setVid(vA, s.a, off); if (st.mode === 'split') setVid(vB, s.b, off); }
+function shotAt(t) { const c = cuts(); let i = 0; c.forEach((x, k) => { if (x != null && t >= x) i = k; }); return i; }
+function showAt(t, force) {
+  const i = shotAt(t), c = cuts(), s = st.shots[i]; if (!s) return;
+  if (i !== curShot || force) { curShot = i; setVid(vA, s.a, t - c[i], st.mode === 'split'); if (st.mode === 'split') setVid(vB, s.b, t - c[i], true); }
   const tr = TRACKS[st.music];
-  $('prog').style.width = `${(t / tr.dur) * 100}%`;
-  $('time').textContent = `${t.toFixed(1)} / ${tr.dur.toFixed(1)} с`;
-  document.querySelectorAll('.shot').forEach((el, k) => el.style.opacity = k === i ? '1' : '.8');
+  const ph = $('ph2'); if (ph) ph.style.left = `${(t / tr.dur) * 100}%`;
+  $('bar').querySelectorAll('span').forEach((el) => el.classList.toggle('cur', +el.dataset.i === i));
+  $('time').textContent = `${fmt(t)} / ${fmt(tr.dur)} с`;
 }
 function tick(ts) {
   if (!playing) return;
-  if (!audio.paused && !audio.ended && audio.src) clock = audio.currentTime; else clock += (ts - lastTs) / 1000;
+  if (audio.src && !audio.paused) clock = audio.currentTime; else clock += (ts - lastTs) / 1000;
   lastTs = ts;
-  const tr = TRACKS[st.music];
-  if (clock >= tr.dur) { stop(); clock = 0; showAt(0); return; }
+  if (clock >= TRACKS[st.music].dur) { stop(); clock = 0; showAt(0, true); return; }
   const before = curShot; showAt(clock);
-  if (curShot !== before) { [vA, vB].forEach((v) => v && v.play().catch(() => {})); }
+  if (curShot !== before) [vA, vB].forEach((v) => v && v.play().catch(() => {}));
   requestAnimationFrame(tick);
 }
 function play() {
-  playing = true; $('play').textContent = '❚❚ Пауза'; curShot = -1; showAt(clock);
+  playing = true; markHalf(); $('play').textContent = '❚❚ Пауза'; showAt(clock, true);
   [vA, vB].forEach((v) => v && v.play().catch(() => {}));
   const mu = MUSIC_URLS[st.music];
-  if (mu) { if (audio.dataset.t !== st.music) { audio.src = mu; audio.dataset.t = st.music; } audio.currentTime = clock; audio.play().catch(() => {}); }
+  if (mu) { if (audio.dataset.t !== st.music) { audio.src = mu; audio.dataset.t = st.music; } try { audio.currentTime = clock; } catch (e) {} audio.play().catch(() => {}); }
   lastTs = performance.now(); requestAnimationFrame(tick);
 }
-function stop() { playing = false; $('play').textContent = '▶ Смотреть'; audio.pause(); [vA, vB].forEach((v) => v && v.pause()); }
+function stop() { playing = false; markHalf(); $('play').textContent = '▶ Смотреть'; audio.pause(); [vA, vB].forEach((v) => v && v.pause()); }
 
-// ── shot bench
+// ── step 2: shot strip
 function renderShots() {
   const c = cuts();
   $('shots').innerHTML = st.shots.map((s, i) => {
     const off = c[i] == null;
-    const th = (x) => x ? `<video muted playsinline preload="metadata" src="${url(x.clip)}#t=${(x.start + 0.4).toFixed(2)}" style="object-position:50% ${st.mode === 'split' ? x.fy : 50}%"></video>` : '';
-    return `<button type="button" class="shot ${i === sel ? 'sel' : ''}" data-i="${i}" ${off ? 'title="Не помещается в длину трека"' : ''}>
+    const th = (x) => x ? `<video muted playsinline preload="metadata" src="${url(x.clip)}#t=${(x.start + 0.3).toFixed(2)}" style="object-position:50% ${st.mode === 'split' ? x.fy ?? 50 : 50}%"></video>` : '';
+    return `<button type="button" class="shot ${i === sel ? 'sel' : ''} ${off ? 'bad' : ''}" data-i="${i}" aria-label="Кадр ${i + 1}">
       <div class="thumbs ${st.mode === 'split' ? 'split' : ''}">${th(s.a)}${st.mode === 'split' ? th(s.b) : ''}</div>
-      <div class="meta"><span>Кадр ${i + 1}</span><span>${off ? 'не влезает' : shotLen(i).toFixed(1) + ' с'}</span></div></button>`;
+      <div class="meta"><span>${i + 1}</span><span>${off ? 'не влез' : fmt(shotLen(i)) + ' с'}</span></div></button>`;
   }).join('');
-  $('shots').querySelectorAll('.shot').forEach((b) => b.onclick = () => { sel = +b.dataset.i; renderShots(); renderEdit(); stop(); clock = cuts()[sel] ?? 0; showAt(clock); });
+  $('shots').querySelectorAll('.shot').forEach((b) => b.onclick = () => selectShot(+b.dataset.i));
 }
-function cur() { const s = st.shots[sel]; return s ? (st.mode === 'split' ? s[side] : s.a) : null; }
-function renderEdit() {
-  $('sidesel').hidden = st.mode !== 'split'; $('fy-wrap').hidden = st.mode !== 'split'; $('cropbox').hidden = st.mode !== 'split';
-  if (st.mode !== 'split') side = 'a';
+function selectShot(i) { sel = i; stop(); clock = cuts()[sel] ?? 0; renderShots(); renderEditor(); showAt(clock, true); markHalf(); }
+
+// ── step 2: shot editor
+const films = {}; // clip -> ImageBitmap[] frames
+async function filmstrip(clip) {
+  if (films[clip]) return films[clip];
+  const v = document.createElement('video'); v.muted = true; v.preload = 'auto'; v.src = url(clip);
+  await new Promise((r) => { v.onloadeddata = r; v.onerror = r; setTimeout(r, 4000); });
+  const d = v.duration || DURS[clip] || 10, n = 16, out = [];
+  const cv = document.createElement('canvas'); cv.width = 60; cv.height = 107; const cx = cv.getContext('2d');
+  for (let k = 0; k < n; k++) {
+    await new Promise((r) => { v.onseeked = r; try { v.currentTime = Math.min(d - 0.05, (k + 0.5) * d / n); } catch (e) { r(); } setTimeout(r, 1500); });
+    try { cx.drawImage(v, 0, 0, 60, 107); out.push(cx.getImageData(0, 0, 60, 107)); } catch (e) { out.push(null); }
+  }
+  films[clip] = out; return out;
+}
+async function drawFilm(clip) {
+  const c = $('film'), cx = c.getContext('2d'); cx.fillStyle = '#151411'; cx.fillRect(0, 0, c.width, c.height);
+  const fr = await filmstrip(clip); if (cur()?.clip !== clip) return;
+  const w = c.width / fr.length;
+  const tmp = document.createElement('canvas'); tmp.width = 60; tmp.height = 107; const tx = tmp.getContext('2d');
+  fr.forEach((img, k) => { if (!img) return; tx.putImageData(img, 0, 0); cx.drawImage(tmp, 0, 26, 60, 55, k * w, 0, w, c.height); });
+}
+function placeWin() {
+  const s = cur(); if (!s) return; const d = DURS[s.clip] || 10; const len = Math.min(shotLen(sel) || 1, d);
+  $('win').style.left = `${(s.start / d) * 100}%`; $('win').style.width = `${(len / d) * 100}%`;
+  $('start').value = s.start.toFixed(1); $('start').max = (d - len).toFixed(1);
+  $('len-v').textContent = `${fmt(len)} с`; $('dur-v').textContent = `${fmt(d)} с`;
+}
+function renderEditor() {
+  const split = st.mode === 'split'; if (!split) side = 'a';
+  $('sidesel').hidden = !split; $('fy-wrap').hidden = !split; $('cropbox').hidden = !split; $('crop-hint').hidden = !split;
   $('side-a').classList.toggle('on', side === 'a'); $('side-b').classList.toggle('on', side === 'b');
   const s = cur(); if (!s) return;
-  const len = Math.max(0.5, shotLen(sel));
-  const d = DURS[s.clip] || 10;
-  $('start').max = Math.max(0, d - len).toFixed(2); $('start').value = s.start;
-  $('start-v').textContent = `${s.start.toFixed(1)} с из ${d.toFixed(1)}`;
-  $('fy').value = s.fy ?? 50; $('fy-v').textContent = `${s.fy ?? 50}%`;
-  const v = $('scrubv'); if (v.dataset.clip !== s.clip) { v.dataset.clip = s.clip; v.src = url(s.clip); }
-  const seek = () => { try { v.currentTime = s.start + 0.05; } catch (e) {} };
-  if (v.readyState >= 1) seek(); else v.addEventListener('loadedmetadata', seek, {once: true});
-  // crop window: half of a 9:16 frame is a 9:8 window; fy positions it inside
-  $('cropbox').style.height = '50%'; $('cropbox').style.top = `${(s.fy ?? 50) * 0.5}%`;
+  $('ed-title').textContent = `Кадр ${sel + 1}${split ? (side === 'a' ? ' · верх' : ' · низ') : ''}`;
+  clampStart(s); placeWin();
+  $('fy').value = s.fy ?? 50; $('fy-v').textContent = `${s.fy ?? 50}%`; $('cropbox').style.top = `${(s.fy ?? 50) * 0.5}%`;
+  const v = $('srcv'); if (v.dataset.clip !== s.clip) { v.dataset.clip = s.clip; v.src = url(s.clip); drawFilm(s.clip); }
+  seekSrc(s.start);
   renderLib();
+}
+function seekSrc(t) { const v = $('srcv'); const go = () => { try { v.currentTime = t + 0.05; } catch (e) {} }; if (v.readyState >= 1) go(); else v.addEventListener('loadedmetadata', go, {once: true}); }
+function setStart(t, live) {
+  const s = cur(); if (!s) return; s.start = +t; clampStart(s); placeWin(); seekSrc(s.start);
+  if (!live) changed('start');
+}
+// drag the orange window along the film strip
+(function () {
+  const strip = $('strip'); let drag = null;
+  const toT = (x) => { const r = strip.getBoundingClientRect(); const s = cur(); const d = DURS[s.clip] || 10; return ((x - r.left) / r.width) * d; };
+  strip.addEventListener('pointerdown', (e) => {
+    const s = cur(); if (!s) return; strip.setPointerCapture(e.pointerId);
+    const t = toT(e.clientX); const len = Math.min(shotLen(sel) || 1, DURS[s.clip] || 10);
+    drag = e.target.id === 'win' ? t - s.start : len / 2; setStart(t - drag, true);
+  });
+  strip.addEventListener('pointermove', (e) => { if (drag != null) setStart(toT(e.clientX) - drag, true); });
+  const end = () => { if (drag != null) { drag = null; changed('start'); } };
+  strip.addEventListener('pointerup', end); strip.addEventListener('pointercancel', end);
+  strip.addEventListener('keydown', (e) => { const s = cur(); if (!s) return; if (e.key === 'ArrowLeft') { e.preventDefault(); setStart(s.start - 0.1); } if (e.key === 'ArrowRight') { e.preventDefault(); setStart(s.start + 0.1); } });
+})();
+// drag the crop box up and down
+(function () {
+  const box = $('cropbox'), src = $('source'); let on = false;
+  const toFy = (y) => { const r = src.getBoundingClientRect(); const top = (y - r.top) / r.height - 0.25; return Math.round(Math.max(0, Math.min(100, top * 200))); };
+  box.addEventListener('pointerdown', (e) => { on = true; box.setPointerCapture(e.pointerId); });
+  box.addEventListener('pointermove', (e) => { if (!on) return; setFy(toFy(e.clientY), true); });
+  box.addEventListener('pointerup', () => { if (on) { on = false; changed('fy'); } });
+})();
+function setFy(v, live) {
+  const s = cur(); if (!s) return; s.fy = +v; $('fy').value = s.fy; $('fy-v').textContent = `${s.fy}%`; $('cropbox').style.top = `${s.fy * 0.5}%`;
+  const vid = side === 'a' ? vA : vB; if (vid) vid.style.objectPosition = `50% ${s.fy}%`;
+  if (!live) changed('fy');
 }
 function renderLib() {
   const s = cur();
-  const ids = Object.keys(ASSETS).filter((id) => filter === 'all' || (filter === 'c') === isCandle(id)).sort();
   $('f-all').classList.toggle('on', filter === 'all'); $('f-k').classList.toggle('on', filter === 'k'); $('f-c').classList.toggle('on', filter === 'c');
-  $('lib').innerHTML = ids.map((id) => `<button type="button" data-id="${id}" class="${s && s.clip === id ? 'cur' : ''}" aria-label="${id}">
-    <video muted playsinline preload="none" data-src="${ASSETS[id]}#t=${Math.min(1.5, (DURS[id] || 2) / 2).toFixed(1)}"></video><span>${id.replace('IMG_', '')}</span></button>`).join('');
-  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { const v = e.target; if (!v.src) { v.preload = 'metadata'; v.src = v.dataset.src; } io.unobserve(v); } }), {root: $('lib')});
+  const ids = Object.keys(ASSETS).filter((id) => filter === 'all' || (filter === 'c') === isCandle(id)).sort();
+  $('lib').innerHTML = ids.map((id) => `<button type="button" data-id="${id}" class="${s && s.clip === id ? 'cur' : ''}" aria-label="Клип ${id}"><video muted playsinline preload="none" data-src="${ASSETS[id]}#t=${Math.min(1.5, (DURS[id] || 2) / 2).toFixed(1)}"></video><span>${id.replace('IMG_', '')}</span></button>`).join('');
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { const v = e.target; if (!v.getAttribute('src')) { v.preload = 'metadata'; v.src = v.dataset.src; } io.unobserve(v); } }), {root: $('lib')});
   $('lib').querySelectorAll('video').forEach((v) => io.observe(v));
-  $('lib').querySelectorAll('button').forEach((b) => b.onclick = () => {
-    const x = cur(); if (!x) return; x.clip = b.dataset.id; x.start = 0; x.fy = 50; changed();
-  });
+  $('lib').querySelectorAll('button').forEach((b) => b.onclick = () => { const x = cur(); if (!x) return; x.clip = b.dataset.id; x.start = 0; x.fy = 50; changed('clip'); });
 }
-function changed() { draft(); renderShots(); renderEdit(); buildMonitor(); syncRail(); }
+function changed(what) {
+  draft();
+  if (what === 'start' || what === 'fy') { renderShots(); curShot = -1; showAt(clock, true); return; }
+  syncRail(); buildMonitor(); renderShots(); renderEditor();
+}
 
 // ── events
-$('preset').onchange = (e) => { presetId = e.target.value; st = JSON.parse(JSON.stringify(PRESETS[presetId])); sel = 0; side = 'a'; stop(); clock = 0; changed(); };
+$('preset').onchange = (e) => { presetId = e.target.value; st = clone(presets()[presetId]); sel = 0; side = 'a'; stop(); clock = 0; changed(); };
 $('name').oninput = (e) => { st.name = e.target.value; draft(); };
 $('title').oninput = (e) => { st.title = e.target.value; buildMonitor(); draft(); };
 $('t-display').onclick = () => { st.titleFont = 'display'; changed(); };
@@ -348,57 +436,84 @@ $('music').onchange = (e) => { st.music = e.target.value; stop(); clock = 0; aud
 $('beats').oninput = (e) => { st.beatsPerCut = +e.target.value; changed(); };
 $('grade').onchange = (e) => { st.grade = e.target.checked; buildMonitor(); draft(); };
 $('safezones').onchange = () => buildMonitor();
-$('m-split').onclick = () => { if (st.mode === 'split') return; st.mode = 'split'; st.shots.forEach((s, i) => { s.b = s.b || {clip: isCandle(s.a.clip) ? s.a.clip : 'IMG_0776', start: 0, fy: 50}; }); changed(); };
-$('m-seq').onclick = () => { if (st.mode === 'seq') return; st.mode = 'seq';
-  const flat = []; st.shots.forEach((s) => { flat.push({a: {...s.a}}); if (s.b) flat.push({a: {...s.b}}); }); st.shots = flat; sel = 0; changed(); };
-$('side-a').onclick = () => { side = 'a'; renderEdit(); };
-$('side-b').onclick = () => { side = 'b'; renderEdit(); };
+$('m-split').onclick = () => { if (st.mode === 'split') return; st.mode = 'split'; st.shots.forEach((s) => { s.b = s.b || {clip: 'IMG_0776', start: 0, fy: 50}; }); changed(); };
+$('m-seq').onclick = () => { if (st.mode === 'seq') return; st.mode = 'seq'; const flat = []; st.shots.forEach((s) => { flat.push({a: {...s.a}}); if (s.b) flat.push({a: {...s.b}}); }); st.shots = flat; sel = 0; changed(); };
+$('side-a').onclick = () => { side = 'a'; renderEditor(); markHalf(); };
+$('side-b').onclick = () => { side = 'b'; renderEditor(); markHalf(); };
 $('f-all').onclick = () => { filter = 'all'; renderLib(); };
 $('f-k').onclick = () => { filter = 'k'; renderLib(); };
 $('f-c').onclick = () => { filter = 'c'; renderLib(); };
-$('start').oninput = (e) => { const s = cur(); if (!s) return; s.start = +e.target.value; $('start-v').textContent = `${s.start.toFixed(1)} с из ${(DURS[s.clip] || 0).toFixed(1)}`; try { $('scrubv').currentTime = s.start; } catch (er) {} };
-$('start').onchange = () => { changed(); };
-$('fy').oninput = (e) => { const s = cur(); if (!s) return; s.fy = +e.target.value; $('fy-v').textContent = `${s.fy}%`; $('cropbox').style.top = `${s.fy * 0.5}%`; if (side === 'a' && vA) vA.style.objectPosition = `50% ${s.fy}%`; if (side === 'b' && vB) vB.style.objectPosition = `50% ${s.fy}%`; };
-$('fy').onchange = () => { changed(); };
-$('playseg').onclick = () => { const s = cur(); const v = $('scrubv'); if (!s) return; v.currentTime = s.start; v.play().catch(() => {}); const len = shotLen(sel) || 2; clearTimeout(v._t); v._t = setTimeout(() => { v.pause(); v.currentTime = s.start; }, len * 1000); };
-$('add').onclick = () => { const base = st.shots[sel] || st.shots[st.shots.length - 1]; st.shots.splice(sel + 1, 0, JSON.parse(JSON.stringify(base))); sel++; changed(); };
-$('dup').onclick = $('add').onclick;
+$('start').onchange = (e) => setStart(e.target.value);
+$('s-minus').onclick = () => setStart(cur().start - 0.1);
+$('s-plus').onclick = () => setStart(cur().start + 0.1);
+$('fy').oninput = (e) => setFy(e.target.value, true);
+$('fy').onchange = (e) => setFy(e.target.value);
+$('playseg').onclick = () => {
+  const s = cur(); const v = $('srcv'); if (!s) return; const len = Math.min(shotLen(sel) || 1, DURS[s.clip] || 10);
+  v.currentTime = s.start; v.play().catch(() => {}); const ph = $('ph'); ph.hidden = false; const d = DURS[s.clip] || 10;
+  const t0 = performance.now(); clearInterval(v._i);
+  v._i = setInterval(() => { const t = (performance.now() - t0) / 1000; ph.style.left = `${((s.start + t) / d) * 100}%`; if (t >= len) { clearInterval(v._i); v.pause(); ph.hidden = true; seekSrc(s.start); } }, 40);
+};
+$('add').onclick = () => { st.shots.splice(sel + 1, 0, clone(st.shots[sel])); sel++; changed(); };
 $('del').onclick = () => { if (st.shots.length <= 1) return; st.shots.splice(sel, 1); sel = Math.max(0, sel - 1); changed(); };
 $('left').onclick = () => { if (sel === 0) return; [st.shots[sel - 1], st.shots[sel]] = [st.shots[sel], st.shots[sel - 1]]; sel--; changed(); };
 $('right').onclick = () => { if (sel >= st.shots.length - 1) return; [st.shots[sel + 1], st.shots[sel]] = [st.shots[sel], st.shots[sel + 1]]; sel++; changed(); };
 $('play').onclick = () => (playing ? stop() : play());
-$('restart').onclick = () => { stop(); clock = 0; showAt(0); };
-$('bar').onclick = (e) => { const r = e.currentTarget.getBoundingClientRect(); clock = ((e.clientX - r.left) / r.width) * TRACKS[st.music].dur; curShot = -1; if (playing) { audio.currentTime = clock; } showAt(clock); };
+$('restart').onclick = () => { stop(); clock = 0; showAt(0, true); };
+$('bar').onclick = (e) => { const r = e.currentTarget.getBoundingClientRect(); clock = ((e.clientX - r.left) / r.width) * TRACKS[st.music].dur; if (playing) { try { audio.currentTime = clock; } catch (er) {} } showAt(clock, true); };
 
-// ── draft in this browser only
-function draft() { try { localStorage.setItem('ss-draft', JSON.stringify({presetId, st})); } catch (e) {} }
-try { const d = JSON.parse(localStorage.getItem('ss-draft') || 'null'); if (d && d.st && d.st.shots) { presetId = d.presetId || 'split1'; st = d.st; } } catch (e) {}
-
-// ── render requests go to the shared store; Claude reads them and renders the final mp4
-function payload() { return {...st, preset: presetId, duration: TRACKS[st.music].dur}; }
-$('copy').onclick = () => {
-  const txt = JSON.stringify(payload(), null, 1);
-  const done = () => status('Настройки скопированы. Можно вставить их в чат.', 'ok');
-  navigator.clipboard.writeText(txt).then(done, () => status('Браузер не дал скопировать. Используй «Отправить на рендер».', 'err'));
-};
-function status(t, k) { $('status').textContent = t; $('status').className = 'status ' + (k || ''); }
+// ── presets: saved for everyone who opens the editor (db), else in this browser
 let db = null;
-(async () => {
-  try { db = await window.claude?.use?.('db'); } catch (e) { db = null; }
-  if (!db) { $('send').disabled = true; status('Отправка доступна только владельцу. Можно скопировать настройки.', ''); return; }
-  db.collection('renders').orderBy('createdAt', 'desc').limit(8).onSnapshot((snap) => {
-    const rows = (snap.docs || snap).map((d) => (d.data ? d.data() : d));
-    $('saved').innerHTML = rows.map((r) => `<div><span>${esc(r.name || 'Без названия')}</span><span class="pill ${r.status === 'done' ? 'done' : 'req'}">${r.status === 'done' ? 'готово' : 'в очереди'}</span></div>`).join('');
-  }, () => {});
-})();
+async function savePreset(id, cfg) {
+  custom[id] = clone(cfg);
+  if (db) { await db.doc('presets/' + id).set({id, config: clone(cfg), updatedAt: new Date().toISOString()}); }
+  else { try { localStorage.setItem('ss-presets', JSON.stringify(custom)); } catch (e) {} }
+}
+async function dropPreset(id) {
+  delete custom[id];
+  if (db) await db.doc('presets/' + id).delete(); else { try { localStorage.setItem('ss-presets', JSON.stringify(custom)); } catch (e) {} }
+}
+$('p-save').onclick = async () => {
+  try { await savePreset(presetId, {...st}); fillPresets(); status(`Пресет «${st.name}» обновлён.`, 'ok'); } catch (e) { status('Не получилось сохранить пресет.', 'err'); }
+};
+$('p-new').onclick = async () => {
+  const id = 'my-' + Date.now(); const cfg = {...clone(st), name: st.name && !Object.values(presets()).some((p) => p.name === st.name) ? st.name : `${st.name || 'Версия'} · копия`};
+  try { await savePreset(id, cfg); presetId = id; st = clone(cfg); changed(); status(`Сохранён новый пресет «${cfg.name}».`, 'ok'); } catch (e) { status('Не получилось сохранить пресет.', 'err'); }
+};
+$('p-reset').onclick = () => {
+  $('p-confirm').innerHTML = `<div class="confirm">Вернуть исходные кадры пресета? <button class="small" id="p-yes" type="button">Да</button><button class="small" id="p-no" type="button">Нет</button></div>`;
+  $('p-no').onclick = () => { $('p-confirm').innerHTML = ''; };
+  $('p-yes').onclick = async () => { $('p-confirm').innerHTML = ''; try { await dropPreset(presetId); st = clone(BUILTIN[presetId]); sel = 0; changed(); status('Пресет возвращён к исходному.', 'ok'); } catch (e) { status('Не получилось.', 'err'); } };
+};
+
+// ── draft (this browser)
+function draft() { try { localStorage.setItem('ss-draft', JSON.stringify({presetId, st})); } catch (e) {} }
+try { custom = JSON.parse(localStorage.getItem('ss-presets') || '{}') || {}; } catch (e) { custom = {}; }
+try { const d = JSON.parse(localStorage.getItem('ss-draft') || 'null'); if (d && d.st && d.st.shots) { presetId = presets()[d.presetId] ? d.presetId : 'split1'; st = d.st; } } catch (e) {}
+
+// ── step 3
+function payload() { return {...clone(st), preset: presetId, duration: TRACKS[st.music].dur}; }
+function status(t, k) { $('status').textContent = t; $('status').className = 'status ' + (k || ''); }
+$('copy').onclick = () => {
+  navigator.clipboard.writeText(JSON.stringify(payload())).then(() => status('Настройки скопированы. Вставь их в чат.', 'ok'), () => status('Браузер не дал скопировать. Используй «Отправить на рендер».', 'err'));
+};
 $('send').onclick = async () => {
   if (!db) return;
-  const id = 'r' + Date.now();
-  try {
-    await db.doc('renders/' + id).set({...payload(), status: 'requested', createdAt: new Date().toISOString()});
-    status('Отправлено. Напиши в чат «рендер», и я соберу финальное видео.', 'ok');
-  } catch (e) { status('Не получилось отправить. Скопируй настройки и вставь в чат.', 'err'); }
+  try { await db.doc('renders/r' + Date.now()).set({...payload(), status: 'requested', createdAt: new Date().toISOString()}); status('Отправлено. Напиши в чат «рендер», и я соберу видео.', 'ok'); }
+  catch (e) { status('Не получилось отправить. Скопируй настройки и вставь в чат.', 'err'); }
 };
+(async () => {
+  try { db = await window.claude?.use?.('db'); } catch (e) { db = null; }
+  if (!db) { $('send').disabled = true; status('Отправка доступна только владельцу. Можно скопировать настройки.'); return; }
+  db.collection('presets').onSnapshot((snap) => {
+    const next = {}; snap.docs.forEach((d) => { const x = d.data(); if (x && x.config) next[d.id] = x.config; });
+    custom = next; fillPresets();
+  }, () => {});
+  db.collection('renders').orderBy('createdAt', 'desc').limit(6).onSnapshot((snap) => {
+    $('queue').innerHTML = snap.docs.map((d) => { const r = d.data() || {}; return `<div><span>${esc(r.name || 'Без названия')}</span><span class="pill ${r.status === 'done' ? 'done' : ''}">${r.status === 'done' ? 'готово' : 'ждёт рендера'}</span></div>`; }).join('');
+  }, () => {});
+})();
 
-fillSelects(); syncRail(); buildMonitor(); renderShots(); renderEdit();
+$('music').innerHTML = Object.entries(TRACKS).map(([k, t]) => `<option value="${k}">${t.label}</option>`).join('');
+syncRail(); buildMonitor(); renderShots(); renderEditor();
 </script>
