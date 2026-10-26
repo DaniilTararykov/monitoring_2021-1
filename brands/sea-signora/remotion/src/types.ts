@@ -12,7 +12,7 @@ export type Block =
   | {t: 'rule'} // thin orange divider under a headline
   | {t: 'gap'; px: number}
   | {t: 'giant'; text: string; size?: number; color?: 'ivory' | 'orange' | 'olive'; raw?: boolean} // bold: one huge word (raw = keep ':' in times like 19:00)
-  | {t: 'kicker'; text: string}; // tiny mono label above a giant/headline (e.g. "N°1", "ACT II")
+  | {t: 'kicker'; text: string; color?: 'orange'}; // tiny mono label above a giant/headline (e.g. "N°1", "ACT II"); orange = teaser for the next story/day
 
 export type Overlay = {
   position: 'top' | 'bottom' | 'center';
@@ -52,7 +52,7 @@ export type Story = {
   id: string; // e.g. "01-mon-we-are-open"
   day: string; // e.g. "Mon 26.10"
   rubric: string;
-  music: string; // file name (no extension) in public/music
+  music: string; // file name (no extension) in public/music; 'none' = silent video (client adds music in Instagram)
   musicFrom?: number; // seconds into the track
   scenes: Scene[];
   transition?: 'cut' | 'fade'; // between scenes; default hard cut

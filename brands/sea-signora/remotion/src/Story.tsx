@@ -72,7 +72,7 @@ export const StoryVideo: React.FC<{story: StoryT; guides?: boolean; frozen?: boo
       {story.cta ? <Chip cta={story.cta} /> : null}
       <AbsoluteFill style={{background: colors.night, opacity: end}} />
       {guides ? <SafeGuides /> : null}
-      {frozen ? null : <Audio
+      {frozen || story.music === 'none' ? null : <Audio
         src={staticFile(`music/${story.music}.mp3`)}
         startFrom={Math.round((story.musicFrom ?? 0) * fps)}
         volume={vol}

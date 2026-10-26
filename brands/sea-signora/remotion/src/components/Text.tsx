@@ -110,7 +110,7 @@ export const BlockView: React.FC<{b: Block; align: 'center' | 'left'}> = ({b, al
       );
     case 'kicker':
       return (
-        <p style={{...mono, fontWeight: 500, textTransform: 'uppercase', fontSize: 26, letterSpacing: 6, opacity: 0.85}}>{b.text}</p>
+        <p style={{...mono, fontWeight: 500, textTransform: 'uppercase', fontSize: 26, letterSpacing: 6, opacity: b.color ? 1 : 0.85, color: b.color ? colors[b.color] : undefined}}>{b.text}</p>
       );
   }
 };
