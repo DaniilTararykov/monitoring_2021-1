@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Img, OffthreadVideo, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
-import {colors, fonts, motion, scrim, type} from '../../../tokens';
+import {colors, fonts, grade, motion, scrim, type} from '../../../tokens';
 import type {Cta, Scene} from '../types';
 
 // Full-bleed photo or video, cropped to 9:16 around a focus point.
@@ -20,6 +20,7 @@ export const Photo: React.FC<{scene: Scene}> = ({scene}) => {
   const media: React.CSSProperties = {
     width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${fx}% ${fy}%`,
     transform: `scale(${scale})`, transformOrigin: `${fx}% ${fy}%`,
+    filter: grade.filter,
   };
   const box: React.CSSProperties = w
     ? {top: w.top, bottom: w.bottom, left: w.side, right: w.side, width: 'auto', height: 'auto', overflow: 'hidden'}
@@ -38,6 +39,8 @@ export const Photo: React.FC<{scene: Scene}> = ({scene}) => {
         ) : (
           <Img src={staticFile(`photos/${scene.src}`)} style={media} />
         )}
+        <AbsoluteFill style={{background: grade.warmth, mixBlendMode: 'soft-light'}} />
+        <AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,${grade.vignette}) 100%)`}} />
       </AbsoluteFill>
       {shift > 0 && !w ? (
         <div

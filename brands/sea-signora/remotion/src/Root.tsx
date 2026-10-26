@@ -5,6 +5,7 @@ import {BrandSheet} from './BrandSheet';
 import {StoryVideo, storyFrames} from './Story';
 import {stories} from './stories';
 import {pack2} from './pack2';
+import {pack3} from './pack3';
 import type {Story} from './types';
 
 const Story: React.FC<{story: Story; guides?: boolean}> = (p) => <StoryVideo {...p} />;
@@ -12,7 +13,7 @@ const Story: React.FC<{story: Story; guides?: boolean}> = (p) => <StoryVideo {..
 export const RemotionRoot: React.FC = () => (
   <>
     <Composition id="BrandSheet" component={BrandSheet} durationInFrames={300} fps={video.fps} width={2600} height={1500} />
-    {[...stories, ...pack2].map((s) => (
+    {[...stories, ...pack2, ...pack3].map((s) => (
       <Composition
         key={s.id}
         id={`S${s.id}`}

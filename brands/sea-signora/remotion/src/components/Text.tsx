@@ -3,6 +3,9 @@ import {interpolate, useCurrentFrame, Easing} from 'remotion';
 import {colors, contacts, fonts, motion, safe, type} from '../../../tokens';
 import type {Block, Overlay} from '../types';
 
+// Client rule: no full stops or punctuation in headlines (wordmark keeps its comma).
+const clean = (t: string) => t.replace(/[.,:;!?]+/g, '').replace(/ +\n/g, '\n').trim();
+
 const display: React.CSSProperties = {
   fontFamily: fonts.display,
   color: colors.ivory,
@@ -46,13 +49,13 @@ export const BlockView: React.FC<{b: Block; align: 'center' | 'left'}> = ({b, al
   switch (b.t) {
     case 'wordmark':
       return (
-        <p style={{...display, textTransform: 'none', fontSize: b.size ?? type.wordmark.size, lineHeight: type.wordmark.lineHeight, letterSpacing: type.wordmark.letterSpacing}}>
+        <p style={{...display, textTransform: 'none', fontSize: Math.min(b.size ?? type.wordmark.size, 96), lineHeight: type.wordmark.lineHeight, letterSpacing: type.wordmark.letterSpacing}}>
           {b.text ?? 'Sea, Signora'}
         </p>
       );
     case 'headline':
       return (
-        <p style={{...display, fontSize: b.size ?? type.headline.size, lineHeight: type.headline.lineHeight}}>{b.text}</p>
+        <p style={{...display, fontSize: Math.min(b.size ?? type.headline.size, 72), lineHeight: type.headline.lineHeight, letterSpacing: type.headline.letterSpacing}}>{clean(b.text)}</p>
       );
     case 'sub':
       return (
@@ -101,8 +104,8 @@ export const BlockView: React.FC<{b: Block; align: 'center' | 'left'}> = ({b, al
       return <div style={{height: b.px}} />;
     case 'giant':
       return (
-        <p style={{...display, fontSize: b.size ?? 260, lineHeight: 0.86, letterSpacing: -2, color: b.color ? colors[b.color] : colors.ivory}}>
-          {b.text}
+        <p style={{...display, fontSize: Math.min(b.size ?? 140, 150), lineHeight: 0.95, letterSpacing: 1, color: b.color ? colors[b.color] : colors.ivory}}>
+          {clean(b.text)}
         </p>
       );
     case 'kicker':

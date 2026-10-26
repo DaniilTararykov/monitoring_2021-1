@@ -60,10 +60,10 @@ export const safe = {
 
 // Type scale, px at 1080×1920 (measured from frames: headline ≈ 6.5–7% of width).
 export const type = {
-  wordmark: {size: 112, letterSpacing: -1, lineHeight: 1.0}, // "Sea, Signora"
-  headline: {size: 74, letterSpacing: 0, lineHeight: 1.04}, // STEP ONE / WE ARE OPEN
-  headlineSmall: {size: 58, letterSpacing: 0, lineHeight: 1.08}, // long dish names
-  sub: {size: 34, letterSpacing: 1.5, lineHeight: 1.3}, // mono subtitle under headline
+  wordmark: {size: 96, letterSpacing: 0, lineHeight: 1.0}, // "Sea, Signora"
+  headline: {size: 60, letterSpacing: 0.5, lineHeight: 1.05}, // STEP ONE / WE ARE OPEN
+  headlineSmall: {size: 50, letterSpacing: 0.5, lineHeight: 1.08}, // long dish names
+  sub: {size: 28, letterSpacing: 1.5, lineHeight: 1.35}, // mono subtitle under headline
   caption: {size: 30, letterSpacing: 1, lineHeight: 1.35}, // mono caption / hours
   small: {size: 24, letterSpacing: 0.6, lineHeight: 1.4}, // review body, uppercase mono
   chip: {size: 32, letterSpacing: 0, lineHeight: 1}, // link-sticker chip
@@ -74,6 +74,14 @@ export const scrim = {
   topHeight: 760, // px from top
   bottomHeight: 820,
   opacity: 0.88,
+} as const;
+
+// Light grade for atmosphere on every photo/video: warmer, slightly deeper shadows,
+// a touch less saturation, soft vignette. Applied in components/Visual.tsx.
+export const grade = {
+  filter: 'contrast(1.08) brightness(0.93) saturate(0.9) sepia(0.12)',
+  warmth: 'rgba(120, 60, 20, 0.10)', // soft-light tint
+  vignette: 0.45, // edge darkness 0..1
 } as const;
 
 export const motion = {
