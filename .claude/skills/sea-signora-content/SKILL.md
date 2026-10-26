@@ -58,6 +58,7 @@ description: Use for ANY task about Instagram stories, reels, video editing (м�
 - `brands/sea-signora/tools/check_video.sh remotion/out/*.mp4`: 1080×1920, 30 fps, длительность 6–17 с, аудио есть, средняя громкость −16…−24 dB, нет чёрного хвоста.
 - QA-кадры: важный текст и CTA не заходят в верхние 250 px и нижние 340 px; текст не закрывает лица и сам продукт. Если закрывает, меняй `shift`, `fx`, позицию оверлея или фото.
 - Опечатки: перечитай `stories-week.md`. Названия блюд сверь с меню на seasignorarest.com/en/ (итальянское написание, «Tiramisù» с акцентом).
+- Горизонтальные (16:9) клипы не используем, если их нельзя вписать эстетично; проверяй `ffprobe` ширину×высоту перед монтажом.
 - Шрифты только Skanaus / JetBrains Mono / Spectral, текст только ivory.
 
 ## 6. Отправка

@@ -57,8 +57,8 @@ export const pack3: Story[] = [
     rubric: 'Отзыв Google (1 в неделю)',
     music: 'aquarium-ambient',
     scenes: [
-      {src: 'IMG_8879.mp4', start: 0.5, frames: 130, window: {top: 470, bottom: 900, side: 64}, overlay: {position: 'top', anim: 'static', blocks: [{t: 'headline', text: 'Sea Signora'}, {t: 'note', text: 'google review'}]}},
-      {src: 'IMG_8884.mp4', start: 0, frames: 150, window: {top: 470, bottom: 900, side: 64}, overlay: {position: 'top', anim: 'static', blocks: [{t: 'headline', text: 'Sea Signora'}, {t: 'note', text: 'google review'}]}},
+      {src: 's_8889.mp4', start: 0, frames: 105, window: {top: 470, bottom: 900, side: 64}, overlay: {position: 'top', anim: 'static', blocks: [{t: 'headline', text: 'Sea Signora'}, {t: 'note', text: 'google review'}]}},
+      {src: 's_8888.mp4', start: 0, frames: 100, window: {top: 470, bottom: 900, side: 64}, overlay: {position: 'top', anim: 'static', blocks: [{t: 'headline', text: 'Sea Signora'}, {t: 'note', text: 'google review'}]}},
     ],
     overlay: {
       position: 'top',

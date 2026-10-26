@@ -35,7 +35,7 @@ const ACTS: {top: Clip[]; bottom: Clip[]}[] = [
     bottom: [{src: 'IMG_0762.mp4', start: 3.6}, {src: 'IMG_0764.mp4', start: 3.2}]},
   // III · Tagliolini, calamari e finferli  ↔  pour
   {top: [{src: 'IMG_0681.mp4', start: 12.1}, {src: 'IMG_0711.mp4', start: 0.9}],
-    bottom: [{src: 'IMG_0766.mp4', start: 3.0, rate: 0.75}, {src: 'IMG_0773.mp4', start: 9.8}]},
+    bottom: [{src: 'IMG_0766.mp4', start: 3.0, rate: 0.75}, {src: 'IMG_0747.mp4', start: 0.5}]},
   // IV · Polpo, zucca, nocciole  ↔  the wick, the finish
   {top: [{src: 'IMG_0655.mp4', start: 9.0}, {src: 'IMG_0657.mp4', start: 2.4}],
     bottom: [{src: 'IMG_0772.mp4', start: 5.1}, {src: 'IMG_0776.mp4', start: 0}]},

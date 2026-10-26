@@ -137,4 +137,5 @@ export const statics: Story[] = stories
     overlay: s.overlay ? {...s.overlay, anim: 'static' as const} : undefined,
   }));
 
-export const pack2: Story[] = [...videos7, ...statics];
+// V2 (no message) and V6 (horizontal clips) were rejected by the client; R6 in pack3 replaces V6.
+export const pack2: Story[] = [...videos7.filter((s) => !['V2-red', 'V6-google-review-sc'].includes(s.id)), ...statics];
