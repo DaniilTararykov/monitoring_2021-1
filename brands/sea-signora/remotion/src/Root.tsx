@@ -2,6 +2,7 @@ import React from 'react';
 import {Composition} from 'remotion';
 import {video} from '../../tokens';
 import {BrandSheet} from './BrandSheet';
+import {SEQ_S, SPLIT_S, TwoRecipesSeq, TwoRecipesSplit} from './TwoRecipes';
 import {BlackoutReel, DURATION_S, FPS} from './BlackoutReel';
 import {StoryVideo, storyFrames} from './Story';
 import {stories} from './stories';
@@ -17,6 +18,9 @@ export const RemotionRoot: React.FC = () => (
     {['a', 'b', 'c', 'd'].map((v) => (
       <Composition key={v} id={v === 'a' ? 'BlackoutReel' : `BlackoutReel-${v}`} component={BlackoutReel} durationInFrames={Math.round(DURATION_S * FPS)} fps={FPS} width={1080} height={1920} defaultProps={{withAudio: true, variant: v}} />
     ))}
+    <Composition id="TwoRecipes-split1" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's1'}} />
+    <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
+    <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />
     {[...stories, ...pack2, ...pack3].map((s) => (
       <Composition
         key={s.id}
