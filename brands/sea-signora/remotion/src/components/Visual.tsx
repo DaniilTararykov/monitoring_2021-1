@@ -98,7 +98,8 @@ const LinkIcon: React.FC<{size: number; color: string}> = ({size, color}) => (
 // Link-sticker look-alike. NEVER animated: the real Instagram link sticker is placed
 // exactly on top of it when publishing, so it must sit still from the first frame.
 export const Chip: React.FC<{cta: Cta}> = ({cta}) => {
-  const bg = cta.color === 'olive' ? colors.olive : colors.orange;
+  const bg = cta.color === 'olive' ? colors.olive : cta.color === 'white' ? colors.ivory : colors.orange;
+  const fg = cta.color === 'white' ? colors.marble : colors.ivory;
   return (
     <div style={{position: 'absolute', left: 0, right: 0, bottom: cta.y ?? 400, display: 'flex', justifyContent: 'center'}}>
       <div
@@ -107,8 +108,8 @@ export const Chip: React.FC<{cta: Cta}> = ({cta}) => {
           boxShadow: '0 4px 18px rgba(0,0,0,0.25)',
         }}
       >
-        <LinkIcon size={36} color={colors.ivory} />
-        <span style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: type.chip.size, color: colors.ivory}}>{cta.label}</span>
+        <LinkIcon size={36} color={fg} />
+        <span style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: type.chip.size, color: fg}}>{cta.label}</span>
       </div>
     </div>
   );

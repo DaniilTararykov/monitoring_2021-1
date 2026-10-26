@@ -34,7 +34,7 @@ type Media = {photo?: string; video?: string; size: [number, number]; focus: [nu
 // a dictionary entry (word, reading, part of speech, one line) — or, for events, the same layout with the event info
 type Info = {label: string; title: string; line: string; meta: string};
 type Entry = {id: string; bg: Bg; shape: Shape; word?: string; read?: string; pos?: string; def?: string; info?: Info;
-  m: Media; frames: number; cta?: {label: string; color: 'orange' | 'olive'}};
+  m: Media; frames: number; cta?: {label: string; color: 'orange' | 'olive' | 'white'}};
 
 // the media covers the shape, scaled `zoom` × over cover, with the focus point as close to the centre as the edges allow
 const place = (w: number, h: number, m: Media): React.CSSProperties => {
@@ -91,7 +91,7 @@ const ENTRIES: Entry[] = [
   {id: 'W5-3wed-1p-caviale', bg: 'green', shape: 'circle', word: 'Caviale', read: 'ca·vià·le', pos: 'noun', def: 'osetra on spaghetti with anchovy and butter',
     m: {photo: 's8_120', size: S8, focus: [1100, 1320]}, frames: 1},
   {id: 'W5-3wed-2v-servito', bg: 'white', shape: 'arch', word: 'Servito', read: 'ser·ví·to', pos: 'adjective', def: 'the moment the plate lands',
-    m: {video: 'served', size: V, focus: [560, 1150], zoom: 1.2}, frames: s(6.3), cta: {label: 'book a table', color: 'orange'}},
+    m: {video: 'served', size: V, focus: [560, 1150], zoom: 1.2}, frames: s(6.3)},
   // Thu 29.10 — sauce poured over dessert; the waiter's lobster shirt; the new Tomahawk
   {id: 'W5-4thu-1p-dolce', bg: 'orange', shape: 'pill', word: 'Dolce', read: 'dól·ce', pos: 'noun', def: 'a sweet ending poured slowly',
     m: {photo: 's7_093', size: S7, focus: [475, 760]}, frames: 1},
@@ -116,9 +116,9 @@ const ENTRIES: Entry[] = [
     m: {photo: 's7_105', size: [1200, 1500], focus: [600, 640], zoom: 1.15}, frames: 1},
   // events (client 26.10): same design, event info instead of the dictionary entry. Blackout Night — candles, a plate and a
   // glass from the event's photo set; Dim Sum Milano — the dumplings from the client's own story, cropped below its title
-  {id: 'W5-4thu-4p-blackout-night', bg: 'orange', shape: 'pill',
-    info: {label: 'tonight', title: 'Blackout Night', line: 'dinner by candlelight', meta: '29/10 · from 19:00'},
-    m: {photo: 'blackout-candles', size: [2200, 3300], focus: [1210, 1650], zoom: 1.1}, frames: 1, cta: {label: 'secure your spot', color: 'orange'}},
+  {id: 'W5-3wed-3p-blackout-night', bg: 'orange', shape: 'pill',
+    info: {label: 'tomorrow', title: 'Blackout Night', line: 'dinner by candlelight', meta: '29/10 · from 19:00'},
+    m: {photo: 'blackout-candles', size: [2200, 3300], focus: [1210, 1650], zoom: 1.1}, frames: 1, cta: {label: 'secure your spot', color: 'white'}},
   {id: 'W5-7sun-3p-dim-sum-milano', bg: 'green', shape: 'circle',
     info: {label: 'tomorrow', title: '× Dim Sum Milano', line: 'a cantonese evening', meta: 'from 19:00 · ravioli di gambero piccante'},
     m: {photo: 'dimsum-ravioli', size: [720, 1280], focus: [276, 852]}, frames: 1, cta: {label: 'book your table', color: 'orange'}},

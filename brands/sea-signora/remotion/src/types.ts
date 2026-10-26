@@ -42,7 +42,7 @@ export type Scene = {
 
 export type Cta = {
   label: string;
-  color?: 'orange' | 'olive';
+  color?: 'orange' | 'olive' | 'white'; // white = ivory chip with brand-green icon and text
   y?: number; // px from the bottom edge of the frame, default 400 (above the 340 px safe zone)
 };
 
