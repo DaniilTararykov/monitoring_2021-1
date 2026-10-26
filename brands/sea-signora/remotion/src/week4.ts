@@ -80,7 +80,7 @@ export const week4: Story[] = [
   },
   {
     id: 'W4-2tue-4p-red-and-blue', day: 'Tue 27.10', rubric: 'Сырой бар · статика · анонс завтра', music: silent,
-    scenes: [ph('prawns-lobster', 6)],
+    scenes: [ph('prawns-lobster', 6, {shift: 300})], // photo pushed down: a night band keeps the orange teaser readable
     overlay: top(H('Red & blue'), sub('red prawns · blue lobster'), ...next('the open kitchen')),
     caption: 'Red prawns and blue lobster: the raw bar in two colours. Tomorrow, the open kitchen.',
     hashtags: ['#seasignora', '#rawbar', '#lobster', '#brera'], ctaVariants: ['book a table', 'reserve'],
