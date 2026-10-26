@@ -33,7 +33,7 @@ for (const id of ids) {
   if (png) {
     // static story as image: last frame minus a few (all text on, before end fade)
     await renderStill({serveUrl, composition: comp, frame: comp.durationInFrames - 16,
-      output: path.join(out, 'png', `${id}.png`), imageFormat: 'png', browserExecutable});
+      output: path.join(out, 'png', `${id}.png`), imageFormat: 'png', browserExecutable, timeoutInMilliseconds: 180000});
     console.log('png', id);
   } else if (qa) {
     const d = comp.durationInFrames;
@@ -42,14 +42,14 @@ for (const id of ids) {
       await renderStill({
         serveUrl, composition: {...comp, props: {...comp.props, guides: true}},
         frame: f, output: path.join(out, 'qa', `${id}_${String(f).padStart(3, '0')}.jpg`),
-        imageFormat: 'jpeg', scale: 0.3, browserExecutable,
+        imageFormat: 'jpeg', scale: 0.3, browserExecutable, timeoutInMilliseconds: 180000,
       });
     }
     console.log('qa', id);
   } else {
     await renderMedia({
       serveUrl, composition: comp, codec: 'h264', crf: 18, audioCodec: 'aac',
-      outputLocation: path.join(out, `${id}.mp4`), browserExecutable, concurrency: 4,
+      outputLocation: path.join(out, `${id}.mp4`), browserExecutable, concurrency: 2, timeoutInMilliseconds: 180000,
     });
     console.log('rendered', id, (comp.durationInFrames / comp.fps).toFixed(1) + 's');
   }
