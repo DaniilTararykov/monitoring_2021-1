@@ -487,7 +487,13 @@ $('p-reset').onclick = () => {
 };
 
 // ── draft (this browser)
-function draft() { try { localStorage.setItem('ss-draft', JSON.stringify({presetId, st})); } catch (e) {} }
+let draftTimer = null;
+function draft() {
+  try { localStorage.setItem('ss-draft', JSON.stringify({presetId, st})); } catch (e) {}
+  // autosave to the editor's store too, so Claude can pick up the current state on request
+  clearTimeout(draftTimer);
+  draftTimer = setTimeout(() => { if (db) db.doc('drafts/latest').set({preset: presetId, config: clone(st), updatedAt: new Date().toISOString()}).catch(() => {}); }, 1500);
+}
 try { custom = JSON.parse(localStorage.getItem('ss-presets') || '{}') || {}; } catch (e) { custom = {}; }
 try { const d = JSON.parse(localStorage.getItem('ss-draft') || 'null'); if (d && d.st && d.st.shots) { presetId = presets()[d.presetId] ? d.presetId : 'split1'; st = d.st; } } catch (e) {}
 
@@ -505,6 +511,7 @@ $('send').onclick = async () => {
 (async () => {
   try { db = await window.claude?.use?.('db'); } catch (e) { db = null; }
   if (!db) { $('send').disabled = true; status('Отправка доступна только владельцу. Можно скопировать настройки.'); return; }
+  draft(); // push the restored local draft to the store once the store is available
   db.collection('presets').onSnapshot((snap) => {
     const next = {}; snap.docs.forEach((d) => { const x = d.data(); if (x && x.config) next[d.id] = x.config; });
     custom = next; fillPresets();
