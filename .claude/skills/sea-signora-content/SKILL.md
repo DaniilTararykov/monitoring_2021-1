@@ -55,6 +55,11 @@ description: Use for ANY task about Instagram stories, reels, video editing (м�
 - Рендер с облегчённой папкой ресурсов (жёсткие ссылки только на нужные файлы недели, `bundle({publicDir})`), иначе каждая сборка Remotion копирует весь `public/` (3+ ГБ) в /tmp и место кончается.
 - Тексты в md: `node --experimental-strip-types scripts/export-copy.mjs ../stories-week4.md src/week4.ts week4`.
 
+### Фотографии фотографа (папки Shooting N) и концептуальная неделя (пример: `src/Opere.tsx`)
+- Список папки без MCP-пагинации: `curl -sL "https://drive.google.com/embeddedfolderview?id=<ID>#list"` → id и имена файлов из `flip-entry-title`. Фото не качай целиком (HD до 50 МБ): `https://drive.google.com/thumbnail?id=<ID>&sz=w2200` отдаёт уменьшенную копию, `sz=w360` — для контакт-листа.
+- Неделя держится на одной идее, а не на наборе приёмов (клиент 26.10: «think out of the box, bold, fine dining»): например, неделя-выставка «Opere da mangiare» — залы I–VII, музейные этикетки, аудиогид, вернисаж. Сквозная нить — мономаркер на каждой сторис.
+- Текст на видео описывает то, что реально происходит в кадре («считывай контекст видео»).
+
 ## 4. Тексты (голос бренда)
 Для каждой сторис дай:
 - тексты на экране;
