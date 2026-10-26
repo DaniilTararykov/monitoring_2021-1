@@ -294,7 +294,7 @@ export const stories: Story[] = [
     musicFrom: 12,
     scenes: [{src: 'ss_11.jpg', frames: 8 * S, fx: 55, zoom: 'in'}],
     overlay: {position: 'top', blocks: [{t: 'headline', text: 'No costume required'}, {t: 'sub', text: 'just an appetite'}, {t: 'rule'}, {t: 'sub', text: 'tonight from 19:00'}]},
-    cta: {label: 'reserve', color: 'orange'},
+    // client 26.10: no link chip on this one
     caption: 'Halloween at Sea, Signora: no costume required, just an appetite.',
     hashtags: ['#seasignora', '#halloween', '#brera', '#milanonight'],
     ctaVariants: ['reserve', 'secure your table'],
