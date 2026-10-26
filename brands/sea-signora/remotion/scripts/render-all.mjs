@@ -2,8 +2,9 @@
 //   node scripts/render-all.mjs                 -> all stories to out/*.mp4
 //   node scripts/render-all.mjs 02 14           -> only ids starting with these prefixes
 //   node scripts/render-all.mjs --frames [ids]  -> QA contact frames with safe-zone guides to out/qa/
+//   node scripts/render-all.mjs --png [ids]     -> static story images to out/png/
 import {bundle} from '@remotion/bundler';
-import {renderMedia, renderStill, selectComposition} from '@remotion/renderer';
+import {getCompositions, renderMedia, renderStill, selectComposition} from '@remotion/renderer';
 import path from 'node:path';
 import fs from 'node:fs';
 
@@ -15,19 +16,26 @@ const filters = args.filter((a) => !a.startsWith('--'));
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const out = path.join(root, 'out');
 fs.mkdirSync(path.join(out, 'qa'), {recursive: true});
+fs.mkdirSync(path.join(out, 'png'), {recursive: true});
 
 const serveUrl = await bundle({entryPoint: path.join(root, 'src/index.ts')});
 
-const ids = fs
-  .readFileSync(path.join(root, 'src/stories.ts'), 'utf8')
-  .match(/id: '([^']+)'/g)
-  .map((m) => m.slice(5, -1))
+const png = args.includes('--png');
+const ids = (await getCompositions(serveUrl, {browserExecutable}))
+  .map((c) => c.id)
+  .filter((c) => c.startsWith('S'))
+  .map((c) => c.slice(1))
   .filter((id) => !filters.length || filters.some((f) => id.startsWith(f)));
 
 for (const id of ids) {
   const inputProps = {};
   const comp = await selectComposition({serveUrl, id: `S${id}`, inputProps, browserExecutable});
-  if (qa) {
+  if (png) {
+    // static story as image: last frame minus a few (all text on, before end fade)
+    await renderStill({serveUrl, composition: comp, frame: comp.durationInFrames - 16,
+      output: path.join(out, 'png', `${id}.png`), imageFormat: 'png', browserExecutable});
+    console.log('png', id);
+  } else if (qa) {
     const d = comp.durationInFrames;
     const picks = [...new Set([20, Math.round(d * 0.35), Math.round(d * 0.65), d - 15])];
     for (const f of picks) {

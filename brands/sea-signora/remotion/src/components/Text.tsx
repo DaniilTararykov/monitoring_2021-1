@@ -31,7 +31,7 @@ const Star: React.FC<{size: number}> = ({size}) => (
 const Hours: React.FC<{mode: 'split' | 'compact' | 'weekend'}> = ({mode}) => {
   const s: React.CSSProperties = {...mono, fontWeight: 500, fontSize: type.caption.size, lineHeight: 1.3};
   if (mode === 'compact')
-    return <p style={{...s, textAlign: 'center', fontSize: type.small.size + 2, letterSpacing: 1}}>{contacts.hoursCompact}</p>;
+    return <p style={{...s, textAlign: 'center', fontSize: type.caption.size, letterSpacing: 1, lineHeight: 1.45}}>{contacts.hoursCompact}</p>;
   if (mode === 'weekend')
     return <p style={{...s, textAlign: 'center'}}>{'12:30-15:30\n19:00-00:00'}</p>;
   return (

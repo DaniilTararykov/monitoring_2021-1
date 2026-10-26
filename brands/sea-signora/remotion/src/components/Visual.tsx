@@ -22,7 +22,7 @@ export const Photo: React.FC<{scene: Scene}> = ({scene}) => {
     transform: `scale(${scale})`, transformOrigin: `${fx}% ${fy}%`,
   };
   const box: React.CSSProperties = w
-    ? {top: w.top, bottom: w.bottom, left: w.side, right: w.side, overflow: 'hidden'}
+    ? {top: w.top, bottom: w.bottom, left: w.side, right: w.side, width: 'auto', height: 'auto', overflow: 'hidden'}
     : {top: shift, height: 1920, overflow: 'hidden'};
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: colors.night}}>
