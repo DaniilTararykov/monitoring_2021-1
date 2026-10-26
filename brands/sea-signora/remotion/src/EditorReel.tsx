@@ -11,13 +11,13 @@ loadBrandFonts();
 //   npx remotion render EditorReel out/x.mp4 --props=config.json
 
 // rot (deg, + = clockwise) levels the horizon; zoom/fx/fy crop in; the cover scale for rot is added automatically.
-// n: this shot's length in beats (default beatsPerCut), e.g. a longer pre-cut clip played through.
-export type EditorClip = {clip: string; start: number; fy?: number; fx?: number; rot?: number; zoom?: number; n?: number};
+// rate: playback speed (default config.rate ?? 1); n: this shot's length in beats (default beatsPerCut), e.g. a longer pre-cut clip played through.
+export type EditorClip = {clip: string; start: number; fy?: number; fx?: number; rot?: number; zoom?: number; n?: number; rate?: number};
 export type EditorConfig = {
   name: string; mode: 'split' | 'seq'; title: string; titleFont: 'display' | 'serif'; sub?: string; // sub: small mono line under the title
   music: string; beatsPerCut: number; secPerCut?: number; grade: boolean; shots: {a: EditorClip; b?: EditorClip}[];
   // final-render options (not set by the editor): explicit beat grid + audio file, no fades/drift, stronger grade
-  beats?: number[]; audio?: string; fades?: boolean; drift?: number; gradeAmount?: number; film?: boolean;
+  beats?: number[]; audio?: string; rate?: number; fades?: boolean; drift?: number; gradeAmount?: number; film?: boolean;
   // optional ending: the last shot fades into the poster (fade 0 = straight cut), which holds `hold` s
   poster?: {src: string; fade: number; hold: number};
 };
@@ -73,7 +73,7 @@ const Shot: React.FC<{c: EditorClip; len: number; fy: boolean; graded: boolean; 
   const a = cfg.gradeAmount ?? 1;
   return (
     <AbsoluteFill style={{overflow: 'hidden'}}>
-      <OffthreadVideo src={staticFile(src(c.clip))} startFrom={fr(c.start)} muted
+      <OffthreadVideo src={staticFile(src(c.clip))} startFrom={fr(c.start)} playbackRate={c.rate ?? cfg.rate ?? 1} muted
         style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${px}% ${py}%`,
           transform: `rotate(${rot}deg) scale(${scale})`, transformOrigin: `${px}% ${py}%`, filter: graded ? gradeFilter(a, !!cfg.film) : undefined}} />
       {graded ? <AbsoluteFill style={{background: `rgba(120, 60, 20, ${0.1 * a})`, mixBlendMode: 'soft-light'}} /> : null}

@@ -1,5 +1,5 @@
 {
- "beatsPerCut": 3,
+ "beatsPerCut": 2,
  "grade": false,
  "mode": "seq",
  "music": "ref-kitchen-cinematic",
@@ -97,7 +97,8 @@
    "a": {
     "clip": "blackout-past",
     "start": 0,
-    "n": 10
+    "n": 10,
+    "rate": 1
    }
   }
  ],
@@ -177,7 +178,7 @@
   40.658,
   41.216
  ],
- "audio": "final-two-ways-31.mp3",
+ "audio": "final-two-ways-23.mp3",
  "fades": false,
  "drift": 0,
  "gradeAmount": 1,
@@ -187,5 +188,6 @@
   "fade": 0,
   "hold": 4
  },
- "sub": "getting ready for blackout night"
+ "sub": "getting ready for blackout night",
+ "rate": 1.35
 }
