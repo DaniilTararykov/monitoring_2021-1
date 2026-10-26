@@ -4,7 +4,6 @@ import {video} from '../../tokens';
 import {BrandSheet} from './BrandSheet';
 import {SEQ_S, SPLIT_S, TwoRecipesSeq, TwoRecipesSplit} from './TwoRecipes';
 import {RECIPE_CARD_S, RecipeCard} from './RecipeCard';
-import {TWO_WAYS_S, TwoWays} from './TwoWays';
 import {EditorReel, editorDuration, type EditorConfig} from './EditorReel';
 import {BlackoutReel, DURATION_S, FPS} from './BlackoutReel';
 import {StoryVideo, storyFrames} from './Story';
@@ -38,7 +37,6 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
     <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />
     <Composition id="TwoRecipes-card" component={RecipeCard} durationInFrames={Math.round(RECIPE_CARD_S * 30)} fps={30} width={1080} height={1920} />
-    <Composition id="TwoWays" component={TwoWays} durationInFrames={Math.round(TWO_WAYS_S * 30)} fps={30} width={1080} height={1920} />
     {[...stories, ...pack2, ...pack3, ...week4, ...week4b].map((s) => (
       <Composition
         key={s.id}

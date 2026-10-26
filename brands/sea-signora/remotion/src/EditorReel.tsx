@@ -11,13 +11,14 @@ loadBrandFonts();
 //   npx remotion render EditorReel out/x.mp4 --props=config.json
 
 // rot (deg, + = clockwise) levels the horizon; zoom/fx/fy crop in; the cover scale for rot is added automatically.
-export type EditorClip = {clip: string; start: number; fy?: number; fx?: number; rot?: number; zoom?: number};
+// n: this shot's length in beats (default beatsPerCut), e.g. a longer pre-cut clip played through.
+export type EditorClip = {clip: string; start: number; fy?: number; fx?: number; rot?: number; zoom?: number; n?: number};
 export type EditorConfig = {
-  name: string; mode: 'split' | 'seq'; title: string; titleFont: 'display' | 'serif';
+  name: string; mode: 'split' | 'seq'; title: string; titleFont: 'display' | 'serif'; sub?: string; // sub: small mono line under the title
   music: string; beatsPerCut: number; secPerCut?: number; grade: boolean; shots: {a: EditorClip; b?: EditorClip}[];
   // final-render options (not set by the editor): explicit beat grid + audio file, no fades/drift, stronger grade
   beats?: number[]; audio?: string; fades?: boolean; drift?: number; gradeAmount?: number; film?: boolean;
-  // optional ending: the only transition — the last shot fades into the poster, which holds `hold` s
+  // optional ending: the last shot fades into the poster (fade 0 = straight cut), which holds `hold` s
   poster?: {src: string; fade: number; hold: number};
 };
 
@@ -37,7 +38,7 @@ export const cutAt = (c: EditorConfig, i: number) => {
   if (i <= 0) return 0;
   if (noMusic(c)) return i * (c.secPerCut || 2);
   const b = c.beats ?? TRACKS[c.music].beats;
-  const k = i * c.beatsPerCut - 1;
+  const k = c.shots.slice(0, i).reduce((sum, s) => sum + (s.a.n ?? c.beatsPerCut), 0) - 1;
   return k < b.length ? b[k] : b[b.length - 1] + (k - b.length + 1) * interval(b);
 };
 export const editorDuration = (c: EditorConfig) => fr(cutAt(c, c.shots.length) + (c.poster ? c.poster.hold + c.poster.fade : 0));
@@ -87,7 +88,7 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
   const starts = config.shots.map((_, i) => cutAt(config, i));
   const shotsEnd = fr(cutAt(config, config.shots.length));
   const p = config.poster;
-  const posterO = p ? interpolate(f, [shotsEnd, shotsEnd + fr(p.fade)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}) : 0;
+  const posterO = !p ? 0 : p.fade > 0 ? interpolate(f, [shotsEnd, shotsEnd + fr(p.fade)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}) : f >= shotsEnd ? 1 : 0;
   const split = config.mode === 'split';
   const titleStyle: React.CSSProperties = config.titleFont === 'serif'
     ? {fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 52}
@@ -124,6 +125,7 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
       {config.title ? (
         <div style={{position: 'absolute', left: 40, right: 40, top: split ? 960 - 36 : safe.top + 30, textAlign: 'center', color: colors.ivory, textShadow: '0 1px 14px rgba(0,0,0,0.6)', ...titleStyle}}>
           {config.title}
+          {config.sub ? <div style={{fontFamily: fonts.mono, fontStyle: 'normal', fontWeight: 500, fontSize: 22, letterSpacing: 5, textTransform: 'uppercase', marginTop: 12, opacity: 0.92}}>{config.sub}</div> : null}
         </div>
       ) : null}
       {p ? (
