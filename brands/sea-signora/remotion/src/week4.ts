@@ -131,7 +131,7 @@ export const week4: Story[] = [
   },
   {
     id: 'W4-3wed-v2-mirror', day: 'Wed 28.10', rubric: 'Атмосфера · новое', music: 'velvet-strings',
-    scenes: [v('mirror', 7)],
+    scenes: [v('mirror', 7, {rot: 9, scale: 1.5, fx: 54, fy: 54})], // the mirror hangs at an angle: level the reflection
     overlay: top(H('Mirror mirror'), sub('the best table is the one you booked')),
     cta: {label: 'secure your table', color: 'olive'},
     caption: 'Mirror, mirror: the best table is the one you booked.',
@@ -299,7 +299,7 @@ export const week4: Story[] = [
   },
   {
     id: 'W4-6sat-p2-mirror', day: 'Sat 31.10', rubric: 'Атмосфера · статика', music: 'velvet-strings',
-    scenes: [ph('mirror', 6)],
+    scenes: [ph('mirror', 6, {rot: 9, scale: 1.5, fx: 54, fy: 54})],
     overlay: top(H('Brera tonight'), sub('via fiori chiari 32')),
     caption: 'Brera tonight, seen from the mirror.',
     hashtags: ['#seasignora', '#brera', '#milanonight', '#interiordesign'], ctaVariants: ['secure your table', 'reserve'],
