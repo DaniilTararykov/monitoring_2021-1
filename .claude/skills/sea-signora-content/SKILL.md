@@ -68,3 +68,9 @@ description: Use for ANY task about Instagram stories, reels, video editing (м�
 
 ## 7. Правки
 Проси правки списком **«сторис, секунда, что поменять»** и вноси их **одним заходом**: правишь `stories.ts`, делаешь QA-кадры только изменённых сторис, рендеришь только их (`render-all.mjs <префиксы>`), прогоняешь `check_video.sh` и присылаешь обновлённые mp4 вместе со списком «что изменено».
+
+## 8. Редактор «Монтажная» (рилсы «Два рецепта одного вечера»)
+- Артефакт: https://claude.ai/artifact/WDXKvNLakA838xooPJzbgJ (исходник `brands/sea-signora/editor/template.html`, сборка `editor/build.py`; превью клипов 270×480 лежат в ассетах артефакта).
+- Пользователь правит кадры/заголовок/музыку и жмёт «Отправить на рендер» → документ в коллекции `renders` (status `requested`). Когда он пишет «рендер»: `ArtifactData list renders` с `out_dir`, для каждого `requested` — `tools/render_editor.sh <json>`, проверка, отправка mp4, затем `update` status `done` (с `if_version`).
+- Композиция `EditorReel` (`remotion/src/EditorReel.tsx`) повторяет логику превью: кадр i начинается на доле i×beatsPerCut, последний держится до конца трека.
+- Нужные полноразмерные клипы — в `remotion/public/videos/reel/<id>.mp4` (в .gitignore); если сессия новая — заново скачать папку Content с Drive и сделать прокси 1080p.

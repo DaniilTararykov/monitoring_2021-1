@@ -3,6 +3,7 @@ import {Composition} from 'remotion';
 import {video} from '../../tokens';
 import {BrandSheet} from './BrandSheet';
 import {SEQ_S, SPLIT_S, TwoRecipesSeq, TwoRecipesSplit} from './TwoRecipes';
+import {EditorReel, editorDuration, type EditorConfig} from './EditorReel';
 import {BlackoutReel, DURATION_S, FPS} from './BlackoutReel';
 import {StoryVideo, storyFrames} from './Story';
 import {stories} from './stories';
@@ -18,6 +19,17 @@ export const RemotionRoot: React.FC = () => (
     {['a', 'b', 'c', 'd'].map((v) => (
       <Composition key={v} id={v === 'a' ? 'BlackoutReel' : `BlackoutReel-${v}`} component={BlackoutReel} durationInFrames={Math.round(DURATION_S * FPS)} fps={FPS} width={1080} height={1920} defaultProps={{withAudio: true, variant: v}} />
     ))}
+    <Composition
+      id="EditorReel"
+      component={EditorReel}
+      fps={30}
+      width={1080}
+      height={1920}
+      durationInFrames={552}
+      defaultProps={{config: {name: 'demo', mode: 'split', title: 'Two recipes of one evening', titleFont: 'display', music: 'ref-art-of-hands', beatsPerCut: 6, grade: true,
+        shots: [{a: {clip: 'IMG_0633', start: 3.9, fy: 73}, b: {clip: 'IMG_0763', start: 2.6, fy: 56}}]} as EditorConfig}}
+      calculateMetadata={({props}) => ({durationInFrames: editorDuration(props.config)})}
+    />
     <Composition id="TwoRecipes-split1" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's1'}} />
     <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
     <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />

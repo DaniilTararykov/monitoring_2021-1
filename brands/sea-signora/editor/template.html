@@ -1,0 +1,404 @@
+<title>Монтажная Sea, Signora</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Spectral:ital,wght@0,400;1,400&display=swap">
+<style>
+@font-face { font-family: "Skanaus"; src: url(data:font/otf;base64,__SKANAUS__) format("opentype"); font-display: swap; }
+/* Layout: editing table — left rail of settings, centre 9:16 monitor, right the shot bench. */
+:root {
+  --night: #0B0B0B; --ink: #161512; --panel: #1C1B17; --line: #34322B;
+  --ivory: #F8F6F5; --muted: #A9A49A; --orange: #E57533; --olive: #9E9E6A; --marble: #1B2F1C; --danger: #D9534F;
+  --display: "Skanaus", "Spectral", Georgia, serif;
+  --serif: "Spectral", Georgia, serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+:root[data-theme="light"], :root[data-theme="dark"] { color-scheme: dark; }
+html, body { height: 100%; }
+body { background: var(--night); color: var(--ivory); font-family: var(--mono); font-size: 13px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px; }
+* { box-sizing: border-box; }
+h1 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 0; letter-spacing: .5px; }
+h2 { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); font-weight: 500; margin: 0 0 10px; }
+.top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; margin-bottom: 16px; }
+.top p { margin: 0; color: var(--muted); max-width: 70ch; }
+.app { display: grid; grid-template-columns: minmax(240px, 300px) minmax(280px, 380px) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 1100px) { .app { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .bench { grid-column: 1 / -1; } }
+@media (max-width: 720px) { .app { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; min-width: 0; }
+.stack { display: flex; flex-direction: column; gap: 14px; }
+label.f { display: flex; flex-direction: column; gap: 6px; color: var(--muted); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+input[type=text], select { background: var(--ink); color: var(--ivory); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font: inherit; font-size: 13px; text-transform: none; letter-spacing: 0; width: 100%; }
+input[type=range] { width: 100%; accent-color: var(--orange); }
+.seg { display: flex; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 3px; }
+.seg button { flex: 1; }
+button { font: inherit; color: var(--ivory); background: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+button.on { background: var(--ivory); color: var(--night); border-color: var(--ivory); }
+button.primary { background: var(--orange); border-color: var(--orange); color: var(--night); font-weight: 700; }
+button.ghost { background: transparent; }
+.hint { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.val { color: var(--ivory); font-variant-numeric: tabular-nums; }
+
+/* monitor */
+.monitor { position: relative; width: 100%; max-width: 360px; aspect-ratio: 9 / 16; margin: 0 auto; background: #000; border-radius: 12px; overflow: hidden; }
+.half { position: absolute; left: 0; right: 0; overflow: hidden; }
+.half video, .full video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.full { position: absolute; inset: 0; }
+.graded video { filter: contrast(1.08) brightness(.93) saturate(.9) sepia(.12); }
+.mtitle { position: absolute; left: 0; right: 0; text-align: center; color: var(--ivory); text-transform: uppercase; font-family: var(--display); font-size: 17px; letter-spacing: .3px; pointer-events: none; text-shadow: 0 1px 8px rgba(0,0,0,.6); padding: 0 10px; }
+.mtitle.serif { font-family: var(--serif); font-style: italic; text-transform: none; font-size: 18px; }
+.safe { position: absolute; left: 0; right: 0; background: rgba(229,117,51,.18); pointer-events: none; }
+.transport { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+.transport .time { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--ink); border-radius: 3px; margin-top: 8px; position: relative; overflow: hidden; cursor: pointer; }
+.bar i { position: absolute; top: 0; bottom: 0; left: 0; background: var(--orange); }
+.bar b { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--line); }
+
+/* bench */
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+.shot { background: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 6px; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 6px; }
+.shot.sel { border-color: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
+.shot .thumbs { display: grid; gap: 2px; border-radius: 6px; overflow: hidden; aspect-ratio: 9 / 16; background: #000; }
+.shot .thumbs.split { grid-template-rows: 1fr 1fr; }
+.shot .thumbs video { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 0; }
+.shot .meta { font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; }
+.edit { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; }
+@media (max-width: 720px) { .edit { grid-template-columns: minmax(0, 1fr); } }
+.scrub { position: relative; width: 100%; max-width: 240px; aspect-ratio: 9 / 16; background: #000; border-radius: 10px; overflow: hidden; margin: 0 auto; }
+.scrub video { width: 100%; height: 100%; object-fit: cover; }
+.cropbox { position: absolute; left: 0; right: 0; border: 2px solid var(--orange); box-shadow: 0 0 0 999px rgba(0,0,0,.55); pointer-events: none; }
+.lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); grid-auto-rows: max-content; align-content: start; gap: 6px; max-height: 360px; overflow-y: auto; padding-right: 4px; }
+.lib button { padding: 0; border-radius: 6px; overflow: hidden; aspect-ratio: 9 / 16; height: auto; width: 100%; display: block; position: relative; background: #000; }
+.lib button.cur { outline: 2px solid var(--orange); outline-offset: 1px; }
+.lib video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.lib span { position: absolute; left: 3px; bottom: 3px; font-size: 9px; background: rgba(0,0,0,.65); padding: 1px 4px; border-radius: 4px; }
+.status { font-size: 12px; min-height: 18px; }
+.status.ok { color: var(--olive); } .status.err { color: var(--danger); }
+.saved { display: flex; flex-direction: column; gap: 6px; }
+.saved div { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 6px; }
+.pill { padding: 1px 8px; border-radius: 999px; font-size: 10px; border: 1px solid var(--line); }
+.pill.done { color: var(--olive); border-color: var(--olive); } .pill.req { color: var(--orange); border-color: var(--orange); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+
+<div class="top">
+  <h1>Монтажная</h1>
+  <p>Выбери пресет, поправь кадры и нажми «Отправить на рендер». Финальное видео соберу в полном качестве, со шрифтами и цветокоррекцией бренда.</p>
+</div>
+
+<div class="app">
+  <!-- settings rail -->
+  <div class="stack">
+    <div class="card stack">
+      <h2>Ролик</h2>
+      <label class="f">Пресет<select id="preset"></select></label>
+      <label class="f">Название версии<input id="name" type="text" maxlength="40"></label>
+      <div class="f" style="display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase">Формат
+        <div class="seg" role="group" aria-label="Формат">
+          <button id="m-split" type="button">Сплит</button><button id="m-seq" type="button">Друг за другом</button>
+        </div>
+      </div>
+    </div>
+    <div class="card stack">
+      <h2>Текст и звук</h2>
+      <label class="f">Заголовок на всё видео<input id="title" type="text" maxlength="60"></label>
+      <div class="seg" role="group" aria-label="Шрифт заголовка">
+        <button id="t-display" type="button">Skanaus, капс</button><button id="t-serif" type="button">Spectral, курсив</button>
+      </div>
+      <label class="f">Музыка<select id="music"></select></label>
+      <label class="f">Длина кадра: <span class="val" id="beats-v"></span><input id="beats" type="range" min="1" max="10" step="1"></label>
+      <label class="row" style="color:var(--muted)"><input id="grade" type="checkbox"> тёплая цветокоррекция</label>
+      <label class="row" style="color:var(--muted)"><input id="safezones" type="checkbox"> показать зоны Instagram</label>
+    </div>
+    <div class="card stack">
+      <h2>Рендер</h2>
+      <button class="primary" id="send" type="button">Отправить на рендер</button>
+      <button class="ghost" id="copy" type="button">Скопировать настройки</button>
+      <div class="status" id="status" role="status"></div>
+      <div class="saved" id="saved"></div>
+    </div>
+  </div>
+
+  <!-- monitor -->
+  <div class="card">
+    <h2>Предпросмотр</h2>
+    <div class="monitor" id="monitor"></div>
+    <div class="bar" id="bar"><i id="prog"></i></div>
+    <div class="transport">
+      <button id="play" type="button">▶ Смотреть</button>
+      <button id="restart" type="button" class="ghost">С начала</button>
+      <span class="time" id="time">0.0 / 0.0 с</span>
+    </div>
+    <p class="hint">Предпросмотр в низком качестве и может чуть запаздывать на склейках. В финальном рендере склейки точно в бит.</p>
+  </div>
+
+  <!-- shot bench -->
+  <div class="card bench">
+    <h2>Кадры</h2>
+    <div class="shots" id="shots"></div>
+    <div class="row" style="margin-top:10px">
+      <button id="add" type="button">+ Добавить кадр</button>
+      <button id="dup" type="button">Дублировать</button>
+      <button id="left" type="button">← Раньше</button>
+      <button id="right" type="button">Позже →</button>
+      <button id="del" type="button">Удалить</button>
+    </div>
+    <div class="edit" id="edit">
+      <div class="stack">
+        <div class="seg" id="sidesel" role="group" aria-label="Половина кадра">
+          <button id="side-a" type="button">Верх · кухня</button><button id="side-b" type="button">Низ · свеча</button>
+        </div>
+        <div class="scrub" id="scrub"><video id="scrubv" muted playsinline preload="auto"></video><div class="cropbox" id="cropbox"></div></div>
+        <label class="f">Откуда брать: <span class="val" id="start-v"></span><input id="start" type="range" min="0" max="10" step="0.05"></label>
+        <label class="f" id="fy-wrap">Кадрирование по вертикали: <span class="val" id="fy-v"></span><input id="fy" type="range" min="0" max="100" step="1"></label>
+        <button id="playseg" type="button">▶ Проиграть отрезок</button>
+      </div>
+      <div class="stack" style="min-width:0">
+        <div class="seg" role="group" aria-label="Фильтр клипов">
+          <button id="f-all" type="button">Все</button><button id="f-k" type="button">Кухня</button><button id="f-c" type="button">Свеча</button>
+        </div>
+        <div class="lib" id="lib"></div>
+        <p class="hint">Нажми на клип, чтобы поставить его в выбранную половину. Ползунком «Откуда брать» выбери момент. Оранжевая рамка показывает, что попадёт в половину сплита.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ASSETS = __ASSETS__;   // clip id -> preview url
+const MUSIC_URLS = __MUSIC__; // track id -> url
+const DURS = {__DURS__};      // clip id -> seconds
+
+const TRACKS = {
+  'ref-two-recipes': {label: 'Спокойный · 96 BPM · 13,4 с', dur: 13.4, beats: [0.743,1.37,1.997,2.647,3.274,3.924,4.551,5.178,5.828,6.455,7.105,7.755,8.382,9.009,9.66,10.286,10.937,11.564,12.214]},
+  'ref-art-of-hands': {label: 'The art of hands · 152 BPM · 18,4 с', dur: 18.4, beats: [0.093,0.534,0.952,1.37,1.788,2.206,2.624,3.042,3.46,3.855,4.249,4.644,5.039,5.41,5.805,6.177,6.548,6.989,7.407,7.825,8.22,8.615,9.033,9.404,9.822,10.217,10.612,11.006,11.424,11.819,12.214,12.608,13.003,13.398,13.816,14.211,14.605,15.0,15.395,15.79,16.184,16.579,16.974,17.369]},
+  'ref-kitchen-cinematic': {label: 'Кинематографичный · 103 BPM · 23,4 с', dur: 23.4, beats: [0.116,0.766,1.416,1.997,2.577,3.158,3.738,4.296,4.876,5.433,6.014,6.571,7.152,7.709,8.29,8.87,9.451,10.008,10.588,11.146,11.726,12.283,12.864,13.444,14.002,14.582,15.163,15.72,16.3,16.858,17.438,17.995,18.576,19.156,19.737,20.294,20.875,21.432]},
+};
+const isCandle = (id) => id === 'candle-light' || Number(id.slice(4)) >= 745;
+const S = (clip, start, fy = 50) => ({clip, start, fy});
+const TITLE = 'Two recipes of one evening';
+const PRESETS = {
+  'split1': {name: 'Сплит 1', mode: 'split', title: TITLE, titleFont: 'display', music: 'ref-art-of-hands', beatsPerCut: 6, grade: true, shots: [
+    {a: S('IMG_0633',3.9,73), b: S('IMG_0763',2.6,56)}, {a: S('IMG_0696',8.3,62), b: S('IMG_0762',3.5,74)}, {a: S('IMG_0654',1.5,68), b: S('IMG_0747',0.2,34)},
+    {a: S('IMG_0702',10.6,68), b: S('IMG_0772',4.3,16)}, {a: S('IMG_0657',2.4,42), b: S('IMG_0751',1.4,66)}, {a: S('IMG_0711',0.3,60), b: S('IMG_0776',0,90)},
+    {a: S('IMG_0706',5.5,50), b: S('candle-light',2.6,59)}]},
+  'split2': {name: 'Сплит 2', mode: 'split', title: TITLE, titleFont: 'display', music: 'ref-art-of-hands', beatsPerCut: 6, grade: true, shots: [
+    {a: S('IMG_0646',5.2,74), b: S('IMG_0746',1.5,63)}, {a: S('IMG_0686',1.5,56), b: S('IMG_0764',3.2,67)}, {a: S('IMG_0653',0.7,51), b: S('IMG_0766',3.0,26)},
+    {a: S('IMG_0701',9.9,79), b: S('IMG_0777',0.5,86)}, {a: S('IMG_0656',5.6,45), b: S('IMG_0754',7.4,58)}, {a: S('IMG_0665',0.6,62), b: S('IMG_0778',3.0,88)},
+    {a: S('IMG_0706',7.0,54), b: S('candle-light',2.6,59)}]},
+  'sequence': {name: 'Друг за другом', mode: 'seq', title: TITLE, titleFont: 'display', music: 'ref-kitchen-cinematic', beatsPerCut: 4, grade: true, shots: [
+    {a: S('IMG_0638',2.1)}, {a: S('IMG_0749',14.6)}, {a: S('IMG_0647',1.3)}, {a: S('IMG_0763',2.6)}, {a: S('IMG_0654',1.5)},
+    {a: S('IMG_0747',0.2)}, {a: S('IMG_0702',10.6)}, {a: S('IMG_0772',4.3)}, {a: S('IMG_0706',5.5)}, {a: S('candle-light',2.6)}]},
+  'fast-b': {name: 'Быстрый сплит B', mode: 'split', title: TITLE, titleFont: 'serif', music: 'ref-two-recipes', beatsPerCut: 2, grade: true, shots: [
+    {a: S('IMG_0638',2.1), b: S('IMG_0759',10.8)}, {a: S('IMG_0660',4.7), b: S('IMG_0751',1.4)}, {a: S('IMG_0633',3.9), b: S('IMG_0756',4.0)},
+    {a: S('IMG_0696',8.3), b: S('IMG_0764',3.2)}, {a: S('IMG_0653',0.7), b: S('IMG_0766',3.0)}, {a: S('IMG_0701',9.9), b: S('IMG_0777',0.5)},
+    {a: S('IMG_0665',0.6), b: S('IMG_0778',3.0)}, {a: S('IMG_0706',7.0), b: S('candle-light',2.6)}]},
+  'fast-c': {name: 'Быстрый сплит C', mode: 'split', title: TITLE, titleFont: 'serif', music: 'ref-two-recipes', beatsPerCut: 2, grade: true, shots: [
+    {a: S('IMG_0639',6.0), b: S('IMG_0749',4.0)}, {a: S('IMG_0705',4.5), b: S('IMG_0750',2.4)}, {a: S('IMG_0646',5.2), b: S('IMG_0763',5.0)},
+    {a: S('IMG_0686',1.5), b: S('IMG_0762',1.0)}, {a: S('IMG_0655',5.0), b: S('IMG_0747',1.8)}, {a: S('IMG_0699',3.3), b: S('IMG_0772',1.5)},
+    {a: S('IMG_0717',5.4), b: S('IMG_0774',0.4)}, {a: S('IMG_0706',4.2), b: S('candle-light',2.6)}]},
+  'fast-d': {name: 'Быстрый сплит D', mode: 'split', title: TITLE, titleFont: 'serif', music: 'ref-two-recipes', beatsPerCut: 2, grade: true, shots: [
+    {a: S('IMG_0658',8.0), b: S('IMG_0745',5.0)}, {a: S('IMG_0656',5.6), b: S('IMG_0754',7.4)}, {a: S('IMG_0634',5.0), b: S('IMG_0746',3.1)},
+    {a: S('IMG_0693',3.0), b: S('IMG_0764',6.5)}, {a: S('IMG_0654',3.5), b: S('IMG_0766',5.0)}, {a: S('IMG_0700',0), b: S('IMG_0777',4.0)},
+    {a: S('IMG_0711',3.5), b: S('IMG_0776',1.5)}, {a: S('IMG_0706',6.2), b: S('candle-light',2.6)}]},
+};
+
+let st = JSON.parse(JSON.stringify(PRESETS.split1));
+let presetId = 'split1';
+let sel = 0, side = 'a', filter = 'all';
+const $ = (id) => document.getElementById(id);
+const url = (clip) => ASSETS[clip] || '';
+
+// ── timing: shot i starts at beat i*beatsPerCut; last shot holds to the end of the track
+function cuts() {
+  const tr = TRACKS[st.music]; const n = st.shots.length; const out = [];
+  for (let i = 0; i < n; i++) { const k = i * st.beatsPerCut; out.push(i === 0 ? 0 : (k - 1 < tr.beats.length ? tr.beats[k - 1] : null)); }
+  return out;
+}
+function shotLen(i) { const c = cuts(); const tr = TRACKS[st.music]; if (c[i] == null) return 0; const next = c[i + 1]; return (i === st.shots.length - 1 || next == null ? tr.dur : next) - c[i]; }
+
+// ── settings rail
+function fillSelects() {
+  $('preset').innerHTML = Object.entries(PRESETS).map(([k, p]) => `<option value="${k}">${p.name}</option>`).join('');
+  $('music').innerHTML = Object.entries(TRACKS).map(([k, t]) => `<option value="${k}">${t.label}</option>`).join('');
+}
+function syncRail() {
+  $('preset').value = presetId; $('name').value = st.name; $('title').value = st.title; $('music').value = st.music;
+  $('beats').value = st.beatsPerCut; $('grade').checked = st.grade;
+  const sec = (60 / bpm()) * st.beatsPerCut;
+  $('beats-v').textContent = `${st.beatsPerCut} ${st.beatsPerCut === 1 ? 'доля' : st.beatsPerCut < 5 ? 'доли' : 'долей'} ≈ ${sec.toFixed(1)} с`;
+  $('m-split').classList.toggle('on', st.mode === 'split'); $('m-seq').classList.toggle('on', st.mode === 'seq');
+  $('t-display').classList.toggle('on', st.titleFont === 'display'); $('t-serif').classList.toggle('on', st.titleFont === 'serif');
+}
+function bpm() { const b = TRACKS[st.music].beats; return 60 / ((b[b.length - 1] - b[0]) / (b.length - 1)); }
+
+// ── monitor
+let vA, vB;
+function buildMonitor() {
+  const m = $('monitor'); m.className = 'monitor' + (st.grade ? ' graded' : '');
+  if (st.mode === 'split') {
+    m.innerHTML = `<div class="half" style="top:0;height:49.9%"><video id="vA" muted playsinline preload="auto"></video></div>
+      <div class="half" style="top:50.1%;bottom:0"><video id="vB" muted playsinline preload="auto"></video></div>
+      <div class="mtitle ${st.titleFont === 'serif' ? 'serif' : ''}" style="top:calc(50% - 12px)">${esc(st.title)}</div>`;
+  } else {
+    m.innerHTML = `<div class="full"><video id="vA" muted playsinline preload="auto"></video></div>
+      <div class="mtitle ${st.titleFont === 'serif' ? 'serif' : ''}" style="top:15%">${esc(st.title)}</div>`;
+  }
+  if ($('safezones').checked) m.insertAdjacentHTML('beforeend', '<div class="safe" style="top:0;height:13%"></div><div class="safe" style="bottom:0;height:17.7%"></div>');
+  vA = $('vA'); vB = $('vB'); curShot = -1; showAt(clock);
+  const tr = TRACKS[st.music]; const bar = $('bar'); bar.querySelectorAll('b').forEach((x) => x.remove());
+  cuts().forEach((c) => { if (c) bar.insertAdjacentHTML('beforeend', `<b style="left:${(c / tr.dur) * 100}%"></b>`); });
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c])); }
+function setVid(v, s, offset) {
+  if (!v || !s) return;
+  const u = url(s.clip);
+  v.style.objectPosition = `50% ${st.mode === 'split' ? s.fy ?? 50 : 50}%`;
+  if (v.dataset.clip !== s.clip) { v.dataset.clip = s.clip; v.src = u; }
+  const t = s.start + offset;
+  const seek = () => { try { if (Math.abs(v.currentTime - t) > 0.25) v.currentTime = t; } catch (e) {} };
+  if (v.readyState >= 1) seek(); else v.addEventListener('loadedmetadata', seek, {once: true});
+}
+
+let clock = 0, playing = false, curShot = -1, lastTs = 0;
+const audio = new Audio();
+function shotAt(t) { const c = cuts(); let i = 0; for (let k = 0; k < c.length; k++) if (c[k] != null && t >= c[k]) i = k; return i; }
+function showAt(t) {
+  const i = shotAt(t); const c = cuts(); const s = st.shots[i]; if (!s) return;
+  const off = t - c[i];
+  if (i !== curShot || !playing) { curShot = i; setVid(vA, s.a, off); if (st.mode === 'split') setVid(vB, s.b, off); }
+  const tr = TRACKS[st.music];
+  $('prog').style.width = `${(t / tr.dur) * 100}%`;
+  $('time').textContent = `${t.toFixed(1)} / ${tr.dur.toFixed(1)} с`;
+  document.querySelectorAll('.shot').forEach((el, k) => el.style.opacity = k === i ? '1' : '.8');
+}
+function tick(ts) {
+  if (!playing) return;
+  if (!audio.paused && !audio.ended && audio.src) clock = audio.currentTime; else clock += (ts - lastTs) / 1000;
+  lastTs = ts;
+  const tr = TRACKS[st.music];
+  if (clock >= tr.dur) { stop(); clock = 0; showAt(0); return; }
+  const before = curShot; showAt(clock);
+  if (curShot !== before) { [vA, vB].forEach((v) => v && v.play().catch(() => {})); }
+  requestAnimationFrame(tick);
+}
+function play() {
+  playing = true; $('play').textContent = '❚❚ Пауза'; curShot = -1; showAt(clock);
+  [vA, vB].forEach((v) => v && v.play().catch(() => {}));
+  const mu = MUSIC_URLS[st.music];
+  if (mu) { if (audio.dataset.t !== st.music) { audio.src = mu; audio.dataset.t = st.music; } audio.currentTime = clock; audio.play().catch(() => {}); }
+  lastTs = performance.now(); requestAnimationFrame(tick);
+}
+function stop() { playing = false; $('play').textContent = '▶ Смотреть'; audio.pause(); [vA, vB].forEach((v) => v && v.pause()); }
+
+// ── shot bench
+function renderShots() {
+  const c = cuts();
+  $('shots').innerHTML = st.shots.map((s, i) => {
+    const off = c[i] == null;
+    const th = (x) => x ? `<video muted playsinline preload="metadata" src="${url(x.clip)}#t=${(x.start + 0.4).toFixed(2)}" style="object-position:50% ${st.mode === 'split' ? x.fy : 50}%"></video>` : '';
+    return `<button type="button" class="shot ${i === sel ? 'sel' : ''}" data-i="${i}" ${off ? 'title="Не помещается в длину трека"' : ''}>
+      <div class="thumbs ${st.mode === 'split' ? 'split' : ''}">${th(s.a)}${st.mode === 'split' ? th(s.b) : ''}</div>
+      <div class="meta"><span>Кадр ${i + 1}</span><span>${off ? 'не влезает' : shotLen(i).toFixed(1) + ' с'}</span></div></button>`;
+  }).join('');
+  $('shots').querySelectorAll('.shot').forEach((b) => b.onclick = () => { sel = +b.dataset.i; renderShots(); renderEdit(); stop(); clock = cuts()[sel] ?? 0; showAt(clock); });
+}
+function cur() { const s = st.shots[sel]; return s ? (st.mode === 'split' ? s[side] : s.a) : null; }
+function renderEdit() {
+  $('sidesel').hidden = st.mode !== 'split'; $('fy-wrap').hidden = st.mode !== 'split'; $('cropbox').hidden = st.mode !== 'split';
+  if (st.mode !== 'split') side = 'a';
+  $('side-a').classList.toggle('on', side === 'a'); $('side-b').classList.toggle('on', side === 'b');
+  const s = cur(); if (!s) return;
+  const len = Math.max(0.5, shotLen(sel));
+  const d = DURS[s.clip] || 10;
+  $('start').max = Math.max(0, d - len).toFixed(2); $('start').value = s.start;
+  $('start-v').textContent = `${s.start.toFixed(1)} с из ${d.toFixed(1)}`;
+  $('fy').value = s.fy ?? 50; $('fy-v').textContent = `${s.fy ?? 50}%`;
+  const v = $('scrubv'); if (v.dataset.clip !== s.clip) { v.dataset.clip = s.clip; v.src = url(s.clip); }
+  const seek = () => { try { v.currentTime = s.start + 0.05; } catch (e) {} };
+  if (v.readyState >= 1) seek(); else v.addEventListener('loadedmetadata', seek, {once: true});
+  // crop window: half of a 9:16 frame is a 9:8 window; fy positions it inside
+  $('cropbox').style.height = '50%'; $('cropbox').style.top = `${(s.fy ?? 50) * 0.5}%`;
+  renderLib();
+}
+function renderLib() {
+  const s = cur();
+  const ids = Object.keys(ASSETS).filter((id) => filter === 'all' || (filter === 'c') === isCandle(id)).sort();
+  $('f-all').classList.toggle('on', filter === 'all'); $('f-k').classList.toggle('on', filter === 'k'); $('f-c').classList.toggle('on', filter === 'c');
+  $('lib').innerHTML = ids.map((id) => `<button type="button" data-id="${id}" class="${s && s.clip === id ? 'cur' : ''}" aria-label="${id}">
+    <video muted playsinline preload="none" data-src="${ASSETS[id]}#t=${Math.min(1.5, (DURS[id] || 2) / 2).toFixed(1)}"></video><span>${id.replace('IMG_', '')}</span></button>`).join('');
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { const v = e.target; if (!v.src) { v.preload = 'metadata'; v.src = v.dataset.src; } io.unobserve(v); } }), {root: $('lib')});
+  $('lib').querySelectorAll('video').forEach((v) => io.observe(v));
+  $('lib').querySelectorAll('button').forEach((b) => b.onclick = () => {
+    const x = cur(); if (!x) return; x.clip = b.dataset.id; x.start = 0; x.fy = 50; changed();
+  });
+}
+function changed() { draft(); renderShots(); renderEdit(); buildMonitor(); syncRail(); }
+
+// ── events
+$('preset').onchange = (e) => { presetId = e.target.value; st = JSON.parse(JSON.stringify(PRESETS[presetId])); sel = 0; side = 'a'; stop(); clock = 0; changed(); };
+$('name').oninput = (e) => { st.name = e.target.value; draft(); };
+$('title').oninput = (e) => { st.title = e.target.value; buildMonitor(); draft(); };
+$('t-display').onclick = () => { st.titleFont = 'display'; changed(); };
+$('t-serif').onclick = () => { st.titleFont = 'serif'; changed(); };
+$('music').onchange = (e) => { st.music = e.target.value; stop(); clock = 0; audio.dataset.t = ''; changed(); };
+$('beats').oninput = (e) => { st.beatsPerCut = +e.target.value; changed(); };
+$('grade').onchange = (e) => { st.grade = e.target.checked; buildMonitor(); draft(); };
+$('safezones').onchange = () => buildMonitor();
+$('m-split').onclick = () => { if (st.mode === 'split') return; st.mode = 'split'; st.shots.forEach((s, i) => { s.b = s.b || {clip: isCandle(s.a.clip) ? s.a.clip : 'IMG_0776', start: 0, fy: 50}; }); changed(); };
+$('m-seq').onclick = () => { if (st.mode === 'seq') return; st.mode = 'seq';
+  const flat = []; st.shots.forEach((s) => { flat.push({a: {...s.a}}); if (s.b) flat.push({a: {...s.b}}); }); st.shots = flat; sel = 0; changed(); };
+$('side-a').onclick = () => { side = 'a'; renderEdit(); };
+$('side-b').onclick = () => { side = 'b'; renderEdit(); };
+$('f-all').onclick = () => { filter = 'all'; renderLib(); };
+$('f-k').onclick = () => { filter = 'k'; renderLib(); };
+$('f-c').onclick = () => { filter = 'c'; renderLib(); };
+$('start').oninput = (e) => { const s = cur(); if (!s) return; s.start = +e.target.value; $('start-v').textContent = `${s.start.toFixed(1)} с из ${(DURS[s.clip] || 0).toFixed(1)}`; try { $('scrubv').currentTime = s.start; } catch (er) {} };
+$('start').onchange = () => { changed(); };
+$('fy').oninput = (e) => { const s = cur(); if (!s) return; s.fy = +e.target.value; $('fy-v').textContent = `${s.fy}%`; $('cropbox').style.top = `${s.fy * 0.5}%`; if (side === 'a' && vA) vA.style.objectPosition = `50% ${s.fy}%`; if (side === 'b' && vB) vB.style.objectPosition = `50% ${s.fy}%`; };
+$('fy').onchange = () => { changed(); };
+$('playseg').onclick = () => { const s = cur(); const v = $('scrubv'); if (!s) return; v.currentTime = s.start; v.play().catch(() => {}); const len = shotLen(sel) || 2; clearTimeout(v._t); v._t = setTimeout(() => { v.pause(); v.currentTime = s.start; }, len * 1000); };
+$('add').onclick = () => { const base = st.shots[sel] || st.shots[st.shots.length - 1]; st.shots.splice(sel + 1, 0, JSON.parse(JSON.stringify(base))); sel++; changed(); };
+$('dup').onclick = $('add').onclick;
+$('del').onclick = () => { if (st.shots.length <= 1) return; st.shots.splice(sel, 1); sel = Math.max(0, sel - 1); changed(); };
+$('left').onclick = () => { if (sel === 0) return; [st.shots[sel - 1], st.shots[sel]] = [st.shots[sel], st.shots[sel - 1]]; sel--; changed(); };
+$('right').onclick = () => { if (sel >= st.shots.length - 1) return; [st.shots[sel + 1], st.shots[sel]] = [st.shots[sel], st.shots[sel + 1]]; sel++; changed(); };
+$('play').onclick = () => (playing ? stop() : play());
+$('restart').onclick = () => { stop(); clock = 0; showAt(0); };
+$('bar').onclick = (e) => { const r = e.currentTarget.getBoundingClientRect(); clock = ((e.clientX - r.left) / r.width) * TRACKS[st.music].dur; curShot = -1; if (playing) { audio.currentTime = clock; } showAt(clock); };
+
+// ── draft in this browser only
+function draft() { try { localStorage.setItem('ss-draft', JSON.stringify({presetId, st})); } catch (e) {} }
+try { const d = JSON.parse(localStorage.getItem('ss-draft') || 'null'); if (d && d.st && d.st.shots) { presetId = d.presetId || 'split1'; st = d.st; } } catch (e) {}
+
+// ── render requests go to the shared store; Claude reads them and renders the final mp4
+function payload() { return {...st, preset: presetId, duration: TRACKS[st.music].dur}; }
+$('copy').onclick = () => {
+  const txt = JSON.stringify(payload(), null, 1);
+  const done = () => status('Настройки скопированы. Можно вставить их в чат.', 'ok');
+  navigator.clipboard.writeText(txt).then(done, () => status('Браузер не дал скопировать. Используй «Отправить на рендер».', 'err'));
+};
+function status(t, k) { $('status').textContent = t; $('status').className = 'status ' + (k || ''); }
+let db = null;
+(async () => {
+  try { db = await window.claude?.use?.('db'); } catch (e) { db = null; }
+  if (!db) { $('send').disabled = true; status('Отправка доступна только владельцу. Можно скопировать настройки.', ''); return; }
+  db.collection('renders').orderBy('createdAt', 'desc').limit(8).onSnapshot((snap) => {
+    const rows = (snap.docs || snap).map((d) => (d.data ? d.data() : d));
+    $('saved').innerHTML = rows.map((r) => `<div><span>${esc(r.name || 'Без названия')}</span><span class="pill ${r.status === 'done' ? 'done' : 'req'}">${r.status === 'done' ? 'готово' : 'в очереди'}</span></div>`).join('');
+  }, () => {});
+})();
+$('send').onclick = async () => {
+  if (!db) return;
+  const id = 'r' + Date.now();
+  try {
+    await db.doc('renders/' + id).set({...payload(), status: 'requested', createdAt: new Date().toISOString()});
+    status('Отправлено. Напиши в чат «рендер», и я соберу финальное видео.', 'ok');
+  } catch (e) { status('Не получилось отправить. Скопируй настройки и вставь в чат.', 'err'); }
+};
+
+fillSelects(); syncRail(); buildMonitor(); renderShots(); renderEdit();
+</script>
