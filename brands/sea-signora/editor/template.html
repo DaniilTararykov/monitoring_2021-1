@@ -131,7 +131,9 @@ button.small { padding: 5px 8px; font-size: 12px; }
       <div class="field"><span class="sub">Заголовок на всё видео</span><input id="title" type="text" maxlength="60"></div>
       <div class="seg" role="group" aria-label="Шрифт заголовка"><button id="t-display" type="button">SKANAUS</button><button id="t-serif" type="button"><em>Spectral</em></button></div>
       <div class="field"><span class="sub">Музыка</span><select id="music"></select></div>
-      <div class="field"><span class="sub">Длина каждого кадра: <span class="val" id="beats-v"></span></span><input id="beats" type="range" min="1" max="10" step="1" aria-label="Длина кадра в долях"></div>
+      <div class="field" id="beats-wrap"><span class="sub">Длина каждого кадра: <span class="val" id="beats-v"></span></span><input id="beats" type="range" min="1" max="10" step="1" aria-label="Длина кадра в долях бита"></div>
+      <div class="field" id="secs-wrap"><span class="sub">Длина каждого кадра: <span class="val" id="secs-v"></span></span><input id="secs" type="range" min="0.5" max="6" step="0.1" aria-label="Длина кадра в секундах"></div>
+      <p class="hint" id="total-v"></p>
       <label class="check"><input id="grade" type="checkbox"> тёплая цветокоррекция</label>
       <label class="check"><input id="safezones" type="checkbox"> показать зоны интерфейса Instagram</label>
     </div>
@@ -163,6 +165,7 @@ button.small { padding: 5px 8px; font-size: 12px; }
     <div class="shots" id="shots"></div>
     <div class="row" style="margin-top:8px">
       <button class="small" id="add" type="button">+ Кадр после выбранного</button>
+      <button class="small" id="addend" type="button">+ Кадр в конец</button>
       <button class="small" id="left" type="button">← Раньше</button>
       <button class="small" id="right" type="button">Позже →</button>
       <button class="small" id="del" type="button">Удалить кадр</button>
@@ -207,9 +210,9 @@ const ASSETS = __ASSETS__;
 const MUSIC_URLS = __MUSIC__;
 const DURS = {__DURS__};
 const TRACKS = {
-  'ref-two-recipes': {label: 'Спокойный · 96 BPM · 13,4 с', dur: 13.4, beats: [0.743,1.37,1.997,2.647,3.274,3.924,4.551,5.178,5.828,6.455,7.105,7.755,8.382,9.009,9.66,10.286,10.937,11.564,12.214]},
-  'ref-art-of-hands': {label: 'The art of hands · 152 BPM · 18,4 с', dur: 18.4, beats: [0.093,0.534,0.952,1.37,1.788,2.206,2.624,3.042,3.46,3.855,4.249,4.644,5.039,5.41,5.805,6.177,6.548,6.989,7.407,7.825,8.22,8.615,9.033,9.404,9.822,10.217,10.612,11.006,11.424,11.819,12.214,12.608,13.003,13.398,13.816,14.211,14.605,15.0,15.395,15.79,16.184,16.579,16.974,17.369]},
-  'ref-kitchen-cinematic': {label: 'Кинематографичный · 103 BPM · 23,4 с', dur: 23.4, beats: [0.116,0.766,1.416,1.997,2.577,3.158,3.738,4.296,4.876,5.433,6.014,6.571,7.152,7.709,8.29,8.87,9.451,10.008,10.588,11.146,11.726,12.283,12.864,13.444,14.002,14.582,15.163,15.72,16.3,16.858,17.438,17.995,18.576,19.156,19.737,20.294,20.875,21.432]},
+  'ref-two-recipes': {label: 'Спокойный · 96 BPM', dur: 13.4, beats: [0.743,1.37,1.997,2.647,3.274,3.924,4.551,5.178,5.828,6.455,7.105,7.755,8.382,9.009,9.66,10.286,10.937,11.564,12.214]},
+  'ref-art-of-hands': {label: 'The art of hands · 152 BPM', dur: 18.4, beats: [0.093,0.534,0.952,1.37,1.788,2.206,2.624,3.042,3.46,3.855,4.249,4.644,5.039,5.41,5.805,6.177,6.548,6.989,7.407,7.825,8.22,8.615,9.033,9.404,9.822,10.217,10.612,11.006,11.424,11.819,12.214,12.608,13.003,13.398,13.816,14.211,14.605,15.0,15.395,15.79,16.184,16.579,16.974,17.369]},
+  'ref-kitchen-cinematic': {label: 'Кинематографичный · 103 BPM', dur: 23.4, beats: [0.116,0.766,1.416,1.997,2.577,3.158,3.738,4.296,4.876,5.433,6.014,6.571,7.152,7.709,8.29,8.87,9.451,10.008,10.588,11.146,11.726,12.283,12.864,13.444,14.002,14.582,15.163,15.72,16.3,16.858,17.438,17.995,18.576,19.156,19.737,20.294,20.875,21.432]},
 };
 const isCandle = (id) => id === 'candle-light' || Number(id.slice(4)) >= 745;
 const S = (clip, start, fy = 50) => ({clip, start, fy});
@@ -251,9 +254,20 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt
 const fmt = (n) => n.toFixed(1).replace('.', ',');
 
 // ── timing (same rule as the final render): shot i starts on beat i*beatsPerCut; last shot holds to the end
-function cuts() { const b = TRACKS[st.music].beats; return st.shots.map((_, i) => (i === 0 ? 0 : (b[i * st.beatsPerCut - 1] ?? null))); }
-function shotLen(i) { const c = cuts(); const tr = TRACKS[st.music]; if (c[i] == null) return 0; const n = c[i + 1]; return (i === st.shots.length - 1 || n == null ? tr.dur : n) - c[i]; }
-function bpm() { const b = TRACKS[st.music].beats; return 60 / ((b[b.length - 1] - b[0]) / (b.length - 1)); }
+// Every shot has the same length: N beats of the track (or N seconds without music).
+// Adding shots makes the video longer; the track loops if the video outlasts it.
+const noMusic = () => st.music === 'none' || !TRACKS[st.music];
+function interval() { const b = TRACKS[st.music].beats; return (b[b.length - 1] - b[0]) / (b.length - 1); }
+function cutAt(i) {
+  if (i <= 0) return 0;
+  if (noMusic()) return i * (st.secPerCut || 2);
+  const b = TRACKS[st.music].beats, k = i * st.beatsPerCut - 1;
+  return k < b.length ? b[k] : b[b.length - 1] + (k - b.length + 1) * interval();
+}
+function cuts() { return st.shots.map((_, i) => cutAt(i)); }
+function total() { return cutAt(st.shots.length); }
+function shotLen(i) { return cutAt(i + 1) - cutAt(i); }
+function bpm() { return 60 / interval(); }
 function cur() { const s = st.shots[sel]; return s ? (st.mode === 'split' ? s[side] : s.a) : null; }
 function clampStart(s) { const d = DURS[s.clip] || 10; const len = Math.min(shotLen(sel) || 1, d); s.start = Math.max(0, Math.min(+s.start || 0, +(d - len).toFixed(2))); }
 
@@ -266,8 +280,11 @@ function fillPresets() {
 function syncRail() {
   fillPresets();
   $('name').value = st.name; $('title').value = st.title; $('music').value = st.music; $('beats').value = st.beatsPerCut; $('grade').checked = st.grade;
-  const sec = (60 / bpm()) * st.beatsPerCut;
-  $('beats-v').textContent = `${fmt(sec)} с (${st.beatsPerCut} ${st.beatsPerCut === 1 ? 'доля' : st.beatsPerCut < 5 ? 'доли' : 'долей'})`;
+  $('beats-wrap').hidden = noMusic(); $('secs-wrap').hidden = !noMusic();
+  if (!noMusic()) { const sec = interval() * st.beatsPerCut; $('beats-v').textContent = `${fmt(sec)} с (${st.beatsPerCut} ${st.beatsPerCut === 1 ? 'доля' : st.beatsPerCut < 5 ? 'доли' : 'долей'} бита)`; }
+  $('secs').value = st.secPerCut || 2; $('secs-v').textContent = `${fmt(st.secPerCut || 2)} с`;
+  const tl = total(), loops = !noMusic() && tl > TRACKS[st.music].dur + 0.05;
+  $('total-v').textContent = `Ролик: ${fmt(tl)} с · ${st.shots.length} кадров${loops ? ' · трек пойдёт по кругу' : ''}`;
   $('m-split').classList.toggle('on', st.mode === 'split'); $('m-seq').classList.toggle('on', st.mode === 'seq');
   $('t-display').classList.toggle('on', st.titleFont === 'display'); $('t-serif').classList.toggle('on', st.titleFont === 'serif');
 }
@@ -288,8 +305,8 @@ function buildMonitor() {
 }
 function markHalf() { const h = $('hl'); if (!h) return; h.style.top = side === 'a' ? '0' : '50.2%'; h.style.height = '49.8%'; h.hidden = playing; }
 function buildBar() {
-  const tr = TRACKS[st.music]; const c = cuts();
-  $('bar').innerHTML = st.shots.map((_, i) => c[i] == null ? '' : `<span data-i="${i}" style="width:${(shotLen(i) / tr.dur) * 100}%">${i + 1}</span>`).join('') + '<i id="ph2"></i>';
+  const T = total();
+  $('bar').innerHTML = st.shots.map((_, i) => `<span data-i="${i}" style="width:${(shotLen(i) / T) * 100}%">${i + 1}</span>`).join('') + '<i id="ph2"></i>';
 }
 function setVid(v, s, offset, split) {
   if (!v || !s) return;
@@ -303,16 +320,16 @@ function shotAt(t) { const c = cuts(); let i = 0; c.forEach((x, k) => { if (x !=
 function showAt(t, force) {
   const i = shotAt(t), c = cuts(), s = st.shots[i]; if (!s) return;
   if (i !== curShot || force) { curShot = i; setVid(vA, s.a, t - c[i], st.mode === 'split'); if (st.mode === 'split') setVid(vB, s.b, t - c[i], true); }
-  const tr = TRACKS[st.music];
-  const ph = $('ph2'); if (ph) ph.style.left = `${(t / tr.dur) * 100}%`;
+  const T = total();
+  const ph = $('ph2'); if (ph) ph.style.left = `${(t / T) * 100}%`;
   $('bar').querySelectorAll('span').forEach((el) => el.classList.toggle('cur', +el.dataset.i === i));
-  $('time').textContent = `${fmt(t)} / ${fmt(tr.dur)} с`;
+  $('time').textContent = `${fmt(t)} / ${fmt(T)} с`;
 }
 function tick(ts) {
   if (!playing) return;
-  if (audio.src && !audio.paused) clock = audio.currentTime; else clock += (ts - lastTs) / 1000;
+  clock += (ts - lastTs) / 1000;
   lastTs = ts;
-  if (clock >= TRACKS[st.music].dur) { stop(); clock = 0; showAt(0, true); return; }
+  if (clock >= total()) { stop(); clock = 0; showAt(0, true); return; }
   const before = curShot; showAt(clock);
   if (curShot !== before) [vA, vB].forEach((v) => v && v.play().catch(() => {}));
   requestAnimationFrame(tick);
@@ -320,8 +337,8 @@ function tick(ts) {
 function play() {
   playing = true; markHalf(); $('play').textContent = '❚❚ Пауза'; showAt(clock, true);
   [vA, vB].forEach((v) => v && v.play().catch(() => {}));
-  const mu = MUSIC_URLS[st.music];
-  if (mu) { if (audio.dataset.t !== st.music) { audio.src = mu; audio.dataset.t = st.music; } try { audio.currentTime = clock; } catch (e) {} audio.play().catch(() => {}); }
+  const mu = noMusic() ? null : MUSIC_URLS[st.music];
+  if (mu) { audio.loop = true; if (audio.dataset.t !== st.music) { audio.src = mu; audio.dataset.t = st.music; } try { audio.currentTime = clock % TRACKS[st.music].dur; } catch (e) {} audio.play().catch(() => {}); }
   lastTs = performance.now(); requestAnimationFrame(tick);
 }
 function stop() { playing = false; markHalf(); $('play').textContent = '▶ Смотреть'; audio.pause(); [vA, vB].forEach((v) => v && v.pause()); }
@@ -330,7 +347,7 @@ function stop() { playing = false; markHalf(); $('play').textContent = '▶ См
 function renderShots() {
   const c = cuts();
   $('shots').innerHTML = st.shots.map((s, i) => {
-    const off = c[i] == null;
+    const off = false;
     const th = (x) => x ? `<video muted playsinline preload="metadata" src="${url(x.clip)}#t=${(x.start + 0.3).toFixed(2)}" style="object-position:50% ${st.mode === 'split' ? x.fy ?? 50 : 50}%"></video>` : '';
     return `<button type="button" class="shot ${i === sel ? 'sel' : ''} ${off ? 'bad' : ''}" data-i="${i}" aria-label="Кадр ${i + 1}">
       <div class="thumbs ${st.mode === 'split' ? 'split' : ''}">${th(s.a)}${st.mode === 'split' ? th(s.b) : ''}</div>
@@ -434,6 +451,7 @@ $('t-display').onclick = () => { st.titleFont = 'display'; changed(); };
 $('t-serif').onclick = () => { st.titleFont = 'serif'; changed(); };
 $('music').onchange = (e) => { st.music = e.target.value; stop(); clock = 0; audio.dataset.t = ''; changed(); };
 $('beats').oninput = (e) => { st.beatsPerCut = +e.target.value; changed(); };
+$('secs').oninput = (e) => { st.secPerCut = +e.target.value; changed(); };
 $('grade').onchange = (e) => { st.grade = e.target.checked; buildMonitor(); draft(); };
 $('safezones').onchange = () => buildMonitor();
 $('m-split').onclick = () => { if (st.mode === 'split') return; st.mode = 'split'; st.shots.forEach((s) => { s.b = s.b || {clip: 'IMG_0776', start: 0, fy: 50}; }); changed(); };
@@ -460,7 +478,8 @@ $('left').onclick = () => { if (sel === 0) return; [st.shots[sel - 1], st.shots[
 $('right').onclick = () => { if (sel >= st.shots.length - 1) return; [st.shots[sel + 1], st.shots[sel]] = [st.shots[sel], st.shots[sel + 1]]; sel++; changed(); };
 $('play').onclick = () => (playing ? stop() : play());
 $('restart').onclick = () => { stop(); clock = 0; showAt(0, true); };
-$('bar').onclick = (e) => { const r = e.currentTarget.getBoundingClientRect(); clock = ((e.clientX - r.left) / r.width) * TRACKS[st.music].dur; if (playing) { try { audio.currentTime = clock; } catch (er) {} } showAt(clock, true); };
+$('bar').onclick = (e) => { const r = e.currentTarget.getBoundingClientRect(); clock = ((e.clientX - r.left) / r.width) * total(); if (playing && !noMusic()) { try { audio.currentTime = clock % TRACKS[st.music].dur; } catch (er) {} } showAt(clock, true); };
+$('addend').onclick = () => { st.shots.push(clone(st.shots[st.shots.length - 1])); sel = st.shots.length - 1; changed(); };
 
 // ── presets: saved for everyone who opens the editor (db), else in this browser
 let db = null;
@@ -498,7 +517,7 @@ try { custom = JSON.parse(localStorage.getItem('ss-presets') || '{}') || {}; } c
 try { const d = JSON.parse(localStorage.getItem('ss-draft') || 'null'); if (d && d.st && d.st.shots) { presetId = presets()[d.presetId] ? d.presetId : 'split1'; st = d.st; } } catch (e) {}
 
 // ── step 3
-function payload() { return {...clone(st), preset: presetId, duration: TRACKS[st.music].dur}; }
+function payload() { return {...clone(st), preset: presetId, duration: +total().toFixed(2)}; }
 function status(t, k) { $('status').textContent = t; $('status').className = 'status ' + (k || ''); }
 $('copy').onclick = () => {
   navigator.clipboard.writeText(JSON.stringify(payload())).then(() => status('Настройки скопированы. Вставь их в чат.', 'ok'), () => status('Браузер не дал скопировать. Используй «Отправить на рендер».', 'err'));
@@ -521,6 +540,6 @@ $('send').onclick = async () => {
   }, () => {});
 })();
 
-$('music').innerHTML = Object.entries(TRACKS).map(([k, t]) => `<option value="${k}">${t.label}</option>`).join('');
+$('music').innerHTML = Object.entries(TRACKS).map(([k, t]) => `<option value="${k}">${t.label}</option>`).join('') + '<option value="none">Без музыки</option>';
 syncRail(); buildMonitor(); renderShots(); renderEditor();
 </script>

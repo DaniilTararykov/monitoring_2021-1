@@ -13,7 +13,7 @@ loadBrandFonts();
 export type EditorClip = {clip: string; start: number; fy?: number};
 export type EditorConfig = {
   name: string; mode: 'split' | 'seq'; title: string; titleFont: 'display' | 'serif';
-  music: string; beatsPerCut: number; grade: boolean; shots: {a: EditorClip; b?: EditorClip}[];
+  music: string; beatsPerCut: number; secPerCut?: number; grade: boolean; shots: {a: EditorClip; b?: EditorClip}[];
 };
 
 export const TRACKS: Record<string, {dur: number; beats: number[]}> = {
@@ -25,7 +25,17 @@ const FPS = 30;
 const fr = (s: number) => Math.round(s * FPS);
 const src = (id: string) => `videos/reel/${id}.mp4`;
 
-export const editorDuration = (c: EditorConfig) => fr((TRACKS[c.music] ?? TRACKS['ref-art-of-hands']).dur);
+// Every shot has the same length (N beats, or N seconds with music "none"); the track loops if shorter.
+const noMusic = (c: EditorConfig) => !TRACKS[c.music];
+const interval = (b: number[]) => (b[b.length - 1] - b[0]) / (b.length - 1);
+export const cutAt = (c: EditorConfig, i: number) => {
+  if (i <= 0) return 0;
+  if (noMusic(c)) return i * (c.secPerCut || 2);
+  const b = TRACKS[c.music].beats;
+  const k = i * c.beatsPerCut - 1;
+  return k < b.length ? b[k] : b[b.length - 1] + (k - b.length + 1) * interval(b);
+};
+export const editorDuration = (c: EditorConfig) => fr(cutAt(c, c.shots.length));
 
 const Shot: React.FC<{c: EditorClip; len: number; fy: boolean; graded: boolean}> = ({c, len, fy, graded}) => {
   const f = useCurrentFrame();
@@ -42,9 +52,8 @@ const Shot: React.FC<{c: EditorClip; len: number; fy: boolean; graded: boolean}>
 
 export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
   const f = useCurrentFrame();
-  const tr = TRACKS[config.music] ?? TRACKS['ref-art-of-hands'];
-  const total = fr(tr.dur);
-  const starts = config.shots.map((_, i) => (i === 0 ? 0 : tr.beats[i * config.beatsPerCut - 1])).filter((x) => x !== undefined) as number[];
+  const total = editorDuration(config);
+  const starts = config.shots.map((_, i) => cutAt(config, i));
   const split = config.mode === 'split';
   const titleStyle: React.CSSProperties = config.titleFont === 'serif'
     ? {fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 52}
@@ -80,7 +89,7 @@ export const EditorReel: React.FC<{config: EditorConfig}> = ({config}) => {
         </div>
       ) : null}
       <AbsoluteFill style={{background: colors.night, opacity: fade}} />
-      <Audio src={staticFile(`music/${config.music}.mp3`)} />
+      {noMusic(config) ? null : <Audio src={staticFile(`music/${config.music}.mp3`)} loop />}
     </AbsoluteFill>
   );
 };
