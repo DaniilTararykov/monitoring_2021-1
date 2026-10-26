@@ -111,10 +111,8 @@ const ENTRIES: Entry[] = [
     m: {video: 'natura-morta', size: V, focus: [528, 800], zoom: 1.15, rate: 0.6}, frames: s(6)},
   {id: 'W5-7sun-2p-fine', bg: 'white', shape: 'rect', word: 'Fine', read: 'fí·ne', pos: 'noun', def: 'the end of the week not of dessert',
     m: {photo: 's7_105', size: [1200, 1500], focus: [600, 640], zoom: 1.15}, frames: 1},
-  // events (client 26.10): the Dim Sum Milano collab — the dumplings from the client's own story, cropped below its
-  // burned-in title; Blackout Night — candles, a plate and a glass from the event's photo set
-  {id: 'W5-7sun-3p-dimsum-ravioli', bg: 'green', shape: 'circle', word: 'Ravioli', read: 'ra·vió·li', pos: 'noun', def: 'di gambero piccante · sea, signora × dim sum milano',
-    m: {photo: 'dimsum-ravioli', size: [720, 1280], focus: [276, 852]}, frames: 1},
+  // event (client 26.10): Blackout Night — candles, a plate and a glass from the event's photo set. The Dim Sum night
+  // keeps its announcement format: stories.ts «25-sun-dimsum-tomorrow», rendered as a still for Sun 01.11
   {id: 'W5-4thu-4p-blackout-buio', bg: 'orange', shape: 'pill', word: 'Buio', read: 'bù·io', pos: 'noun', def: 'blackout night 29/10 · dinner by candlelight',
     m: {photo: 'blackout-candles', size: [2200, 3300], focus: [1210, 1650], zoom: 1.1}, frames: 1},
 ];
