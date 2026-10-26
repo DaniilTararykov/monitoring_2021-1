@@ -185,7 +185,7 @@ export const week4: Story[] = [
   {
     id: 'W4-6sat-1v-weekends', day: 'Sat 31.10', rubric: 'График выходных', music: silent,
     scenes: [v('pumpkins-curtain', 4.3, {fy: 60}), v('pumpkins-card', 4.5)],
-    overlay: top(kick('weekends'), {t: 'hours', mode: 'weekend'}),
+    overlay: top(H('Weekends'), {t: 'gap', px: 10}, {t: 'hours', mode: 'weekend'}),
     cta: {label: 'reserve', color: 'orange'},
     caption: 'Weekends at Sea, Signora: 12:30–15:30 and 19:00–00:00.',
     hashtags: ['#seasignora', '#weekend', '#brera', '#milano'], ctaVariants: ['reserve', 'book your table'],
