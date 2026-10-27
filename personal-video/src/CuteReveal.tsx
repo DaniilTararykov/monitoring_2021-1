@@ -1,34 +1,47 @@
 import React from "react";
-import { AbsoluteFill, Audio, Easing, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame } from "remotion";
-import cute from "./cute.json";
+import { AbsoluteFill, Audio, Easing, interpolate, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { SAFE, SANS } from "./theme";
 import { f, FPS, Shot as ShotT } from "./edit";
 import { Shot } from "./components/Shot";
 
-const BEAT = 60 / cute.bpm;
 const CREAM = "#FFF4E2";
 const STAR = "#FFE27A";
 
-type CuteShot = { src: number; beats: number; speed?: number; zoom?: [number, number] };
+type RevealShot = { src: number; beats: number; speed?: number; zoom?: [number, number]; rotate?: number };
+export type RevealConfig = {
+  id: string;
+  bpm: number;
+  stars?: boolean;
+  hook: { beats: number; src: number; rotate?: number; inset: number; insetRotate?: number; lines: string[] };
+  shots: RevealShot[];
+  captions: { fromShot: number; toShot: number; text: string }[];
+  sfx: { id: string; beat: number; vol: number }[];
+};
 
 /** Shot timeline in seconds; the hook occupies the first beats. */
-const timeline = (() => {
-  let beat = cute.hook.beats;
-  return (cute.shots as CuteShot[]).map((s) => {
+const timeline = (cfg: RevealConfig): ShotT[] => {
+  const beat = 60 / cfg.bpm;
+  let at = cfg.hook.beats;
+  return cfg.shots.map((s) => {
     const shot: ShotT = {
-      at: beat * BEAT,
-      dur: s.beats * BEAT,
+      at: at * beat,
+      dur: s.beats * beat,
       src: s.src,
       speed: s.speed ?? 1,
-      zoom: s.zoom ?? [1.06, 1.0],
+      zoom: s.zoom ?? (cfg.stars ? [1.06, 1.0] : [1.0, 1.04]),
       fx: "cut",
+      rotate: s.rotate,
+      still: !cfg.stars,
     };
-    beat += s.beats;
+    at += s.beats;
     return shot;
   });
-})();
+};
 
-export const cuteDuration = () => timeline[timeline.length - 1].at + timeline[timeline.length - 1].dur;
+export const revealDuration = (cfg: RevealConfig) => {
+  const t = timeline(cfg);
+  return t[t.length - 1].at + t[t.length - 1].dur;
+};
 
 const Star: React.FC<{ x: number; y: number; size: number; delay: number }> = ({ x, y, size, delay }) => {
   const frame = useCurrentFrame();
@@ -46,13 +59,17 @@ const Star: React.FC<{ x: number; y: number; size: number; delay: number }> = ({
   );
 };
 
-/** Opening "before" frame with a polaroid of the result, big lowercase text and sparkles. */
-const Hook: React.FC = () => {
+/** Opening "before" frame with a polaroid of the result and a big lowercase hook. */
+const Hook: React.FC<{ cfg: RevealConfig }> = ({ cfg }) => {
   const frame = useCurrentFrame();
+  const beat = 60 / cfg.bpm;
+  const h = cfg.hook;
   const inset = interpolate(frame, [0, 6], [0.7, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.back(2)) });
   return (
     <AbsoluteFill>
-      <Shot shot={{ at: 0, dur: cute.hook.beats * BEAT, src: cute.hook.src, speed: 0.8, zoom: [1.04, 1.0], fx: "cut" }} />
+      <Shot
+        shot={{ at: 0, dur: h.beats * beat, src: h.src, speed: 0.8, zoom: cfg.stars ? [1.04, 1.0] : [1.0, 1.03], fx: "cut", rotate: h.rotate, still: !cfg.stars }}
+      />
       <div
         style={{
           position: "absolute",
@@ -66,15 +83,12 @@ const Hook: React.FC = () => {
           transform: `rotate(-4deg) scale(${inset})`,
         }}
       >
-        <OffthreadVideo
-          src={staticFile("footage.mp4")}
-          trimBefore={Math.round(cute.hook.inset * FPS)}
-          muted
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
+        <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
+          <Shot shot={{ at: 0, dur: h.beats * beat, src: h.inset, speed: 1, zoom: [1.0, 1.0], fx: "cut", rotate: h.insetRotate, still: true }} />
+        </div>
       </div>
       <div style={{ position: "absolute", left: SAFE.left, right: SAFE.right, top: 820, textAlign: "center" }}>
-        {cute.hook.lines.map((l, i) => {
+        {h.lines.map((l, i) => {
           const p = interpolate(frame, [i * 2, i * 2 + 5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           return (
             <div
@@ -96,12 +110,16 @@ const Hook: React.FC = () => {
           );
         })}
       </div>
-      <Star x={190} y={800} size={70} delay={3} />
-      <Star x={880} y={760} size={50} delay={5} />
-      <Star x={140} y={1180} size={46} delay={7} />
-      <Star x={900} y={1160} size={64} delay={4} />
-      <Star x={520} y={1250} size={40} delay={8} />
-      <Star x={430} y={300} size={44} delay={6} />
+      {cfg.stars ? (
+        <>
+          <Star x={190} y={800} size={70} delay={3} />
+          <Star x={880} y={760} size={50} delay={5} />
+          <Star x={140} y={1180} size={46} delay={7} />
+          <Star x={900} y={1160} size={64} delay={4} />
+          <Star x={520} y={1250} size={40} delay={8} />
+          <Star x={430} y={300} size={44} delay={6} />
+        </>
+      ) : null}
     </AbsoluteFill>
   );
 };
@@ -133,30 +151,35 @@ const SmallCaption: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const CuteReveal: React.FC = () => (
-  <AbsoluteFill style={{ backgroundColor: "#000" }}>
-    <Sequence durationInFrames={f(cute.hook.beats * BEAT)}>
-      <Hook />
-    </Sequence>
-    {timeline.map((s, i) => (
-      <Sequence key={i} from={f(s.at)} durationInFrames={Math.max(1, f(s.at + s.dur) - f(s.at))}>
-        <Shot shot={s} />
+/** Music-only before -> process -> after reveal, one shot per beat. */
+export const Reveal: React.FC<{ cfg: RevealConfig }> = ({ cfg }) => {
+  const beat = 60 / cfg.bpm;
+  const shots = timeline(cfg);
+  return (
+    <AbsoluteFill style={{ backgroundColor: "#000" }}>
+      <Sequence durationInFrames={f(cfg.hook.beats * beat)}>
+        <Hook cfg={cfg} />
       </Sequence>
-    ))}
-    {cute.captions.map((c, i) => {
-      const from = timeline[c.fromShot].at;
-      const to = timeline[c.toShot].at + timeline[c.toShot].dur;
-      return (
-        <Sequence key={`c${i}`} from={f(from)} durationInFrames={f(to) - f(from)} layout="none">
-          <SmallCaption text={c.text} />
+      {shots.map((s, i) => (
+        <Sequence key={i} from={f(s.at)} durationInFrames={Math.max(1, f(s.at + s.dur) - f(s.at))}>
+          <Shot shot={s} />
         </Sequence>
-      );
-    })}
-    <Audio src={staticFile(`music_${cute.id}.wav`)} volume={0.85} />
-    {cute.sfx.map((s, i) => (
-      <Sequence key={`s${i}`} from={Math.round(s.beat * BEAT * FPS)} layout="none">
-        <Audio src={staticFile(`sfx/${s.id}.wav`)} volume={s.vol} />
-      </Sequence>
-    ))}
-  </AbsoluteFill>
-);
+      ))}
+      {cfg.captions.map((c, i) => {
+        const from = shots[c.fromShot].at;
+        const to = shots[c.toShot].at + shots[c.toShot].dur;
+        return (
+          <Sequence key={`c${i}`} from={f(from)} durationInFrames={f(to) - f(from)} layout="none">
+            <SmallCaption text={c.text} />
+          </Sequence>
+        );
+      })}
+      <Audio src={staticFile(`music_${cfg.id}.wav`)} volume={0.85} />
+      {cfg.sfx.map((s, i) => (
+        <Sequence key={`s${i}`} from={Math.round(s.beat * beat * FPS)} layout="none">
+          <Audio src={staticFile(`sfx/${s.id}.wav`)} volume={s.vol} />
+        </Sequence>
+      ))}
+    </AbsoluteFill>
+  );
+};

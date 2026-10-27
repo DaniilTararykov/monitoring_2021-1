@@ -3,7 +3,11 @@ import { Composition } from "remotion";
 import { ChestReel } from "./ChestReel";
 import { DURATION, FPS } from "./edit";
 import { MoodCut, moodDuration, variants } from "./MoodCut";
-import { CuteReveal, cuteDuration } from "./CuteReveal";
+import { Reveal, RevealConfig, revealDuration } from "./CuteReveal";
+import cute from "./cute.json";
+import clean from "./clean.json";
+
+const reveals = [cute, clean] as unknown as RevealConfig[];
 
 export const Root: React.FC = () => (
   <>
@@ -27,13 +31,17 @@ export const Root: React.FC = () => (
         height={1920}
       />
     ))}
-    <Composition
-      id="CuteReveal"
-      component={CuteReveal}
-      durationInFrames={Math.round(cuteDuration() * FPS)}
-      fps={FPS}
-      width={1080}
-      height={1920}
-    />
+    {reveals.map((cfg) => (
+      <Composition
+        key={cfg.id}
+        id={cfg.id}
+        component={Reveal}
+        defaultProps={{ cfg }}
+        durationInFrames={Math.round(revealDuration(cfg) * FPS)}
+        fps={FPS}
+        width={1080}
+        height={1920}
+      />
+    ))}
   </>
 );

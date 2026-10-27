@@ -25,7 +25,11 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
   const p = frame / Math.max(1, len - 1);
 
   const ease = Easing.inOut(Easing.cubic);
-  let scale = interpolate(ease(Math.min(1, p)), [0, 1], shot.zoom);
+  const rot = shot.rotate ?? 0;
+  // Smallest zoom that keeps a rotated 9:16 frame free of empty corners.
+  const rad = (Math.abs(rot) * Math.PI) / 180;
+  const cover = Math.cos(rad) + (1920 / 1080) * Math.sin(rad);
+  let scale = interpolate(ease(Math.min(1, p)), [0, 1], shot.zoom) * cover;
   let ty = 0;
   let blur = 0;
   let opacity = 1;
@@ -41,7 +45,7 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
     opacity = interpolate(frame, [0, 7], [0, 1], { extrapolateRight: "clamp" });
   }
   // Gentle drift so locked-off shots still breathe.
-  const drift = Math.sin((frame + shot.src * 10) / 45) * 6;
+  const drift = shot.still ? 0 : Math.sin((frame + shot.src * 10) / 45) * 6;
 
   const segments: React.ReactNode[] = [];
   const start = Math.round(shot.src * FPS);
@@ -70,7 +74,7 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
       <AbsoluteFill
         style={{
           opacity,
-          transform: `translateY(${ty}%) translateX(${drift}px) scale(${scale})`,
+          transform: `translateY(${ty}%) translateX(${drift}px) rotate(${rot}deg) scale(${scale})`,
           filter: blur ? `blur(${blur}px)` : undefined,
         }}
       >
