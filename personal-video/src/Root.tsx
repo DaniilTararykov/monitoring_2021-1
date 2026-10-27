@@ -3,6 +3,7 @@ import { Composition } from "remotion";
 import { ChestReel } from "./ChestReel";
 import { DURATION, FPS } from "./edit";
 import { MoodCut, moodDuration, variants } from "./MoodCut";
+import { CuteReveal, cuteDuration } from "./CuteReveal";
 
 export const Root: React.FC = () => (
   <>
@@ -26,5 +27,13 @@ export const Root: React.FC = () => (
         height={1920}
       />
     ))}
+    <Composition
+      id="CuteReveal"
+      component={CuteReveal}
+      durationInFrames={Math.round(cuteDuration() * FPS)}
+      fps={FPS}
+      width={1080}
+      height={1920}
+    />
   </>
 );

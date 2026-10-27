@@ -1,0 +1,44 @@
+{
+  "id": "CuteReveal",
+  "bpm": 100,
+  "hook": {
+    "beats": 2,
+    "src": 5.0,
+    "inset": 155.0,
+    "lines": ["спасаем сундук,", "который нашли", "на улице"]
+  },
+  "shots": [
+    { "src": 1.0, "beats": 1 },
+    { "src": 12.6, "beats": 1 },
+    { "src": 18.4, "beats": 1 },
+    { "src": 20.2, "beats": 1 },
+    { "src": 22.2, "beats": 1, "speed": 1.3 },
+    { "src": 26.0, "beats": 1, "speed": 1.2 },
+    { "src": 30.0, "beats": 1 },
+    { "src": 46.4, "beats": 1 },
+    { "src": 52.2, "beats": 1, "speed": 1.3 },
+    { "src": 56.6, "beats": 1, "speed": 1.3 },
+    { "src": 66.5, "beats": 1 },
+    { "src": 71.2, "beats": 1 },
+    { "src": 73.7, "beats": 1 },
+    { "src": 76.8, "beats": 1, "speed": 1.4 },
+    { "src": 82.7, "beats": 1, "speed": 1.4 },
+    { "src": 4.6, "beats": 1, "zoom": [1.0, 1.0] },
+    { "src": 152.5, "beats": 6, "zoom": [1.0, 1.08] }
+  ],
+  "captions": [
+    { "fromShot": 0, "toShot": 1, "text": "нашли его прямо на улице в милане" },
+    { "fromShot": 2, "toShot": 5, "text": "шаг первый:\nубрать плесень и зашкурить" },
+    { "fromShot": 7, "toShot": 9, "text": "грунт и три слоя зелёного" },
+    { "fromShot": 10, "toShot": 12, "text": "а фурнитуру — в золото" },
+    { "fromShot": 13, "toShot": 14, "text": "снимаем скотч!!" },
+    { "fromShot": 15, "toShot": 15, "text": "напоминание, каким он был" },
+    { "fromShot": 16, "toShot": 16, "text": "как вам??\n\nуже думаю, что переделать следующим" }
+  ],
+  "sfx": [
+    { "id": "pop", "beat": 0.1, "vol": 0.35 },
+    { "id": "tape_rip", "beat": 15, "vol": 0.5 },
+    { "id": "tape_rip", "beat": 16, "vol": 0.5 },
+    { "id": "shimmer", "beat": 18, "vol": 0.35 }
+  ]
+}
