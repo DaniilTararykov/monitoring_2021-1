@@ -3,8 +3,8 @@
  "bpm": 100,
  "stars": false,
  "hook": {
-  "beats": 3,
-  "src": 13.0,
+  "beats": 5,
+  "src": 12.8,
   "rotate": 4.5,
   "inset": 157.5,
   "insetRotate": -3.7,
@@ -12,66 +12,71 @@
    "let's save this",
    "trunk we found",
    "on the street"
-  ]
+  ],
+  "layout": "textTop"
  },
  "shots": [
   {
-   "src": 20.2,
-   "beats": 2,
+   "src": 20.05,
+   "beats": 3,
+   "speed": 0.9,
    "rotate": 4.6
   },
   {
-   "src": 26.2,
-   "beats": 2
+   "src": 26.0,
+   "beats": 3,
+   "speed": 0.8
   },
   {
-   "src": 46.5,
-   "beats": 2
+   "src": 46.1,
+   "beats": 4
   },
   {
-   "src": 66.6,
-   "beats": 2
+   "src": 66.4,
+   "beats": 3
   },
   {
-   "src": 71.2,
+   "src": 71.15,
    "beats": 2,
    "speed": 0.75,
    "rotate": -1.9
   },
   {
-   "src": 72.3,
-   "beats": 1
-  },
-  {
-   "src": 73.7,
-   "beats": 2
-  },
-  {
-   "src": 77.0,
+   "src": 72.2,
    "beats": 2,
+   "speed": 0.9
+  },
+  {
+   "src": 73.6,
+   "beats": 3
+  },
+  {
+   "src": 76.5,
+   "beats": 3,
    "speed": 1.2
   },
   {
-   "src": 90.3,
-   "beats": 2
+   "src": 90.0,
+   "beats": 3
   },
   {
-   "src": 13.0,
-   "beats": 1,
+   "src": 12.8,
+   "beats": 3,
+   "speed": 0.8,
    "rotate": 4.5
   },
   {
-   "src": 139.0,
-   "beats": 2,
+   "src": 138.5,
+   "beats": 3,
    "rotate": -3.5
   },
   {
-   "src": 123.0,
-   "beats": 2
+   "src": 122.5,
+   "beats": 3
   },
   {
-   "src": 157.5,
-   "beats": 4,
+   "src": 156.5,
+   "beats": 6,
    "rotate": -3.7
   }
  ],
@@ -79,65 +84,80 @@
   {
    "fromShot": 0,
    "toShot": 0,
-   "text": "step one: get rid of the mold"
+   "text": "step one: get rid of the mold",
+   "pos": "top"
   },
   {
    "fromShot": 1,
    "toShot": 1,
-   "text": "sanding around every\npiece of hardware"
+   "text": "sanding around every\npiece of hardware",
+   "pos": "bottom"
   },
   {
    "fromShot": 2,
    "toShot": 2,
-   "text": "primer, at night"
+   "text": "primer, at night",
+   "pos": "top"
   },
   {
    "fromShot": 3,
    "toShot": 3,
-   "text": "three coats of green"
+   "text": "three coats of green",
+   "pos": "top"
   },
   {
    "fromShot": 4,
    "toShot": 6,
-   "text": "and gold for the hardware"
+   "text": "and gold for the hardware",
+   "pos": "bottom"
   },
   {
    "fromShot": 7,
    "toShot": 7,
-   "text": "the best part"
+   "text": "the best part",
+   "pos": "bottom"
   },
   {
    "fromShot": 8,
    "toShot": 8,
-   "text": "final touches"
+   "text": "final touches",
+   "pos": "top"
   },
   {
    "fromShot": 9,
    "toShot": 9,
-   "text": "a reminder of the before"
+   "text": "a reminder of the before",
+   "pos": "top"
   },
   {
    "fromShot": 10,
+   "toShot": 11,
+   "text": "love how it turned out!!",
+   "pos": "top"
+  },
+  {
+   "fromShot": 12,
    "toShot": 12,
-   "text": "love how it turned out!!\n\nalready planning the next project"
+   "text": "already planning the next project",
+   "pos": "top"
   }
  ],
  "sfx": [
   {
    "id": "spray",
-   "beat": 11,
+   "beat": 18,
    "vol": 0.35
   },
   {
    "id": "tape_rip",
-   "beat": 16,
+   "beat": 25.5,
    "vol": 0.45
   },
   {
    "id": "shimmer",
-   "beat": 21,
+   "beat": 34,
    "vol": 0.3
   }
  ],
- "revealBeat": 21
+ "revealBeat": 34
 }

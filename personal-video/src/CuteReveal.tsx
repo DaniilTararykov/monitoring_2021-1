@@ -12,9 +12,9 @@ export type RevealConfig = {
   id: string;
   bpm: number;
   stars?: boolean;
-  hook: { beats: number; src: number; rotate?: number; inset: number; insetRotate?: number; lines: string[] };
+  hook: { beats: number; src: number; rotate?: number; inset: number; insetRotate?: number; lines: string[]; layout?: "textTop" };
   shots: RevealShot[];
-  captions: { fromShot: number; toShot: number; text: string }[];
+  captions: { fromShot: number; toShot: number; text: string; pos?: "top" | "bottom" }[];
   sfx: { id: string; beat: number; vol: number }[];
 };
 
@@ -65,6 +65,8 @@ const Hook: React.FC<{ cfg: RevealConfig }> = ({ cfg }) => {
   const beat = 60 / cfg.bpm;
   const h = cfg.hook;
   const inset = interpolate(frame, [0, 6], [0.7, 1], { extrapolateRight: "clamp", easing: Easing.out(Easing.back(2)) });
+  // textTop: hook text in the empty wall area, polaroid down on the floor
+  const textTop = h.layout === "textTop";
   return (
     <AbsoluteFill>
       <Shot
@@ -73,10 +75,10 @@ const Hook: React.FC<{ cfg: RevealConfig }> = ({ cfg }) => {
       <div
         style={{
           position: "absolute",
-          top: SAFE.top + 10,
+          top: textTop ? 1130 : SAFE.top + 10,
           left: SAFE.left + 10,
-          width: 330,
-          height: 440,
+          width: textTop ? 290 : 330,
+          height: textTop ? 386 : 440,
           background: "#fff",
           padding: 12,
           boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
@@ -87,7 +89,7 @@ const Hook: React.FC<{ cfg: RevealConfig }> = ({ cfg }) => {
           <Shot shot={{ at: 0, dur: h.beats * beat, src: h.inset, speed: 1, zoom: [1.0, 1.0], fx: "cut", rotate: h.insetRotate, still: true }} />
         </div>
       </div>
-      <div style={{ position: "absolute", left: SAFE.left, right: SAFE.right, top: 820, textAlign: "center" }}>
+      <div style={{ position: "absolute", left: SAFE.left, right: SAFE.right, top: textTop ? SAFE.top + 20 : 820, textAlign: "center" }}>
         {h.lines.map((l, i) => {
           const p = interpolate(frame, [i * 2, i * 2 + 5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           return (
@@ -125,28 +127,42 @@ const Hook: React.FC<{ cfg: RevealConfig }> = ({ cfg }) => {
 };
 
 /** Small, light lowercase caption in the middle of the frame. */
-const SmallCaption: React.FC<{ text: string }> = ({ text }) => {
+const SmallCaption: React.FC<{ text: string; pos?: "top" | "bottom" }> = ({ text, pos }) => {
   const frame = useCurrentFrame();
-  const o = interpolate(frame, [0, 3], [0, 1], { extrapolateRight: "clamp" });
+  const o = interpolate(frame, [0, 4], [0, 1], { extrapolateRight: "clamp" });
   return (
     <div
       style={{
         position: "absolute",
         left: SAFE.left,
         right: SAFE.right,
-        top: 880,
+        ...(pos === "top" ? { top: SAFE.top + 40 } : pos === "bottom" ? { bottom: SAFE.bottom + 60 } : { top: 880 }),
         textAlign: "center",
         whiteSpace: "pre-line",
         fontFamily: SANS,
         fontWeight: 600,
-        fontSize: 40,
+        fontSize: pos ? 46 : 40,
         lineHeight: 1.2,
         color: "#FFF6F8",
         opacity: o,
-        textShadow: "0 1px 3px rgba(0,0,0,0.55), 0 0 12px rgba(0,0,0,0.3)",
+        textShadow: pos ? undefined : "0 1px 3px rgba(0,0,0,0.55), 0 0 12px rgba(0,0,0,0.3)",
       }}
     >
-      {text}
+      {pos ? (
+        // soft translucent pill keeps positioned captions readable on bright walls
+        <span
+          style={{
+            display: "inline-block",
+            background: "rgba(24,20,16,0.5)",
+            borderRadius: 18,
+            padding: "12px 26px 14px",
+          }}
+        >
+          {text}
+        </span>
+      ) : (
+        text
+      )}
     </div>
   );
 };
@@ -170,7 +186,7 @@ export const Reveal: React.FC<{ cfg: RevealConfig }> = ({ cfg }) => {
         const to = shots[c.toShot].at + shots[c.toShot].dur;
         return (
           <Sequence key={`c${i}`} from={f(from)} durationInFrames={f(to) - f(from)} layout="none">
-            <SmallCaption text={c.text} />
+            <SmallCaption text={c.text} pos={c.pos} />
           </Sequence>
         );
       })}
