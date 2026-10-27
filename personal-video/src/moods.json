@@ -1,0 +1,459 @@
+{
+ "bpm": 80,
+ "variants": [
+  {
+   "id": "MoodProcess",
+   "drumsFromBeat": 4,
+   "fadeOutBeats": 3,
+   "shots": [
+    {
+     "src": 0.5,
+     "beats": 3,
+     "speed": 0.8,
+     "zoom": [
+      1.08,
+      1.0
+     ],
+     "fx": "fade"
+    },
+    {
+     "src": 5.0,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.0,
+      1.08
+     ]
+    },
+    {
+     "src": 12.6,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.1,
+      1.02
+     ]
+    },
+    {
+     "src": 18.3,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.05,
+      1.12
+     ]
+    },
+    {
+     "src": 20.0,
+     "beats": 2,
+     "speed": 0.7,
+     "zoom": [
+      1.0,
+      1.12
+     ]
+    },
+    {
+     "src": 22.0,
+     "beats": 2,
+     "speed": 0.9,
+     "zoom": [
+      1.1,
+      1.1
+     ]
+    },
+    {
+     "src": 26.0,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.12,
+      1.04
+     ]
+    },
+    {
+     "src": 46.3,
+     "beats": 2,
+     "speed": 0.9,
+     "zoom": [
+      1.04,
+      1.12
+     ]
+    },
+    {
+     "src": 52.0,
+     "beats": 2,
+     "speed": 0.9,
+     "zoom": [
+      1.0,
+      1.08
+     ]
+    },
+    {
+     "src": 56.5,
+     "beats": 2,
+     "speed": 1.0,
+     "zoom": [
+      1.0,
+      1.08
+     ]
+    },
+    {
+     "src": 66.4,
+     "beats": 2,
+     "speed": 0.9,
+     "zoom": [
+      1.0,
+      1.1
+     ]
+    },
+    {
+     "src": 71.2,
+     "beats": 1,
+     "speed": 1.0,
+     "zoom": [
+      1.08,
+      1.0
+     ]
+    },
+    {
+     "src": 73.6,
+     "beats": 2,
+     "speed": 0.7,
+     "zoom": [
+      1.05,
+      1.16
+     ]
+    },
+    {
+     "src": 76.6,
+     "beats": 2,
+     "speed": 1.2,
+     "zoom": [
+      1.0,
+      1.05
+     ]
+    },
+    {
+     "src": 82.6,
+     "beats": 2,
+     "speed": 1.2,
+     "zoom": [
+      1.05,
+      1.0
+     ]
+    },
+    {
+     "src": 123.0,
+     "beats": 2,
+     "speed": 0.7,
+     "zoom": [
+      1.0,
+      1.1
+     ],
+     "fx": "fade"
+    },
+    {
+     "src": 138.0,
+     "beats": 3,
+     "speed": 0.9,
+     "zoom": [
+      1.0,
+      1.06
+     ]
+    },
+    {
+     "src": 152.0,
+     "beats": 4,
+     "speed": 0.9,
+     "zoom": [
+      1.0,
+      1.08
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "sanding",
+     "beat": 11,
+     "vol": 0.35
+    },
+    {
+     "id": "roller",
+     "beat": 17,
+     "vol": 0.3
+    },
+    {
+     "id": "tape_rip",
+     "beat": 21,
+     "vol": 0.3
+    },
+    {
+     "id": "spray",
+     "beat": 23,
+     "vol": 0.4
+    },
+    {
+     "id": "tape_rip",
+     "beat": 26,
+     "vol": 0.55
+    },
+    {
+     "id": "tape_rip",
+     "beat": 28,
+     "vol": 0.55
+    },
+    {
+     "id": "lock_click",
+     "beat": 30.5,
+     "vol": 0.7
+    }
+   ]
+  },
+  {
+   "id": "MoodDetails",
+   "drumsFromBeat": 4,
+   "fadeOutBeats": 3,
+   "shots": [
+    {
+     "src": 26.0,
+     "beats": 3,
+     "speed": 0.6,
+     "zoom": [
+      1.2,
+      1.1
+     ],
+     "fx": "fade"
+    },
+    {
+     "src": 22.4,
+     "beats": 2,
+     "speed": 0.7,
+     "zoom": [
+      1.15,
+      1.2
+     ]
+    },
+    {
+     "src": 57.0,
+     "beats": 2,
+     "speed": 0.7,
+     "zoom": [
+      1.15,
+      1.25
+     ]
+    },
+    {
+     "src": 49.5,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.2,
+      1.1
+     ]
+    },
+    {
+     "src": 71.2,
+     "beats": 2,
+     "speed": 0.5,
+     "zoom": [
+      1.1,
+      1.2
+     ]
+    },
+    {
+     "src": 72.2,
+     "beats": 2,
+     "speed": 0.6,
+     "zoom": [
+      1.1,
+      1.22
+     ]
+    },
+    {
+     "src": 73.6,
+     "beats": 2,
+     "speed": 0.6,
+     "zoom": [
+      1.2,
+      1.1
+     ]
+    },
+    {
+     "src": 77.5,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.15,
+      1.2
+     ]
+    },
+    {
+     "src": 90.0,
+     "beats": 2,
+     "speed": 0.7,
+     "zoom": [
+      1.15,
+      1.25
+     ]
+    },
+    {
+     "src": 125.0,
+     "beats": 3,
+     "speed": 0.5,
+     "zoom": [
+      1.1,
+      1.22
+     ],
+     "fx": "fade"
+    },
+    {
+     "src": 140.0,
+     "beats": 4,
+     "speed": 0.7,
+     "zoom": [
+      1.05,
+      1.12
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "sanding",
+     "beat": 0.5,
+     "vol": 0.4
+    },
+    {
+     "id": "brush",
+     "beat": 5,
+     "vol": 0.4
+    },
+    {
+     "id": "roller",
+     "beat": 7,
+     "vol": 0.3
+    },
+    {
+     "id": "spray",
+     "beat": 9,
+     "vol": 0.45
+    },
+    {
+     "id": "shimmer",
+     "beat": 11,
+     "vol": 0.3
+    },
+    {
+     "id": "tape_rip",
+     "beat": 15,
+     "vol": 0.55
+    },
+    {
+     "id": "lock_click",
+     "beat": 19.5,
+     "vol": 0.7
+    }
+   ]
+  },
+  {
+   "id": "MoodBeforeAfter",
+   "drumsFromBeat": 3,
+   "fadeOutBeats": 3,
+   "shots": [
+    {
+     "src": 5.0,
+     "beats": 3,
+     "speed": 0.6,
+     "zoom": [
+      1.0,
+      1.12
+     ],
+     "fx": "fade"
+    },
+    {
+     "src": 18.4,
+     "beats": 0.5
+    },
+    {
+     "src": 22.2,
+     "beats": 0.5
+    },
+    {
+     "src": 26.2,
+     "beats": 0.5
+    },
+    {
+     "src": 30.0,
+     "beats": 0.5
+    },
+    {
+     "src": 46.5,
+     "beats": 0.5
+    },
+    {
+     "src": 52.2,
+     "beats": 0.5
+    },
+    {
+     "src": 57.0,
+     "beats": 0.5
+    },
+    {
+     "src": 66.6,
+     "beats": 0.5
+    },
+    {
+     "src": 69.5,
+     "beats": 0.5
+    },
+    {
+     "src": 71.3,
+     "beats": 0.5
+    },
+    {
+     "src": 72.4,
+     "beats": 0.5
+    },
+    {
+     "src": 77.0,
+     "beats": 0.5
+    },
+    {
+     "src": 138.0,
+     "beats": 3,
+     "speed": 0.8,
+     "zoom": [
+      1.1,
+      1.0
+     ],
+     "fx": "flash"
+    },
+    {
+     "src": 152.0,
+     "beats": 4,
+     "speed": 0.8,
+     "zoom": [
+      1.0,
+      1.08
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "id": "whoosh",
+     "beat": 2.6,
+     "vol": 0.4
+    },
+    {
+     "id": "lock_click",
+     "beat": 9.05,
+     "vol": 0.8
+    },
+    {
+     "id": "shimmer",
+     "beat": 9.05,
+     "vol": 0.3
+    }
+   ]
+  }
+ ]
+}
