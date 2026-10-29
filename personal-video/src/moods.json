@@ -561,6 +561,114 @@
     }
    ],
    "sfx": []
+  },
+  {
+   "id": "MilanClean",
+   "video": "milan.mp4",
+   "grade": "none",
+   "ambience": {
+    "file": "milan_audio.wav",
+    "vol": 0.6
+   },
+   "drumsFromBeat": 3,
+   "fadeOutBeats": 2,
+   "shots": [
+    {
+     "src": 9.0,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "src": 9.7,
+     "beats": 1,
+     "zoom": [
+      1.7,
+      1.7
+     ],
+     "focus": [
+      740,
+      804
+     ]
+    },
+    {
+     "src": 0.5,
+     "beats": 2,
+     "zoom": [
+      1.04,
+      1.04
+     ],
+     "focus": [
+      520,
+      900
+     ]
+    },
+    {
+     "src": 2.2,
+     "beats": 1,
+     "zoom": [
+      1.6,
+      1.6
+     ],
+     "focus": [
+      577,
+      730
+     ]
+    },
+    {
+     "src": 4.2,
+     "beats": 1,
+     "zoom": [
+      1.6,
+      1.6
+     ],
+     "focus": [
+      636,
+      744
+     ]
+    },
+    {
+     "src": 7.7,
+     "beats": 1,
+     "zoom": [
+      1.6,
+      1.6
+     ],
+     "focus": [
+      508,
+      744
+     ]
+    },
+    {
+     "src": 16.8,
+     "beats": 2,
+     "zoom": [
+      1.8,
+      1.8
+     ],
+     "focus": [
+      580,
+      520
+     ]
+    },
+    {
+     "src": 20.1,
+     "beats": 3,
+     "speed": 0.7,
+     "zoom": [
+      1.8,
+      1.8
+     ],
+     "focus": [
+      560,
+      520
+     ]
+    }
+   ],
+   "sfx": []
   }
  ]
 }
