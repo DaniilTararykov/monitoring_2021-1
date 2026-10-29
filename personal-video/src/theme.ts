@@ -6,6 +6,7 @@ export const C = {
 
 export const SERIF = "HoD Serif";
 export const SANS = "HoD Sans";
+export const MONO = "HoD Mono";
 
 // Reels safe zone (px): keep important content out of these margins.
 export const SAFE = { top: 250, bottom: 420, right: 120, left: 72 };

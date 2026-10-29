@@ -5,6 +5,7 @@ import { DURATION, FPS } from "./edit";
 import { MoodCut, moodDuration, variants } from "./MoodCut";
 import { Reveal, RevealConfig, revealDuration } from "./CuteReveal";
 import cute from "./cute.json";
+import { GRWMCards, GRWMMac, GRWMSplit, GRWM_FRAMES } from "./GRWM";
 import clean from "./clean.json";
 
 const reveals = [cute, clean] as unknown as RevealConfig[];
@@ -42,6 +43,13 @@ export const Root: React.FC = () => (
         width={1080}
         height={1920}
       />
+    ))}
+    {([
+      ["GRWMMac", GRWMMac],
+      ["GRWMCards", GRWMCards],
+      ["GRWMSplit", GRWMSplit],
+    ] as const).map(([id, C]) => (
+      <Composition key={id} id={id} component={C} durationInFrames={GRWM_FRAMES} fps={30} width={1080} height={1920} />
     ))}
   </>
 );

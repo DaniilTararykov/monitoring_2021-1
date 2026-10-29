@@ -1,0 +1,199 @@
+{
+ "bpm": 120,
+ "source": {
+  "file": "grwm.mp4",
+  "w": 1920,
+  "h": 1080
+ },
+ "products": {
+  "cosrx": {
+   "step": 1,
+   "label": "cleanse",
+   "brand": "COSRX",
+   "name": "Low pH Good Morning Gel Cleanser",
+   "src": 52.0,
+   "crop": [
+    860,
+    470,
+    720
+   ]
+  },
+  "loreal": {
+   "step": 2,
+   "label": "style",
+   "brand": "L'Oréal Paris",
+   "name": "Studio Line Invisi Fix texturizing wax",
+   "src": 112.0,
+   "crop": [
+    1000,
+    420,
+    660
+   ]
+  },
+  "anua": {
+   "step": 3,
+   "label": "serum",
+   "brand": "Anua",
+   "name": "Niacinamide 10 + TXA 4 Serum",
+   "src": 217.0,
+   "crop": [
+    960,
+    560,
+    680
+   ]
+  },
+  "boj": {
+   "step": 4,
+   "label": "spf",
+   "brand": "Beauty of Joseon",
+   "name": "Relief Sun SPF 50+",
+   "src": 326.0,
+   "crop": [
+    960,
+    480,
+    720
+   ]
+  },
+  "deo": {
+   "step": 5,
+   "label": "deo",
+   "brand": "deodorant",
+   "name": "roll-on, obviously",
+   "src": 382.3,
+   "crop": [
+    1150,
+    260,
+    700
+   ]
+  }
+ },
+ "segments": [
+  {
+   "src": 0.0,
+   "beats": 3,
+   "focus": 950,
+   "caption": "6:47 am. gym in 30."
+  },
+  {
+   "src": 2.5,
+   "beats": 2,
+   "speed": 1.5,
+   "focus": 950
+  },
+  {
+   "src": 28.0,
+   "beats": 2,
+   "speed": 1.5,
+   "focus": 960,
+   "caption": "step one: wake up"
+  },
+  {
+   "src": 50.5,
+   "beats": 3,
+   "focus": 880,
+   "product": "cosrx"
+  },
+  {
+   "src": 86.5,
+   "beats": 2,
+   "focus": 1000
+  },
+  {
+   "src": 99.0,
+   "beats": 2,
+   "speed": 1.5,
+   "focus": 960
+  },
+  {
+   "src": 110.0,
+   "beats": 3,
+   "focus": 1000,
+   "product": "loreal"
+  },
+  {
+   "src": 131.0,
+   "beats": 2,
+   "focus": 1000
+  },
+  {
+   "src": 146.0,
+   "beats": 1,
+   "focus": 960
+  },
+  {
+   "src": 150.0,
+   "beats": 2,
+   "speed": 2.0,
+   "focus": 960
+  },
+  {
+   "src": 174.0,
+   "beats": 2,
+   "speed": 1.5,
+   "focus": 1000,
+   "caption": "hair: messy on purpose"
+  },
+  {
+   "src": 190.0,
+   "beats": 1,
+   "focus": 960
+  },
+  {
+   "src": 215.5,
+   "beats": 3,
+   "focus": 980,
+   "product": "anua"
+  },
+  {
+   "src": 225.0,
+   "beats": 2,
+   "focus": 1080
+  },
+  {
+   "src": 238.0,
+   "beats": 2,
+   "speed": 1.5,
+   "focus": 1150
+  },
+  {
+   "src": 285.0,
+   "beats": 2,
+   "focus": 1250,
+   "caption": "it's getting hot in here"
+  },
+  {
+   "src": 320.5,
+   "beats": 3,
+   "focus": 900,
+   "product": "boj"
+  },
+  {
+   "src": 333.0,
+   "beats": 2,
+   "focus": 980
+  },
+  {
+   "src": 355.0,
+   "beats": 2,
+   "speed": 2.0,
+   "focus": 960
+  },
+  {
+   "src": 382.0,
+   "beats": 2,
+   "focus": 1100,
+   "product": "deo"
+  },
+  {
+   "src": 398.0,
+   "beats": 2,
+   "focus": 960
+  },
+  {
+   "src": 401.5,
+   "beats": 4,
+   "focus": 960,
+   "caption": "ok. gym."
+  }
+ ]
+}
