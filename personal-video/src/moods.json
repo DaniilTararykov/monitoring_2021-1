@@ -454,6 +454,113 @@
      "vol": 0.3
     }
    ]
+  },
+  {
+   "id": "MilanEdit",
+   "video": "milan.mp4",
+   "film": true,
+   "grade": "contrast(1.07) saturate(0.86) sepia(0.12) brightness(0.99)",
+   "label": "milano · ottobre",
+   "ambience": {
+    "file": "milan_audio.wav",
+    "vol": 0.6
+   },
+   "drumsFromBeat": 3,
+   "fadeOutBeats": 3,
+   "shots": [
+    {
+     "src": 9.0,
+     "beats": 3,
+     "speed": 0.85,
+     "zoom": [
+      1.0,
+      1.06
+     ],
+     "focus": [
+      700,
+      900
+     ]
+    },
+    {
+     "src": 0.8,
+     "beats": 3,
+     "speed": 0.95,
+     "zoom": [
+      1.04,
+      1.14
+     ],
+     "focus": [
+      500,
+      820
+     ]
+    },
+    {
+     "src": 2.8,
+     "beats": 2,
+     "speed": 0.75,
+     "zoom": [
+      1.5,
+      1.56
+     ],
+     "focus": [
+      640,
+      720
+     ]
+    },
+    {
+     "src": 4.1,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.4,
+      1.46
+     ],
+     "focus": [
+      650,
+      720
+     ]
+    },
+    {
+     "src": 7.5,
+     "beats": 2,
+     "speed": 0.8,
+     "zoom": [
+      1.6,
+      1.66
+     ],
+     "focus": [
+      560,
+      680
+     ]
+    },
+    {
+     "src": 16.7,
+     "beats": 3,
+     "speed": 0.8,
+     "zoom": [
+      1.8,
+      1.86
+     ],
+     "focus": [
+      580,
+      520
+     ]
+    },
+    {
+     "src": 20.0,
+     "beats": 4,
+     "speed": 0.55,
+     "zoom": [
+      1.8,
+      1.9
+     ],
+     "focus": [
+      560,
+      520
+     ]
+    }
+   ],
+   "sfx": []
   }
  ]
 }

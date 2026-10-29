@@ -6,9 +6,9 @@ import { f, FPS, Shot as ShotT } from "../edit";
 const FOOTAGE = staticFile("footage.mp4");
 
 /** One source segment at a constant playback rate. */
-const Clip: React.FC<{ srcFrame: number; rate: number }> = ({ srcFrame, rate }) => (
+const Clip: React.FC<{ srcFrame: number; rate: number; video?: string }> = ({ srcFrame, rate, video }) => (
   <OffthreadVideo
-    src={FOOTAGE}
+    src={video ? staticFile(video) : FOOTAGE}
     trimBefore={srcFrame}
     playbackRate={rate}
     muted
@@ -46,6 +46,14 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
   }
   // Gentle drift so locked-off shots still breathe.
   const drift = shot.still ? 0 : Math.sin((frame + shot.src * 10) / 45) * 6;
+  // Crop: shift so the focus point sits in the centre, without exposing the frame edge.
+  let fx = 0;
+  let fy = 0;
+  if (shot.focus) {
+    const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
+    fx = clamp(-scale * (shot.focus[0] - 540), 540 * (scale - 1));
+    fy = clamp(-scale * (shot.focus[1] - 960), 960 * (scale - 1));
+  }
 
   const segments: React.ReactNode[] = [];
   const start = Math.round(shot.src * FPS);
@@ -60,13 +68,13 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
       const rate = a + ((b - a) * (i + 0.5)) / RAMP_STEPS;
       segments.push(
         <Sequence key={i} from={from} durationInFrames={dur} layout="none">
-          <Clip srcFrame={Math.round(src)} rate={rate} />
+          <Clip srcFrame={Math.round(src)} rate={rate} video={shot.video} />
         </Sequence>,
       );
       src += dur * rate;
     }
   } else {
-    segments.push(<Clip key="0" srcFrame={start} rate={shot.speed} />);
+    segments.push(<Clip key="0" srcFrame={start} rate={shot.speed} video={shot.video} />);
   }
 
   return (
@@ -74,7 +82,7 @@ export const Shot: React.FC<{ shot: ShotT }> = ({ shot }) => {
       <AbsoluteFill
         style={{
           opacity,
-          transform: `translateY(${ty}%) translateX(${drift}px) rotate(${rot}deg) scale(${scale})`,
+          transform: `translate(${fx}px, ${fy}px) translateY(${ty}%) translateX(${drift}px) rotate(${rot}deg) scale(${scale})`,
           filter: blur ? `blur(${blur}px)` : undefined,
         }}
       >
