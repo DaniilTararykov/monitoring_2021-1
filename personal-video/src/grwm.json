@@ -11,7 +11,7 @@
    "label": "cleanse",
    "brand": "COSRX",
    "name": "Low pH Good Morning Gel Cleanser",
-   "src": 52.0,
+   "src": 57.07,
    "crop": [
     860,
     470,
@@ -23,7 +23,7 @@
    "label": "style",
    "brand": "L'Oréal Paris",
    "name": "Studio Line Invisi Fix texturizing wax",
-   "src": 112.0,
+   "src": 113.03,
    "crop": [
     1000,
     420,
@@ -35,7 +35,7 @@
    "label": "serum",
    "brand": "Anua",
    "name": "Niacinamide 10 + TXA 4 Serum",
-   "src": 217.0,
+   "src": 219.87,
    "crop": [
     960,
     560,
@@ -46,32 +46,20 @@
    "step": 4,
    "label": "spf",
    "brand": "Beauty of Joseon",
-   "name": "Relief Sun SPF 50+",
-   "src": 326.0,
+   "name": "Relief Sun Aqua-Fresh: Rice + B5 SPF 50+",
+   "src": 324.1,
    "crop": [
     960,
     480,
     720
    ]
-  },
-  "deo": {
-   "step": 5,
-   "label": "deo",
-   "brand": "deodorant",
-   "name": "roll-on, obviously",
-   "src": 382.3,
-   "crop": [
-    1150,
-    260,
-    700
-   ]
   }
  },
  "segments": [
   {
-   "src": 0.0,
+   "src": 390.6,
    "beats": 3,
-   "focus": 950,
+   "focus": 960,
    "caption": "6:47 am. gym in 30."
   },
   {
@@ -177,12 +165,6 @@
    "beats": 2,
    "speed": 2.0,
    "focus": 960
-  },
-  {
-   "src": 382.0,
-   "beats": 2,
-   "focus": 1100,
-   "product": "deo"
   },
   {
    "src": 398.0,

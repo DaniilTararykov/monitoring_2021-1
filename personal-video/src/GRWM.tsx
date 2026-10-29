@@ -112,6 +112,21 @@ const useCurrentProduct = () => {
 
 const stepsDone = (frame: number) => timeline.filter((s) => s.product && frame >= s.from).length;
 
+/** Text overlays live until the next one of their kind, at least their own shot, at most `max` seconds. */
+const holdSpan = (list: Timed[], s: Timed, max: number) => {
+  const next = list.find((c) => c.from > s.from);
+  const end = Math.min(next ? next.from : GRWM_FRAMES, s.from + fr(max));
+  return Math.max(end, s.from + s.frames) - s.from;
+};
+const captionSegs = timeline.filter((s) => s.caption);
+const productSegs = timeline.filter((s) => s.product);
+
+const useHeld = (list: Timed[], max: number) => {
+  const frame = useCurrentFrame();
+  const s = [...list].reverse().find((c) => frame >= c.from && frame < c.from + holdSpan(list, c, max));
+  return s ? { s, local: frame - s.from, span: holdSpan(list, s, max) } : null;
+};
+
 /* ------------------------------------------------------------------ */
 /* 1 · macOS desktop                                                   */
 /* ------------------------------------------------------------------ */
@@ -251,7 +266,7 @@ export const GRWMMac: React.FC = () => {
   const ticked = cur ? cur.p.step - 1 : 0;
   const checkY = 1090 + ticked * 76;
   const travel = cur ? interpolate(cur.since, [0, 10], [0, 1], { extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) }) : 0;
-  const cx = interpolate(travel, [0, 1], [880, 585]);
+  const cx = interpolate(travel, [0, 1], [880, 655]);
   const cy = interpolate(travel, [0, 1], [820, checkY]);
   const pressed = cur ? cur.since >= 10 && cur.since < 14 : false;
   const qlScale = cur ? spring({ frame: cur.since, fps, config: { damping: 14 } }) : 0;
@@ -266,15 +281,15 @@ export const GRWMMac: React.FC = () => {
       </MacWindow>
 
       {cur ? (
-        <MacWindow title={`${cur.key}.png`} x={40} y={960} w={470} scale={qlScale}>
-          <Window src={cur.p.src} w={470} h={470} cx={cur.p.crop[0]} cy={cur.p.crop[1]} cw={cur.p.crop[2]} still />
+        <MacWindow title={`${cur.key}.png`} x={40} y={960} w={540} scale={qlScale}>
+          <Window src={cur.p.src} w={540} h={540} cx={cur.p.crop[0]} cy={cur.p.crop[1]} cw={cur.p.crop[2]} still />
           <div style={{ padding: "14px 20px 18px", fontFamily: MONO, fontSize: 22, color: MAC.sub }}>
             0{cur.p.step} · {cur.p.label}
           </div>
         </MacWindow>
       ) : null}
 
-      <MacWindow title="Notes" x={530} y={960} w={510}>
+      <MacWindow title="Notes" x={600} y={960} w={440}>
         <div style={{ padding: "22px 28px 26px", fontFamily: SANS, color: MAC.text }}>
           <div style={{ fontSize: 34, fontWeight: 800, marginBottom: 14 }}>gym morning</div>
           {productList.map(([k, p], i) => {
@@ -327,12 +342,12 @@ export const GRWMMac: React.FC = () => {
       {timeline
         .filter((s) => s.caption)
         .map((s, i, all) => (
-          <Sequence key={s.idx} from={s.from} durationInFrames={i === all.length - 1 ? GRWM_FRAMES - s.from : s.frames + fr(BEAT)} layout="none">
+          <Sequence key={s.idx} from={s.from} durationInFrames={i === all.length - 1 ? GRWM_FRAMES - s.from : holdSpan(captionSegs, s, 3)} layout="none">
             <Notification
               app={i === all.length - 1 ? "Calendar" : "Messages"}
               title={i === all.length - 1 ? "Gym" : "me"}
               body={s.caption!}
-              dur={i === all.length - 1 ? GRWM_FRAMES - s.from + 30 : s.frames + fr(BEAT)}
+              dur={i === all.length - 1 ? GRWM_FRAMES - s.from + 30 : holdSpan(captionSegs, s, 3)}
             />
           </Sequence>
         ))}
@@ -454,7 +469,6 @@ export const GRWMSplit: React.FC = () => {
   const frame = useCurrentFrame();
   const { seg } = useSegment();
   const local = frame - seg.from;
-  const p = seg.product ? products[seg.product] : null;
   // real-time stopwatch from the source clock
   const srcT = seg.src + (local / FPS) * (seg.speed ?? 1);
   const mm = String(Math.floor(srcT / 60)).padStart(2, "0");
@@ -463,6 +477,8 @@ export const GRWMSplit: React.FC = () => {
   const progress = Math.min(1, srcT / 406);
   const done = stepsDone(frame);
   const blink = Math.floor(frame / 15) % 2 === 0;
+  const cap = useHeld(captionSegs, 3);
+  const tag = useHeld(productSegs, 3.5);
 
   return (
     <AbsoluteFill style={{ background: "#0B0B0B" }}>
@@ -539,8 +555,8 @@ export const GRWMSplit: React.FC = () => {
         </div>
       </div>
 
-      {/* labels */}
-      {p ? (
+      {/* labels (held so they can be read) */}
+      {tag ? (
         <div
           style={{
             position: "absolute",
@@ -552,30 +568,175 @@ export const GRWMSplit: React.FC = () => {
             padding: "12px 20px",
             fontSize: 28,
             maxWidth: 900,
-            clipPath: `inset(0 ${100 - Math.min(100, local * 8)}% 0 0)`,
+            clipPath: `inset(0 ${100 - Math.min(100, tag.local * 8)}% 0 0)`,
+            opacity: interpolate(tag.local, [tag.span - 6, tag.span], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}
         >
-          {p.brand} — {p.name}
+          {products[tag.s.product!].brand} — {products[tag.s.product!].name}
         </div>
       ) : null}
-      {seg.caption ? (
+      {cap ? (
         <div
           style={{
             position: "absolute",
-            left: 48,
-            right: SAFE.right,
-            top: 262,
+            left: 32,
+            top: 268,
             fontFamily: MONO,
-            fontSize: 34,
+            fontSize: 36,
             color: "#fff",
-            textShadow: "0 1px 8px rgba(0,0,0,0.6)",
+            background: "rgba(11,11,11,0.55)",
+            padding: "10px 18px",
+            opacity: interpolate(cap.local, [cap.span - 6, cap.span], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}
         >
           {"> "}
-          {seg.caption.slice(0, Math.floor(local / 1.2))}
+          {cap.s.caption!.slice(0, Math.floor(cap.local / 0.8))}
           <span style={{ opacity: blink ? 1 : 0 }}>_</span>
         </div>
       ) : null}
+      <SoundTrack clicks />
+    </AbsoluteFill>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/* 4 · Viewfinder scan (Split's sibling)                               */
+/* ------------------------------------------------------------------ */
+
+const NEON = "#E8FF47";
+
+const Brackets: React.FC<{ x: number; y: number; w: number; h: number; len?: number; color?: string; thick?: number }> = ({
+  x,
+  y,
+  w,
+  h,
+  len = 60,
+  color = "#fff",
+  thick = 5,
+}) => {
+  const corner = (l: number, t: number, edges: React.CSSProperties) => (
+    <div style={{ position: "absolute", left: l, top: t, width: len, height: len, borderColor: color, borderStyle: "solid", borderWidth: 0, ...edges }} />
+  );
+  return (
+    <>
+      {corner(x, y, { borderTopWidth: thick, borderLeftWidth: thick })}
+      {corner(x + w - len, y, { borderTopWidth: thick, borderRightWidth: thick })}
+      {corner(x, y + h - len, { borderBottomWidth: thick, borderLeftWidth: thick })}
+      {corner(x + w - len, y + h - len, { borderBottomWidth: thick, borderRightWidth: thick })}
+    </>
+  );
+};
+
+export const GRWMScan: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { seg } = useSegment();
+  const local = frame - seg.from;
+  const srcT = seg.src + (local / FPS) * (seg.speed ?? 1);
+  const tc = `${String(Math.floor(srcT / 60)).padStart(2, "0")}:${String(Math.floor(srcT % 60)).padStart(2, "0")}:${String(Math.floor((srcT % 1) * 30)).padStart(2, "0")}`;
+  const blink = Math.floor(frame / 15) % 2 === 0;
+  const done = stepsDone(frame);
+  const cap = useHeld(captionSegs, 3);
+  const p = seg.product ? products[seg.product] : null;
+
+  // product scan: brackets close in, scan line sweeps, label wipes on
+  const BOX = 860;
+  const bx = (1080 - BOX) / 2;
+  const by = 520;
+  const close = p ? interpolate(local, [3, 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) }) : 0;
+  const pad = interpolate(close, [0, 1], [90, 0]);
+  const sweep = p ? interpolate(local, [8, 26], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
+  const flash = p ? interpolate(local, [0, 3], [0.9, 0], { extrapolateRight: "clamp" }) : 0;
+
+  return (
+    <AbsoluteFill style={{ background: "#000" }}>
+      <Cuts render={(s) => <Window src={s.src} speed={s.speed} w={1080} h={1920} cx={s.focus} cy={540} cw={VCROP} />} />
+
+      {p ? (
+        <>
+          <AbsoluteFill style={{ background: `rgba(0,0,0,${0.62 * close})` }} />
+          <div style={{ position: "absolute", left: bx, top: by, opacity: close, boxShadow: "0 30px 80px rgba(0,0,0,0.5)" }}>
+            <Window src={p.src} w={BOX} h={BOX} cx={p.crop[0]} cy={p.crop[1]} cw={p.crop[2]} still />
+            <div style={{ position: "absolute", left: 0, right: 0, top: sweep * BOX, height: 4, background: NEON, opacity: sweep < 1 ? 0.9 : 0, boxShadow: `0 0 18px ${NEON}` }} />
+          </div>
+          <Brackets x={bx - pad} y={by - pad} w={BOX + pad * 2} h={BOX + pad * 2} len={80} color={NEON} thick={6} />
+          <div
+            style={{
+              position: "absolute",
+              left: bx,
+              top: by + BOX + 26,
+              maxWidth: BOX,
+              fontFamily: MONO,
+              color: "#0B0B0B",
+              background: NEON,
+              padding: "12px 20px",
+              fontSize: 28,
+              clipPath: `inset(0 ${100 - Math.min(100, Math.max(0, local - 10) * 7)}% 0 0)`,
+            }}
+          >
+            OBJECT DETECTED · 0{p.step} {p.label.toUpperCase()}
+            <div style={{ fontSize: 30, marginTop: 6 }}>
+              {p.brand} — {p.name}
+            </div>
+          </div>
+          <AbsoluteFill style={{ background: "#fff", opacity: flash }} />
+        </>
+      ) : null}
+
+      {/* viewfinder HUD */}
+      <Brackets x={56} y={262} w={968} h={1220} len={70} color="rgba(255,255,255,0.85)" thick={4} />
+      <div style={{ position: "absolute", top: 290, left: 90, right: 90, display: "flex", fontFamily: MONO, fontSize: 30, color: "#fff", textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <span style={{ width: 18, height: 18, borderRadius: 9, background: "#FF3B30", opacity: blink ? 1 : 0.25 }} />
+          REC {tc}
+        </span>
+        <span style={{ marginLeft: "auto", color: NEON }}>
+          {String(done).padStart(2, "0")}/0{productList.length}
+        </span>
+      </div>
+      <div style={{ position: "absolute", top: 340, left: 90, fontFamily: MONO, fontSize: 24, color: "rgba(255,255,255,0.8)", textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}>
+        GRWM / GYM EDITION
+      </div>
+
+      {cap ? (
+        <div
+          style={{
+            position: "absolute",
+            left: 90,
+            right: 90,
+            top: 410,
+            fontFamily: MONO,
+            fontSize: 38,
+            color: "#fff",
+            textShadow: "0 1px 8px rgba(0,0,0,0.6)",
+            opacity: interpolate(cap.local, [cap.span - 6, cap.span], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+          }}
+        >
+          {"> "}
+          {cap.s.caption!.slice(0, Math.floor(cap.local / 0.8))}
+          <span style={{ opacity: blink ? 1 : 0 }}>_</span>
+        </div>
+      ) : null}
+
+      {/* step progress */}
+      <div style={{ position: "absolute", left: 90, right: 90, top: 1420, height: 4, background: "rgba(255,255,255,0.3)" }}>
+        <div style={{ height: 4, width: `${(frame / GRWM_FRAMES) * 100}%`, background: NEON }} />
+        {productSegs.map((s, i) => (
+          <span
+            key={s.idx}
+            style={{
+              position: "absolute",
+              left: `${(s.from / GRWM_FRAMES) * 100}%`,
+              top: -8,
+              width: 20,
+              height: 20,
+              marginLeft: -10,
+              borderRadius: 10,
+              background: i < done ? NEON : "rgba(0,0,0,0.6)",
+              border: `3px solid ${NEON}`,
+            }}
+          />
+        ))}
+      </div>
       <SoundTrack clicks />
     </AbsoluteFill>
   );
