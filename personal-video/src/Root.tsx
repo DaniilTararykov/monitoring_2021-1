@@ -1,10 +1,11 @@
 import React from "react";
-import { Composition } from "remotion";
+import { Composition, Still } from "remotion";
 import { ChestReel } from "./ChestReel";
 import { DURATION, FPS } from "./edit";
 import { MoodCut, moodDuration, variants } from "./MoodCut";
 import { Reveal, RevealConfig, revealDuration } from "./CuteReveal";
 import cute from "./cute.json";
+import { H as CH, slides, W as CW } from "./Carousel";
 import { GRWMCards, GRWMMac, GRWMScan, GRWMSplit, GRWM_FRAMES } from "./GRWM";
 import clean from "./clean.json";
 
@@ -51,6 +52,9 @@ export const Root: React.FC = () => (
       ["GRWMScan", GRWMScan],
     ] as const).map(([id, C]) => (
       <Composition key={id} id={id} component={C} durationInFrames={GRWM_FRAMES} fps={30} width={1080} height={1920} />
+    ))}
+    {slides.map((sl) => (
+      <Still key={sl.id} id={sl.id} component={sl.el} width={sl.w ?? CW} height={CH} />
     ))}
   </>
 );
