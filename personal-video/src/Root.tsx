@@ -6,6 +6,7 @@ import { MoodCut, moodDuration, variants } from "./MoodCut";
 import { Reveal, RevealConfig, revealDuration } from "./CuteReveal";
 import cute from "./cute.json";
 import { H as CH, slides, W as CW } from "./Carousel";
+import { DOODLE_FRAMES, doodles } from "./Doodles";
 import { GRWMCards, GRWMMac, GRWMScan, GRWMSplit, GRWM_FRAMES } from "./GRWM";
 import clean from "./clean.json";
 
@@ -52,6 +53,9 @@ export const Root: React.FC = () => (
       ["GRWMScan", GRWMScan],
     ] as const).map(([id, C]) => (
       <Composition key={id} id={id} component={C} durationInFrames={GRWM_FRAMES} fps={30} width={1080} height={1920} />
+    ))}
+    {doodles.map((d) => (
+      <Composition key={d.id} id={d.id} component={d.component} durationInFrames={DOODLE_FRAMES} fps={30} width={1080} height={1350} />
     ))}
     {slides.map((sl) => (
       <Still key={sl.id} id={sl.id} component={sl.el} width={sl.w ?? CW} height={CH} />
