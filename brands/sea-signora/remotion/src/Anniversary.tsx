@@ -17,7 +17,7 @@ const FPS = 30;
 
 // n = frames on screen; push = slow zoom-in over the shot (0.04 = +4 %); note = where the paper sits on this shot
 export type YearCut = {clip: string; start: number; n: number; zoom?: number; fx?: number; fy?: number; push?: number; note?: 'top' | 'bottom'};
-export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange' | 'cycle'};
+export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange' | 'cycle' | 'swap'};
 
 const Shot: React.FC<{c: YearCut; grade?: boolean}> = ({c, grade}) => {
   const f = useCurrentFrame();
@@ -255,13 +255,14 @@ const Face: React.FC<{k: number; color: string; f?: number; letters?: boolean; l
   );
 };
 
-export const ChalkCycle: React.FC<{f: number; segs: number[]}> = ({f, segs}) => {
+// swap: the patch is painted once and keeps its shape; on each segment only its colour changes (3-frame crossfade)
+export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> = ({f, segs, swap}) => {
   const k = Math.max(0, segs.filter((s) => f >= s).length - 1);
   const last = k === segs.length - 1;
   const pal = (i: number) => PALETTES[i % PALETTES.length];
   const tCur = interpolate(f - segs[k], [0, k === 0 ? FILL : REPAINT], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
   const roll = k === 0 ? 1 : interpolate(f - segs[k], [0, ROLL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
-  const textColor = (i: number) => (tCur > 0.45 || k === 0 ? pal(i) : pal(Math.max(0, i - 1)));
+  const textColor = (i: number) => (swap || tCur > 0.45 || k === 0 ? pal(i) : pal(Math.max(0, i - 1)));
   return (
     <div style={{position: 'relative', width: CW, height: CH}}>
       <svg width={CW} height={CH} style={{position: 'absolute', inset: 0, overflow: 'visible'}}>
@@ -276,10 +277,32 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]}> = ({f, segs}) => 
             <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0.62" result="streaks" />
             <feComposite in="pitted" in2="streaks" operator="in" />
           </filter>
+          {/* denser crayon for the small one-shape patch: rough edge, soft streaks, only a few pinholes */}
+          <filter id="crayon3" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="4" result="warp" />
+            <feDisplacementMap in="SourceGraphic" in2="warp" scale="30" xChannelSelector="R" yChannelSelector="G" result="rough" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="9" result="grain" />
+            <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -12 9.4" result="holes" />
+            <feComposite in="rough" in2="holes" operator="in" result="pitted" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.3" numOctaves="2" seed="5" result="streak" />
+            <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0.8" result="streaks" />
+            <feComposite in="pitted" in2="streaks" operator="in" />
+          </filter>
         </defs>
-        <g filter="url(#crayon2)">
-          {k > 0 ? <Layer color={pal(k - 1).bg} t={1} seed={k * 7} flip={(k - 1) % 2 === 1} /> : null}
-          <Layer color={pal(k).bg} t={tCur} seed={k * 7 + 7} flip={k % 2 === 1} />
+        <g filter={swap ? 'url(#crayon3)' : 'url(#crayon2)'}>
+          {swap ? (
+            <>
+              <Layer color={pal(Math.max(0, k - 1)).bg} t={k === 0 ? tCur : 1} seed={7} flip={false} />
+              <Layer color={pal(Math.max(0, k - 1)).bg} t={k === 0 ? tCur : 1} seed={21} flip />
+              {k > 0 ? <g opacity={interpolate(f - segs[k], [0, 3], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}>
+                <Layer color={pal(k).bg} t={1} seed={7} flip={false} /><Layer color={pal(k).bg} t={1} seed={21} flip /></g> : null}
+            </>
+          ) : (
+            <>
+              {k > 0 ? <Layer color={pal(k - 1).bg} t={1} seed={k * 7} flip={(k - 1) % 2 === 1} /> : null}
+              <Layer color={pal(k).bg} t={tCur} seed={k * 7 + 7} flip={k % 2 === 1} />
+            </>
+          )}
         </g>
       </svg>
       <div style={{position: 'absolute', left: 0, right: 0, top: 40, textAlign: 'center', transform: 'scale(0.86)'}}>
@@ -327,7 +350,9 @@ export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade
       })}
       {chalk ? (
         <div style={{position: 'absolute', left: 540 - CW / 2, top: 960 - CH / 2, width: CW, height: CH, transform: 'rotate(-2deg)'}}>
-          {chalk === 'cycle' ? <ChalkCycle f={f} segs={starts.filter((_, i) => i % 4 === 0)} /> : <Chalk f={f} tone={chalk} />}
+          {chalk === 'cycle' || chalk === 'swap'
+            ? <div style={{transform: chalk === 'swap' ? 'scale(0.74)' : undefined}}><ChalkCycle f={f} segs={starts.filter((_, i) => i % 4 === 0)} swap={chalk === 'swap'} /></div>
+            : <Chalk f={f} tone={chalk} />}
         </div>
       ) : (
         <div style={{position: 'absolute', left: 540 - NW / 2, top: 960 - NH / 2, width: NW, height: NH,
