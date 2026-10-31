@@ -261,7 +261,7 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> =
   const last = k === segs.length - 1;
   const pal = (i: number) => PALETTES[i % PALETTES.length];
   const tCur = interpolate(f - segs[k], [0, k === 0 ? FILL : REPAINT], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
-  const tFill = interpolate(f, [0, FILL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
+  const tFill = 1; // client 31.10: no colouring-in, the patch is there from the first frame
   const roll = k === 0 || swap ? 1 : interpolate(f - segs[k], [0, ROLL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
   const textColor = (i: number) => (swap || tCur > 0.45 || k === 0 ? pal(i) : pal(Math.max(0, i - 1)));
   return (
@@ -295,7 +295,7 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> =
             <>
               <Layer color={pal(Math.max(0, k - 1)).bg} t={tFill} seed={7} flip={false} />
               <Layer color={pal(Math.max(0, k - 1)).bg} t={tFill} seed={21} flip />
-              {k > 0 ? <g opacity={interpolate(f - segs[k], [0, 1], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}>
+              {k > 0 ? <g>
                 <Layer color={pal(k).bg} t={tFill} seed={7} flip={false} /><Layer color={pal(k).bg} t={tFill} seed={21} flip /></g> : null}
             </>
           ) : (
