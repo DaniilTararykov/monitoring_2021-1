@@ -255,13 +255,14 @@ const Face: React.FC<{k: number; color: string; f?: number; letters?: boolean; l
   );
 };
 
-// swap: the patch is painted once and keeps its shape; on each segment only its colour changes (3-frame crossfade)
+// swap: the patch is painted once and keeps its shape; its colour changes with every cut (client 31.10: no font counter)
 export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> = ({f, segs, swap}) => {
   const k = Math.max(0, segs.filter((s) => f >= s).length - 1);
   const last = k === segs.length - 1;
   const pal = (i: number) => PALETTES[i % PALETTES.length];
   const tCur = interpolate(f - segs[k], [0, k === 0 ? FILL : REPAINT], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
-  const roll = k === 0 ? 1 : interpolate(f - segs[k], [0, ROLL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+  const tFill = interpolate(f, [0, FILL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
+  const roll = k === 0 || swap ? 1 : interpolate(f - segs[k], [0, ROLL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
   const textColor = (i: number) => (swap || tCur > 0.45 || k === 0 ? pal(i) : pal(Math.max(0, i - 1)));
   return (
     <div style={{position: 'relative', width: CW, height: CH}}>
@@ -292,10 +293,10 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> =
         <g filter={swap ? 'url(#crayon3)' : 'url(#crayon2)'}>
           {swap ? (
             <>
-              <Layer color={pal(Math.max(0, k - 1)).bg} t={k === 0 ? tCur : 1} seed={7} flip={false} />
-              <Layer color={pal(Math.max(0, k - 1)).bg} t={k === 0 ? tCur : 1} seed={21} flip />
-              {k > 0 ? <g opacity={interpolate(f - segs[k], [0, 3], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}>
-                <Layer color={pal(k).bg} t={1} seed={7} flip={false} /><Layer color={pal(k).bg} t={1} seed={21} flip /></g> : null}
+              <Layer color={pal(Math.max(0, k - 1)).bg} t={tFill} seed={7} flip={false} />
+              <Layer color={pal(Math.max(0, k - 1)).bg} t={tFill} seed={21} flip />
+              {k > 0 ? <g opacity={interpolate(f - segs[k], [0, 1], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}>
+                <Layer color={pal(k).bg} t={tFill} seed={7} flip={false} /><Layer color={pal(k).bg} t={tFill} seed={21} flip /></g> : null}
             </>
           ) : (
             <>
@@ -315,7 +316,7 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> =
             </div>
           ) : null}
           <div style={{position: 'absolute', left: 0, right: 0, top: 0, transform: `translateY(${(1 - roll) * BLOCK}px)`, filter: `blur(${(1 - roll) * 6}px)`}}>
-            <Face k={k} color={textColor(k).b} f={f} letters={k === 0} last={last} />
+            <Face k={k} color={textColor(k).b} f={f} letters={k === 0 || swap} last={last || swap} />
           </div>
         </div>
       </div>
@@ -351,7 +352,7 @@ export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade
       {chalk ? (
         <div style={{position: 'absolute', left: 540 - CW / 2, top: 960 - CH / 2, width: CW, height: CH, transform: 'rotate(-2deg)'}}>
           {chalk === 'cycle' || chalk === 'swap'
-            ? <div style={{transform: chalk === 'swap' ? 'scale(0.74)' : undefined}}><ChalkCycle f={f} segs={starts.filter((_, i) => i % 4 === 0)} swap={chalk === 'swap'} /></div>
+            ? <div style={{transform: chalk === 'swap' ? 'scale(0.74)' : undefined}}><ChalkCycle f={f} segs={chalk === 'swap' ? starts : starts.filter((_, i) => i % 4 === 0)} swap={chalk === 'swap'} /></div>
             : <Chalk f={f} tone={chalk} />}
         </div>
       ) : (
