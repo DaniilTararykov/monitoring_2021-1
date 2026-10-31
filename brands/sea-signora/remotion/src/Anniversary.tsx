@@ -45,16 +45,16 @@ const Note: React.FC<{f: number}> = ({f}) => {
   const last = [...WORDS].reverse().find((w) => f >= w.at);
   const pop = last ? interpolate(f - last.at, [0, 4], [1.06, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}) : 1;
   return (
-    <div style={{position: 'relative', width: 640, height: 820, transform: `rotate(-1.6deg) scale(${pop})`}}>
+    <div style={{position: 'relative', width: 640, height: 720, transform: `rotate(-1.6deg) scale(${pop})`}}>
       <div style={{position: 'absolute', inset: 0, borderRadius: 6,
         background: 'linear-gradient(160deg, #FBF7EF 0%, #F3ECDF 55%, #EADFCB 100%)',
         boxShadow: '0 30px 60px rgba(0,0,0,0.38), inset 0 0 40px rgba(160,130,90,0.18)'}} />
       {/* folded corner */}
       <div style={{position: 'absolute', left: 0, top: 0, width: 54, height: 54,
         background: 'linear-gradient(135deg, rgba(0,0,0,0) 50%, #E3D6BF 50%, #F7F1E6 100%)', borderTopLeftRadius: 6}} />
-      <div style={{position: 'absolute', left: 56, right: 40, top: 70, fontFamily: fonts.display, fontSize: 82, lineHeight: 1.02,
+      <div style={{position: 'absolute', left: 46, right: 24, top: 64, fontFamily: fonts.display, fontSize: 102, lineHeight: 1.0, whiteSpace: 'nowrap',
         textTransform: 'uppercase', color: brandPalette.orange158, letterSpacing: 1}}>
-        {lines.map((l, i) => <div key={i} style={{minHeight: 84}}>{l.join(' ')}</div>)}
+        {lines.map((l, i) => <div key={i} style={{minHeight: 112}}>{l.join(' ')}</div>)}
       </div>
     </div>
   );
@@ -75,7 +75,7 @@ export const Anniversary: React.FC<{cuts: YearCut[]; endS: number}> = ({cuts, en
   const montageEnd = cuts.length * CUT;
   const ending = f >= montageEnd;
   // the note grows in steps with the words, then once more for the end card
-  const scale = interpolate(f, [0, 70, 76, 100, 106, 160, 168, montageEnd, montageEnd + 10], [0.42, 0.42, 0.55, 0.55, 0.64, 0.64, 0.74, 0.74, 0.9],
+  const scale = interpolate(f, [0, 70, 76, 100, 106, 130, 138, montageEnd, montageEnd + 10], [0.42, 0.42, 0.5, 0.5, 0.58, 0.58, 0.64, 0.64, 0.9],
     {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
   const endIn = interpolate(f, [montageEnd, montageEnd + 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const lastCut = cuts[cuts.length - 1];
@@ -99,7 +99,7 @@ export const Anniversary: React.FC<{cuts: YearCut[]; endS: number}> = ({cuts, en
         <IgGlyph size={46} color={colors.ivory} />
       </div>
       <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
-        <div style={{transform: `translateY(${-60 * endIn}px) scale(${scale})`}}><Note f={f} /></div>
+        <div style={{transform: `translateY(${300 * (1 - endIn) - 60 * endIn}px) scale(${scale})`}}><Note f={f} /></div>
       </AbsoluteFill>
       <div style={{position: 'absolute', left: 0, right: 0, top: 1460, textAlign: 'center', opacity: endIn, color: colors.ivory}}>
         <div style={{display: 'flex', justifyContent: 'center'}}><IgGlyph size={64} color={colors.ivory} /></div>

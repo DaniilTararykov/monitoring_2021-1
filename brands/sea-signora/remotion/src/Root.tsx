@@ -7,6 +7,8 @@ import {RECIPE_CARD_S, RecipeCard} from './RecipeCard';
 import {TOMAHAWK} from './Tomahawk';
 import {VOCABOLARIO} from './Vocabolario';
 import {PosterChip} from './PosterChip';
+import {Anniversary, yearDuration} from './Anniversary';
+import {YEAR_CUTS} from './anniversaryCuts';
 import {EditorReel, editorDuration, type EditorConfig} from './EditorReel';
 import {BlackoutReel, DURATION_S, FPS} from './BlackoutReel';
 import {StoryVideo, storyFrames} from './Story';
@@ -40,6 +42,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
     <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />
     <Composition id="TwoRecipes-card" component={RecipeCard} durationInFrames={Math.round(RECIPE_CARD_S * 30)} fps={30} width={1080} height={1920} />
+    <Composition id="Anniversary" component={Anniversary} durationInFrames={yearDuration(YEAR_CUTS.length, 3)} fps={30} width={1080} height={1920}
+      defaultProps={{cuts: YEAR_CUTS, endS: 3}} />
     <Composition id="PosterChip" component={PosterChip} durationInFrames={1} fps={30} width={1080} height={1920}
       defaultProps={{src: 'photos/w5/dimsum-special-set.jpg', cta: {label: 'book your table', color: 'orange', y: 417}}} />
     {VOCABOLARIO.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
