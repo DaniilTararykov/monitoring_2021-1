@@ -8,7 +8,7 @@ import {TOMAHAWK} from './Tomahawk';
 import {VOCABOLARIO} from './Vocabolario';
 import {PosterChip} from './PosterChip';
 import {Anniversary, yearDuration} from './Anniversary';
-import {CUTS_A, CUTS_B, CUTS_C} from './anniversaryCuts';
+import {CUTS_A, CUTS_B, CUTS_C, CUTS_D} from './anniversaryCuts';
 import {EditorReel, editorDuration, type EditorConfig} from './EditorReel';
 import {BlackoutReel, DURATION_S, FPS} from './BlackoutReel';
 import {StoryVideo, storyFrames} from './Story';
@@ -42,9 +42,9 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
     <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />
     <Composition id="TwoRecipes-card" component={RecipeCard} durationInFrames={Math.round(RECIPE_CARD_S * 30)} fps={30} width={1080} height={1920} />
-    {([['A', CUTS_A], ['B', CUTS_B], ['C', CUTS_C]] as const).map(([v, cuts]) => (
-      <Composition key={v} id={`Anniversary-${v}`} component={Anniversary} durationInFrames={yearDuration([...cuts], 3.5)} fps={30} width={1080} height={1920}
-        defaultProps={{cuts: [...cuts], endS: 3.5}} />
+    {([['A', CUTS_A], ['B', CUTS_B], ['C', CUTS_C], ['D', CUTS_D]] as const).map(([v, cuts]) => (
+      <Composition key={v} id={`Anniversary-${v}`} component={Anniversary} durationInFrames={yearDuration([...cuts], v === 'D' ? 1 : 3.5)} fps={30} width={1080} height={1920}
+        defaultProps={{cuts: [...cuts], endS: v === 'D' ? 1 : 3.5}} />
     ))}
     <Composition id="PosterChip" component={PosterChip} durationInFrames={1} fps={30} width={1080} height={1920}
       defaultProps={{src: 'photos/w5/dimsum-special-set.jpg', cta: {label: 'book your table', color: 'orange', y: 417}}} />
