@@ -429,7 +429,7 @@ export const stories: Story[] = [
         {t: 'headline', text: 'Tomorrow', size: 96},
         {t: 'sub', text: 'sea, signora × dim sum milano'},
         {t: 'rule'},
-        {t: 'sub', text: 'a cantonese evening\nfrom 19:00'}, // client 26.10: no date, no "in Brera" on screen
+        {t: 'sub', text: 'a cantonese evening\n2 november · from 19:00'}, // client 31.10: date back on; still no "in Brera"
       ],
     },
     // client 26.10: no link chip
