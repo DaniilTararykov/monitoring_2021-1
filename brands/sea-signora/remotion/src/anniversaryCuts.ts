@@ -1,6 +1,6 @@
 import type {YearCut} from './Anniversary';
 
-// The year in 30 moments, cut every 14 frames like the client's reference: mostly plates from above, cocktails and pours,
+// A «Ritmo» — the year in 30 moments, cut every 14 frames like the client's reference: mostly plates from above, cocktails and pours,
 // a few hands at work (client 31.10: «кадры все не оч» → only the cleanest content-shooting footage, one look).
 // start = the steadiest, sharpest 0.5 s of each proxy (scratchpad windows.py); the last one is the blurred end frame.
 export const CUTS_A: YearCut[] = [
@@ -34,4 +34,40 @@ export const CUTS_A: YearCut[] = [
   {clip: 'pasta-fork', start: 18.02, n: 14}, // sharpness 2669.5, shift 0.01
   {clip: 'oysters-lemon', start: 0.42, n: 14}, // sharpness 1409.8, shift 0.15
   {clip: 'booth-table', start: 3.37, n: 14}, // sharpness 1384.6, shift 0.04
+];
+
+// B «Crescendo» — the room and the people: tables, guests, the bar; cuts accelerate from 1 s to a quarter second.
+export const CUTS_B: YearCut[] = [
+  {clip: 'canapes-table', start: 3.03, n: 30},
+  {clip: 'table-stand', start: 0.85, n: 29},
+  {clip: 'champagne-canapes', start: 0.88, n: 27},
+  {clip: 'couple-dinner', start: 1.02, n: 26},
+  {clip: 'cocktails-bar', start: 3.28, n: 24},
+  {clip: 'bartender-white', start: 1.6, n: 23},
+  {clip: 'booth-plates', start: 9.03, n: 22},
+  {clip: 'table-guests', start: 1.82, n: 20},
+  {clip: 'guests-kitchen', start: 0.83, n: 19},
+  {clip: 'booth-dish', start: 6.47, n: 18},
+  {clip: 'booth-top', start: 2.17, n: 16},
+  {clip: 'booth-dish2', start: 2.87, n: 15},
+  {clip: 'dinner-top', start: 15.47, n: 14},
+  {clip: 'tuna-plate', start: 0.4, n: 12},
+  {clip: 'pink-pasta', start: 5.98, n: 11},
+  {clip: 'room-staff', start: 0.4, n: 9},
+  {clip: 'dinner-table', start: 8.78, n: 8},
+];
+
+// C «Lento» — the kitchen and the hands: long calm shots (1.2 s) with a slow push-in.
+export const CUTS_C: YearCut[] = [
+  {clip: 'chef-pass', start: 13.15, n: 36, push: 0.05},
+  {clip: 'chef-stove', start: 2.4, n: 36, push: 0.05},
+  {clip: 'chef-slice', start: 3.22, n: 36, push: 0.05},
+  {clip: 'chef-pour', start: 2.97, n: 36, push: 0.05},
+  {clip: 'frying', start: 1.02, n: 36, push: 0.05},
+  {clip: 'chef-pan', start: 4.35, n: 36, push: 0.05},
+  {clip: 'sauce-pour', start: 2.82, n: 36, push: 0.05},
+  {clip: 'chef-woman', start: 17.65, n: 36, push: 0.05},
+  {clip: 'plating-hands2', start: 0.52, n: 36, push: 0.05},
+  {clip: 'chef-plating', start: 4.53, n: 36, push: 0.05},
+  {clip: 'lamb-dish', start: 1.17, n: 36, push: 0.05},
 ];
