@@ -11,13 +11,13 @@ loadBrandFonts();
 // room, the guests and the events. Client 31.10 (3): a more real, aesthetic note — fibrous paper with soft light, a strip
 // of masking tape, a contact shadow and a slow sway; each word is «written» left to right like ink, fast; the note never
 // covers people: every cut says where it sits (top / bottom) and it glides between the two; a light warm «culinary»
-// grade (≈ 40 %, a little darker); music: our own track, cuts on its half-beats.
+// grade — client 31.10 (4): livelier: more contrast and colour, warm soft-light highlights, a light vignette; music: our own track, cuts on its half-beats.
 
 const FPS = 30;
 
 // n = frames on screen; push = slow zoom-in over the shot (0.04 = +4 %); note = where the paper sits on this shot
 export type YearCut = {clip: string; start: number; n: number; zoom?: number; fx?: number; fy?: number; push?: number; note?: 'top' | 'bottom'};
-export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange'};
+export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange' | 'cycle'};
 
 const Shot: React.FC<{c: YearCut; grade?: boolean}> = ({c, grade}) => {
   const f = useCurrentFrame();
@@ -28,9 +28,9 @@ const Shot: React.FC<{c: YearCut; grade?: boolean}> = ({c, grade}) => {
         style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${c.fx ?? 50}% ${c.fy ?? 50}%`,
           transform: `scale(${z})`, transformOrigin: `${c.fx ?? 50}% ${c.fy ?? 50}%`,
           // warm, slightly darker «culinary» look at ~40 %: deeper shadows, browner mids, softer colour
-          filter: grade ? 'brightness(0.86) contrast(1.1) saturate(0.86) sepia(0.18)' : undefined}} />
-      {grade ? <AbsoluteFill style={{background: 'rgba(92, 56, 30, 0.14)', mixBlendMode: 'multiply'}} /> : null}
-      {grade ? <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(20,12,6,0.32) 100%)'}} /> : null}
+          filter: grade ? 'brightness(1.0) contrast(1.12) saturate(1.22)' : undefined}} />
+      {grade ? <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(255,170,90,0.16), rgba(255,120,60,0.10))', mixBlendMode: 'soft-light'}} /> : null}
+      {grade ? <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(20,12,6,0.22) 100%)'}} /> : null}
     </AbsoluteFill>
   );
 };
@@ -218,6 +218,88 @@ const Chalk: React.FC<{f: number; tone: 'ivory' | 'orange'}> = ({f, tone}) => {
   );
 };
 
+// the cycling version (client 31.10, 4): every segment (2 beats) the crayon repaints the patch in the next brand colour
+// and the big words roll to the next brand font like the drum of a counter; the last segment lands on Skanaus.
+const PALETTES = [
+  {bg: '#F2EADB', a: brandPalette.green5605, b: brandPalette.orange158},
+  {bg: brandPalette.orange158, a: '#FFF8EC', b: brandPalette.green5605},
+  {bg: brandPalette.green5605, a: brandPalette.mustard605, b: '#FFF8EC'},
+  {bg: brandPalette.mustard605, a: brandPalette.green5605, b: brandPalette.green5605},
+  {bg: brandPalette.olive5845, a: '#FFF8EC', b: brandPalette.green5605},
+];
+const FACES: {text: [string, string]; style: React.CSSProperties}[] = [
+  {text: ['SEA,', 'SIGNORA'], style: {fontFamily: fonts.display, fontSize: 150, letterSpacing: 1}},
+  {text: ['Sea,', 'Signora'], style: {fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 158}},
+  {text: ['SEA,', 'SIGNORA'], style: {fontFamily: fonts.mono, fontWeight: 700, fontSize: 112, letterSpacing: -2}},
+];
+const REPAINT = 7, ROLL = 6, BLOCK = 330;
+
+const Layer: React.FC<{color: string; t: number; seed: number; flip: boolean}> = ({color, t, seed, flip}) => {
+  const L = 9000;
+  return (
+    <g transform={flip ? `translate(${CW} 0) scale(-1 1)` : undefined}>
+      <path d={zigzag(seed, 30)} fill="none" stroke={color} strokeWidth={160} strokeLinecap="round" strokeLinejoin="round"
+        strokeDasharray={L} strokeDashoffset={L * (1 - t)} />
+      <path d={zigzag(seed + 1, 60)} fill="none" stroke={color} strokeWidth={130} strokeLinecap="round" strokeLinejoin="round"
+        strokeDasharray={L} strokeDashoffset={L * (1 - Math.max(0, t * 1.25 - 0.25))} transform={`translate(${CW} 0) scale(-1 1)`} />
+    </g>
+  );
+};
+
+const Face: React.FC<{k: number; color: string; f?: number; letters?: boolean; last?: boolean}> = ({k, color, f = 0, letters, last}) => {
+  const face = FACES[last ? 0 : k % FACES.length];
+  return (
+    <div style={{height: BLOCK, color, lineHeight: 1.05, whiteSpace: 'nowrap', display: 'flex', flexDirection: 'column', justifyContent: 'center', ...face.style}}>
+      {face.text.map((w, i) => <div key={i}>{letters ? <Letters f={f} text={w} at={LINES[i + 1].at} /> : w}</div>)}
+    </div>
+  );
+};
+
+export const ChalkCycle: React.FC<{f: number; segs: number[]}> = ({f, segs}) => {
+  const k = Math.max(0, segs.filter((s) => f >= s).length - 1);
+  const last = k === segs.length - 1;
+  const pal = (i: number) => PALETTES[i % PALETTES.length];
+  const tCur = interpolate(f - segs[k], [0, k === 0 ? FILL : REPAINT], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
+  const roll = k === 0 ? 1 : interpolate(f - segs[k], [0, ROLL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+  const textColor = (i: number) => (tCur > 0.45 || k === 0 ? pal(i) : pal(Math.max(0, i - 1)));
+  return (
+    <div style={{position: 'relative', width: CW, height: CH}}>
+      <svg width={CW} height={CH} style={{position: 'absolute', inset: 0, overflow: 'visible'}}>
+        <defs>
+          <filter id="crayon2" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="4" result="warp" />
+            <feDisplacementMap in="SourceGraphic" in2="warp" scale="34" xChannelSelector="R" yChannelSelector="G" result="rough" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="grain" />
+            <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -7 4.9" result="holes" />
+            <feComposite in="rough" in2="holes" operator="in" result="pitted" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.35" numOctaves="2" seed="5" result="streak" />
+            <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0.62" result="streaks" />
+            <feComposite in="pitted" in2="streaks" operator="in" />
+          </filter>
+        </defs>
+        <g filter="url(#crayon2)">
+          {k > 0 ? <Layer color={pal(k - 1).bg} t={1} seed={k * 7} flip={(k - 1) % 2 === 1} /> : null}
+          <Layer color={pal(k).bg} t={tCur} seed={k * 7 + 7} flip={k % 2 === 1} />
+        </g>
+      </svg>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 40, textAlign: 'center', transform: 'scale(0.86)'}}>
+        <div style={{...LINES[0].style, color: textColor(k).a, height: 120}}><Letters f={f} text={LINES[0].text} at={LINES[0].at} /></div>
+        {/* the counter: the previous face rolls up and out, the next one rolls in from below */}
+        <div style={{position: 'relative', height: BLOCK, overflow: 'hidden'}}>
+          {k > 0 && roll < 1 ? (
+            <div style={{position: 'absolute', left: 0, right: 0, top: 0, transform: `translateY(${-roll * BLOCK}px)`, filter: `blur(${roll * 6}px)`}}>
+              <Face k={k - 1} color={pal(k - 1).b} />
+            </div>
+          ) : null}
+          <div style={{position: 'absolute', left: 0, right: 0, top: 0, transform: `translateY(${(1 - roll) * BLOCK}px)`, filter: `blur(${(1 - roll) * 6}px)`}}>
+            <Face k={k} color={textColor(k).b} f={f} letters={k === 0} last={last} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const montageFrames = (cuts: YearCut[]) => cuts.reduce((s, c) => s + c.n, 0);
 // endS: how long the last shot holds with the full phrase on the note
 export const yearDuration = (cuts: YearCut[], endS: number) => montageFrames(cuts) + Math.round(endS * FPS);
@@ -245,7 +327,7 @@ export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade
       })}
       {chalk ? (
         <div style={{position: 'absolute', left: 540 - CW / 2, top: 960 - CH / 2, width: CW, height: CH, transform: 'rotate(-2deg)'}}>
-          <Chalk f={f} tone={chalk} />
+          {chalk === 'cycle' ? <ChalkCycle f={f} segs={starts.filter((_, i) => i % 4 === 0)} /> : <Chalk f={f} tone={chalk} />}
         </div>
       ) : (
         <div style={{position: 'absolute', left: 540 - NW / 2, top: 960 - NH / 2, width: NW, height: NH,

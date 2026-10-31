@@ -19,9 +19,14 @@ SAFE = 'cc0,by,by-sa,pdm'
 UA = {'User-Agent': 'sea-signora-content/1.0'}
 
 
-def get_json(url):
-    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
-        return json.load(r)
+def get_json(url, tries=4):
+    for i in range(tries):  # the API is sometimes slow: retry with a longer wait
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30 + 15 * i) as r:
+                return json.load(r)
+        except (TimeoutError, OSError):
+            if i == tries - 1:
+                raise
 
 
 def find(q, n=5, lic=SAFE, max_s=None):
