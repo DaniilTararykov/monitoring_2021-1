@@ -17,7 +17,7 @@ const FPS = 30;
 
 // n = frames on screen; push = slow zoom-in over the shot (0.04 = +4 %); note = where the paper sits on this shot
 export type YearCut = {clip: string; start: number; n: number; zoom?: number; fx?: number; fy?: number; push?: number; note?: 'top' | 'bottom'};
-export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange' | 'cycle' | 'swap'};
+export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange' | 'cycle' | 'swap'; finale?: number; clipAudio?: string};
 
 const Shot: React.FC<{c: YearCut; grade?: boolean}> = ({c, grade}) => {
   const f = useCurrentFrame();
@@ -256,8 +256,10 @@ const Face: React.FC<{k: number; color: string; f?: number; letters?: boolean; l
 };
 
 // swap: the patch is painted once and keeps its shape; its colour changes with every cut (client 31.10: no font counter)
-export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> = ({f, segs, swap}) => {
-  const k = Math.max(0, segs.filter((s) => f >= s).length - 1);
+// finaleAt: from this frame the patch stops changing colour and shows the invitation instead of the title
+export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean; finaleAt?: number}> = ({f, segs, swap, finaleAt}) => {
+  const inFinale = finaleAt !== undefined && f >= finaleAt;
+  const k = inFinale ? 1 : Math.max(0, segs.filter((s) => f >= s).length - 1);
   const last = k === segs.length - 1;
   const pal = (i: number) => PALETTES[i % PALETTES.length];
   const tCur = interpolate(f - segs[k], [0, k === 0 ? FILL : REPAINT], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
@@ -306,21 +308,44 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> =
           )}
         </g>
       </svg>
-      {swap ? (
-        // client 31.10: «THE FIRST OF MANY / celebrating one year of / SEA, SIGNORA»
-        <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: CH, display: 'flex', flexDirection: 'column', justifyContent: 'center',
-          textAlign: 'center', whiteSpace: 'nowrap'}}>
-          <div style={{fontFamily: fonts.display, fontSize: 80, lineHeight: 1, letterSpacing: 1, color: textColor(k).b}}>
-            <Letters f={f} text="THE FIRST OF MANY" at={4} />
-          </div>
-          <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 50, marginTop: 30, color: textColor(k).a}}>
-            <Letters f={f} text="celebrating one year of" at={16} />
-          </div>
-          <div style={{fontFamily: fonts.display, fontSize: 96, lineHeight: 1, letterSpacing: 1, marginTop: 14, color: textColor(k).b}}>
-            <Letters f={f} text="SEA, SIGNORA" at={26} />
-          </div>
-        </div>
-      ) : (
+      {swap ? (() => {
+        const out = finaleAt === undefined ? 1 : interpolate(f, [finaleAt, finaleAt + 8], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        const at = finaleAt ?? 0;
+        return (
+          <>
+            {/* client 31.10: «THE FIRST OF MANY / celebrating one year of / SEA, SIGNORA» */}
+            {out > 0 ? (
+              <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: CH, display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                textAlign: 'center', whiteSpace: 'nowrap', opacity: out, filter: `blur(${(1 - out) * 6}px)`}}>
+                <div style={{fontFamily: fonts.display, fontSize: 80, lineHeight: 1, letterSpacing: 1, color: textColor(k).b}}>
+                  <Letters f={f} text="THE FIRST OF MANY" at={4} />
+                </div>
+                <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 50, marginTop: 30, color: textColor(k).a}}>
+                  <Letters f={f} text="celebrating one year of" at={16} />
+                </div>
+                <div style={{fontFamily: fonts.display, fontSize: 96, lineHeight: 1, letterSpacing: 1, marginTop: 14, color: textColor(k).b}}>
+                  <Letters f={f} text="SEA, SIGNORA" at={26} />
+                </div>
+              </div>
+            ) : null}
+            {/* the invitation (client 31.10: the patch grows at the end and tells people to come on 12 November) */}
+            {inFinale ? (
+              <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: CH, display: 'flex', flexDirection: 'column', justifyContent: 'center',
+                textAlign: 'center', whiteSpace: 'nowrap'}}>
+                <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 54, color: textColor(k).a}}>
+                  <Letters f={f} text="come celebrate with us" at={at + 8} />
+                </div>
+                <div style={{fontFamily: fonts.display, fontSize: 120, lineHeight: 1, letterSpacing: 2, marginTop: 18, color: textColor(k).b}}>
+                  <Letters f={f} text="12 NOVEMBER" at={at + 16} />
+                </div>
+                <div style={{fontFamily: fonts.mono, fontWeight: 700, fontSize: 30, letterSpacing: 3, textTransform: 'uppercase', marginTop: 28, color: textColor(k).b}}>
+                  <Letters f={f} text="sea, signora · via fiori chiari 32" at={at + 26} />
+                </div>
+              </div>
+            ) : null}
+          </>
+        );
+      })() : (
       <div style={{position: 'absolute', left: 0, right: 0, top: 40, textAlign: 'center', transform: 'scale(0.86)'}}>
           <div style={{...LINES[0].style, color: textColor(k).a, height: 120}}><Letters f={f} text={LINES[0].text} at={LINES[0].at} /></div>
           {/* the counter: the previous face rolls up and out, the next one rolls in from below */}
@@ -345,7 +370,8 @@ export const montageFrames = (cuts: YearCut[]) => cuts.reduce((s, c) => s + c.n,
 export const yearDuration = (cuts: YearCut[], endS: number) => montageFrames(cuts) + Math.round(endS * FPS);
 
 
-export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade, audio, chalk}) => {
+// finale: index of the first finale cut (the patch grows and turns into the invitation); clipAudio: a cut whose own sound plays
+export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade, audio, chalk, finale, clipAudio}) => {
   const f = useCurrentFrame();
   const montageEnd = montageFrames(cuts);
   const total = montageEnd + Math.round(endS * FPS);
@@ -368,7 +394,8 @@ export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade
       {chalk ? (
         <div style={{position: 'absolute', left: 540 - CW / 2, top: 960 - CH / 2, width: CW, height: CH, transform: 'rotate(-2deg)'}}>
           {chalk === 'cycle' || chalk === 'swap'
-            ? <div style={{transform: chalk === 'swap' ? 'scale(0.74)' : undefined}}><ChalkCycle f={f} segs={chalk === 'swap' ? starts : starts.filter((_, i) => i % 4 === 0)} swap={chalk === 'swap'} /></div>
+            ? <div style={{transform: chalk === 'swap' ? `scale(${finale === undefined ? 0.74 : interpolate(f, [starts[finale], starts[finale] + 12], [0.74, 1.08], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)})})` : undefined}}>
+                <ChalkCycle f={f} segs={chalk === 'swap' ? starts : starts.filter((_, i) => i % 4 === 0)} swap={chalk === 'swap'} finaleAt={finale === undefined ? undefined : starts[finale]} /></div>
             : <Chalk f={f} tone={chalk} />}
         </div>
       ) : (
@@ -381,6 +408,12 @@ export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade
         <Audio src={staticFile(audio.src)} startFrom={Math.round(audio.from * FPS)}
           volume={(fr) => interpolate(fr, [0, 4, total - 18, total], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
       ) : null}
+      {/* the clinking glasses: the toast clips keep their own sound, under the music */}
+      {clipAudio ? cuts.map((c, i) => (c.clip === clipAudio ? (
+        <Sequence key={`a${i}`} from={starts[i]} durationInFrames={i === cuts.length - 1 ? c.n + Math.round(endS * FPS) : c.n}>
+          <Audio src={staticFile(`videos/year/${c.clip}.mp4`)} startFrom={Math.round(c.start * FPS)} volume={0.9} />
+        </Sequence>
+      ) : null)) : null}
     </AbsoluteFill>
   );
 };

@@ -125,3 +125,11 @@ export const CUTS_D: YearCut[] = [
   {clip: 'e34', start: 4.3, n: 7},
   {clip: 'e55', start: 12.8, n: 7},
 ];
+
+// D + the invitation (client 31.10): after the montage, the toasts — the long table raising glasses, then the clink up
+// close — while the patch grows and turns into «come celebrate with us · 12 NOVEMBER».
+export const CUTS_INVITE: YearCut[] = [
+  ...CUTS_D,
+  {clip: 'toast', start: 2.0, n: 45},
+  {clip: 'toast', start: 8.7, n: 84},
+];
