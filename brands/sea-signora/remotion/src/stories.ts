@@ -426,14 +426,13 @@ export const stories: Story[] = [
     overlay: {
       position: 'top',
       blocks: [
-        {t: 'headline', text: 'Tomorrow', size: 96},
-        {t: 'sub', text: 'sea, signora × dim sum milano'},
+        {t: 'headline', text: 'Sea, Signora\n× Dim Sum Milano'}, // client 31.10: no «Tomorrow»
         {t: 'rule'},
         {t: 'sub', text: 'a cantonese evening\n2 november · from 19:00'}, // client 31.10: date back on; still no "in Brera"
       ],
     },
     // client 26.10: no link chip
-    caption: 'Tomorrow: Sea, Signora × Dim Sum Milano. A Cantonese evening, from 19:00.',
+    caption: 'Sea, Signora × Dim Sum Milano. A Cantonese evening, 2 November from 19:00.',
     hashtags: ['#seasignora', '#dimsummilano', '#brera', '#milanoevents'],
     ctaVariants: ['book your table', 'secure your spot', 'reserve'],
   },
