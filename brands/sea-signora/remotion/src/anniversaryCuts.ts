@@ -128,8 +128,12 @@ export const CUTS_D: YearCut[] = [
 
 // D + the invitation (client 31.10): after the montage, the toasts — the long table raising glasses, then the clink up
 // close — while the patch grows and turns into «come celebrate with us · 12 NOVEMBER».
+// client 31.10: the invitation from second 8 — the montage is cut to the first ~8 s of D
+const upTo = (cuts: YearCut[], frames: number) => cuts.filter((_, i) => cuts.slice(0, i).reduce((s, c) => s + c.n, 0) < frames);
+const D8 = upTo(CUTS_D, 236);
+export const INVITE_AT = D8.length;
 export const CUTS_INVITE: YearCut[] = [
-  ...CUTS_D,
+  ...D8,
   {clip: 'toast', start: 2.0, n: 45},
   {clip: 'toast', start: 8.7, n: 84},
 ];
