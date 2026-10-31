@@ -1,20 +1,19 @@
 import React from 'react';
 import {AbsoluteFill, Easing, OffthreadVideo, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
-import {brandPalette, colors, fonts} from '../../tokens';
+import {brandPalette, fonts} from '../../tokens';
 import {loadBrandFonts} from './fonts';
 
 loadBrandFonts();
 
 // Reel «Sea, Signora Milano turns 1» (client, 30–31.10), after the client's reference: a montage of the year with an
-// aged paper note in the middle that grows while the words arrive one by one, a small Instagram mark top right, and the
-// end on a dimmed, blurred frame with the note large and the Instagram logo over it.
+// aged paper note in the middle that grows while the words arrive one by one, the reel ending on the full phrase.
+// Client 31.10 (2): no Instagram marks, no end card; faster, denser cuts with the room, the guests and the events.
 // Client 31.10: brand fonts only (Skanaus words in brand orange, mono handle), words fade/rise in smoothly and the note
 // grows continuously — no jumps. Three cuts of the montage (anniversaryCuts.ts): each clip has its own length in frames,
 // so a variant can keep an even beat, accelerate, or hold long calm shots with a slow push-in.
 // Silent: the music is added in Instagram.
 
 const FPS = 30;
-const HANDLE = '@seasignora.milano';
 
 // n = frames on screen; push = slow zoom-in over the shot (0.04 = +4 %)
 export type YearCut = {clip: string; start: number; n: number; zoom?: number; fx?: number; fy?: number; push?: number};
@@ -27,7 +26,7 @@ const WORDS: {text: string; at: number; line: number}[] = [
   {text: 'turns', at: 0.58, line: 3},
   {text: '1', at: 0.72, line: 3},
 ];
-const IN = 14; // frames for a word to fade and rise in
+const IN = 10; // frames for a word to fade and rise in
 
 const Shot: React.FC<{c: YearCut}> = ({c}) => {
   const f = useCurrentFrame();
@@ -94,68 +93,27 @@ const Note: React.FC<{f: number; total: number}> = ({f, total}) => (
   </div>
 );
 
-const IgLogo: React.FC<{size: number; color?: string}> = ({size, color}) => (
-  <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
-    <defs>
-      <linearGradient id="ig" x1="0.1" y1="1" x2="0.9" y2="0">
-        <stop offset="0" stopColor="#FEDA75" />
-        <stop offset="0.3" stopColor="#FA7E1E" />
-        <stop offset="0.6" stopColor="#D62976" />
-        <stop offset="1" stopColor="#4F5BD5" />
-      </linearGradient>
-    </defs>
-    <g stroke={color ?? 'url(#ig)'} strokeWidth={4}>
-      <rect x="5" y="5" width="38" height="38" rx="11" />
-      <circle cx="24" cy="24" r="9" />
-    </g>
-    <circle cx="35" cy="13" r="2.2" fill={color ?? 'url(#ig)'} />
-  </svg>
-);
-
-const END = 10; // frames into the end card
 export const montageFrames = (cuts: YearCut[]) => cuts.reduce((s, c) => s + c.n, 0);
+// endS: how long the last shot holds with the full phrase on the note
 export const yearDuration = (cuts: YearCut[], endS: number) => montageFrames(cuts) + Math.round(endS * FPS);
 
 export const Anniversary: React.FC<{cuts: YearCut[]; endS: number}> = ({cuts, endS}) => {
   const f = useCurrentFrame();
   const montageEnd = montageFrames(cuts);
-  // the note grows smoothly the whole montage, then a little more into the end card
-  const grow = interpolate(f, [0, montageEnd], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.sin)});
-  const endIn = interpolate(f, [montageEnd, montageEnd + END], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
-  const scale = 0.42 + 0.26 * grow + 0.16 * endIn;
+  // the note grows smoothly the whole reel
+  const grow = interpolate(f, [0, montageEnd + endS * FPS], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.sin)});
+  const scale = 0.42 + 0.34 * grow;
   const starts = cuts.map((_, i) => cuts.slice(0, i).reduce((s, c) => s + c.n, 0));
   const last = cuts[cuts.length - 1];
   return (
     <AbsoluteFill style={{background: brandPalette.green5605}}>
       {cuts.map((c, i) => (
-        <Sequence key={i} from={starts[i]} durationInFrames={c.n}>
-          <Shot c={c} />
+        <Sequence key={i} from={starts[i]} durationInFrames={i === cuts.length - 1 ? c.n + Math.round(endS * FPS) : c.n}>
+          <Shot c={i === cuts.length - 1 ? {...c, n: c.n + Math.round(endS * FPS)} : c} />
         </Sequence>
       ))}
-      {f >= montageEnd ? (
-        <Sequence from={montageEnd}>
-          <AbsoluteFill style={{filter: `blur(${16 * endIn}px)`, transform: 'scale(1.08)'}}>
-            <Shot c={{...last, start: last.start + last.n / FPS, n: Math.round(endS * FPS), push: 0}} />
-          </AbsoluteFill>
-        </Sequence>
-      ) : null}
-      {/* small Instagram mark, top right, during the montage */}
-      <div style={{position: 'absolute', top: 270, right: 56, textAlign: 'center', opacity: 1 - endIn, color: colors.ivory,
-        filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.5))'}}>
-        <div style={{display: 'flex', justifyContent: 'center'}}><IgLogo size={44} color={colors.ivory} /></div>
-        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 17, letterSpacing: 2, marginTop: 8, textTransform: 'uppercase'}}>{HANDLE}</div>
-      </div>
       <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
         <div style={{transform: `scale(${scale})`}}><Note f={f} total={montageEnd} /></div>
-      </AbsoluteFill>
-      {/* end: the whole frame dims, note included; the Instagram logo and the handle over it */}
-      <AbsoluteFill style={{background: `rgba(11,11,11,${0.45 * endIn})`}} />
-      <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center', opacity: endIn}}>
-        <div style={{textAlign: 'center', transform: `translateY(40px) scale(${0.92 + 0.08 * endIn})`}}>
-          <div style={{display: 'flex', justifyContent: 'center'}}><IgLogo size={210} /></div>
-          <div style={{fontFamily: fonts.mono, fontWeight: 700, fontSize: 34, letterSpacing: 3, marginTop: 22, color: colors.ivory, textTransform: 'uppercase',
-            textShadow: '0 2px 10px rgba(0,0,0,0.6)'}}>{HANDLE}</div>
-        </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );
