@@ -7,6 +7,7 @@ import {RECIPE_CARD_S, RecipeCard} from './RecipeCard';
 import {TOMAHAWK} from './Tomahawk';
 import {VOCABOLARIO} from './Vocabolario';
 import {PosterChip} from './PosterChip';
+import {OneYear, oneYearDuration} from './OneYear';
 import {Anniversary, yearDuration} from './Anniversary';
 import {CUTS_A, CUTS_B, CUTS_C, CUTS_D} from './anniversaryCuts';
 import {EditorReel, editorDuration, type EditorConfig} from './EditorReel';
@@ -42,6 +43,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
     <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />
     <Composition id="TwoRecipes-card" component={RecipeCard} durationInFrames={Math.round(RECIPE_CARD_S * 30)} fps={30} width={1080} height={1920} />
+    <Composition id="OneYear" component={OneYear} durationInFrames={oneYearDuration(CUTS_D.slice(0, 40))} fps={30} width={1080} height={1920}
+      defaultProps={{cuts: CUTS_D.slice(0, 40), finale: {clip: 'e58', start: 5.73, n: 90}, audio: {src: 'music/brera-house.mp3', from: 0.77}}} />
     {(['ivory', 'orange', 'cycle', 'swap'] as const).map((tone) => (
       <Composition key={tone} id={`Anniversary-chalk-${tone}`} component={Anniversary} durationInFrames={yearDuration(CUTS_D, 1)} fps={30} width={1080} height={1920}
         defaultProps={{cuts: CUTS_D, endS: 1, fast: true, grade: true, chalk: tone, audio: {src: 'music/brera-house.mp3', from: 0.77}}} />
