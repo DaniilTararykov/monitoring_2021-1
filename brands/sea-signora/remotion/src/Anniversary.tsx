@@ -306,20 +306,36 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean}> =
           )}
         </g>
       </svg>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 40, textAlign: 'center', transform: 'scale(0.86)'}}>
-        <div style={{...LINES[0].style, color: textColor(k).a, height: 120}}><Letters f={f} text={LINES[0].text} at={LINES[0].at} /></div>
-        {/* the counter: the previous face rolls up and out, the next one rolls in from below */}
-        <div style={{position: 'relative', height: BLOCK, overflow: 'hidden'}}>
-          {k > 0 && roll < 1 ? (
-            <div style={{position: 'absolute', left: 0, right: 0, top: 0, transform: `translateY(${-roll * BLOCK}px)`, filter: `blur(${roll * 6}px)`}}>
-              <Face k={k - 1} color={pal(k - 1).b} />
-            </div>
-          ) : null}
-          <div style={{position: 'absolute', left: 0, right: 0, top: 0, transform: `translateY(${(1 - roll) * BLOCK}px)`, filter: `blur(${(1 - roll) * 6}px)`}}>
-            <Face k={k} color={textColor(k).b} f={f} letters={k === 0 || swap} last={last || swap} />
+      {swap ? (
+        // client 31.10: «THE FIRST OF MANY / celebrating one year of / SEA, SIGNORA»
+        <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: CH, display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          textAlign: 'center', whiteSpace: 'nowrap'}}>
+          <div style={{fontFamily: fonts.display, fontSize: 80, lineHeight: 1, letterSpacing: 1, color: textColor(k).b}}>
+            <Letters f={f} text="THE FIRST OF MANY" at={4} />
+          </div>
+          <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 50, marginTop: 30, color: textColor(k).a}}>
+            <Letters f={f} text="celebrating one year of" at={16} />
+          </div>
+          <div style={{fontFamily: fonts.display, fontSize: 96, lineHeight: 1, letterSpacing: 1, marginTop: 14, color: textColor(k).b}}>
+            <Letters f={f} text="SEA, SIGNORA" at={26} />
           </div>
         </div>
-      </div>
+      ) : (
+      <div style={{position: 'absolute', left: 0, right: 0, top: 40, textAlign: 'center', transform: 'scale(0.86)'}}>
+          <div style={{...LINES[0].style, color: textColor(k).a, height: 120}}><Letters f={f} text={LINES[0].text} at={LINES[0].at} /></div>
+          {/* the counter: the previous face rolls up and out, the next one rolls in from below */}
+          <div style={{position: 'relative', height: BLOCK, overflow: 'hidden'}}>
+            {k > 0 && roll < 1 ? (
+              <div style={{position: 'absolute', left: 0, right: 0, top: 0, transform: `translateY(${-roll * BLOCK}px)`, filter: `blur(${roll * 6}px)`}}>
+                <Face k={k - 1} color={pal(k - 1).b} />
+              </div>
+            ) : null}
+            <div style={{position: 'absolute', left: 0, right: 0, top: 0, transform: `translateY(${(1 - roll) * BLOCK}px)`, filter: `blur(${(1 - roll) * 6}px)`}}>
+              <Face k={k} color={textColor(k).b} f={f} letters={k === 0 || swap} last={last || swap} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
