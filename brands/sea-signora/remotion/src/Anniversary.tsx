@@ -332,14 +332,18 @@ export const ChalkCycle: React.FC<{f: number; segs: number[]; swap?: boolean; fi
             {inFinale ? (
               <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: CH, display: 'flex', flexDirection: 'column', justifyContent: 'center',
                 textAlign: 'center', whiteSpace: 'nowrap'}}>
-                <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 54, color: textColor(k).a}}>
-                  <Letters f={f} text="come celebrate with us" at={at + 8} />
+                <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 50, lineHeight: 1.15, color: textColor(k).a}}>
+                  <div><Letters f={f} text="come celebrate with us" at={at + 6} /></div>
+                  <div><Letters f={f} text="one year of" at={at + 14} /></div>
                 </div>
-                <div style={{fontFamily: fonts.display, fontSize: 120, lineHeight: 1, letterSpacing: 2, marginTop: 18, color: textColor(k).b}}>
-                  <Letters f={f} text="12 NOVEMBER" at={at + 16} />
+                <div style={{fontFamily: fonts.display, fontSize: 104, lineHeight: 1, letterSpacing: 2, marginTop: 10, color: textColor(k).b}}>
+                  <Letters f={f} text="SEA, SIGNORA" at={at + 20} />
                 </div>
-                <div style={{fontFamily: fonts.mono, fontWeight: 700, fontSize: 30, letterSpacing: 3, textTransform: 'uppercase', marginTop: 28, color: textColor(k).b}}>
-                  <Letters f={f} text="sea, signora · via fiori chiari 32" at={at + 26} />
+                <div style={{fontFamily: fonts.display, fontSize: 76, lineHeight: 1, letterSpacing: 2, marginTop: 22, color: '#FFF8EC'}}>
+                  <Letters f={f} text="12 NOVEMBER" at={at + 30} />
+                </div>
+                <div style={{fontFamily: fonts.mono, fontWeight: 700, fontSize: 26, letterSpacing: 3, textTransform: 'uppercase', marginTop: 18, color: textColor(k).b}}>
+                  <Letters f={f} text="via fiori chiari 32 · brera" at={at + 38} />
                 </div>
               </div>
             ) : null}
