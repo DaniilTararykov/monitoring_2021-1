@@ -17,7 +17,7 @@ const FPS = 30;
 
 // n = frames on screen; push = slow zoom-in over the shot (0.04 = +4 %); note = where the paper sits on this shot
 export type YearCut = {clip: string; start: number; n: number; zoom?: number; fx?: number; fy?: number; push?: number; note?: 'top' | 'bottom'};
-export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}};
+export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange'};
 
 const Shot: React.FC<{c: YearCut; grade?: boolean}> = ({c, grade}) => {
   const f = useCurrentFrame();
@@ -165,12 +165,65 @@ const Note: React.FC<{f: number}> = ({f}) => {
   );
 };
 
+
+// chalk / crayon: the frame is coloured in with loose diagonal strokes (rough edges, grain, a second lighter pass),
+// then the text arrives on it. tone: 'ivory' (green + orange text) or 'orange' (ivory + green text)
+const CW = 860, CH = 600, STROKES = 10, FILL = 14;
+const zigzag = (seed: number, inset: number) => {
+  const pts: string[] = [];
+  for (let i = 0; i <= STROKES; i++) {
+    const x0 = inset + ((CW - 2 * inset - 90) / STROKES) * i, j = (rnd(i, seed) - 0.5) * 40, e = (rnd(i, seed + 5) - 0.5) * 50;
+    pts.push(i % 2 === 0 ? `${x0 + j},${CH - inset - 40 + e}` : `${x0 + 90 + j},${inset + 40 + e}`);
+  }
+  return 'M ' + pts.join(' L ');
+};
+const Chalk: React.FC<{f: number; tone: 'ivory' | 'orange'}> = ({f, tone}) => {
+  const col = tone === 'ivory' ? '#F2EADB' : brandPalette.orange158;
+  const t = interpolate(f, [0, FILL], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
+  const t2 = interpolate(f, [5, FILL + 6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.quad)});
+  const L = 9000;
+  const ink = tone === 'ivory' ? {a: brandPalette.green5605, b: brandPalette.orange158} : {a: '#FFF8EC', b: brandPalette.green5605};
+  return (
+    <div style={{position: 'relative', width: CW, height: CH}}>
+      <svg width={CW} height={CH} style={{position: 'absolute', inset: 0, overflow: 'visible'}}>
+        <defs>
+          <filter id="crayon" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="4" result="warp" />
+            <feDisplacementMap in="SourceGraphic" in2="warp" scale="34" xChannelSelector="R" yChannelSelector="G" result="rough" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="grain" />
+            <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -7 4.9" result="holes" />
+            <feComposite in="rough" in2="holes" operator="in" result="pitted" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.35" numOctaves="2" seed="5" result="streak" />
+            <feColorMatrix in="streak" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0.62" result="streaks" />
+            <feComposite in="pitted" in2="streaks" operator="in" />
+          </filter>
+        </defs>
+        <g filter="url(#crayon)">
+          <g>
+            <path d={zigzag(1, 30)} fill="none" stroke={col} strokeWidth={160} strokeLinecap="round" strokeLinejoin="round"
+              strokeDasharray={L} strokeDashoffset={L * (1 - t)} />
+            <path d={zigzag(2, 60)} fill="none" stroke={col} strokeOpacity={0.85} strokeWidth={130} strokeLinecap="round" strokeLinejoin="round"
+              strokeDasharray={L} strokeDashoffset={L * (1 - t2)} transform={`translate(${CW} 0) scale(-1 1)`} />
+          </g>
+        </g>
+      </svg>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 70, textAlign: 'center', lineHeight: 1.05, transform: 'scale(0.86)'}}>
+        {LINES.map((l, i) => (
+          <div key={l.text} style={{...l.style, color: i === 0 ? ink.a : ink.b, height: (l.style.height as number) * 0.95}}>
+            <Letters f={f} text={l.text} at={l.at} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const montageFrames = (cuts: YearCut[]) => cuts.reduce((s, c) => s + c.n, 0);
 // endS: how long the last shot holds with the full phrase on the note
 export const yearDuration = (cuts: YearCut[], endS: number) => montageFrames(cuts) + Math.round(endS * FPS);
 
 
-export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade, audio}) => {
+export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade, audio, chalk}) => {
   const f = useCurrentFrame();
   const montageEnd = montageFrames(cuts);
   const total = montageEnd + Math.round(endS * FPS);
@@ -190,10 +243,16 @@ export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade
           </Sequence>
         );
       })}
-      <div style={{position: 'absolute', left: 540 - NW / 2, top: 960 - NH / 2, width: NW, height: NH,
-        transform: `rotate(${sway}deg) scale(${scale})`}}>
-        <Note f={f} />
-      </div>
+      {chalk ? (
+        <div style={{position: 'absolute', left: 540 - CW / 2, top: 960 - CH / 2, width: CW, height: CH, transform: 'rotate(-2deg)'}}>
+          <Chalk f={f} tone={chalk} />
+        </div>
+      ) : (
+        <div style={{position: 'absolute', left: 540 - NW / 2, top: 960 - NH / 2, width: NW, height: NH,
+          transform: `rotate(${sway}deg) scale(${scale})`}}>
+          <Note f={f} />
+        </div>
+      )}
       {audio ? (
         <Audio src={staticFile(audio.src)} startFrom={Math.round(audio.from * FPS)}
           volume={(fr) => interpolate(fr, [0, 4, total - 18, total], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />

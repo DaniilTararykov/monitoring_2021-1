@@ -42,6 +42,10 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="TwoRecipes-split2" component={TwoRecipesSplit} durationInFrames={Math.round(SPLIT_S * 30)} fps={30} width={1080} height={1920} defaultProps={{variant: 's2'}} />
     <Composition id="TwoRecipes-sequence" component={TwoRecipesSeq} durationInFrames={Math.round(SEQ_S * 30)} fps={30} width={1080} height={1920} />
     <Composition id="TwoRecipes-card" component={RecipeCard} durationInFrames={Math.round(RECIPE_CARD_S * 30)} fps={30} width={1080} height={1920} />
+    {(['ivory', 'orange'] as const).map((tone) => (
+      <Composition key={tone} id={`Anniversary-chalk-${tone}`} component={Anniversary} durationInFrames={yearDuration(CUTS_D, 1)} fps={30} width={1080} height={1920}
+        defaultProps={{cuts: CUTS_D, endS: 1, fast: true, grade: true, chalk: tone, audio: {src: 'music/brera-house.mp3', from: 0.77}}} />
+    ))}
     {([['A', CUTS_A], ['B', CUTS_B], ['C', CUTS_C], ['D', CUTS_D]] as const).map(([v, cuts]) => (
       <Composition key={v} id={`Anniversary-${v}`} component={Anniversary} durationInFrames={yearDuration([...cuts], v === 'D' ? 1 : 3.5)} fps={30} width={1080} height={1920}
         defaultProps={v === 'D' ? {cuts: [...cuts], endS: 1, fast: true, grade: true, audio: {src: 'music/brera-house.mp3', from: 0.77}} : {cuts: [...cuts], endS: 3.5}} />
