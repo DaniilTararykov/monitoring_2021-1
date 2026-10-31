@@ -10,7 +10,7 @@ loadBrandFonts();
 // The «1» is the frame of the reel, not a window for the whole montage (client: «nothing is visible inside the 1»):
 // it opens on one calm wide shot of the room seen through a huge brand-font «1» and flies through it; the year then
 // plays full-frame, clean, no text, cut on the half-beats; at the end the last shot closes back into the «1» on
-// brand orange with two short lines under it. Warm, lively grade; music: brera-house (our own track).
+// brand orange with «THE FIRST OF MANY / celebrating one year of / SEA, SIGNORA» under it (client 31.10). Warm, lively grade; music: brera-house (our own track).
 
 const FPS = 30;
 const ONE = {size: 1500, x: 540, y: 1430, wide: 1.32}; // the «1»: font size, baseline, horizontal stretch
@@ -46,7 +46,7 @@ export const OneYear: React.FC<{cuts: YearCut[]; opening: YearCut; finale: YearC
   const zOpen = interpolate(f, [0, 10], [0.9, 1], {...clamp, easing: Easing.out(Easing.cubic)})
     * (1 + 34 * interpolate(f, [INTRO, INTRO + FLY], [0, 1], {...clamp, easing: Easing.in(Easing.cubic)}));
   // closing: the finale shot shrinks back into the «1»
-  const zClose = 1 + 34 * (1 - interpolate(f, [m1, m1 + CLOSE], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)}));
+  const zClose = 0.8 * (1 + 42 * (1 - interpolate(f, [m1, m1 + CLOSE], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)}))); // settles a bit smaller to leave room for the lines
   const lineIn = (at: number) => interpolate(f, [at, at + 10], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
   const opening1 = f < m0, closing = f >= m1;
   return (
@@ -70,11 +70,13 @@ export const OneYear: React.FC<{cuts: YearCut[]; opening: YearCut; finale: YearC
           <AbsoluteFill style={{clipPath: 'url(#one-close)'}}>
             <Sequence from={m1}><Clip c={finale} /></Sequence>
           </AbsoluteFill>
-          <div style={{position: 'absolute', left: 0, right: 0, top: 1490, textAlign: 'center', color: brandPalette.green5605}}>
-            <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 58, opacity: lineIn(m1 + CLOSE - 4),
-              transform: `translateY(${(1 - lineIn(m1 + CLOSE - 4)) * 16}px)`}}>un anno di</div>
-            <div style={{fontFamily: fonts.display, fontSize: 100, textTransform: 'uppercase', letterSpacing: 2, marginTop: 4, opacity: lineIn(m1 + CLOSE + 2),
-              transform: `translateY(${(1 - lineIn(m1 + CLOSE + 2)) * 16}px)`}}>Sea, Signora</div>
+          <div style={{position: 'absolute', left: 0, right: 0, top: 1350, textAlign: 'center', color: brandPalette.green5605}}>
+            <div style={{fontFamily: fonts.display, fontSize: 72, textTransform: 'uppercase', letterSpacing: 2, opacity: lineIn(m1 + CLOSE - 4),
+              transform: `translateY(${(1 - lineIn(m1 + CLOSE - 4)) * 16}px)`}}>The first of many</div>
+            <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 22, letterSpacing: 5, textTransform: 'uppercase', marginTop: 26, opacity: lineIn(m1 + CLOSE + 4),
+              transform: `translateY(${(1 - lineIn(m1 + CLOSE + 4)) * 16}px)`}}>celebrating one year of</div>
+            <div style={{fontFamily: fonts.display, fontSize: 72, textTransform: 'uppercase', letterSpacing: 2, marginTop: 10, color: colors.ivory, opacity: lineIn(m1 + CLOSE + 8),
+              transform: `translateY(${(1 - lineIn(m1 + CLOSE + 8)) * 16}px)`}}>Sea, Signora</div>
           </div>
         </>
       ) : null}
