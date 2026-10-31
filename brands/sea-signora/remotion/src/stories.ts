@@ -426,7 +426,7 @@ export const stories: Story[] = [
     overlay: {
       position: 'top',
       blocks: [
-        {t: 'headline', text: 'Sea, Signora\n× Dim Sum Milano'}, // client 31.10: no «Tomorrow»
+        {t: 'headline', text: 'Sea, Signora × Dim Sum Milano', size: 52}, // client 31.10: no «Tomorrow», one line
         {t: 'rule'},
         {t: 'sub', text: 'a cantonese evening\n2 november · from 19:00'}, // client 31.10: date back on; still no "in Brera"
       ],
