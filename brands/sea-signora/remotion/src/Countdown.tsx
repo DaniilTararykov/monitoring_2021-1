@@ -68,10 +68,20 @@ export const Arch: React.FC<ArchProps> = ({bg, photo, shots, fx = 50, fy = 50, z
   );
 };
 
-export type WindowProps = Frame & {band: Bg; title: string; sub: string; kicker?: string; cta?: string};
+export type Slide = {photo: string; title: string; sub: string; fx?: number; fy?: number};
+const SLIDE = Math.round(3.6 * FPS); // one photo of a «slides» story
+export type WindowProps = Frame & {band: Bg; title?: string; sub?: string; kicker?: string; cta?: string; slides?: Slide[]};
 
-export const Window: React.FC<WindowProps> = ({band, photo, shots, fx = 50, fy = 50, zoom = 1, title, sub, kicker, cta}) => {
-  const f = useCurrentFrame();
+export const Window: React.FC<WindowProps> = (props) => {
+  const fr = useCurrentFrame();
+  // «slides»: several photos one after another (hard cuts), each with its own title and line
+  const k = props.slides ? Math.min(props.slides.length - 1, Math.floor(fr / SLIDE)) : 0;
+  const sl = props.slides?.[k];
+  const f = sl ? fr - k * SLIDE : fr;
+  const {band, shots, zoom = 1, kicker, cta} = props;
+  const photo = sl ? sl.photo : props.photo;
+  const fx = sl?.fx ?? props.fx ?? 50, fy = sl?.fy ?? props.fy ?? 50;
+  const title = sl ? sl.title : props.title, sub = sl ? sl.sub : props.sub;
   const c = BG[band];
   const BAND = 560;
   return (
@@ -80,10 +90,10 @@ export const Window: React.FC<WindowProps> = ({band, photo, shots, fx = 50, fy =
         <Media photo={photo} shots={shots} fx={fx} fy={fy} zoom={zoom} />
       </div>
       <div style={{position: 'absolute', left: 80, right: 80, top: 1920 - BAND + 56, color: c.ink}}>
-        {kicker ? <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 18, letterSpacing: 5, textTransform: 'uppercase', color: c.accent, opacity: ease(f, 2)}}>{kicker}</div> : null}
+        {kicker ? <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 18, letterSpacing: 5, textTransform: 'uppercase', color: c.accent, opacity: sl ? 1 : ease(f, 2)}}>{kicker}</div> : null}
         <div style={{fontFamily: fonts.display, fontSize: 72, textTransform: 'uppercase', letterSpacing: 1, lineHeight: 1.02, marginTop: kicker ? 14 : 0,
           opacity: ease(f, 4), transform: `translateY(${(1 - ease(f, 4)) * 16}px)`}}>{title}</div>
-        <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 36, marginTop: 14, opacity: ease(f, 10)}}>{sub}</div>
+        <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 36, marginTop: 14, whiteSpace: 'pre-line', opacity: ease(f, 10)}}>{sub}</div>
         {cta ? (
           <div style={{display: 'inline-flex', marginTop: 26, padding: '14px 26px', borderRadius: 18, background: c.accent, color: c.bg,
             fontFamily: fonts.mono, fontWeight: 500, fontSize: 26}}>{cta}</div>
@@ -108,20 +118,23 @@ export const WEEK6: Item[] = [
     shots: [sh('d1_r6c8', 1, 4), sh('d1_r6c7', 2, 4), sh('d1_r7c10', 0.5, 4)]}},
   {id: 'W6-3wed-2v-the-last-touch', kind: 'w', p: {band: 'orange', kicker: 'at the pass', title: 'The last touch', sub: 'every plate, finished by hand',
     shots: [sh('d1_r8c15', 2, 5), sh('d1_r9c7', 0.5, 3.5), sh('d1_r9c6', 1, 4)]}},
-  {id: 'W6-4thu-1v-one-week', kind: 'a', p: {bg: 'green', kicker: '12 november · our first birthday', line: 'one week to go', place: 'via fiori chiari 32 · brera',
+  {id: 'W6-4thu-1v-one-week', kind: 'a', p: {bg: 'green', kicker: '12 november · our first birthday', line: 'one week to go', place: 'dj · welcome drinks · tuna show',
     shots: [sh('c_r8c7', 1, 4), sh('c_r10c6', 1, 4), sh('c_r3c14', 6, 4)]}},
-  {id: 'W6-4thu-2p-crab-toast', kind: 'w', p: {band: 'white', photo: 'toast.jpg', fy: 45, kicker: 'appetizers', title: 'King crab toast', sub: 'stracciatella and tomato'}},
+  {id: 'W6-4thu-2v-new-on-the-menu', kind: 'w', p: {band: 'white', kicker: 'new on the menu', slides: [
+    {photo: 'bn_akami.jpg', fy: 55, title: 'Akami', sub: 'culatello e porcini'},
+    {photo: 'bn_scampo.jpg', fy: 55, title: 'Scampo', sub: 'lardo di Colonnata, royale di foie gras\ne trombette dei morti'},
+    {photo: 'bn_polpo.jpg', fy: 50, title: 'Polpo', sub: 'zucca, nocciole e scorzanera'}]}},
   {id: 'W6-5fri-1v-flambe', kind: 'a', p: {bg: 'orange', kicker: 'table service', line: 'flambé, right at your table', place: 'crêpes suzette',
     shots: [sh('d2_r5c13', 2.5, 4), sh('d2_r5c13', 16.5, 7.5)]}},
-  {id: 'W6-5fri-2p-tech-mango', kind: 'w', p: {band: 'green', photo: 'cocktail.jpg', fx: 40, fy: 45, kicker: 'from our bar book', title: 'Tech-Mango', sub: 'tequila, mango and a spicy kick'}},
+  {id: 'W6-5fri-2p-new-cocktails', kind: 'w', p: {band: 'green', photo: 'bn_cocktails.jpg', fy: 55, kicker: 'the bar', title: 'New cocktails', sub: 'come and try the new list'}},
   {id: 'W6-6sat-1v-on-ice', kind: 'a', p: {bg: 'white', kicker: 'our grill', line: 'fresh on ice, straight to the grill', place: 'langoustine xxl · carabineros',
     shots: [sh('c_r3c11', 0.2, 4.2), sh('c_r4c11', 0.3, 4), sh('c_r4c11', 13.5, 4.5)]}},
-  {id: 'W6-6sat-2p-mussels', kind: 'w', p: {band: 'orange', photo: 'mussels.jpg', fy: 45, kicker: 'main courses', title: 'Sautéed mussels', sub: "with leek and 'nduja", cta: 'book a table'}},
+  {id: 'W6-6sat-2p-tagliolini', kind: 'w', p: {band: 'orange', photo: 'bn_tagliolini.jpg', fy: 55, kicker: 'new on the menu', title: 'Tagliolini', sub: 'calamari e finferli', cta: 'book a table'}},
   {id: 'W6-7sun-1v-the-signora', kind: 'a', p: {bg: 'green', kicker: 'sunday', line: 'she has seen every night of the year', place: HOURS,
     shots: [sh('w6_v15', 0.4, 4.6), sh('c_r2c12', 4, 4), sh('c_r6c14', 1, 4)]}},
-  {id: 'W6-7sun-2v-save-the-date', kind: 'w', p: {band: 'white', kicker: 'save the date', title: '12 November', sub: 'our first birthday · come celebrate with us',
+  {id: 'W6-7sun-2v-save-the-date', kind: 'w', p: {band: 'white', kicker: 'save the date', title: '12 November', sub: 'our first birthday · from 19:00\ndj, welcome drinks and the tuna show',
     shots: [sh('c_r9c3', 2, 6), sh('w6_lj', 0.4, 5.6)]}},
 ];
-const frames = (it: Item) => it.p.photo ? 1 : (it.p.shots ?? []).reduce((s, x) => s + shotFrames(x), 0);
+const frames = (it: Item) => it.p.photo ? 1 : 'slides' in it.p && it.p.slides ? it.p.slides.length * SLIDE : (it.p.shots ?? []).reduce((s, x) => s + shotFrames(x), 0);
 export const WEEK6_COMPONENTS = WEEK6.map((it) => ({id: it.id, frames: frames(it),
   component: () => { STILL = !!it.p.photo; return it.kind === 'a' ? <Arch {...it.p} /> : <Window {...it.p} />; }}));
