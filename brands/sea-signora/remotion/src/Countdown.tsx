@@ -5,7 +5,7 @@ import {loadBrandFonts} from './fonts';
 
 loadBrandFonts();
 
-// Week 02–08.11. Two stories a day, same clean language as «Vocabolario» (flat brand colour, one shape, little text, no black):
+// Week 02–08.11. Two stories a day (three on Friday: the Holy Shell candle), same clean language as «Vocabolario» (flat brand colour, one shape, little text, no black):
 //  · Arch   — 2–3 calm shots of the restaurant in an arch, a kicker on top, one line under it.
 //  · Window — full frame, with one flat brand-colour band at the bottom.
 // Client 01.11: no big numbers; the birthday (12.11) only twice in the week (Thu «one week to go», Sun save the date);
@@ -126,6 +126,8 @@ export const WEEK6: Item[] = [
   {id: 'W6-5fri-1v-flambe', kind: 'a', p: {bg: 'orange', kicker: 'table service', line: 'flambé, right at your table', place: 'via fiori chiari 32 · brera',
     shots: [sh('d2_r5c13', 2.5, 4), sh('d2_r5c13', 16.5, 7.5)]}},
   {id: 'W6-5fri-2p-new-cocktails', kind: 'w', p: {band: 'green', photo: 'bn_cocktails.jpg', fy: 55, kicker: 'the bar', title: 'New cocktails', sub: 'come and try the new list'}},
+  {id: 'W6-5fri-3p-holy-shell', kind: 'w', p: {band: 'white', photo: 'bn_candle.jpg', fy: 70, kicker: 'the candle cluub × sea, signora', title: 'Holy Shell',
+    sub: 'our limited edition candle\nmarine and earthy', cta: 'shop the candle'}},
   {id: 'W6-6sat-1v-on-ice', kind: 'a', p: {bg: 'white', kicker: 'our grill', line: 'choose from the ice, we take it to the grill', place: 'saturday 12:30—15:30 | 19:00—00:00',
     shots: [sh('c_r3c11', 0.2, 4.2), sh('c_r4c11', 0.3, 4), sh('c_r4c11', 13.5, 4.5)]}},
   {id: 'W6-6sat-2p-tagliolini', kind: 'w', p: {band: 'orange', photo: 'bn_tagliolini.jpg', fy: 55, kicker: 'new on the menu', title: 'Tagliolini', sub: 'calamari e finferli', cta: 'book a table'}},

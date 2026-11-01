@@ -8,7 +8,7 @@ Shooting 8, nothing used before; no Lago, no events. Client 01.11:
 - photos of the new menu and cocktails: Blackout Night shoot (Drive 1ds46KV0…), dish names as on the Blackout Night menu;
 - birthday programme (12.11): 19:00 aperitivo with welcome bites and drinks + DJ, 19:30 Tuna Show; welcome and cake offered to every guest;
 - every dish checked against the menu (seasignorarest.com: main menu, dessert page, bar book).
-Silent videos (music in Instagram). One link sticker: Saturday («book a table»). Hashtags: #seasignora #brera #milanofood #finedining
+Silent videos (music in Instagram). Link stickers: Friday («shop the candle»), Saturday («book a table»). Hashtags: #seasignora #brera #milanofood #finedining
 
 | # | day | story | on screen | caption | menu source |
 |---|---|---|---|---|---|
@@ -22,6 +22,7 @@ Silent videos (music in Instagram). One link sticker: Saturday («book a table»
 | 8 | Thu 05.11 | video 10 s · 2 photos (Blackout Night shoot) | new on the menu / AKAMI / culatello e porcini → SCAMPO / lardo di Colonnata, royale di foie gras e trombette dei morti | New on the menu: Akami, culatello e porcini; Scampo, lardo di Colonnata, royale di foie gras e trombette dei morti. | Blackout Night menu (new menu) |
 | 9 | Fri 06.11 | video 11.5 s · copper cart in a full room, the flambé | table service / flambé, right at your table / via fiori chiari 32 · brera | Flambé, right at your table. | — |
 | 10 | Fri 06.11 | photo · red coupes on a tray (Blackout Night shoot) | the bar / NEW COCKTAILS / come and try the new list | New cocktails at the bar: come and try the new list. | names to add when known |
+| 10b | Fri 06.11 | photo · the Holy Shell candle on the bar (Blackout Night shoot) · link «shop the candle» → https://thecandlecluub.com/products/sea-signora-limited-edition-candle-the-candle-cluub | the candle cluub × sea, signora / HOLY SHELL / our limited edition candle, marine and earthy | Holy Shell, our limited-edition candle by The Candle Cluub: a little piece of the sea, wherever you are. Now on sale, link in the sticker. | thecandlecluub.com product page |
 | 11 | Sat 07.11 | video 12.7 s · the catch on ice, langoustine placed with tongs | our grill / choose from the ice, we take it to the grill / saturday 12:30—15:30 \| 19:00—00:00 | Choose from the ice, we take it to the grill. Today 12:30–15:30 and 19:00–00:00. | Our Grill |
 | 12 | Sat 07.11 | photo · tagliolini (Blackout Night shoot) · link «book a table» | new on the menu / TAGLIOLINI / calamari e finferli | New on the menu: Tagliolini, calamari e finferli. | Blackout Night menu (new menu) |
 | 13 | Sun 08.11 | video 12.6 s · the signora painting, then the room | sunday / she has seen every night of the year / 12:30—15:30 \| 19:00—00:00 | She has seen every night of the year. Open today 12:30–15:30 and 19:00–00:00. | — |
