@@ -62,22 +62,22 @@ export const Arch: React.FC<ArchProps> = ({bg, photo, shots, fx = 50, fy = 50, z
       </div>
       <div style={{position: 'absolute', left: 60, right: 60, top: AY + AH + 64, textAlign: 'center', color: c.ink}}>
         <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 40, opacity: ease(f, 6)}}>{line}</div>
-        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 19, letterSpacing: 4, textTransform: 'uppercase', marginTop: 14, opacity: ease(f, 12)}}>{place}</div>
+        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 19, letterSpacing: 4, textTransform: 'uppercase', marginTop: 14, lineHeight: 1.7, whiteSpace: 'pre-line', opacity: ease(f, 12)}}>{place}</div>
       </div>
     </AbsoluteFill>
   );
 };
 
 export type Slide = {photo: string; title: string; sub: string; fx?: number; fy?: number};
-const SLIDE = Math.round(3.6 * FPS); // one photo of a «slides» story
-export type WindowProps = Frame & {band: Bg; title?: string; sub?: string; kicker?: string; cta?: string; slides?: Slide[]};
+const SLIDE = (sec = 3.6) => Math.round(sec * FPS); // one photo of a «slides» story
+export type WindowProps = Frame & {band: Bg; title?: string; sub?: string; kicker?: string; cta?: string; slides?: Slide[]; slideSec?: number};
 
 export const Window: React.FC<WindowProps> = (props) => {
   const fr = useCurrentFrame();
   // «slides»: several photos one after another (hard cuts), each with its own title and line
-  const k = props.slides ? Math.min(props.slides.length - 1, Math.floor(fr / SLIDE)) : 0;
+  const k = props.slides ? Math.min(props.slides.length - 1, Math.floor(fr / SLIDE(props.slideSec))) : 0;
   const sl = props.slides?.[k];
-  const f = sl ? fr - k * SLIDE : fr;
+  const f = sl ? fr - k * SLIDE(props.slideSec) : fr;
   const {band, shots, zoom = 1, kicker, cta} = props;
   const photo = sl ? sl.photo : props.photo;
   const fx = sl?.fx ?? props.fx ?? 50, fy = sl?.fy ?? props.fy ?? 50;
@@ -105,7 +105,8 @@ export const Window: React.FC<WindowProps> = (props) => {
 
 // ───────────────────────── the week 02–08.11 (14 stories: 9 videos of 11–12 s + 5 photos)
 const sh = (clip: string, start: number, dur: number, rate?: number): Shot => ({clip, start, dur, rate});
-const HOURS = '12:30—15:30 & 19:00—00:00';
+const HOURS = '12:30—15:30 | 19:00—00:00';
+const WEEK_HOURS = 'monday—friday 19:00—00:00\nsaturday—sunday 12:30—15:30 | 19:00—00:00';
 type Item = {id: string; kind: 'a'; p: ArchProps} | {id: string; kind: 'w'; p: WindowProps};
 export const WEEK6: Item[] = [
   {id: 'W6-1mon-1v-full-room', kind: 'a', p: {bg: 'green', kicker: 'tonight in brera', line: 'a full room, every night', place: 'via fiori chiari 32',
@@ -113,21 +114,19 @@ export const WEEK6: Item[] = [
   {id: 'W6-1mon-2p-this-morning', kind: 'w', p: {band: 'white', photo: 'fish.jpg', fy: 45, title: 'Fresh catch of the day', sub: 'on your plate tonight'}},
   {id: 'W6-2tue-1v-your-table', kind: 'a', p: {bg: 'orange', kicker: 'tuesday', line: 'your table, our favourite view', place: 'every night from 19:00',
     shots: [sh('w6_la', 5.5, 6), sh('c_r7c12', 1, 5)]}},
-  {id: 'W6-2tue-2p-raw-scallop', kind: 'w', p: {band: 'green', photo: 'scallops.jpg', fy: 40, kicker: 'raw bar', title: 'Raw scallop', sub: 'with yuzu koshu and fermented sour cherries'}},
-  {id: 'W6-3wed-1v-open-kitchen', kind: 'a', p: {bg: 'white', kicker: 'open kitchen', line: 'dinner, cooked in front of you', place: 'every night from 19:00',
+  {id: 'W6-2tue-2p-wine', kind: 'w', p: {band: 'green', photo: 'bn_wine.jpg', fy: 45, kicker: 'the cellar', title: 'A glass of white', sub: 'poured at your table'}},
+  {id: 'W6-3wed-1v-open-kitchen', kind: 'a', p: {bg: 'white', kicker: 'open kitchen', line: 'dinner, cooked in front of you', place: WEEK_HOURS,
     shots: [sh('d1_r6c8', 1, 4), sh('d1_r6c7', 2, 4), sh('d1_r7c10', 0.5, 4)]}},
-  {id: 'W6-3wed-2v-the-last-touch', kind: 'w', p: {band: 'orange', kicker: 'at the pass', title: 'The last touch', sub: 'every plate, finished by hand',
-    shots: [sh('d1_r8c15', 2, 5), sh('d1_r9c7', 0.5, 3.5), sh('d1_r9c6', 1, 4)]}},
+  {id: 'W6-3wed-2p-polpo', kind: 'w', p: {band: 'orange', photo: 'bn_polpo2.jpg', fy: 50, kicker: 'new on the menu', title: 'Polpo', sub: 'zucca, nocciole e scorzanera'}},
   {id: 'W6-4thu-1v-one-week', kind: 'a', p: {bg: 'green', kicker: '12 november · our first birthday', line: 'one week to go', place: 'dj · welcome drinks · tuna show',
     shots: [sh('c_r8c7', 1, 4), sh('c_r10c6', 1, 4), sh('c_r3c14', 6, 4)]}},
-  {id: 'W6-4thu-2v-new-on-the-menu', kind: 'w', p: {band: 'white', kicker: 'new on the menu', slides: [
+  {id: 'W6-4thu-2v-new-on-the-menu', kind: 'w', p: {band: 'white', kicker: 'new on the menu', slideSec: 5, slides: [
     {photo: 'bn_akami.jpg', fy: 55, title: 'Akami', sub: 'culatello e porcini'},
-    {photo: 'bn_scampo.jpg', fy: 55, title: 'Scampo', sub: 'lardo di Colonnata, royale di foie gras\ne trombette dei morti'},
-    {photo: 'bn_polpo.jpg', fy: 50, title: 'Polpo', sub: 'zucca, nocciole e scorzanera'}]}},
-  {id: 'W6-5fri-1v-flambe', kind: 'a', p: {bg: 'orange', kicker: 'table service', line: 'flambé, right at your table', place: 'crêpes suzette',
+    {photo: 'bn_scampo.jpg', fy: 55, title: 'Scampo', sub: 'lardo di Colonnata, royale di foie gras\ne trombette dei morti'}]}},
+  {id: 'W6-5fri-1v-flambe', kind: 'a', p: {bg: 'orange', kicker: 'table service', line: 'flambé, right at your table', place: 'via fiori chiari 32 · brera',
     shots: [sh('d2_r5c13', 2.5, 4), sh('d2_r5c13', 16.5, 7.5)]}},
   {id: 'W6-5fri-2p-new-cocktails', kind: 'w', p: {band: 'green', photo: 'bn_cocktails.jpg', fy: 55, kicker: 'the bar', title: 'New cocktails', sub: 'come and try the new list'}},
-  {id: 'W6-6sat-1v-on-ice', kind: 'a', p: {bg: 'white', kicker: 'our grill', line: 'fresh on ice, straight to the grill', place: 'langoustine xxl · carabineros',
+  {id: 'W6-6sat-1v-on-ice', kind: 'a', p: {bg: 'white', kicker: 'our grill', line: 'choose from the ice, we take it to the grill', place: 'saturday 12:30—15:30 | 19:00—00:00',
     shots: [sh('c_r3c11', 0.2, 4.2), sh('c_r4c11', 0.3, 4), sh('c_r4c11', 13.5, 4.5)]}},
   {id: 'W6-6sat-2p-tagliolini', kind: 'w', p: {band: 'orange', photo: 'bn_tagliolini.jpg', fy: 55, kicker: 'new on the menu', title: 'Tagliolini', sub: 'calamari e finferli', cta: 'book a table'}},
   {id: 'W6-7sun-1v-the-signora', kind: 'a', p: {bg: 'green', kicker: 'sunday', line: 'she has seen every night of the year', place: HOURS,
@@ -135,6 +134,6 @@ export const WEEK6: Item[] = [
   {id: 'W6-7sun-2v-save-the-date', kind: 'w', p: {band: 'white', kicker: 'save the date', title: '12 November', sub: 'our first birthday · from 19:00\ndj, welcome drinks and the tuna show',
     shots: [sh('c_r9c3', 2, 6), sh('w6_lj', 0.4, 5.6)]}},
 ];
-const frames = (it: Item) => it.p.photo ? 1 : 'slides' in it.p && it.p.slides ? it.p.slides.length * SLIDE : (it.p.shots ?? []).reduce((s, x) => s + shotFrames(x), 0);
+const frames = (it: Item) => it.p.photo ? 1 : 'slides' in it.p && it.p.slides ? it.p.slides.length * SLIDE(it.p.slideSec) : (it.p.shots ?? []).reduce((s, x) => s + shotFrames(x), 0);
 export const WEEK6_COMPONENTS = WEEK6.map((it) => ({id: it.id, frames: frames(it),
   component: () => { STILL = !!it.p.photo; return it.kind === 'a' ? <Arch {...it.p} /> : <Window {...it.p} />; }}));
