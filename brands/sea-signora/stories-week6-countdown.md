@@ -4,7 +4,7 @@ Clean brand language (flat white / green / orange, one shape, little text, no bl
 Shooting 8, nothing used before; no Lago, no events. Client 01.11:
 - no big countdown numbers; the birthday (12.11) only twice in the week: Thu 05.11 «one week to go» and Sun 08.11 save the date;
 - room shots only where the room is full (no empty tables);
-- video stories 10–15 s (here 10.7–12.6 s, 2–3 calm shots each, hard cuts);
+- video stories 10–15 s (here 11–12.7 s, 2–3 calm shots each, hard cuts);
 - every dish checked against the menu (seasignorarest.com: main menu, dessert page, bar book).
 Silent videos (music in Instagram). One link sticker: Saturday («book a table»). Hashtags: #seasignora #brera #milanofood #finedining
 
@@ -20,7 +20,7 @@ Silent videos (music in Instagram). One link sticker: Saturday («book a table»
 | 8 | Thu 05.11 | photo · king crab toast | appetizers / KING CRAB TOAST / stracciatella and tomato | Toast with King Crab, stracciatella and tomato. | Appetizers: Toast with King Crab, Stracciatella and tomato |
 | 9 | Fri 06.11 | video 12 s · the bartender, ice, the foam | the bar / friday starts at the bar / cocktails with a story | Friday starts at the bar. | — |
 | 10 | Fri 06.11 | photo · mango cocktail, spicy rim | from our bar book / TECH-MANGO / tequila, mango and a spicy kick | Tech-Mango: Tequila Herradura Plata, mango and a spicy kick. | Bar book: Tech-Mango |
-| 11 | Sat 07.11 | video 10.7 s · gelato coppa (slowed) | dessert / gelato & sorbets for saturday / 12:30—15:30 & 19:00—00:00 | Gelato & sorbets for Saturday. | Dessert: Gelato & Sorbets |
+| 11 | Sat 07.11 | video 12.7 s · the catch on ice, langoustine placed with tongs | our grill / fresh on ice, straight to the grill / langoustine xxl · carabineros | Fresh on ice, straight to the grill: Langoustine XXL and Carabineros. | Our Grill: Langoustine xxl, Carabineros |
 | 12 | Sat 07.11 | photo · mussels · link «book a table» | main courses / SAUTÉED MUSSELS / with leek and 'nduja | Sautéed mussels with leek and 'nduja. | Main courses: Sautéed Mussels, with Leek and 'Nduja |
 | 13 | Sun 08.11 | video 12.6 s · the signora painting, then the room | sunday / she has seen every night of the year / 12:30—15:30 & 19:00—00:00 | She has seen every night of the year. Open today 12:30–15:30 and 19:00–00:00. | — |
 | 14 | Sun 08.11 | video 11.6 s · full room, wine wall | save the date / 12 NOVEMBER / our first birthday · come celebrate with us | 12 November: our first birthday. Come celebrate with us at Via Fiori Chiari 32. | — |
