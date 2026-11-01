@@ -112,7 +112,7 @@ export const WEEK6: Item[] = [
   {id: 'W6-1mon-1v-full-room', kind: 'a', p: {bg: 'green', kicker: 'tonight in brera', line: 'a full room, every night', place: 'via fiori chiari 32',
     shots: [sh('c_r7c6', 0.5, 4), sh('c_r6c13', 1, 4), sh('c_r1c8', 0.5, 4)]}},
   {id: 'W6-1mon-2p-this-morning', kind: 'w', p: {band: 'white', photo: 'fish.jpg', fy: 45, title: 'Fresh catch of the day', sub: 'on your plate tonight'}},
-  {id: 'W6-2tue-1v-your-table', kind: 'a', p: {bg: 'orange', kicker: 'tuesday', line: 'your table, our favourite view', place: 'every night from 19:00',
+  {id: 'W6-2tue-1v-your-table', kind: 'a', p: {bg: 'orange', kicker: 'tuesday', line: 'your table, our favourite view', place: '',
     shots: [sh('w6_la', 5.5, 6), sh('c_r7c12', 1, 5)]}},
   {id: 'W6-2tue-2p-wine', kind: 'w', p: {band: 'green', photo: 'bn_wine.jpg', fy: 45, kicker: 'the cellar', title: 'A glass of white', sub: 'poured at your table'}},
   {id: 'W6-3wed-1v-open-kitchen', kind: 'a', p: {bg: 'white', kicker: 'open kitchen', line: 'dinner, cooked in front of you', place: WEEK_HOURS,

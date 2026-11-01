@@ -14,7 +14,7 @@ Silent videos (music in Instagram). One link sticker: Saturday («book a table»
 |---|---|---|---|---|---|
 | 1 | Mon 02.11 | video 12 s · three full rooms | tonight in brera / a full room, every night / via fiori chiari 32 | A full room, every night. Via Fiori Chiari 32, Brera. | — |
 | 2 | Mon 02.11 | photo · sea bass on the counter | FRESH CATCH OF THE DAY / on your plate tonight | Fresh catch of the day, on your plate tonight. | — |
-| 3 | Tue 03.11 | video 11 s · two guests, then a full room | tuesday / your table, our favourite view / every night from 19:00 | Your table is our favourite view. Every night from 19:00. | — |
+| 3 | Tue 03.11 | video 11 s · two guests, then a full room | tuesday / your table, our favourite view | Your table is our favourite view. | — |
 | 4 | Tue 03.11 | photo · white wine poured (Blackout Night shoot) | the cellar / A GLASS OF WHITE / poured at your table | A glass of white, poured at your table. | — |
 | 5 | Wed 04.11 | video 12 s · the line: chef at the stove, pan in the fire, two pans of pasta | open kitchen / dinner, cooked in front of you / monday—friday 19:00—00:00 · saturday—sunday 12:30—15:30 \| 19:00—00:00 | Dinner, cooked in front of you. Monday–Friday 19:00–00:00, Saturday–Sunday 12:30–15:30 and 19:00–00:00. | — |
 | 6 | Wed 04.11 | photo · octopus, sauce poured (Blackout Night shoot) | new on the menu / POLPO / zucca, nocciole e scorzanera | New on the menu: Polpo, zucca, nocciole e scorzanera. | Blackout Night menu (new menu) |
