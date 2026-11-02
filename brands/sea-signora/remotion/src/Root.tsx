@@ -8,6 +8,7 @@ import {TOMAHAWK} from './Tomahawk';
 import {VOCABOLARIO} from './Vocabolario';
 import {PosterChip} from './PosterChip';
 import {WEEK6_COMPONENTS} from './Countdown';
+import {NEWWEEK_COMPONENTS} from './NewWeek';
 import {OneYear, oneYearDuration} from './OneYear';
 import {Anniversary, yearDuration} from './Anniversary';
 import {CUTS_A, CUTS_B, CUTS_C, CUTS_D, CUTS_INVITE, INVITE_AT} from './anniversaryCuts';
@@ -58,6 +59,7 @@ export const RemotionRoot: React.FC = () => (
     ))}
     <Composition id="PosterChip" component={PosterChip} durationInFrames={1} fps={30} width={1080} height={1920}
       defaultProps={{src: 'photos/w5/dimsum-special-set.jpg', cta: {label: 'book your table', color: 'orange', y: 417}}} />
+    {NEWWEEK_COMPONENTS.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {WEEK6_COMPONENTS.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {VOCABOLARIO.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {TOMAHAWK.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={1} fps={30} width={1080} height={1920} />)}

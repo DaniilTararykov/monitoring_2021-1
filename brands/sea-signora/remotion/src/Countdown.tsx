@@ -25,8 +25,8 @@ const shotFrames = (sh: Shot) => Math.round((sh.dur / (sh.rate ?? 1)) * FPS);
 const STYLE = (fx: number, fy: number, zoom: number): React.CSSProperties => ({width: '100%', height: '100%', objectFit: 'cover',
   objectPosition: `${fx}% ${fy}%`, transform: `scale(${zoom})`, transformOrigin: `${fx}% ${fy}%`, filter: 'contrast(1.08) saturate(1.15)'});
 // a photo (photos/w6/<name>.jpg) or a sequence of video shots (videos/w7/<clip>.mp4), hard cuts
-const Media: React.FC<{photo?: string; shots?: Shot[]; fx: number; fy: number; zoom: number}> = ({photo, shots = [], fx, fy, zoom}) => {
-  if (photo) return <Img src={staticFile(`photos/w6/${photo}`)} style={STYLE(fx, fy, zoom)} />;
+export const Media: React.FC<{photo?: string; shots?: Shot[]; fx: number; fy: number; zoom: number}> = ({photo, shots = [], fx, fy, zoom}) => {
+  if (photo) return <Img src={staticFile(photo.includes('/') ? `photos/${photo}` : `photos/w6/${photo}`)} style={STYLE(fx, fy, zoom)} />;
   let at = 0;
   return (
     <>
@@ -43,6 +43,7 @@ const Media: React.FC<{photo?: string; shots?: Shot[]; fx: number; fy: number; z
   );
 };
 let STILL = false; // photo stories are rendered as one frame: no build-in
+export const setStill = (v: boolean) => { STILL = v; };
 const ease = (f: number, a: number, len = 10) => STILL ? 1 : interpolate(f, [a, a + len], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
 
 type Frame = {photo?: string; shots?: Shot[]; fx?: number; fy?: number; zoom?: number};
@@ -128,7 +129,7 @@ export const Full: React.FC<FullProps> = (props) => {
         textShadow: shadow}}>Sea, Signora</div>
       <div style={{position: 'absolute', left: 70, right: 70, top: 330, textAlign: 'center', color: ink, textShadow: shadow}}>
         {kicker ? <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 19, letterSpacing: 5, textTransform: 'uppercase', opacity: sl ? 0.9 : 0.9 * ease(f, 2)}}>{kicker}</div> : null}
-        {title ? <div style={{fontFamily: fonts.display, fontSize: 76, textTransform: 'uppercase', letterSpacing: 1, lineHeight: 1.02, marginTop: kicker ? 14 : 0,
+        {title ? <div style={{fontFamily: fonts.display, fontSize: 76, textTransform: 'uppercase', letterSpacing: 1, lineHeight: 1.02, whiteSpace: 'pre-line', marginTop: kicker ? 14 : 0,
           opacity: ease(f, 4), transform: `translateY(${(1 - ease(f, 4)) * 16}px)`}}>{title}</div> : null}
         {sub ? <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 38, marginTop: 12, whiteSpace: 'pre-line', opacity: ease(f, 10)}}>{sub}</div> : null}
         {place ? <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 18, letterSpacing: 4, textTransform: 'uppercase', marginTop: 18, opacity: 0.9 * ease(f, 14)}}>{place}</div> : null}
