@@ -151,7 +151,7 @@ export const WEEK6: Item[] = [
     shots: [sh('c_r7c6', 0.5, 4), sh('c_r6c13', 1, 4), sh('c_r1c8', 0.5, 4)]}},
   {id: 'W6-1mon-2p-this-morning', kind: 'w', p: {band: 'white', photo: 'fish.jpg', fy: 45, title: 'Fresh catch of the day', sub: 'on your plate tonight'}},
   {id: 'W6-2tue-1v-your-table', kind: 'f', p: {kicker: 'tuesday', title: 'Your table', sub: 'our favourite view',
-    shots: [sh('c_r4c9', 1, 6), sh('c_r2c11', 2, 6)]}},
+    shots: [sh('c_r4c9', 1, 6), sh('c_r9c4', 5, 6)]}},
   {id: 'W6-2tue-2p-wine', kind: 'f', p: {photo: 'bn_wine.jpg', fy: 45, title: 'A glass of white', sub: 'poured at your table'}},
   {id: 'W6-3wed-1v-open-kitchen', kind: 'a', p: {bg: 'white', kicker: 'open kitchen', line: 'dinner, cooked in front of you', place: WEEK_HOURS,
     shots: [sh('d1_r6c8', 1, 4), sh('d1_r6c7', 2, 4), sh('d1_r7c10', 0.5, 4)]}},
@@ -170,7 +170,7 @@ export const WEEK6: Item[] = [
     shots: [sh('c_r3c11', 0.2, 4.2), sh('c_r4c11', 0.3, 4), sh('c_r4c11', 13.5, 4.5)]}},
   {id: 'W6-6sat-2p-tagliolini', kind: 'f', p: {photo: 'bn_tagliolini.jpg', fy: 45, kicker: 'new on the menu', title: 'Tagliolini', sub: 'calamari e finferli', cta: 'book a table'}},
   {id: 'W6-7sun-1v-the-signora', kind: 'a', p: {bg: 'green', kicker: 'sunday', line: 'she has seen every night of the year', place: HOURS,
-    shots: [sh('w6_v15', 0.4, 4.6), sh('c_r2c12', 4, 4), sh('c_r6c14', 1, 4)]}},
+    shots: [sh('w6_v15', 0.4, 4.6), sh('c_r6c12', 4, 4), sh('c_r6c14', 1, 4)]}},
   {id: 'W6-7sun-2v-save-the-date', kind: 'w', p: {band: 'white', kicker: 'save the date', title: '12 November', sub: 'our first birthday · from 19:00\ndj, welcome drinks and the tuna show',
     shots: [sh('c_r9c3', 2, 6), sh('w6_lj', 0.4, 5.6)]}},
 ];
