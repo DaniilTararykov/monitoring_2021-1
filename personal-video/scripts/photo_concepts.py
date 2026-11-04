@@ -36,6 +36,8 @@ def photo(n, clean=True):
     p = os.path.join(CLEAN, n + ".jpg")
     if not (clean and os.path.exists(p)):
         p = os.path.join(PHOTOS, n + ".jpg")
+    if not os.path.exists(p):  # Venice set lives next door
+        p = os.path.join(PHOTOS, "..", "venice", n + ".jpg")
     return np.asarray(Image.open(p).convert("RGB")).astype(np.float32) / 255
 
 
@@ -426,7 +428,166 @@ def zine():
     save("06-grunge-zine", out)
 
 
-CONCEPTS = dict(torn=torn, bighead=bighead, fax=fax, badge=badge, silhouette=silhouette, zine=zine)
+
+# ---------------------------------------------------------------- 5b… "YOU / ME" variations
+LIME, COBALT, RED, ORANGE = (214, 240, 60), (47, 85, 212), (232, 53, 43), (255, 112, 41)
+INKC = (26, 24, 22, 255)
+
+
+def col(c):
+    return np.array(c, np.float32) / 255
+
+
+def crop45(img, cx, cy, cw):
+    """4:5 crop of width cw centred on (cx, cy), clamped to the image."""
+    hh, ww = img.shape[:2]
+    ch = int(cw * 5 / 4)
+    x0 = int(np.clip(cx - cw / 2, 0, ww - cw))
+    y0 = int(np.clip(cy - ch / 2, 0, hh - ch))
+    return x0, y0, cw, ch
+
+
+def cut45(arr, box, size=(W, H)):
+    x0, y0, cw, ch = box
+    return cv2.resize(arr[y0:y0 + ch, x0:x0 + cw], size, interpolation=cv2.INTER_AREA)
+
+
+def dot_labels(d, S, items, x, y0, step, color=INKC, dot=None, size=22, zig=30):
+    for i, t in enumerate(items):
+        xx, yy = x + (i % 2) * zig, y0 + i * step
+        d.ellipse([(xx - 10) * S, (yy - 10) * S, (xx + 10) * S, (yy + 10) * S], fill=dot or color)
+        d.text(((xx + 20) * S, (yy - 15) * S), t, font=MONO(size * S), fill=color)
+
+
+def youme_split(name, src, color, words, labels, crop, split=540, tag="LINE 07", text_col=INKC, lx=60, lcol=INKC, wy=70, wcol=None):
+    img, a = photo(src), alpha(src)
+    box = crop45(img, *crop)
+    pic, m = cut45(img, box), cut45(a, box)
+    c = col(color)
+    flat = pic * (1 - m[..., None]) + c * m[..., None]
+    real = np.ones_like(pic) * c
+    real = real * (1 - m[..., None]) + pic * m[..., None]
+    out = real.copy()
+    out[:, :split] = flat[:, :split]
+
+    def draw(d, S):
+        dot_labels(d, S, labels, lx, 300, 170, color=lcol)
+        d.line([(split * S, 0), (split * S, H * S)], fill=INKC, width=2 * S)
+        d.text((60 * S, wy * S), words[0], font=BLACK(64 * S), fill=wcol or INKC)
+        d.text(((split + 60) * S, wy * S), words[1], font=BLACK(64 * S), fill=wcol or text_col)
+        d.text((W * S - 50 * S, 1300 * S), tag, font=MONO(20 * S), fill=text_col, anchor="rs")
+    rgb, ta = text_layer(draw)
+    save(name, grain(over(out, rgb, ta), 0.02))
+
+
+LBL = ["hello?", "is anyone there", "on the line", "please hold", "call me back"]
+
+
+def youme_colors():
+    crop = (548 * 1450 / 1126, 1700, 1000)
+    wh = (255, 255, 255, 255)
+    youme_split("05b-you-me-cobalt", "p2_mirror", COBALT, ("YOU", "ME"), LBL, crop, text_col=wh, wy=1200, wcol=wh)
+    youme_split("05c-you-me-red", "p2_mirror", RED, ("YOU", "ME"), LBL, crop, text_col=wh, wy=1200, wcol=wh)
+
+
+def youme_venice():
+    youme_split("05d-you-me-venezia", "v7", ORANGE, ("TU", "IO"),
+                ["ciao?", "dove sei", "sono qui", "a venezia", "ci vediamo"], (1015, 960, 1520), split=1000 * 1080 // 1520 + 30,
+                tag="VENEZIA", text_col=(255, 255, 255, 255), lx=560, lcol=(255, 255, 255, 255), wcol=(255, 255, 255, 255))
+
+
+def youme_shadow():
+    """The real photo, with a flat colour 'shadow' of the person thrown sideways."""
+    src = "p2_mirror"
+    img, a = photo(src), alpha(src)
+    box = crop45(img, 560 * 1450 / 1126, 1640, 1350)
+    pic, m = cut45(img, box), cut45(a, box)
+    out = pic.copy()
+    for dx, c, o in [(150, LIME, 1.0)]:
+        sh = np.roll(m, dx, axis=1)
+        sh[:, :dx] = 0
+        out = out * (1 - sh[..., None] * o) + col(c) * sh[..., None] * o
+    out = out * (1 - m[..., None]) + pic * m[..., None]
+
+    def draw(d, S):
+        d.text((W * S - 50 * S, 1200 * S), "ME & MY", font=BLACK(52 * S), fill=(255, 255, 255, 255), anchor="ra")
+        d.text((W * S - 50 * S, 1262 * S), "OTHER LINE", font=BLACK(52 * S), fill=(255, 255, 255, 255), anchor="ra")
+        dot_labels(d, S, ["hold on", "another call", "it's me", "again"], 820, 330, 150, size=20)
+    rgb, ta = text_layer(draw)
+    save("05e-you-me-shadow", grain(over(out, rgb, ta), 0.02))
+
+
+def youme_diagonal():
+    src = "p3_look"
+    img, a = photo(src), alpha(src)
+    box = crop45(img, 1030, 1400, 2060)
+    pic, m = cut45(img, box), cut45(a, box)
+    yy, xx = np.mgrid[0:H, 0:W]
+    upper = (yy < H - xx * 1.25).astype(np.float32)
+    upper = cv2.GaussianBlur(upper, (0, 0), 0.8)
+    c = col(COBALT)
+    flat = pic * (1 - m[..., None]) + c * m[..., None]
+    real = np.ones_like(pic) * col(LIME)
+    real = real * (1 - m[..., None]) + pic * m[..., None]
+    out = flat * upper[..., None] + real * (1 - upper[..., None])
+
+    def draw(d, S):
+        d.line([(0, H * S), (W * S, (H - W * 1.25) * S)], fill=INKC, width=3 * S)
+        d.text((60 * S, 70 * S), "YOU", font=BLACK(64 * S), fill=(255, 255, 255, 255))
+        d.text((W * S - 60 * S, 1270 * S), "ME", font=BLACK(64 * S), fill=INKC, anchor="ra")
+    rgb, ta = text_layer(draw)
+    save("05f-you-me-diagonal", grain(over(out, rgb, ta), 0.02))
+
+
+def youme_grid():
+    cells = [("p1_close", (1030, 1100, 1700), "flat", LIME), ("p3_look", (1030, 1250, 1800), "real", LIME),
+             ("p5_down", (1030, 1250, 1800), "real", COBALT), ("v7", (1015, 960, 1500), "flat", COBALT)]
+    out = np.zeros((H, W, 3), np.float32)
+    cw, ch = W // 2, H // 2
+    for i, (src, crop, mode, c) in enumerate(cells):
+        img, a = photo(src), alpha(src)
+        box = crop45(img, *crop)
+        pic, m = cut45(img, box, (cw, ch)), cut45(a, box, (cw, ch))
+        if mode == "flat":
+            tile = pic * (1 - m[..., None]) + col(c) * m[..., None]
+        else:
+            tile = np.ones_like(pic) * col(c) * (1 - m[..., None]) + pic * m[..., None]
+        out[(i // 2) * ch:(i // 2 + 1) * ch, (i % 2) * cw:(i % 2 + 1) * cw] = tile
+
+    def draw(d, S):
+        for i, wd in enumerate(["YOU", "ME", "ME", "YOU"]):
+            x, y = (i % 2) * cw + 36, (i // 2) * ch + 30
+            fill = (255, 255, 255, 255) if i >= 2 else INKC
+            d.text((x * S, y * S), wd, font=BLACK(46 * S), fill=fill)
+        d.line([(cw * S, 0), (cw * S, H * S)], fill=INKC, width=3 * S)
+        d.line([(0, ch * S), (W * S, ch * S)], fill=INKC, width=3 * S)
+    rgb, ta = text_layer(draw)
+    save("05g-you-me-grid", grain(over(out, rgb, ta), 0.02))
+
+
+def youme_trail():
+    """Three flat echoes stepping out behind the real person."""
+    src = "p5_down"
+    img, a = photo(src), alpha(src)
+    box = crop45(img, 800, 1400, 1950)
+    pic, m = cut45(img, box), cut45(a, box)
+    out = pic * 0.92 + 0.08
+    for dx, c in [(-270, RED), (-180, COBALT), (-90, LIME)]:
+        sh = np.roll(m, dx, axis=1)
+        sh[:, W + dx:] = 0
+        out = out * (1 - sh[..., None]) + col(c) * sh[..., None]
+    out = out * (1 - m[..., None]) + pic * m[..., None]
+
+    def draw(d, S):
+        d.text((W * S - 50 * S, 1230 * S), "MISSED CALLS (3)", font=BLACK(46 * S), fill=(255, 255, 255, 255), anchor="ra")
+        d.text((W * S - 50 * S, 1300 * S), "you · you · you · me", font=MONO(22 * S), fill=(255, 255, 255, 255), anchor="ra")
+    rgb, ta = text_layer(draw)
+    save("05h-you-me-missed-calls", grain(over(out, rgb, ta), 0.02))
+
+
+CONCEPTS = dict(torn=torn, bighead=bighead, fax=fax, badge=badge, silhouette=silhouette, zine=zine,
+                youme_colors=youme_colors, youme_venice=youme_venice, youme_shadow=youme_shadow,
+                youme_diagonal=youme_diagonal, youme_grid=youme_grid, youme_trail=youme_trail)
 for k, fn in CONCEPTS.items():
     if not ONLY or k in ONLY:
         fn()
