@@ -37,7 +37,8 @@ K = lab.max()
 
 lum = img @ np.array([0.3, 0.55, 0.15], np.float32)
 bw = np.dstack([lum] * 3)
-PALETTE = ["#FF2E93", "#2F55D4", "#D6F03C", "#FF6A1A", "#7FD3F7", "#9B5CFF"]
+# no yellow, no blue: pinks, reds, orange, lilac, mint
+PALETTE = ["#FF2E93", "#D7263D", "#FF7A1A", "#B58CFF", "#6FE0BE", "#FFB3C7"]
 
 
 def hexc(h):
@@ -54,7 +55,16 @@ ids = np.arange(1, K + 1)
 t_bw = rng.choice(np.arange(1, 9), K) * step            # 0.5 .. 4.5 beats
 pop_ids = set(rng.choice(ids, int(K * 0.45), replace=False).tolist())
 t_pop = rng.choice(np.arange(10, 16), K) * step
-pop_col = rng.integers(0, len(PALETTE), K) + 2
+# neighbours never share a colour
+nbr = {i: set() for i in range(1, K + 1)}
+for i in range(1, K + 1):
+    ring = cv2.dilate((lab == i).astype(np.uint8), np.ones((15, 15), np.uint8)) > 0
+    nbr[i] = set(np.unique(lab[ring]).tolist()) - {0, i}
+pop_col = np.zeros(K, np.int32)
+for i in rng.permutation(np.arange(1, K + 1)):
+    used = {pop_col[j - 1] for j in nbr[i] if pop_col[j - 1]}
+    free = [c + 2 for c in range(len(PALETTE)) if c + 2 not in used]
+    pop_col[i - 1] = rng.choice(free) if free else rng.integers(0, len(PALETTE)) + 2
 t_back = rng.choice(np.arange(18, 30), K) * step          # back to original before the loop
 
 
