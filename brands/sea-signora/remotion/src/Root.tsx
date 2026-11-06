@@ -50,6 +50,8 @@ export const RemotionRoot: React.FC = () => (
       defaultProps={{cuts: CUTS_D.slice(1, 36), opening: {clip: 'e58', start: 5.73, n: 40}, finale: {clip: 'e58', start: 7.5, n: 90}, audio: {src: 'music/brera-house.mp3', from: 0.77}}} />
     <Composition id="Anniversary-invite" component={Anniversary} durationInFrames={yearDuration(CUTS_INVITE, 0.6)} fps={30} width={1080} height={1920}
       defaultProps={{cuts: CUTS_INVITE, endS: 0.6, fast: true, grade: true, chalk: 'swap', finale: INVITE_AT, clipAudio: 'toast', audio: {src: 'music/brera-house.mp3', from: 0.77}}} />
+    <Composition id="Anniversary-invite-clean" component={Anniversary} durationInFrames={yearDuration(CUTS_INVITE, 0.6)} fps={30} width={1080} height={1920}
+      defaultProps={{cuts: CUTS_INVITE, endS: 0.6, fast: true, grade: true, clean: true, finale: INVITE_AT, clipAudio: 'toast', audio: {src: 'music/brera-house.mp3', from: 0.77}}} />
     {(['ivory', 'orange', 'cycle', 'swap'] as const).map((tone) => (
       <Composition key={tone} id={`Anniversary-chalk-${tone}`} component={Anniversary} durationInFrames={yearDuration(CUTS_D, 1)} fps={30} width={1080} height={1920}
         defaultProps={{cuts: CUTS_D, endS: 1, fast: true, grade: true, chalk: tone, audio: {src: 'music/brera-house.mp3', from: 0.77}}} />

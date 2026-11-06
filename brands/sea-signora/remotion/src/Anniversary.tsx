@@ -17,7 +17,7 @@ const FPS = 30;
 
 // n = frames on screen; push = slow zoom-in over the shot (0.04 = +4 %); note = where the paper sits on this shot
 export type YearCut = {clip: string; start: number; n: number; zoom?: number; fx?: number; fy?: number; push?: number; note?: 'top' | 'bottom'};
-export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange' | 'cycle' | 'swap'; finale?: number; clipAudio?: string};
+export type AnniversaryProps = {cuts: YearCut[]; endS: number; fast?: boolean; grade?: boolean; audio?: {src: string; from: number}; chalk?: 'ivory' | 'orange' | 'cycle' | 'swap'; finale?: number; clipAudio?: string; clean?: boolean};
 
 const Shot: React.FC<{c: YearCut; grade?: boolean}> = ({c, grade}) => {
   const f = useCurrentFrame();
@@ -375,7 +375,8 @@ export const yearDuration = (cuts: YearCut[], endS: number) => montageFrames(cut
 
 
 // finale: index of the first finale cut (the patch grows and turns into the invitation); clipAudio: a cut whose own sound plays
-export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade, audio, chalk, finale, clipAudio}) => {
+// clean: only the cut footage (no patch, no note, no text) — client 06.11
+export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade, audio, chalk, finale, clipAudio, clean}) => {
   const f = useCurrentFrame();
   const montageEnd = montageFrames(cuts);
   const total = montageEnd + Math.round(endS * FPS);
@@ -395,7 +396,7 @@ export const Anniversary: React.FC<AnniversaryProps> = ({cuts, endS, fast, grade
           </Sequence>
         );
       })}
-      {chalk ? (
+      {clean ? null : chalk ? (
         <div style={{position: 'absolute', left: 540 - CW / 2, top: 960 - CH / 2, width: CW, height: CH, transform: 'rotate(-2deg)'}}>
           {chalk === 'cycle' || chalk === 'swap'
             ? <div style={{transform: chalk === 'swap' ? `scale(${finale === undefined ? 0.74 : interpolate(f, [starts[finale], starts[finale] + 12], [0.74, 1.08], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)})})` : undefined}}>
