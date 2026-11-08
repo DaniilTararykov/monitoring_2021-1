@@ -33,3 +33,14 @@ Code: remotion/src/week7x.ts (ids W7X-…).
 | 06 | interior | the bar stools (Interior & details #31) | PULL UP A STOOL / the bar opens at 19:00 | Pull up a stool. The bar opens at 19:00. |
 | 07 | chef portrait | the chef holding a plate (Shooting 9 #186) | FROM THE KITCHEN, WITH A SMILE | From the kitchen, with a smile. |
 | 08 | giant word · window (horizontal photo) | red fish on the tray (Shooting 9 #36) | today's catch / FRESH / straight to the ice | Today's catch: fresh, straight to the ice. |
+
+## New concepts (week7z.ts + Fighter.tsx, ids W7Z-…) — formats the account has not had yet
+
+| # | concept | material | on screen | caption |
+|---|---|---|---|---|
+| 01 | guess the dish: macro crop, then the reveal | the gelato (Blackout #476) | zoom in / GUESS THE DISH / answer in 3, 2, 1 → new on the menu / GELATO / nocciola salata e foglia d'ostrica | Guess the dish? Gelato alla nocciola salata e foglia d'ostrica, new on the menu. |
+| 02 | before & after | the empty set table (Interior #24) → the full room (Dim sum IMG_2059) | 18:59 before → 21:00 after | Before and after. 18:59, then 21:00. |
+| 03 | POV meme | a table from above, wine and pasta (Shooting 9 #43) | pov / YOU SAID "JUST ONE GLASS" | POV: you said "just one glass". |
+| 04 | hands only, quick cuts | five hand close-ups from the kitchen and the candle shoot | HANDS ONLY / no shortcuts | Hands only, no shortcuts. |
+| 05 | tonight's forecast | the aquarium room (Interior #10) in a window | tonight's forecast / BRERA, TONIGHT / — candlelight · 100% — oysters · scattered all evening — cin cin · heavy after 21:00 | Tonight's forecast: 100% candlelight, oysters scattered all evening, heavy cin cin after 21:00. |
+| 06 | choose your fighter (three panels) | Akami, Scampo, Tagliolini (Blackout #125, 139, 107) | new on the menu / CHOOSE YOUR FIGHTER / 01 AKAMI · 02 SCAMPO · 03 TAGLIOLINI | Choose your fighter: Akami, Scampo or Tagliolini. New on the menu. |

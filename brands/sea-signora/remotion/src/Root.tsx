@@ -24,6 +24,8 @@ import {week6c} from './week6c';
 import {week7} from './week7';
 import {week7x} from './week7x';
 import {week7y} from './week7y';
+import {week7z} from './week7z';
+import {Fighter} from './Fighter';
 import type {Story} from './types';
 
 const Story: React.FC<{story: Story; guides?: boolean}> = (p) => <StoryVideo {...p} />;
@@ -65,11 +67,12 @@ export const RemotionRoot: React.FC = () => (
     ))}
     <Composition id="PosterChip" component={PosterChip} durationInFrames={1} fps={30} width={1080} height={1920}
       defaultProps={{src: 'photos/w5/dimsum-special-set.jpg', cta: {label: 'book your table', color: 'orange', y: 417}}} />
+    <Composition id="SW7Z-06p-choose-your-fighter" component={Fighter} durationInFrames={1} fps={30} width={1080} height={1920} />
     {NEWWEEK_COMPONENTS.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {WEEK6_COMPONENTS.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {VOCABOLARIO.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {TOMAHAWK.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={1} fps={30} width={1080} height={1920} />)}
-    {[...stories, ...pack2, ...pack3, ...week4, ...week4b, ...week6c, ...week7, ...week7x, ...week7y].map((s) => (
+    {[...stories, ...pack2, ...pack3, ...week4, ...week4b, ...week6c, ...week7, ...week7x, ...week7y, ...week7z].map((s) => (
       <Composition
         key={s.id}
         id={`S${s.id}`}
