@@ -20,3 +20,16 @@ Code: remotion/src/week7x.ts (ids W7X-…).
 | 10 | hours, weekend, time changes | kitchen counter, then the room (IMG_2047, 2068) | weekends / 12:30 until 15:30 → 19:00 until midnight | Weekends, twice: from 12:30 to 15:30 and from 19:00 to midnight. |
 | 11 | Google review | waiter with a plateau (Shooting 9 #143) | Sea Signora / google review / ★★★★★ «Exceptional restaurant with top quality seafood. Professional knowledgeable service within a beautifully designed atmosphere. Highly recommend, we will be back. Thank you.» — S C | Thank you for the kind words. See you soon. |
 | 12 | quote, bottom | the chef tasting (Shooting 9 #170) | CHEF APPROVED / quality control, every night | Chef approved. Quality control, every night. |
+
+## Third pool (week7y.ts, ids W7Y-…) — Shooting 9, Interior & details, the client's candle clip
+
+| # | format | material | on screen | caption |
+|---|---|---|---|---|
+| 01 | steps series | the nugget box, caviar & sour cream, the bite (Shooting 9 #124, 133, 141) | step one OPEN THE BOX → step two CAVIAR & SOUR CREAM → step three ONE BITE | Nugget, caviar and sour cream, in our signature box. Open, dip, one bite. |
+| 02 | Your problem / Our solution | risotto, tartare with caviar, pasta (Shooting 9 #111, 49, 21) | it's cold outside · i need a treat · pasta, please | Cold outside, need a treat, want pasta? We have solutions. |
+| 03 | three frames, one word each | oysters on ice, the dropper, the slurp (Shooting 9 #154, 160, 165) | raw bar / CHOOSE → DRESS → SLURP | Choose, dress, slurp. Oysters of the day from our raw bar. |
+| 04 | window · chip «shop the candle» | the Holy Shell being lit (client's clip, slowed) | holy shell / LIGHT IT AT HOME / a little piece of the sea, wherever you are | Light it at home: Holy Shell, our limited-edition candle by The Candle Cluub. |
+| 05 | quote, bottom | chocolate dessert, olive oil drop (Shooting 9 #175) | SAVE ROOM / dessert is not optional | Save room. Dessert is not optional. |
+| 06 | interior | the bar stools (Interior & details #31) | PULL UP A STOOL / the bar opens at 19:00 | Pull up a stool. The bar opens at 19:00. |
+| 07 | chef portrait | the chef holding a plate (Shooting 9 #186) | FROM THE KITCHEN, WITH A SMILE | From the kitchen, with a smile. |
+| 08 | giant word · window (horizontal photo) | red fish on the tray (Shooting 9 #36) | today's catch / FRESH / straight to the ice | Today's catch: fresh, straight to the ice. |
