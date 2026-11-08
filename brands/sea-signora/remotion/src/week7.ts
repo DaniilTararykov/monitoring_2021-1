@@ -27,7 +27,7 @@ export const week7: Story[] = [
   {
     id: 'W7-1mon-1v-one', day: 'Mon 09.11', rubric: 'ДР · огромное слово + кнопка', music: silent,
     scenes: [v('2054', 0.3, 6), v('2078', 0.5, 6)],
-    overlay: top(kick('this thursday'), giant('One'), sub('sea, signora turns one'), sub('12 november · from 19:00')),
+    overlay: top(kick('this thursday'), H('Sea, Signora\nturns one', 70), sub('12 november · from 19:00')),
     cta: {label: 'reserve', color: 'orange'},
     caption: 'This Thursday, Sea, Signora turns one. 12 November from 19:00: come celebrate with us.',
     hashtags: tags('#birthday', '#oneyear', '#brera', '#milano'), ctaVariants: ['reserve', 'book a table'],
@@ -35,7 +35,7 @@ export const week7: Story[] = [
   {
     id: 'W7-1mon-2p-whats-on', day: 'Mon 09.11', rubric: 'ДР · список программы на фото', music: silent,
     scenes: [ph('sh145', 7, {fy: 45})],
-    overlay: top(kick('12.11 · one year'), H("What's on"), gap(8),
+    overlay: bottom(kick('12.11 · one year'), H("What's on"), gap(8),
       {t: 'list', items: ['19:00 aperitivo, welcome drinks & dj', '19:30 the tuna show', '22:00 the cake']}),
     caption: "12 November, what's on: aperitivo, welcome drinks and DJ from 19:00, the Tuna Show at 19:30, the cake at 22:00.",
     hashtags: tags('#birthday', '#tunashow', '#brera'), ctaVariants: ['reserve', 'book a table'],
