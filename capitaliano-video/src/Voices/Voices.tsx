@@ -118,7 +118,7 @@ export const Voices: React.FC<VoicesProps> = ({ data, mediaBase }) => {
             {it.kind === "title" ? (
               <TitleCard
                 text={it.text}
-                kicker={KICKER[data.format]}
+                kicker={data.kicker ?? KICKER[data.format]}
                 marco={it.marco}
               />
             ) : it.kind === "myth" ? (

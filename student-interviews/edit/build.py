@@ -8,7 +8,7 @@ PAD_IN, PAD_OUT = 0.06, 0.14  # breathing room around kept words inside an answe
 HEAD, TAIL = 0.30, 0.60  # more room where an answer starts and ends, so no one is cut off
 
 # "face": approximate face centre in the 1080×1920 proxy (camera origin, avatars).
-FEMALE = {"AI", "PO", "NA", "MA", "LI", "EV", "EA"}
+FEMALE = {"AI", "PO", "NA", "MA", "LI", "EV", "EA", "AN", "AY"}
 STUDENTS = {
     "AI": {"face": [475, 1000], "file": "IMG_8993", "name": "Айка", "age": "23", "from": "Кыргызстан", "uni": "IULM", "program": "Fashion Communication & Luxury Strategies", "city": "Милан", "level": "Магистратура"},
     "EM": {"face": [475, 960], "file": "IMG_8994", "name": "Эмиль", "age": "23", "from": "Москва", "uni": "Università Cattolica", "program": "Global Business Management", "city": "Пьяченца", "level": "Магистратура"},
@@ -20,6 +20,9 @@ STUDENTS = {
     "LI": {"face": [585, 865], "file": "IMG_9005", "name": "Лия", "age": "24", "from": "Набережные Челны", "uni": "Politecnico di Torino", "program": "Architecture Construction City", "city": "Турин", "level": "Магистратура"},
     "EA": {"face": [650, 1085], "file": "IMG_8996", "name": "Ева", "age": "22", "from": "Москва", "uni": "UNIMI", "program": "Law and Sustainable Development", "city": "Милан", "level": "Магистратура"},
     "EV": {"face": [470, 975], "file": "IMG_9014", "name": "Евдокия", "age": "21", "from": "Королёв", "uni": "IULM", "program": "Corporate Communication & PR", "city": "Милан", "level": "Бакалавриат"},
+    # Video reviews sent in by students; no age or home town given.
+    "AN": {"face": [680, 980], "file": "IMG_2711", "name": "Анна", "age": "", "from": "", "uni": "UNIBO", "program": "Intelligent Embedded Control Systems", "city": "Чезена", "level": "Магистратура"},
+    "AY": {"face": [500, 910], "file": "WA_1029", "name": "Аня", "age": "", "from": "", "uni": "Università di Siena", "program": "Public and Cultural Diplomacy", "city": "Сиена", "level": "Магистратура"},
 }
 
 # Recognition fixes: whole-word replacements, then per-word overrides keyed by
@@ -37,6 +40,11 @@ WORD_FIX = {
     "объемное,": "объёмное,", "Российском": "российском",
 }
 WORD_AT = {
+    # Video reviews
+    ("IMG_2711", 5.82): "Capitaliano.", ("IMG_2711", 13.22): "Бикокка", ("IMG_2711", 14.16): "Болонский.",
+    ("IMG_2711", 15.52): "своё", ("IMG_2711", 38.54): "Такая", ("IMG_2711", 44.02): "взять.", ("IMG_2711", 44.46): "Всё,",
+    ("IMG_2711", 47.44): "Всё", ("IMG_2711", 50.02): "всё", ("IMG_2711", 33.92): "момент —",
+    ("IMG_2711", 78.06): "Capitaliano.", ("IMG_2711", 66.66): "я", ("IMG_2711", 60.62): "удобно.", ("IMG_2711", 64.98): "Мы", ("IMG_2711", 69.76): "всё",
     ("IMG_8994", 81.00): "раза.", ("IMG_9014", 146.44): "Всем", ("IMG_8996", 96.16): "всё",
     ("IMG_9002", 81.44): "поступить.",
     ("IMG_9002", 79.64): "", ("IMG_9002", 79.72): "впопыхах.", ("IMG_9002", 78.06): "всё",
@@ -237,7 +245,7 @@ def build(vid, spec, tdir, photos):
         st["avatar"] = f"photos/{sid}-avatar.jpg" if (photos / f"{sid}-avatar.jpg").exists() else f"avatars/{sid}.jpg"
         st["photo"] = f"photos/{sid}-passport.jpg" if (photos / f"{sid}-passport.jpg").exists() else None
         students[sid] = st
-    return {"id": vid, "format": spec["format"], "title": spec["title"], "question": None,
+    return {"id": vid, "format": spec["format"], "title": spec["title"], "kicker": spec.get("kicker"), "question": None,
             "durationSec": round(t, 3), "durationInFrames": int(round(t * FPS)),
             "students": students, "order": order,
             "segments": segments, "items": items_out, "captions": captions}

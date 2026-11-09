@@ -295,7 +295,8 @@ export const Passport: React.FC<{
           {student.name}
         </div>
         <div style={{ fontSize: 28, fontWeight: 500, color: COLORS.darkGray }}>
-          {student.age} · {student.from}
+          {[student.age, student.from].filter(Boolean).join(" · ") ||
+            student.level}
         </div>
         <div
           style={{

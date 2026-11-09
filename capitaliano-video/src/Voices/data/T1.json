@@ -2,6 +2,7 @@
  "id": "T1",
  "format": "question",
  "title": "Что сказали родители",
+ "kicker": null,
  "question": null,
  "durationSec": 94.58,
  "durationInFrames": 2837,

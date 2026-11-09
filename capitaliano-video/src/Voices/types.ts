@@ -61,6 +61,8 @@ export type VoicesData = {
   id: string;
   format: "story" | "question" | "reviews" | "myths";
   title: string;
+  // Overrides the title card's kicker for the format.
+  kicker?: string | null;
   question: string | null;
   durationSec: number;
   durationInFrames: number;
