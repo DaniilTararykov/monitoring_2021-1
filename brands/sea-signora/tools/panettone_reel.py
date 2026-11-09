@@ -21,7 +21,16 @@ def T(text, font=SK, size=64, color=IV, y=290, t0=0, t1=999, x='(w-text_w)/2'):
 
 SHIFT_ON = True
 
-def build(name, segs, music, music_from=0, global_texts=()):
+def outro_clip(name, img, dur, texts):
+    # a still (cover-cropped to 9:16) with a slow 4% push-in and its own titles
+    vf = (f"scale=1281:1920,crop=1080:1920,scale=w='1080*(1+0.04*t/{dur})':h=-2:eval=frame,crop=1080:1920,{GRADE},"
+          + ','.join(T(**t) for t in texts))
+    out = f'{SP}/build/{name}_outro.mp4'
+    subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-y', '-loop', '1', '-framerate', '30', '-t', str(dur), '-i', img, '-vf', vf,
+                    '-r', '30', '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-pix_fmt', 'yuv420p', out], check=True)
+    return out
+
+def build(name, segs, music, music_from=0, global_texts=(), outro=None):
     parts = []
     for i, (src, ss, dur, texts) in enumerate(segs):
         vf = ','.join([GRADE] + ([SHIFT] if (src != CLOSE and SHIFT_ON) else []) + [T(**t) for t in list(texts)])
@@ -33,6 +42,12 @@ def build(name, segs, music, music_from=0, global_texts=()):
     v = f'{SP}/build/{name}_v.mp4'
     subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', lst, '-c', 'copy', v], check=True)
     d = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', v], capture_output=True, text=True).stdout)
+    if outro:  # soft 0.5 s fade into the closing still
+        o = outro_clip(name, *outro); x = 0.5; vx = f'{SP}/build/{name}_vx.mp4'
+        subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', v, '-i', o, '-filter_complex',
+                        f'[0:v][1:v]xfade=transition=fade:duration={x}:offset={d - x:.3f},format=yuv420p', '-r', '30',
+                        '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', vx], check=True)
+        v = vx; d = d - x + outro[1]
     gvf = ','.join(T(**t) for t in global_texts) or 'null'
     out = f'{R}/out/panettone-{name}.mp4'
     subprocess.run(['ffmpeg', '-nostdin', '-v', 'error', '-y', '-i', v, '-ss', str(music_from), '-i', f'{R}/public/music/{music}.mp3', '-vf', gvf,
@@ -67,9 +82,9 @@ if 'whodunit' in which:
         last = i == len(SUSPECTS) - 1
         segs.append((MAIN, a + 0.2, (b - a) - 0.2 + (0.8 if last else 0),
                      [dict(text=f'suspect n°{i + 1}', y=245, **K)] + ([dict(text='VERDICT: EVERYONE', size=62, y=290, t0=1.0)] if last else [])))
-    segs.append((CLOSE, 0.6, 2.2, [dict(text="CAN YOU\nBLAME THEM?", size=72, y=300), dict(text='Panettone season at Sea, Signora', y=480, **K)]))
     SHIFT_ON = False
-    build('whodunit', segs, 'noir-jazz')
+    build('whodunit', segs, 'noir-jazz', outro=(R + '/public/photos/w8/pan79.jpg', 3.2,
+          [dict(text='ARE YOU NEXT?', size=66, y=250), dict(text='Panettone season at Sea, Signora', y=340, **K)]))
     SHIFT_ON = True
 
 # 3 · «Rule n°1» — one locked frame, people pop in on every second beat (122 bpm), the rule stays on screen
