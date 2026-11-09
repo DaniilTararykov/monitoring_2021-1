@@ -55,16 +55,16 @@ export const week7: Story[] = [
   },
   {
     id: 'W7-2tue-2p-see-you-thursday', day: 'Tue 10.11', rubric: 'ДР · цитата снизу на фото', music: silent,
-    scenes: [ph('sh44', 7, {fy: 40})],
-    overlay: bottom(H('See you\nThursday', 80), sub('one year of sea, signora · 12.11')),
-    caption: 'See you Thursday. One year of Sea, Signora, 12 November.',
+    scenes: [ph('sh187', 7, {fy: 35})],
+    overlay: bottom(H('See you\nThursday', 80), sub('the kitchen is getting ready · 12.11')),
+    caption: 'See you Thursday: the kitchen is getting ready for our first birthday, 12 November.',
     hashtags: tags('#birthday', '#brera', '#milano'), ctaVariants: ['reserve', 'book a table'],
   },
 
   // ───────────────────────── Wed 11.11
   {
     id: 'W7-3wed-1p-panettone-season', day: 'Wed 11.11', rubric: 'Панеттоне · сезон', music: silent,
-    scenes: [ph('pan58', 7, {fy: 55})],
+    scenes: [ph('pan79', 7, {fy: 60})],
     overlay: top(H("It's panettone\nseason", 70), sub('at sea, signora')),
     caption: "It's panettone season at Sea, Signora.",
     hashtags: tags('#panettone', '#christmas', '#brera'), ctaVariants: ['reserve', 'book a table'],
@@ -132,7 +132,7 @@ export const week7: Story[] = [
   // ───────────────────────── Sun 15.11
   {
     id: 'W7-7sun-1p-panettone-sunday', day: 'Sun 15.11', rubric: 'Панеттоне · подарок', music: silent,
-    scenes: [ph('pan51', 7, {fy: 70})],
+    scenes: [ph('pan90', 7, {fy: 60})],
     overlay: top(H('Sunday,\nsomething sweet', 70), sub('panettone at sea, signora')),
     caption: 'Sunday, something sweet: panettone at Sea, Signora.',
     hashtags: tags('#panettone', '#sunday', '#brera'), ctaVariants: ['reserve', 'book a table'],
