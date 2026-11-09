@@ -26,6 +26,7 @@ import {week7x} from './week7x';
 import {week7y} from './week7y';
 import {week7z} from './week7z';
 import {week7t} from './week7t';
+import {week7w} from './week7w';
 import {Fighter} from './Fighter';
 import type {Story} from './types';
 
@@ -73,7 +74,7 @@ export const RemotionRoot: React.FC = () => (
     {WEEK6_COMPONENTS.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {VOCABOLARIO.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={t.frames} fps={30} width={1080} height={1920} />)}
     {TOMAHAWK.map((t) => <Composition key={t.id} id={t.id} component={t.component} durationInFrames={1} fps={30} width={1080} height={1920} />)}
-    {[...stories, ...pack2, ...pack3, ...week4, ...week4b, ...week6c, ...week7, ...week7x, ...week7y, ...week7z, ...week7t].map((s) => (
+    {[...stories, ...pack2, ...pack3, ...week4, ...week4b, ...week6c, ...week7, ...week7x, ...week7y, ...week7z, ...week7t, ...week7w].map((s) => (
       <Composition
         key={s.id}
         id={`S${s.id}`}
