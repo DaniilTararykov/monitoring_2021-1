@@ -22,3 +22,15 @@ Code: remotion/src/week7.ts (ids W7-…). Hashtags: #seasignora + 2–4 per stor
 | 12 | Sat 14.11 | wordmark, centre | guests by the aquarium (IMG_2067, 2056) | saturday at / Sea, Signora | Saturday at Sea, Signora. |
 | 13 | Sun 15.11 | photo | panettone with crème anglaise and cherries, no box (Shooting 2 #90) | SUNDAY, SOMETHING SWEET / panettone at sea, signora | Sunday, something sweet: panettone at Sea, Signora. |
 | 14 | Sun 15.11 | hours | the room with the chandeliers (IMG_2068) | Sea, Signora / sunday / 12:30—15:30 \| 19:00—00:00 | Open today: 12:30–15:30 and 19:00–00:00. |
+
+## Tue 10.11 · alternatives to #4 — the team invites (week7t.ts, Shooting 4). No names on screen.
+
+| id | photo | on screen | caption |
+|---|---|---|---|
+| W7T-01 | raising a glass (#130) | thursday · 12.11 / WE'LL SAVE YOU A GLASS | See you Thursday, we'll save you a glass. 12 November, one year of Sea, Signora. |
+| W7T-02 | chef with king crab legs (#145) | 12.11 · one year / WE'RE READY. ARE YOU? | We're ready. Are you? 12 November, one year of Sea, Signora. |
+| W7T-03 | two of the team (#122) | SEE YOU THURSDAY / from all of us · 12.11 | See you Thursday, from all of us. 12 November, one year of Sea, Signora. |
+| W7T-04 | bartender pouring (#133) | thursday · 12.11 / SHAKING THINGS UP FOR OUR BIRTHDAY | Shaking things up for our birthday. Welcome drinks from 19:00, 12 November. |
+| W7T-05 | in a suit, with a shaker (#137) · chip «reserve» | YOUR TABLE IS WAITING / thursday 12.11 · from 19:00 | Your table is waiting: Thursday 12 November, from 19:00. |
+| W7T-06 | the kitchen team with knives (#142) | 12.11 · one year / KNIVES OUT FOR THE TUNA SHOW / thursday · 19:30 | Knives out for the Tuna Show, Thursday 12 November at 19:30. |
+| W7T-07 | chef, arms crossed (#150) | thursday · 12.11 / DRESS CODE: HUNGRY | Dress code for Thursday: hungry. 12 November, one year of Sea, Signora. |
