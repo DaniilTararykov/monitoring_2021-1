@@ -83,8 +83,8 @@ if 'whodunit' in which:
         segs.append((MAIN, a + 0.2, (b - a) - 0.2 + (0.8 if last else 0),
                      [dict(text=f'suspect n°{i + 1}', y=245, **K)] + ([dict(text='VERDICT: EVERYONE', size=62, y=290, t0=1.0)] if last else [])))
     SHIFT_ON = False
-    build('whodunit', segs, 'noir-jazz', outro=(R + '/public/photos/w8/pan79.jpg', 3.2,
-          [dict(text='ARE YOU NEXT?', size=66, y=250), dict(text='Panettone season at Sea, Signora', y=340, **K)]))
+    build('whodunit', segs, 'noir-jazz', outro=(R + '/public/photos/w8/pan86.jpg', 5.0,
+          [dict(text='ARE YOU NEXT?', size=66, y=1640), dict(text='Panettone season at Sea, Signora', y=1730, **K)]))
     SHIFT_ON = True
 
 # 3 · «Rule n°1» — one locked frame, people pop in on every second beat (122 bpm), the rule stays on screen
