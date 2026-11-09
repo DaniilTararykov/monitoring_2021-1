@@ -39,4 +39,13 @@ export const week7w: Story[] = [
     overlay: bottom(H('From Alba\nto Brera', 86), sub("white truffle season at sea, signora")),
     caption: "From Alba to Brera: white truffle season at Sea, Signora.", hashtags: tags, ctaVariants: ['book a table', 'reserve'],
   },
+  {
+    id: 'W7W-04v-three-dishes', day: 'pool', rubric: 'Белый трюфель · три блюда, текст меняется', music: silent,
+    scenes: [
+      ph('truf_dark', 3.6, {fx: 55, fy: 50, zoom: 'in', overlay: top(kick("01 · tartufo bianco d'alba"), H('Tartare di tonno', 70))}),
+      ph('truf_lace', 3.6, {fy: 45, zoom: 'in', shift: 330, overlay: top(kick("02 · tartufo bianco d'alba"), H('Tagliolini', 76), sub('con gamberi viola di gallipoli'))}),
+      ph('truf_top', 4, {fy: 50, zoom: 'in', overlay: top(kick("03 · tartufo bianco d'alba"), H('Scampi', 80), sub('royale di foie gras'))}),
+    ],
+    caption: CAPTION, hashtags: tags, ctaVariants: ['book a table', 'reserve'],
+  },
 ];
