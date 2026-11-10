@@ -1,0 +1,663 @@
+{
+ "id": "P2",
+ "format": "paper",
+ "title": "Аня: дипломатия в Университете Сиены",
+ "kicker": "отзыв студентки",
+ "question": null,
+ "music": "a-new-life",
+ "props": [
+  {
+   "kind": "tag",
+   "label": "куратор Яна",
+   "at": 4.7,
+   "until": 16.94,
+   "slot": 0
+  },
+  {
+   "kind": "heart",
+   "label": "внимательно",
+   "at": 7.92,
+   "until": 16.94,
+   "slot": 1
+  },
+  {
+   "kind": "route",
+   "label": "выбор вуза → зачисление",
+   "at": 13.08,
+   "until": 16.94,
+   "slot": 2
+  },
+  {
+   "kind": "chip",
+   "label": "Public & Cultural Diplomacy",
+   "at": 22.3,
+   "until": 25.0,
+   "slot": 0
+  },
+  {
+   "kind": "map",
+   "label": "Сиена",
+   "at": 24.02,
+   "until": 25.0,
+   "slot": 1
+  },
+  {
+   "kind": "box",
+   "label": "полное сопровождение",
+   "at": 26.24,
+   "until": 30.16,
+   "slot": 0
+  },
+  {
+   "kind": "docs",
+   "label": "документы",
+   "at": 36.7,
+   "until": 42.8,
+   "slot": 0
+  },
+  {
+   "kind": "chip",
+   "label": "EN",
+   "at": 38.4,
+   "until": 42.8,
+   "slot": 1
+  },
+  {
+   "kind": "chip",
+   "label": "IT",
+   "at": 39.78,
+   "until": 42.8,
+   "slot": 2
+  },
+  {
+   "kind": "star",
+   "label": "верь в себя",
+   "at": 42.0,
+   "until": 42.8,
+   "slot": 3
+  }
+ ],
+ "durationSec": 46.4,
+ "durationInFrames": 1392,
+ "students": {
+  "AY": {
+   "face": [
+    500,
+    910
+   ],
+   "file": "WA_1029",
+   "name": "Аня",
+   "age": "",
+   "from": "",
+   "uni": "Università di Siena",
+   "program": "Public and Cultural Diplomacy",
+   "city": "Сиена",
+   "level": "Магистратура",
+   "female": true,
+   "avatar": "photos/AY-avatar.jpg",
+   "photo": "photos/AY-passport.jpg"
+  }
+ },
+ "order": [
+  "AY"
+ ],
+ "segments": [
+  {
+   "src": "WA_1029.mp4",
+   "from": 12.68,
+   "to": 27.02,
+   "at": 2.6,
+   "student": "AY",
+   "item": 1,
+   "cut": "start"
+  },
+  {
+   "src": "WA_1029.mp4",
+   "from": 0.0,
+   "to": 8.06,
+   "at": 16.94,
+   "student": "AY",
+   "item": 2,
+   "cut": "jump"
+  },
+  {
+   "src": "WA_1029.mp4",
+   "from": 7.76,
+   "to": 12.92,
+   "at": 25.0,
+   "student": "AY",
+   "item": 3,
+   "cut": "jump"
+  },
+  {
+   "src": "WA_1029.mp4",
+   "from": 27.02,
+   "to": 38.36,
+   "at": 31.46,
+   "student": "AY",
+   "item": 5,
+   "cut": "switch"
+  }
+ ],
+ "items": [
+  {
+   "kind": "title",
+   "text": "Аня: дипломатия в Университете Сиены",
+   "start": 0.0,
+   "end": 2.6,
+   "marco": "present"
+  },
+  {
+   "kind": "clip",
+   "student": "AY",
+   "start": 2.6,
+   "end": 16.94
+  },
+  {
+   "kind": "clip",
+   "student": "AY",
+   "start": 16.94,
+   "end": 25.0
+  },
+  {
+   "kind": "clip",
+   "student": "AY",
+   "start": 25.0,
+   "end": 30.16
+  },
+  {
+   "kind": "chapter",
+   "text": "Совет поступающим",
+   "start": 30.16,
+   "end": 31.46
+  },
+  {
+   "kind": "clip",
+   "student": "AY",
+   "start": 31.46,
+   "end": 42.8
+  },
+  {
+   "kind": "end",
+   "text": "Помогаем поступать в университеты Италии",
+   "start": 42.8,
+   "end": 46.4,
+   "marco": "peace"
+  }
+ ],
+ "captions": [
+  {
+   "text": " Я",
+   "startMs": 2840,
+   "endMs": 3380,
+   "timestampMs": 3110,
+   "confidence": 0.99
+  },
+  {
+   "text": " очень",
+   "startMs": 3380,
+   "endMs": 3620,
+   "timestampMs": 3500,
+   "confidence": 1.0
+  },
+  {
+   "text": " благодарна",
+   "startMs": 3620,
+   "endMs": 4120,
+   "timestampMs": 3870,
+   "confidence": 1.0
+  },
+  {
+   "text": " куратору",
+   "startMs": 4120,
+   "endMs": 4700,
+   "timestampMs": 4410,
+   "confidence": 0.99
+  },
+  {
+   "text": " Яне",
+   "startMs": 4700,
+   "endMs": 5080,
+   "timestampMs": 4890,
+   "confidence": 0.95
+  },
+  {
+   "text": " за",
+   "startMs": 5080,
+   "endMs": 5340,
+   "timestampMs": 5210,
+   "confidence": 1.0
+  },
+  {
+   "text": " работу.",
+   "startMs": 5340,
+   "endMs": 6280,
+   "timestampMs": 5810,
+   "confidence": 1.0
+  },
+  {
+   "text": " Она",
+   "startMs": 6760,
+   "endMs": 7160,
+   "timestampMs": 6960,
+   "confidence": 1.0
+  },
+  {
+   "text": " относилась",
+   "startMs": 7160,
+   "endMs": 7600,
+   "timestampMs": 7380,
+   "confidence": 1.0
+  },
+  {
+   "text": " очень",
+   "startMs": 7600,
+   "endMs": 7920,
+   "timestampMs": 7760,
+   "confidence": 1.0
+  },
+  {
+   "text": " внимательно",
+   "startMs": 7920,
+   "endMs": 8760,
+   "timestampMs": 8340,
+   "confidence": 1.0
+  },
+  {
+   "text": " ко",
+   "startMs": 8760,
+   "endMs": 9060,
+   "timestampMs": 8910,
+   "confidence": 0.99
+  },
+  {
+   "text": " мне,",
+   "startMs": 9060,
+   "endMs": 9240,
+   "timestampMs": 9150,
+   "confidence": 1.0
+  },
+  {
+   "text": " помогала",
+   "startMs": 9340,
+   "endMs": 9900,
+   "timestampMs": 9620,
+   "confidence": 1.0
+  },
+  {
+   "text": " со",
+   "startMs": 9900,
+   "endMs": 10060,
+   "timestampMs": 9980,
+   "confidence": 0.99
+  },
+  {
+   "text": " всеми",
+   "startMs": 10060,
+   "endMs": 10340,
+   "timestampMs": 10200,
+   "confidence": 1.0
+  },
+  {
+   "text": " интересующими",
+   "startMs": 10340,
+   "endMs": 10980,
+   "timestampMs": 10660,
+   "confidence": 1.0
+  },
+  {
+   "text": " вопросами",
+   "startMs": 10980,
+   "endMs": 11680,
+   "timestampMs": 11330,
+   "confidence": 1.0
+  },
+  {
+   "text": " от",
+   "startMs": 11680,
+   "endMs": 13080,
+   "timestampMs": 12380,
+   "confidence": 0.89
+  },
+  {
+   "text": " выбора",
+   "startMs": 13080,
+   "endMs": 13840,
+   "timestampMs": 13460,
+   "confidence": 1.0
+  },
+  {
+   "text": " университета",
+   "startMs": 13840,
+   "endMs": 14720,
+   "timestampMs": 14280,
+   "confidence": 1.0
+  },
+  {
+   "text": " до",
+   "startMs": 14720,
+   "endMs": 15100,
+   "timestampMs": 14910,
+   "confidence": 1.0
+  },
+  {
+   "text": " финального",
+   "startMs": 15100,
+   "endMs": 16260,
+   "timestampMs": 15680,
+   "confidence": 1.0
+  },
+  {
+   "text": " зачисления.",
+   "startMs": 16260,
+   "endMs": 16940,
+   "timestampMs": 16600,
+   "confidence": 1.0,
+   "pageBreakAfter": true
+  },
+  {
+   "text": " Меня",
+   "startMs": 16940,
+   "endMs": 17780,
+   "timestampMs": 17360,
+   "confidence": 0.98
+  },
+  {
+   "text": " зовут",
+   "startMs": 17780,
+   "endMs": 18120,
+   "timestampMs": 17950,
+   "confidence": 1.0
+  },
+  {
+   "text": " Аня,",
+   "startMs": 18120,
+   "endMs": 18480,
+   "timestampMs": 18300,
+   "confidence": 1.0
+  },
+  {
+   "text": " и",
+   "startMs": 18700,
+   "endMs": 19060,
+   "timestampMs": 18880,
+   "confidence": 0.99
+  },
+  {
+   "text": " я",
+   "startMs": 19060,
+   "endMs": 19840,
+   "timestampMs": 19450,
+   "confidence": 1.0
+  },
+  {
+   "text": " поступила",
+   "startMs": 19840,
+   "endMs": 20360,
+   "timestampMs": 20100,
+   "confidence": 1.0
+  },
+  {
+   "text": " на",
+   "startMs": 20360,
+   "endMs": 20540,
+   "timestampMs": 20450,
+   "confidence": 1.0
+  },
+  {
+   "text": " программу",
+   "startMs": 20540,
+   "endMs": 21240,
+   "timestampMs": 20890,
+   "confidence": 1.0
+  },
+  {
+   "text": " Public",
+   "startMs": 21240,
+   "endMs": 21860,
+   "timestampMs": 21550,
+   "confidence": 0.93
+  },
+  {
+   "text": " and",
+   "startMs": 21860,
+   "endMs": 22040,
+   "timestampMs": 21950,
+   "confidence": 0.23
+  },
+  {
+   "text": " Cultural",
+   "startMs": 22040,
+   "endMs": 22300,
+   "timestampMs": 22170,
+   "confidence": 0.9
+  },
+  {
+   "text": " Diplomacy",
+   "startMs": 22300,
+   "endMs": 23000,
+   "timestampMs": 22650,
+   "confidence": 0.87
+  },
+  {
+   "text": " в",
+   "startMs": 23000,
+   "endMs": 23520,
+   "timestampMs": 23260,
+   "confidence": 0.97
+  },
+  {
+   "text": " Университете",
+   "startMs": 23520,
+   "endMs": 24020,
+   "timestampMs": 23770,
+   "confidence": 0.9
+  },
+  {
+   "text": " Сиены.",
+   "startMs": 24020,
+   "endMs": 24460,
+   "timestampMs": 24240,
+   "confidence": 0.95,
+   "pageBreakAfter": true
+  },
+  {
+   "text": " Я",
+   "startMs": 25300,
+   "endMs": 25780,
+   "timestampMs": 25540,
+   "confidence": 1.0
+  },
+  {
+   "text": " взяла",
+   "startMs": 25780,
+   "endMs": 26240,
+   "timestampMs": 26010,
+   "confidence": 1.0
+  },
+  {
+   "text": " пакет",
+   "startMs": 26240,
+   "endMs": 26660,
+   "timestampMs": 26450,
+   "confidence": 0.98
+  },
+  {
+   "text": " полного",
+   "startMs": 26660,
+   "endMs": 27060,
+   "timestampMs": 26860,
+   "confidence": 1.0
+  },
+  {
+   "text": " сопровождения",
+   "startMs": 27060,
+   "endMs": 27800,
+   "timestampMs": 27430,
+   "confidence": 1.0
+  },
+  {
+   "text": " от",
+   "startMs": 27800,
+   "endMs": 28740,
+   "timestampMs": 28270,
+   "confidence": 1.0
+  },
+  {
+   "text": " команды",
+   "startMs": 28740,
+   "endMs": 29300,
+   "timestampMs": 29020,
+   "confidence": 1.0
+  },
+  {
+   "text": " Capitaliano.",
+   "startMs": 29300,
+   "endMs": 29920,
+   "timestampMs": 29610,
+   "confidence": 0.92,
+   "pageBreakAfter": true
+  },
+  {
+   "text": " Всем",
+   "startMs": 31460,
+   "endMs": 32360,
+   "timestampMs": 31910,
+   "confidence": 0.85
+  },
+  {
+   "text": " поступающим",
+   "startMs": 32360,
+   "endMs": 33140,
+   "timestampMs": 32750,
+   "confidence": 1.0
+  },
+  {
+   "text": " я",
+   "startMs": 33140,
+   "endMs": 33340,
+   "timestampMs": 33240,
+   "confidence": 1.0
+  },
+  {
+   "text": " могу",
+   "startMs": 33340,
+   "endMs": 33860,
+   "timestampMs": 33600,
+   "confidence": 1.0
+  },
+  {
+   "text": " посоветовать,",
+   "startMs": 33860,
+   "endMs": 35580,
+   "timestampMs": 34720,
+   "confidence": 1.0
+  },
+  {
+   "text": " как",
+   "startMs": 35580,
+   "endMs": 35820,
+   "timestampMs": 35700,
+   "confidence": 1.0
+  },
+  {
+   "text": " можно",
+   "startMs": 35820,
+   "endMs": 36060,
+   "timestampMs": 35940,
+   "confidence": 1.0
+  },
+  {
+   "text": " раньше",
+   "startMs": 36060,
+   "endMs": 36280,
+   "timestampMs": 36170,
+   "confidence": 1.0
+  },
+  {
+   "text": " собирать",
+   "startMs": 36280,
+   "endMs": 36700,
+   "timestampMs": 36490,
+   "confidence": 1.0
+  },
+  {
+   "text": " документы,",
+   "startMs": 36700,
+   "endMs": 37280,
+   "timestampMs": 36990,
+   "confidence": 1.0
+  },
+  {
+   "text": " учить",
+   "startMs": 38140,
+   "endMs": 38400,
+   "timestampMs": 38270,
+   "confidence": 1.0
+  },
+  {
+   "text": " английский,",
+   "startMs": 38400,
+   "endMs": 39020,
+   "timestampMs": 38710,
+   "confidence": 1.0
+  },
+  {
+   "text": " учить",
+   "startMs": 39580,
+   "endMs": 39780,
+   "timestampMs": 39680,
+   "confidence": 1.0
+  },
+  {
+   "text": " итальянский",
+   "startMs": 39780,
+   "endMs": 40440,
+   "timestampMs": 40110,
+   "confidence": 1.0
+  },
+  {
+   "text": " и,",
+   "startMs": 40440,
+   "endMs": 41180,
+   "timestampMs": 40810,
+   "confidence": 0.94
+  },
+  {
+   "text": " конечно",
+   "startMs": 41180,
+   "endMs": 41420,
+   "timestampMs": 41300,
+   "confidence": 1.0
+  },
+  {
+   "text": " же,",
+   "startMs": 41420,
+   "endMs": 41640,
+   "timestampMs": 41530,
+   "confidence": 1.0
+  },
+  {
+   "text": " верить",
+   "startMs": 41680,
+   "endMs": 41900,
+   "timestampMs": 41790,
+   "confidence": 1.0
+  },
+  {
+   "text": " в",
+   "startMs": 41900,
+   "endMs": 42000,
+   "timestampMs": 41950,
+   "confidence": 1.0
+  },
+  {
+   "text": " себя.",
+   "startMs": 42000,
+   "endMs": 42200,
+   "timestampMs": 42100,
+   "confidence": 1.0,
+   "pageBreakAfter": true
+  }
+ ]
+}

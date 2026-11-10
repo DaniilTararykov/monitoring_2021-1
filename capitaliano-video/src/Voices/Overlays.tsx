@@ -155,7 +155,7 @@ export const QuestionBubble: React.FC<{ text: string; top?: number }> = ({
   );
 };
 
-const ItalyMap: React.FC<{ city: string; width: number }> = ({
+export const ItalyMap: React.FC<{ city: string; width: number }> = ({
   city,
   width,
 }) => {

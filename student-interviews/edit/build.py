@@ -164,13 +164,13 @@ def finish_item(caps):
 
 def build(vid, spec, tdir, photos):
     t = 0.0
-    segments, captions, items_out = [], [], []
+    segments, captions, items_out, props_out = [], [], [], []
     prev_student = None
     items = spec["items"] + [{"end": spec["cta"], "dur": 3.6, "marco": spec.get("endMarco")}]
     for idx, it in enumerate(items):
         if "student" not in it:
-            kind = "end" if "end" in it else ("myth" if "myth" in it else "title")
-            items_out.append({"kind": kind, "text": it.get("end") or it.get("myth") or it.get("title"),
+            kind = next((k for k in ("end", "myth", "chapter") if k in it), "title")
+            items_out.append({"kind": kind, "text": it.get(kind) if kind != "title" else it["title"],
                               "start": round(t, 3), "end": round(t + it["dur"], 3)})
             if it.get("marco"):
                 items_out[-1]["marco"] = it["marco"]
@@ -229,6 +229,16 @@ def build(vid, spec, tdir, photos):
             prev_student = it["student"]
         finish_item(item_caps)
         captions.extend(item_caps)
+        # Paper props pop in on the first word starting with their cue.
+        cursor = 0
+        for slot, (cue, kind, label) in enumerate(it.get("props", [])):
+            hits = [i for i, c in enumerate(item_caps) if i >= cursor
+                    and c["text"].strip().strip("«»,.!?:—").lower().startswith(cue.lower())]
+            if not hits:
+                raise SystemExit(f"{vid}: no word starting with {cue!r} in {it['student']}'s answer")
+            cursor = hits[0] + 1
+            props_out.append({"kind": kind, "label": label, "at": item_caps[hits[0]]["startMs"] / 1000,
+                              "until": round(t, 3), "slot": slot % 4})
         item = {"kind": "clip", "student": it["student"], "start": round(item_start, 3), "end": round(t, 3)}
         for k in ("hook", "passport", "bubble", "bubbleLead", "truth"):
             if k in it:
@@ -246,6 +256,7 @@ def build(vid, spec, tdir, photos):
         st["photo"] = f"photos/{sid}-passport.jpg" if (photos / f"{sid}-passport.jpg").exists() else None
         students[sid] = st
     return {"id": vid, "format": spec["format"], "title": spec["title"], "kicker": spec.get("kicker"), "question": None,
+            "music": spec.get("music"), "props": props_out,
             "durationSec": round(t, 3), "durationInFrames": int(round(t * FPS)),
             "students": students, "order": order,
             "segments": segments, "items": items_out, "captions": captions}

@@ -16,3 +16,8 @@ editor/dist
 
 # Interview proxies (symlink to the local working folder, not versioned).
 public/interviews
+
+# Mixkit music and sound effects from the ghost-editor library (licence
+# allows use in videos, not redistribution as-is).
+public/music
+public/sfx/gx

@@ -22,6 +22,15 @@ export type StudentInfo = {
 
 export type MarcoPose = "point" | "present" | "notebook" | "peace" | "open";
 
+export type Prop = {
+  kind: string;
+  label: string;
+  // Seconds on the output timeline: the cue word's start and its answer's end.
+  at: number;
+  until: number;
+  slot: number;
+};
+
 export type Segment = {
   src: string;
   // Source range in seconds.
@@ -49,7 +58,7 @@ export type Item =
       truth?: string;
     }
   | {
-      kind: "title" | "myth" | "end";
+      kind: "title" | "myth" | "chapter" | "end";
       text: string;
       // Pose of Marco, the mascot, shown on the card.
       marco?: MarcoPose;
@@ -59,11 +68,14 @@ export type Item =
 
 export type VoicesData = {
   id: string;
-  format: "story" | "question" | "reviews" | "myths";
+  format: "story" | "question" | "reviews" | "myths" | "paper";
   title: string;
   // Overrides the title card's kicker for the format.
   kicker?: string | null;
   question: string | null;
+  // Paper edit only: the music bed and the props that pop in on cue words.
+  music?: string | null;
+  props?: Prop[];
   durationSec: number;
   durationInFrames: number;
   students: Record<string, StudentInfo>;
