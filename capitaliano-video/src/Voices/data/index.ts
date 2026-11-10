@@ -7,6 +7,8 @@ import O1 from "./O1.json";
 import O2 from "./O2.json";
 import P1 from "./P1.json";
 import P2 from "./P2.json";
+import A1 from "./A1.json";
+import B1 from "./B1.json";
 import type { VoicesData } from "../types";
 
 export const VOICES_DATA: VoicesData[] = [
@@ -18,4 +20,6 @@ export const VOICES_DATA: VoicesData[] = [
   O2 as VoicesData,
   P1 as VoicesData,
   P2 as VoicesData,
+  A1 as VoicesData,
+  B1 as VoicesData,
 ];

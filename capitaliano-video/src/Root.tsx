@@ -1,6 +1,7 @@
 import { Composition } from "remotion";
 import { BEATS } from "./beats";
 import { Capitaliano, calculateCapitalianoMetadata } from "./Capitaliano";
+import { Look } from "./Voices/Look";
 import { Paper } from "./Voices/Paper";
 import { Voices } from "./Voices/Voices";
 import { VOICES_DATA } from "./Voices/data";
@@ -27,7 +28,13 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           key={data.id}
           id={`Voices-${data.id}`}
-          component={data.format === "paper" ? Paper : Voices}
+          component={
+            data.format === "paper"
+              ? Paper
+              : data.format === "punch" || data.format === "editorial"
+                ? Look
+                : Voices
+          }
           durationInFrames={data.durationInFrames}
           fps={30}
           width={1080}

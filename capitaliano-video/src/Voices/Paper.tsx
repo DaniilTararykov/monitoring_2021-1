@@ -39,9 +39,9 @@ const VIDEO_W = 740;
 const VIDEO_H = 925;
 const SCALE = VIDEO_W / 1080;
 // How long cards overlap the footage while they slide in or out.
-const SLIDE = 0.27;
+export const SLIDE = 0.27;
 
-const Sfx: React.FC<{ at: number; src: string; volume: number }> = ({
+export const Sfx: React.FC<{ at: number; src: string; volume: number }> = ({
   at,
   src,
   volume,
@@ -312,11 +312,11 @@ const PaperCaptions: React.FC<{ data: VoicesData }> = ({ data }) => {
 };
 
 // A sheet of paper that slides up over the desk for a chapter.
-const ChapterPage: React.FC<{ text: string; index: number; total: number }> = ({
-  text,
-  index,
-  total,
-}) => {
+export const ChapterPage: React.FC<{
+  text: string;
+  index: number;
+  total: number;
+}> = ({ text, index, total }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const slide = Math.round(SLIDE * fps);

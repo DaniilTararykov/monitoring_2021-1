@@ -372,4 +372,7 @@ VIDEOS = {
             ("документы", "docs", "документы"), ("английский", "chip", "EN"), ("итальянский", "chip", "IT"),
             ("себя", "star", "верь в себя")]},
     ]},
+    # Two full-frame looks of Anna's review to compare with the paper desk.
 }
+VIDEOS["A1"] = {**VIDEOS["P1"], "format": "punch"}
+VIDEOS["B1"] = {**VIDEOS["P1"], "format": "editorial"}
