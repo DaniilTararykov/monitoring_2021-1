@@ -59,7 +59,7 @@ export const BlockView: React.FC<{b: Block; align: 'center' | 'left'}> = ({b, al
       );
     case 'sub':
       return (
-        <p style={{...mono, fontWeight: 500, textTransform: 'uppercase', fontSize: type.sub.size, letterSpacing: type.sub.letterSpacing, lineHeight: type.sub.lineHeight}}>
+        <p style={{...mono, fontWeight: 500, textTransform: 'uppercase', fontSize: b.size ?? type.sub.size, letterSpacing: type.sub.letterSpacing, lineHeight: type.sub.lineHeight}}>
           {b.text}
         </p>
       );
@@ -92,7 +92,7 @@ export const BlockView: React.FC<{b: Block; align: 'center' | 'left'}> = ({b, al
       return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-start'}}>
           {b.items.map((it) => (
-            <p key={it} style={{...mono, fontWeight: 500, textTransform: 'uppercase', fontSize: type.small.size + 4, letterSpacing: type.small.letterSpacing, textAlign: 'left'}}>
+            <p key={it} style={{...mono, fontWeight: 500, textTransform: 'uppercase', fontSize: b.size ?? type.small.size + 4, letterSpacing: type.small.letterSpacing, textAlign: 'left'}}>
               — {it}
             </p>
           ))}

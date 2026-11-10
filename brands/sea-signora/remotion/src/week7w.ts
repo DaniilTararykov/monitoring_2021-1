@@ -8,8 +8,9 @@ const ph = (name: string, sec: number, o: Partial<Scene> = {}): Scene => ({src: 
 const top = (...blocks: Block[]): Overlay => ({position: 'top', anim: 'static', blocks});
 const bottom = (...blocks: Block[]): Overlay => ({position: 'bottom', anim: 'static', blocks});
 const H = (text: string, size?: number): Block => ({t: 'headline', text, size});
-const sub = (text: string): Block => ({t: 'sub', text});
+const sub = (text: string): Block => ({t: 'sub', text, size: 32});
 const kick = (text: string): Block => ({t: 'kicker', text, color: 'orange'});
+// client 10.11: text a touch bigger; the chip sits right under the menu list
 const silent = 'none';
 const tags = ['#seasignora', '#tartufobianco', '#whitetruffle', '#alba', '#brera'];
 const DISHES = [
@@ -22,9 +23,9 @@ const CAPTION = "White truffle from Alba is on the menu:\n— Tartare di tonno c
 export const week7w: Story[] = [
   {
     id: 'W7W-01p-on-the-menu', day: 'pool', rubric: 'Белый трюфель · список блюд', music: silent,
-    scenes: [ph('truf_top', 8, {fy: 50, shift: 360})],
-    overlay: top(kick("tartufo bianco d'alba"), H('On the menu'), {t: 'rule'}, {t: 'list', items: DISHES}),
-    cta: {label: 'book a table', color: 'orange'},
+    scenes: [ph('truf_top', 8, {fy: 50, shift: 520})],
+    overlay: top(kick("tartufo bianco d'alba"), H('On the menu'), {t: 'rule'}, {t: 'list', items: DISHES, size: 32}),
+    cta: {label: 'book a table', color: 'orange', y: 1120},
     caption: CAPTION, hashtags: tags, ctaVariants: ['book a table', 'reserve'],
   },
   {

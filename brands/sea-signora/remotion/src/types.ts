@@ -3,12 +3,12 @@
 export type Block =
   | {t: 'wordmark'; text?: string; size?: number} // "Sea, Signora" in the logotype font, mixed case
   | {t: 'headline'; text: string; size?: number} // Skanaus, always uppercase
-  | {t: 'sub'; text: string} // JetBrains Mono, uppercase, letter-spaced
+  | {t: 'sub'; text: string; size?: number} // JetBrains Mono, uppercase, letter-spaced
   | {t: 'note'; text: string} // JetBrains Mono, as typed (lowercase notes like "review")
   | {t: 'stars'}
   | {t: 'review'; text: string; author?: string}
   | {t: 'hours'; mode?: 'split' | 'compact' | 'weekend'}
-  | {t: 'list'; items: string[]}
+  | {t: 'list'; items: string[]; size?: number} // size: optional font size (default small + 4)
   | {t: 'rule'} // thin orange divider under a headline
   | {t: 'gap'; px: number}
   | {t: 'giant'; text: string; size?: number; color?: 'ivory' | 'orange' | 'olive'; raw?: boolean} // bold: one huge word (raw = keep ':' in times like 19:00)
