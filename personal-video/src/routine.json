@@ -1,0 +1,166 @@
+{
+ "bpm": 112,
+ "full": true,
+ "source": {
+  "w": 3840,
+  "h": 2160
+ },
+ "segments": [
+  {
+   "src": 5.0,
+   "beats": 4,
+   "kind": "title"
+  },
+  {
+   "src": 64.5,
+   "beats": 4,
+   "product": 0
+  },
+  {
+   "src": 102.0,
+   "beats": 3
+  },
+  {
+   "src": 197.5,
+   "beats": 3
+  },
+  {
+   "src": 261.5,
+   "beats": 4,
+   "product": 1
+  },
+  {
+   "src": 276.0,
+   "beats": 2
+  },
+  {
+   "src": 287.0,
+   "beats": 3
+  },
+  {
+   "src": 311.0,
+   "beats": 2
+  },
+  {
+   "src": 345.0,
+   "beats": 3
+  },
+  {
+   "src": 450.8,
+   "beats": 4,
+   "product": 2
+  },
+  {
+   "src": 456.0,
+   "beats": 2
+  },
+  {
+   "src": 479.0,
+   "beats": 3
+  },
+  {
+   "src": 527.5,
+   "beats": 4,
+   "product": 3
+  },
+  {
+   "src": 551.0,
+   "beats": 3
+  },
+  {
+   "src": 683.0,
+   "beats": 2
+  },
+  {
+   "src": 766.5,
+   "beats": 4,
+   "product": 4
+  },
+  {
+   "src": 791.0,
+   "beats": 3
+  },
+  {
+   "src": 839.0,
+   "beats": 2
+  },
+  {
+   "src": 929.6,
+   "beats": 5,
+   "kind": "end"
+  }
+ ],
+ "products": [
+  {
+   "step": "cleanser",
+   "name": "Centella Ampoule Foam",
+   "at": [
+    950,
+    580
+   ],
+   "label": [
+    110,
+    330
+   ],
+   "brand": "SKIN1004"
+  },
+  {
+   "step": "toner",
+   "name": "Dual Barrier Creamy Toner",
+   "at": [
+    740,
+    540
+   ],
+   "label": [
+    1330,
+    700
+   ],
+   "brand": "celimax"
+  },
+  {
+   "step": "serum",
+   "name": "15% Niacinamide Serum",
+   "at": [
+    1000,
+    550
+   ],
+   "label": [
+    110,
+    330
+   ],
+   "brand": "Dr. Althea"
+  },
+  {
+   "step": "hair",
+   "name": "",
+   "at": [
+    1090,
+    410
+   ],
+   "label": [
+    1380,
+    330
+   ],
+   "brand": "styling mousse"
+  },
+  {
+   "step": "moisturiser",
+   "name": "Aqua Marine Water Cream",
+   "at": [
+    1080,
+    510
+   ],
+   "label": [
+    110,
+    760
+   ],
+   "brand": "Dr. Althea"
+  }
+ ],
+ "end": {
+  "at": [
+   1050,
+   430
+  ]
+ }
+}

@@ -12,11 +12,13 @@ import clean from "./clean.json";
 import { Morning, MORNING_FRAMES } from "./Morning";
 import { Triple, TRIPLE_FRAMES } from "./Triple";
 import { Film, FILM_FRAMES } from "./Film";
+import { Routine, ROUTINE_FRAMES } from "./Routine";
 
 const reveals = [cute, clean] as unknown as RevealConfig[];
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Routine" component={Routine} durationInFrames={ROUTINE_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Film" component={Film} durationInFrames={FILM_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Triple" component={Triple} durationInFrames={TRIPLE_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="Morning" component={Morning} durationInFrames={MORNING_FRAMES} fps={30} width={1080} height={1920} />
