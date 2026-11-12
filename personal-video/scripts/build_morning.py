@@ -24,9 +24,11 @@ for i, s in enumerate(cfg["segments"]):
     t += s["beats"] * beat
     n = f1 - f0
     sp = s.get("speed", 1)
-    x = int(min(max((1 - s["cx"]) * W - cw / 2, 0), W - cw))  # cx is given in flipped coordinates
+    x = int(min(max((1 - s.get("cx", 0.5)) * W - cw / 2, 0), W - cw))  # cx is given in flipped coordinates
     part = os.path.join(TMP, f"seg{i:02d}.mp4")
     vf = f"crop={cw}:{H}:{x}:0,hflip,scale=1080:1200,setpts=PTS/{sp},fps={FPS}"
+    if cfg.get("full"):  # keep the whole landscape frame
+        vf = f"hflip,scale=1920:1080,setpts=PTS/{sp},fps={FPS}"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(s["src"]), "-t", str(n / FPS * sp + 0.5), "-i", SRC, "-an",
                     "-vf", vf, "-frames:v", str(n), "-c:v", "libx264", "-preset", "fast", "-crf", "16", "-g", "10",
                     "-pix_fmt", "yuv420p", part], check=True)

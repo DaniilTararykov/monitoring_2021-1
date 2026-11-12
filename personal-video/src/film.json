@@ -1,0 +1,30 @@
+{
+ "bpm": 112, "full": true, "source": {"w": 3840, "h": 2160},
+ "creditBeats": 7,
+ "credits": [["cleanser", "SKIN1004 Centella Ampoule Foam"], ["toner", "celimax Dual Barrier Creamy Toner"], ["serum", "Dr. Althea 15% Niacinamide Serum"], ["hair", "styling mousse"], ["moisturiser", "Dr. Althea Aqua Marine Water Cream"], ["bathroom", "as itself"]],
+ "subs": [
+  {"from": 1, "to": 2, "text": "7:00 am. unfortunately."},
+  {"from": 3, "to": 4, "text": "step one: become a person."},
+  {"from": 5, "to": 7, "text": "cold water builds character."},
+  {"from": 8, "to": 9, "text": "toner. the internet told me to."},
+  {"from": 10, "to": 12, "text": "two minutes. the mustache makes it harder."},
+  {"from": 13, "to": 14, "text": "niacinamide. no idea what it does. love it."},
+  {"from": 15, "to": 18, "text": "hair: forty attempts at effortless."},
+  {"from": 19, "to": 21, "text": "moisturise like rent depends on it."},
+  {"from": 22, "to": 23, "text": "ok."},
+  {"from": 24, "to": 24, "text": "now I can be perceived."}
+ ],
+ "segments": [
+  {"src": 5.0, "beats": 4},
+  {"src": 19.0, "beats": 2}, {"src": 84.0, "beats": 2},
+  {"src": 113.0, "beats": 2, "speed": 2}, {"src": 120.0, "beats": 2},
+  {"src": 197.0, "beats": 2}, {"src": 203.0, "beats": 2}, {"src": 221.0, "beats": 2},
+  {"src": 275.0, "beats": 2}, {"src": 287.0, "beats": 2},
+  {"src": 311.0, "beats": 2}, {"src": 345.0, "beats": 2, "speed": 3}, {"src": 407.0, "beats": 2, "speed": 3},
+  {"src": 455.0, "beats": 2}, {"src": 479.0, "beats": 2},
+  {"src": 539.0, "beats": 2, "speed": 2}, {"src": 551.0, "beats": 2, "speed": 2}, {"src": 599.0, "beats": 2}, {"src": 683.0, "beats": 2},
+  {"src": 742.0, "beats": 2}, {"src": 791.0, "beats": 2}, {"src": 809.0, "beats": 2, "speed": 2},
+  {"src": 868.0, "beats": 2}, {"src": 911.0, "beats": 3},
+  {"src": 930.2, "beats": 5}
+ ]
+}
