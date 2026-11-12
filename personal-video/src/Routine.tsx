@@ -14,7 +14,7 @@ const W = 1920;
 const H = 1080;
 const BEAT = 60 / data.bpm;
 const WHITE = "#FFFFFF";
-type Seg = { src: number; beats: number; product?: number; kind?: string };
+type Seg = { src: number; beats: number; product?: number; kind?: string; play?: number };
 type Product = { step: string; brand: string; name: string; at: number[]; label: number[] };
 const products = data.products as Product[];
 const timeline = (() => {
@@ -139,11 +139,15 @@ const Title: React.FC<{ dur: number }> = ({ dur }) => {
   const o = interpolate(frame, [3, 10, dur - 6, dur], [0, 1, 1, 0], clamp);
   return (
     <AbsoluteFill style={{ opacity: o }}>
-      <div style={{ position: "absolute", left: 110, top: 760, fontFamily: SANS, fontWeight: 800, fontSize: 92, color: WHITE, textShadow: shadow, letterSpacing: "-0.01em" }}>my morning routine</div>
+      <div style={{ position: "absolute", left: 100, top: 300, fontFamily: SANS, fontWeight: 800, fontSize: 84, lineHeight: 1.08, color: WHITE, textShadow: shadow, letterSpacing: "-0.01em" }}>
+        my morning
+        <br />
+        routine
+      </div>
       <Boil id="title">
-        <Draw d="M112,888 C330,868 560,902 780,880 S1010,872 1060,884" a={10} b={26} w={9} />
-        <Sparkle x={1130} y={770} s={40} at={22} />
-        <Sparkle x={1190} y={850} s={22} at={27} />
+        <Draw d="M102,506 C190,490 300,516 400,498 S440,494 452,502" a={10} b={24} w={9} />
+        <Sparkle x={500} y={420} s={34} at={20} />
+        <Sparkle x={70} y={270} s={20} at={25} />
       </Boil>
     </AbsoluteFill>
   );
@@ -177,11 +181,11 @@ export const Routine: React.FC = () => {
           </Sequence>
         ) : null,
       )}
-      <Sequence from={end.from}><End /></Sequence>
+      <Sequence from={end.from + Math.round((end.play ?? 0) * FPS)}><End /></Sequence>
       <AbsoluteFill style={{ backgroundColor: "#000", opacity: out }} />
       <Audio src={staticFile("music_routine.wav")} volume={0.85} />
       {timeline.map((s) => (s.product !== undefined ? <Sequence key={`p${s.from}`} from={s.from + 4} layout="none"><Audio src={staticFile("sfx/pop.wav")} volume={0.55} /></Sequence> : null))}
-      <Sequence from={end.from} layout="none"><Audio src={staticFile("sfx/shimmer.wav")} volume={0.35} /></Sequence>
+      <Sequence from={end.from + Math.round((end.play ?? 0) * FPS)} layout="none"><Audio src={staticFile("sfx/shimmer.wav")} volume={0.35} /></Sequence>
     </AbsoluteFill>
   );
 };

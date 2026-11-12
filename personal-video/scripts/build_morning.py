@@ -29,7 +29,11 @@ for i, s in enumerate(cfg["segments"]):
     vf = f"crop={cw}:{H}:{x}:0,hflip,scale=1080:1200,setpts=PTS/{sp},fps={FPS}"
     if cfg.get("full"):  # keep the whole landscape frame
         vf = f"hflip,scale=1920:1080,setpts=PTS/{sp},fps={FPS}"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(s["src"]), "-t", str(n / FPS * sp + 0.5), "-i", SRC, "-an",
+    take = n / FPS * sp + 0.5
+    if s.get("play"):  # play this long, then hold the last frame for the rest of the segment
+        take = s["play"]
+        vf += f",tpad=stop_mode=clone:stop_duration={n / FPS}"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(s["src"]), "-t", str(take), "-i", SRC, "-an",
                     "-vf", vf, "-frames:v", str(n), "-c:v", "libx264", "-preset", "fast", "-crf", "16", "-g", "10",
                     "-pix_fmt", "yuv420p", part], check=True)
     parts.append(part)

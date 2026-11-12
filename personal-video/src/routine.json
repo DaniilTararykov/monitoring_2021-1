@@ -21,7 +21,7 @@
    "beats": 3
   },
   {
-   "src": 197.5,
+   "src": 221.0,
    "beats": 3
   },
   {
@@ -30,20 +30,20 @@
    "product": 1
   },
   {
-   "src": 276.0,
-   "beats": 2
+   "src": 277.2,
+   "beats": 3
   },
   {
    "src": 287.0,
    "beats": 3
   },
   {
-   "src": 311.0,
-   "beats": 2
+   "src": 360.4,
+   "beats": 3
   },
   {
-   "src": 345.0,
-   "beats": 3
+   "src": 414.0,
+   "beats": 2
   },
   {
    "src": 450.8,
@@ -85,9 +85,18 @@
    "beats": 2
   },
   {
-   "src": 929.6,
-   "beats": 5,
-   "kind": "end"
+   "src": 919.2,
+   "beats": 3
+  },
+  {
+   "src": 925.6,
+   "beats": 2
+  },
+  {
+   "src": 931.25,
+   "beats": 7,
+   "kind": "end",
+   "play": 1.4
   }
  ],
  "products": [
@@ -141,7 +150,7 @@
     1380,
     330
    ],
-   "brand": "styling mousse"
+   "brand": "styling wax"
   },
   {
    "step": "moisturiser",
@@ -159,8 +168,8 @@
  ],
  "end": {
   "at": [
-   1050,
-   430
+   990,
+   390
   ]
  }
 }
