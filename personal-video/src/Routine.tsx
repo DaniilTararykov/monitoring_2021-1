@@ -75,7 +75,8 @@ const arrowPath = (from: number[], to: number[]) => {
   const len = Math.hypot(dx, dy);
   const ux = dx / len;
   const uy = dy / len;
-  const end = [to[0] - ux * 230, to[1] - uy * 230];
+  const stop = Math.min(230, len * 0.35);
+  const end = [to[0] - ux * stop, to[1] - uy * stop];
   const mid = [(from[0] + end[0]) / 2 - uy * 70, (from[1] + end[1]) / 2 + ux * 70];
   const a = Math.atan2(end[1] - mid[1], end[0] - mid[0]);
   const h = (r: number) => `${(end[0] - Math.cos(a + r) * 38).toFixed(1)},${(end[1] - Math.sin(a + r) * 38).toFixed(1)}`;
@@ -94,7 +95,7 @@ const ProductMark: React.FC<{ p: Product; i: number; dur: number }> = ({ p, i, d
     const a = (k / 4) * Math.PI * 2 + i * 0.9 + 0.5;
     const r = 300 + rnd(i * 10 + k) * 90;
     return { x: p.at[0] + Math.cos(a) * r * 1.15, y: p.at[1] + Math.sin(a) * r * 0.8, s: 22 + rnd(i * 7 + k) * 22, at: 8 + k * 5 };
-  }).filter((s) => s.y > 60 && s.y < H - 60);
+  }).filter((s) => s.y > 60 && s.y < H - 60 && !(s.x > lx - 60 && s.x < lx + 540 && s.y > ly - 60 && s.y < ly + 220));
   return (
     <AbsoluteFill style={{ opacity: o }}>
       <Boil id={`pm${i}`}>
