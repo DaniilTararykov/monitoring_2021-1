@@ -1,0 +1,174 @@
+{
+ "bpm": 112,
+ "source": {
+  "w": 3840,
+  "h": 2160
+ },
+ "steps": {
+  "cleanse": {
+   "n": 1,
+   "word": "cleanse",
+   "brand": "SKIN1004",
+   "name": "Centella Ampoule Foam"
+  },
+  "tone": {
+   "n": 2,
+   "word": "tone",
+   "brand": "celimax",
+   "name": "Dual Barrier Creamy Toner"
+  },
+  "serum": {
+   "n": 3,
+   "word": "serum",
+   "brand": "Dr. Althea",
+   "name": "15% Niacinamide Purity Serum"
+  },
+  "hair": {
+   "n": 4,
+   "word": "hair",
+   "brand": "styling mousse",
+   "name": "messy, but on purpose"
+  },
+  "cream": {
+   "n": 5,
+   "word": "moisturise",
+   "brand": "Dr. Althea",
+   "name": "Aqua Marine Water Cream"
+  }
+ },
+ "segments": [
+  {
+   "src": 2.0,
+   "beats": 4,
+   "cx": 0.5,
+   "note": "alarm"
+  },
+  {
+   "src": 48.5,
+   "beats": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 65.0,
+   "beats": 3,
+   "cx": 0.56,
+   "step": "cleanse"
+  },
+  {
+   "src": 101.0,
+   "beats": 2,
+   "speed": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 119.0,
+   "beats": 2,
+   "speed": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 125.5,
+   "beats": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 215.0,
+   "beats": 2,
+   "speed": 1.5,
+   "cx": 0.5
+  },
+  {
+   "src": 262.0,
+   "beats": 3,
+   "cx": 0.57,
+   "step": "tone"
+  },
+  {
+   "src": 281.0,
+   "beats": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 341.0,
+   "beats": 2,
+   "speed": 3,
+   "cx": 0.5,
+   "tag": "brush. 2 min. no skipping."
+  },
+  {
+   "src": 353.0,
+   "beats": 2,
+   "speed": 3,
+   "cx": 0.5
+  },
+  {
+   "src": 450.8,
+   "beats": 3,
+   "cx": 0.57,
+   "step": "serum"
+  },
+  {
+   "src": 467.0,
+   "beats": 2,
+   "speed": 1.5,
+   "cx": 0.5
+  },
+  {
+   "src": 485.0,
+   "beats": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 527.5,
+   "beats": 2,
+   "cx": 0.5,
+   "step": "hair"
+  },
+  {
+   "src": 545.0,
+   "beats": 2,
+   "speed": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 611.0,
+   "beats": 2,
+   "speed": 3,
+   "cx": 0.5
+  },
+  {
+   "src": 665.0,
+   "beats": 2,
+   "speed": 1.5,
+   "cx": 0.5
+  },
+  {
+   "src": 768.5,
+   "beats": 3,
+   "cx": 0.55,
+   "step": "cream"
+  },
+  {
+   "src": 797.5,
+   "beats": 2,
+   "cx": 0.5
+  },
+  {
+   "src": 839.0,
+   "beats": 2,
+   "speed": 1,
+   "cx": 0.5
+  },
+  {
+   "src": 911.0,
+   "beats": 3,
+   "cx": 0.5
+  },
+  {
+   "src": 928.5,
+   "beats": 5,
+   "cx": 0.5,
+   "note": "ready"
+  }
+ ]
+}

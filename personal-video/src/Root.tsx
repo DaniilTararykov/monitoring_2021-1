@@ -9,11 +9,13 @@ import { H as CH, slides, W as CW } from "./Carousel";
 import { DOODLE_FRAMES, doodles } from "./Doodles";
 import { GRWMCards, GRWMMac, GRWMScan, GRWMSplit, GRWM_FRAMES } from "./GRWM";
 import clean from "./clean.json";
+import { Morning, MORNING_FRAMES } from "./Morning";
 
 const reveals = [cute, clean] as unknown as RevealConfig[];
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Morning" component={Morning} durationInFrames={MORNING_FRAMES} fps={30} width={1080} height={1920} />
     <Composition
       id="ChestReel"
       component={ChestReel}
