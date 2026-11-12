@@ -1,0 +1,18 @@
+{
+ "bpm": 112,
+ "clips": [
+  {"src": 2.0}, {"src": 13.0}, {"src": 48.5},
+  {"src": 65.0, "label": "SKIN1004 · centella ampoule foam"}, {"src": 101.0, "speed": 2}, {"src": 119.0, "speed": 2},
+  {"src": 125.5}, {"src": 215.0, "speed": 1.5},
+  {"src": 262.0, "label": "celimax · dual barrier creamy toner"}, {"src": 276.0}, {"src": 281.0},
+  {"src": 312.0}, {"src": 341.0, "speed": 3}, {"src": 353.0, "speed": 3}, {"src": 365.0, "speed": 2},
+  {"src": 450.8, "label": "Dr. Althea · 15% niacinamide serum"}, {"src": 456.0}, {"src": 467.0, "speed": 1.5}, {"src": 485.0},
+  {"src": 527.5, "label": "hair mousse"}, {"src": 545.0, "speed": 2}, {"src": 558.0}, {"src": 611.0, "speed": 3},
+  {"src": 630.0, "speed": 2}, {"src": 665.0, "speed": 1.5}, {"src": 690.0},
+  {"src": 768.5, "label": "Dr. Althea · aqua marine water cream"}, {"src": 792.0}, {"src": 797.5}, {"src": 815.0, "speed": 2},
+  {"src": 839.0}, {"src": 866.0}, {"src": 900.0}, {"src": 911.0}
+ ],
+ "final": {"src": 928.6, "atBeat": 36, "beats": 6},
+ "title": ["my", "morning", "routine"],
+ "segments": [{"beats": 36}, {"beats": 6}]
+}
