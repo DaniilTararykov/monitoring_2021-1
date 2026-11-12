@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Audio, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame } from "remotion";
 import data from "./film.json";
-import { MONO, SERIF } from "./theme";
+import { SANS } from "./theme";
 
 /**
  * "A short film": the full landscape frame, untouched. Type works like cinema:
@@ -30,15 +30,15 @@ const Title: React.FC<{ dur: number }> = ({ dur }) => {
   const ls = interpolate(frame, [0, dur], [0.02, 0.06], clamp);
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-end", paddingBottom: 110, opacity: o }}>
-      <div style={{ fontFamily: MONO, fontSize: 22, color: CREAM, letterSpacing: "0.5em", textShadow: subShadow, marginBottom: 6 }}>A SHORT FILM</div>
-      <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 600, fontSize: 120, color: CREAM, letterSpacing: `${ls}em`, textShadow: subShadow, lineHeight: 1 }}>My Morning Routine</div>
+      <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 22, color: CREAM, letterSpacing: "0.5em", textShadow: subShadow, marginBottom: 14 }}>A SHORT FILM</div>
+      <div style={{ fontFamily: SANS, fontWeight: 700, fontSize: 84, color: CREAM, letterSpacing: `${ls}em`, textShadow: subShadow, lineHeight: 1 }}>My Morning Routine</div>
     </AbsoluteFill>
   );
 };
 
 const Sub: React.FC<{ text: string }> = ({ text }) => (
   <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-end", paddingBottom: 78 }}>
-    <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 600, fontSize: 56, color: CREAM, textShadow: subShadow, textAlign: "center" }}>{text}</div>
+    <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 44, color: CREAM, textShadow: subShadow, textAlign: "center" }}>{text}</div>
   </AbsoluteFill>
 );
 
@@ -48,11 +48,11 @@ const Credits: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#0F0D0B" }}>
       <div style={{ position: "absolute", left: 0, right: 0, top: y, display: "flex", flexDirection: "column", alignItems: "center", gap: 26 }}>
-        <div style={{ fontFamily: MONO, fontSize: 22, color: "#8F887C", letterSpacing: "0.5em", marginBottom: 20 }}>CAST</div>
+        <div style={{ fontFamily: SANS, fontWeight: 600, fontSize: 22, color: "#8F887C", letterSpacing: "0.5em", marginBottom: 20 }}>CAST</div>
         {data.credits.map(([role, name]) => (
           <div key={role} style={{ display: "flex", gap: 34, alignItems: "baseline", width: 1300 }}>
-            <div style={{ flex: 1, textAlign: "right", fontFamily: MONO, fontSize: 24, color: "#8F887C", letterSpacing: "0.12em" }}>{role}</div>
-            <div style={{ flex: 1.4, fontFamily: SERIF, fontStyle: "italic", fontWeight: 600, fontSize: 46, color: CREAM }}>{name}</div>
+            <div style={{ flex: 1, textAlign: "right", fontFamily: SANS, fontWeight: 600, fontSize: 24, color: "#8F887C", letterSpacing: "0.08em" }}>{role}</div>
+            <div style={{ flex: 1.4, fontFamily: SANS, fontWeight: 600, fontSize: 36, color: CREAM }}>{name}</div>
           </div>
         ))}
       </div>
