@@ -55,7 +55,7 @@ for pi, ph in enumerate(cfg["phrases"]):
     f0 = frame
     k = 0
     for a, b in ph["r"]:
-        for s, e in speech(a, b):
+        for s, e in ([[a, b]] if ph.get("raw") else speech(a, b)):
             n = max(3, round((e - s) * FPS))
             s = round(s * FPS) / FPS
             part = os.path.join(TMP, f"{NAME}_p{len(parts):03d}.mp4")
@@ -67,6 +67,7 @@ for pi, ph in enumerate(cfg["phrases"]):
             fade = int(0.008 * sr)
             seg[:fade] *= np.linspace(0, 1, fade)
             seg[-fade:] *= np.linspace(1, 0, fade)
+            seg *= ph.get("vol", 1.0)
             voice.append(seg)
             pieces.append({"from": frame, "to": frame + n, "phrase": pi, "k": k})
             frame += n
@@ -79,7 +80,8 @@ open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", "-movflags", "+faststart",
                 os.path.join(PUB, NAME + "_cut.mp4")], check=True)
 v = np.concatenate(voice)
-v = np.tanh(v / (np.percentile(np.abs(v), 99.5) + 1e-9) * 1.1) * 0.85
+loud = np.concatenate([x for x, ph in zip(voice, [cfg["phrases"][p["phrase"]] for p in pieces]) if not ph.get("raw")] or [v])
+v = np.tanh(v / (np.percentile(np.abs(loud), 99.5) + 1e-9) * 1.1) * 0.85
 sf.write(os.path.join(PUB, NAME + "_voice.wav"), v, sr)
 json.dump({"name": NAME, "frames": frame, "title": cfg.get("title", ""), "pieces": pieces, "subs": subs}, open(OUT, "w"), indent=1)
 print("total", round(frame / FPS, 2), "s,", len(parts), "pieces")

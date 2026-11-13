@@ -1,0 +1,237 @@
+{
+ "name": "looks_e",
+ "frames": 986,
+ "title": "",
+ "pieces": [
+  {
+   "from": 0,
+   "to": 54,
+   "phrase": 0,
+   "k": 0
+  },
+  {
+   "from": 54,
+   "to": 101,
+   "phrase": 1,
+   "k": 0
+  },
+  {
+   "from": 101,
+   "to": 143,
+   "phrase": 2,
+   "k": 0
+  },
+  {
+   "from": 143,
+   "to": 185,
+   "phrase": 3,
+   "k": 0
+  },
+  {
+   "from": 185,
+   "to": 239,
+   "phrase": 4,
+   "k": 0
+  },
+  {
+   "from": 239,
+   "to": 299,
+   "phrase": 5,
+   "k": 0
+  },
+  {
+   "from": 299,
+   "to": 338,
+   "phrase": 6,
+   "k": 0
+  },
+  {
+   "from": 338,
+   "to": 389,
+   "phrase": 7,
+   "k": 0
+  },
+  {
+   "from": 389,
+   "to": 455,
+   "phrase": 8,
+   "k": 0
+  },
+  {
+   "from": 455,
+   "to": 494,
+   "phrase": 9,
+   "k": 0
+  },
+  {
+   "from": 494,
+   "to": 542,
+   "phrase": 10,
+   "k": 0
+  },
+  {
+   "from": 542,
+   "to": 593,
+   "phrase": 11,
+   "k": 0
+  },
+  {
+   "from": 593,
+   "to": 635,
+   "phrase": 12,
+   "k": 0
+  },
+  {
+   "from": 635,
+   "to": 680,
+   "phrase": 13,
+   "k": 0
+  },
+  {
+   "from": 680,
+   "to": 719,
+   "phrase": 14,
+   "k": 0
+  },
+  {
+   "from": 719,
+   "to": 768,
+   "phrase": 15,
+   "k": 0
+  },
+  {
+   "from": 768,
+   "to": 831,
+   "phrase": 16,
+   "k": 0
+  },
+  {
+   "from": 831,
+   "to": 915,
+   "phrase": 17,
+   "k": 0
+  },
+  {
+   "from": 915,
+   "to": 986,
+   "phrase": 18,
+   "k": 0
+  }
+ ],
+ "subs": [
+  {
+   "from": 0,
+   "to": 54,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 54,
+   "to": 101,
+   "text": "Honestly, I don't know what to wear tonight.",
+   "item": ""
+  },
+  {
+   "from": 101,
+   "to": 143,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 143,
+   "to": 185,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 185,
+   "to": 239,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 239,
+   "to": 299,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 299,
+   "to": 338,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 338,
+   "to": 389,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 389,
+   "to": 455,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 455,
+   "to": 494,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 494,
+   "to": 542,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 542,
+   "to": 593,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 593,
+   "to": 635,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 635,
+   "to": 680,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 680,
+   "to": 719,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 719,
+   "to": 768,
+   "text": "I think we're ready!",
+   "item": ""
+  },
+  {
+   "from": 768,
+   "to": 831,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 831,
+   "to": 915,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 915,
+   "to": 986,
+   "text": "Bye! I'm gonna get drunk.",
+   "item": ""
+  }
+ ]
+}

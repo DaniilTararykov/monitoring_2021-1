@@ -1,0 +1,411 @@
+{
+ "name": "looks_f",
+ "frames": 2283,
+ "title": "",
+ "pieces": [
+  {
+   "from": 0,
+   "to": 71,
+   "phrase": 0,
+   "k": 0
+  },
+  {
+   "from": 71,
+   "to": 112,
+   "phrase": 0,
+   "k": 1
+  },
+  {
+   "from": 112,
+   "to": 135,
+   "phrase": 0,
+   "k": 2
+  },
+  {
+   "from": 135,
+   "to": 201,
+   "phrase": 1,
+   "k": 0
+  },
+  {
+   "from": 201,
+   "to": 225,
+   "phrase": 1,
+   "k": 1
+  },
+  {
+   "from": 225,
+   "to": 263,
+   "phrase": 1,
+   "k": 2
+  },
+  {
+   "from": 263,
+   "to": 300,
+   "phrase": 2,
+   "k": 0
+  },
+  {
+   "from": 300,
+   "to": 349,
+   "phrase": 2,
+   "k": 1
+  },
+  {
+   "from": 349,
+   "to": 361,
+   "phrase": 2,
+   "k": 2
+  },
+  {
+   "from": 361,
+   "to": 380,
+   "phrase": 2,
+   "k": 3
+  },
+  {
+   "from": 380,
+   "to": 533,
+   "phrase": 3,
+   "k": 0
+  },
+  {
+   "from": 533,
+   "to": 564,
+   "phrase": 4,
+   "k": 0
+  },
+  {
+   "from": 564,
+   "to": 593,
+   "phrase": 5,
+   "k": 0
+  },
+  {
+   "from": 593,
+   "to": 637,
+   "phrase": 5,
+   "k": 1
+  },
+  {
+   "from": 637,
+   "to": 713,
+   "phrase": 6,
+   "k": 0
+  },
+  {
+   "from": 713,
+   "to": 752,
+   "phrase": 7,
+   "k": 0
+  },
+  {
+   "from": 752,
+   "to": 839,
+   "phrase": 8,
+   "k": 0
+  },
+  {
+   "from": 839,
+   "to": 847,
+   "phrase": 8,
+   "k": 1
+  },
+  {
+   "from": 847,
+   "to": 880,
+   "phrase": 8,
+   "k": 2
+  },
+  {
+   "from": 880,
+   "to": 976,
+   "phrase": 9,
+   "k": 0
+  },
+  {
+   "from": 976,
+   "to": 1042,
+   "phrase": 10,
+   "k": 0
+  },
+  {
+   "from": 1042,
+   "to": 1094,
+   "phrase": 10,
+   "k": 1
+  },
+  {
+   "from": 1094,
+   "to": 1153,
+   "phrase": 11,
+   "k": 0
+  },
+  {
+   "from": 1153,
+   "to": 1288,
+   "phrase": 12,
+   "k": 0
+  },
+  {
+   "from": 1288,
+   "to": 1334,
+   "phrase": 13,
+   "k": 0
+  },
+  {
+   "from": 1334,
+   "to": 1359,
+   "phrase": 13,
+   "k": 1
+  },
+  {
+   "from": 1359,
+   "to": 1369,
+   "phrase": 13,
+   "k": 2
+  },
+  {
+   "from": 1369,
+   "to": 1455,
+   "phrase": 14,
+   "k": 0
+  },
+  {
+   "from": 1455,
+   "to": 1498,
+   "phrase": 15,
+   "k": 0
+  },
+  {
+   "from": 1498,
+   "to": 1511,
+   "phrase": 15,
+   "k": 1
+  },
+  {
+   "from": 1511,
+   "to": 1522,
+   "phrase": 15,
+   "k": 2
+  },
+  {
+   "from": 1522,
+   "to": 1589,
+   "phrase": 16,
+   "k": 0
+  },
+  {
+   "from": 1589,
+   "to": 1632,
+   "phrase": 16,
+   "k": 1
+  },
+  {
+   "from": 1632,
+   "to": 1699,
+   "phrase": 16,
+   "k": 2
+  },
+  {
+   "from": 1699,
+   "to": 1744,
+   "phrase": 17,
+   "k": 0
+  },
+  {
+   "from": 1744,
+   "to": 1818,
+   "phrase": 18,
+   "k": 0
+  },
+  {
+   "from": 1818,
+   "to": 1836,
+   "phrase": 18,
+   "k": 1
+  },
+  {
+   "from": 1836,
+   "to": 1916,
+   "phrase": 19,
+   "k": 0
+  },
+  {
+   "from": 1916,
+   "to": 1947,
+   "phrase": 19,
+   "k": 1
+  },
+  {
+   "from": 1947,
+   "to": 1986,
+   "phrase": 20,
+   "k": 0
+  },
+  {
+   "from": 1986,
+   "to": 2035,
+   "phrase": 21,
+   "k": 0
+  },
+  {
+   "from": 2035,
+   "to": 2169,
+   "phrase": 21,
+   "k": 1
+  },
+  {
+   "from": 2169,
+   "to": 2212,
+   "phrase": 21,
+   "k": 2
+  },
+  {
+   "from": 2212,
+   "to": 2283,
+   "phrase": 22,
+   "k": 0
+  }
+ ],
+ "subs": [
+  {
+   "from": 0,
+   "to": 135,
+   "text": "And now the hardest part is to choose which coat I want to wear.",
+   "item": ""
+  },
+  {
+   "from": 135,
+   "to": 263,
+   "text": "I know that I have one coat that's gonna be very nice in this outfit,",
+   "item": ""
+  },
+  {
+   "from": 263,
+   "to": 380,
+   "text": "but I don't want to wear it because I've been wearing this for the last week, non-stop.",
+   "item": ""
+  },
+  {
+   "from": 380,
+   "to": 533,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 533,
+   "to": 564,
+   "text": "You see, it's nice.",
+   "item": ""
+  },
+  {
+   "from": 564,
+   "to": 637,
+   "text": "And this coat looks very nice with this outfit.",
+   "item": ""
+  },
+  {
+   "from": 637,
+   "to": 713,
+   "text": "But I don't want to wear this coat, so let's try something else.",
+   "item": ""
+  },
+  {
+   "from": 713,
+   "to": 752,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 752,
+   "to": 880,
+   "text": "The first option is a leather jacket. It's very heavy.",
+   "item": ""
+  },
+  {
+   "from": 880,
+   "to": 976,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 976,
+   "to": 1094,
+   "text": "Actually, it's not bad. I thought it's gonna be worse. Maybe I will choose this option.",
+   "item": ""
+  },
+  {
+   "from": 1094,
+   "to": 1153,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 1153,
+   "to": 1288,
+   "text": "This is another option with another leather jacket, which I bought recently, a couple of weeks ago.",
+   "item": ""
+  },
+  {
+   "from": 1288,
+   "to": 1369,
+   "text": "I really like this washed brown color.",
+   "item": ""
+  },
+  {
+   "from": 1369,
+   "to": 1455,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 1455,
+   "to": 1522,
+   "text": "a bit oversized black coat.",
+   "item": ""
+  },
+  {
+   "from": 1522,
+   "to": 1699,
+   "text": "I think it looks nice too, but I don't know if it's a vibe. Let's see how it will be with the bags.",
+   "item": ""
+  },
+  {
+   "from": 1699,
+   "to": 1744,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 1744,
+   "to": 1836,
+   "text": "But let's be honest, this bag doesn't match with this coat.",
+   "item": ""
+  },
+  {
+   "from": 1836,
+   "to": 1947,
+   "text": "I'm gonna be back in one second with my final look.",
+   "item": ""
+  },
+  {
+   "from": 1947,
+   "to": 1986,
+   "text": "",
+   "item": ""
+  },
+  {
+   "from": 1986,
+   "to": 2212,
+   "text": "I think we're ready! So I decided to go with this almost black leather jacket and this bag that I wanted.",
+   "item": ""
+  },
+  {
+   "from": 2212,
+   "to": 2283,
+   "text": "Bye! I'm gonna get drunk.",
+   "item": ""
+  }
+ ]
+}
