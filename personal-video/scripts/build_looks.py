@@ -4,7 +4,7 @@ For every phrase range the script finds speech by loudness, removes silences lon
 than ~0.3 s, cuts those pieces from the 4K source (video) and from a 48 kHz wav
 (voice, short fades at each joint), and writes src/looks_cut.json for the composition.
 
-usage: python build_looks.py <source.mov> <looks.json> <tmp_dir> <public_dir> <out_json>
+usage: python build_looks.py <source.mov> <looks.json> <tmp_dir> <public_dir> <out_json> [name]
 """
 import json
 import os
@@ -15,6 +15,7 @@ import numpy as np
 import soundfile as sf
 
 SRC, CFG, TMP, PUB, OUT = sys.argv[1:6]
+NAME = sys.argv[6] if len(sys.argv) > 6 else "looks"
 FPS = 30
 os.makedirs(TMP, exist_ok=True)
 wav = os.path.join(TMP, "full48.wav")
@@ -57,7 +58,7 @@ for pi, ph in enumerate(cfg["phrases"]):
         for s, e in speech(a, b):
             n = max(3, round((e - s) * FPS))
             s = round(s * FPS) / FPS
-            part = os.path.join(TMP, f"p{len(parts):03d}.mp4")
+            part = os.path.join(TMP, f"{NAME}_p{len(parts):03d}.mp4")
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-t", f"{n / FPS + 0.5:.3f}", "-i", SRC, "-an",
                             "-vf", f"scale=1080:1920,fps={FPS}", "-frames:v", str(n), "-c:v", "libx264", "-preset", "fast",
                             "-crf", "17", "-g", "10", "-pix_fmt", "yuv420p", part], check=True)
@@ -73,12 +74,12 @@ for pi, ph in enumerate(cfg["phrases"]):
     subs.append({"from": f0, "to": frame, "text": ph["text"]})
     print(pi, round((frame - f0) / FPS, 2), ph["text"], flush=True)
 
-lst = os.path.join(TMP, "list.txt")
+lst = os.path.join(TMP, NAME + "_list.txt")
 open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", "-movflags", "+faststart",
-                os.path.join(PUB, "looks_cut.mp4")], check=True)
+                os.path.join(PUB, NAME + "_cut.mp4")], check=True)
 v = np.concatenate(voice)
 v = np.tanh(v / (np.percentile(np.abs(v), 99.5) + 1e-9) * 1.1) * 0.85
-sf.write(os.path.join(PUB, "looks_voice.wav"), v, sr)
-json.dump({"frames": frame, "title": cfg.get("title", ""), "pieces": pieces, "subs": subs}, open(OUT, "w"), indent=1)
+sf.write(os.path.join(PUB, NAME + "_voice.wav"), v, sr)
+json.dump({"name": NAME, "frames": frame, "title": cfg.get("title", ""), "pieces": pieces, "subs": subs}, open(OUT, "w"), indent=1)
 print("total", round(frame / FPS, 2), "s,", len(parts), "pieces")

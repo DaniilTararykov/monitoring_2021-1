@@ -13,13 +13,15 @@ import { Morning, MORNING_FRAMES } from "./Morning";
 import { Triple, TRIPLE_FRAMES } from "./Triple";
 import { Film, FILM_FRAMES } from "./Film";
 import { Routine, ROUTINE_FRAMES } from "./Routine";
-import { Looks, LOOKS_FRAMES } from "./Looks";
+import { Looks, looksCuts } from "./Looks";
 
 const reveals = [cute, clean] as unknown as RevealConfig[];
 
 export const Root: React.FC = () => (
   <>
-    <Composition id="Looks" component={Looks} durationInFrames={LOOKS_FRAMES} fps={30} width={1080} height={1920} />
+    {Object.keys(looksCuts).map((id) => (
+      <Composition key={id} id={id} component={Looks} defaultProps={{ id }} durationInFrames={looksCuts[id].frames} fps={30} width={1080} height={1920} />
+    ))}
     <Composition id="Routine" component={Routine} durationInFrames={ROUTINE_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Film" component={Film} durationInFrames={FILM_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Triple" component={Triple} durationInFrames={TRIPLE_FRAMES} fps={30} width={1080} height={1920} />

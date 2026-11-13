@@ -1,0 +1,409 @@
+{
+ "name": "looks_b",
+ "frames": 2366,
+ "title": "",
+ "pieces": [
+  {
+   "from": 0,
+   "to": 47,
+   "phrase": 0,
+   "k": 0
+  },
+  {
+   "from": 47,
+   "to": 106,
+   "phrase": 1,
+   "k": 0
+  },
+  {
+   "from": 106,
+   "to": 159,
+   "phrase": 2,
+   "k": 0
+  },
+  {
+   "from": 159,
+   "to": 228,
+   "phrase": 2,
+   "k": 1
+  },
+  {
+   "from": 228,
+   "to": 294,
+   "phrase": 3,
+   "k": 0
+  },
+  {
+   "from": 294,
+   "to": 346,
+   "phrase": 4,
+   "k": 0
+  },
+  {
+   "from": 346,
+   "to": 369,
+   "phrase": 4,
+   "k": 1
+  },
+  {
+   "from": 369,
+   "to": 457,
+   "phrase": 5,
+   "k": 0
+  },
+  {
+   "from": 457,
+   "to": 596,
+   "phrase": 6,
+   "k": 0
+  },
+  {
+   "from": 596,
+   "to": 721,
+   "phrase": 7,
+   "k": 0
+  },
+  {
+   "from": 721,
+   "to": 728,
+   "phrase": 8,
+   "k": 0
+  },
+  {
+   "from": 728,
+   "to": 788,
+   "phrase": 8,
+   "k": 1
+  },
+  {
+   "from": 788,
+   "to": 828,
+   "phrase": 8,
+   "k": 2
+  },
+  {
+   "from": 828,
+   "to": 902,
+   "phrase": 9,
+   "k": 0
+  },
+  {
+   "from": 902,
+   "to": 943,
+   "phrase": 9,
+   "k": 1
+  },
+  {
+   "from": 943,
+   "to": 966,
+   "phrase": 9,
+   "k": 2
+  },
+  {
+   "from": 966,
+   "to": 1032,
+   "phrase": 10,
+   "k": 0
+  },
+  {
+   "from": 1032,
+   "to": 1056,
+   "phrase": 10,
+   "k": 1
+  },
+  {
+   "from": 1056,
+   "to": 1094,
+   "phrase": 10,
+   "k": 2
+  },
+  {
+   "from": 1094,
+   "to": 1131,
+   "phrase": 11,
+   "k": 0
+  },
+  {
+   "from": 1131,
+   "to": 1180,
+   "phrase": 11,
+   "k": 1
+  },
+  {
+   "from": 1180,
+   "to": 1192,
+   "phrase": 11,
+   "k": 2
+  },
+  {
+   "from": 1192,
+   "to": 1211,
+   "phrase": 11,
+   "k": 3
+  },
+  {
+   "from": 1211,
+   "to": 1242,
+   "phrase": 12,
+   "k": 0
+  },
+  {
+   "from": 1242,
+   "to": 1329,
+   "phrase": 13,
+   "k": 0
+  },
+  {
+   "from": 1329,
+   "to": 1358,
+   "phrase": 14,
+   "k": 0
+  },
+  {
+   "from": 1358,
+   "to": 1420,
+   "phrase": 15,
+   "k": 0
+  },
+  {
+   "from": 1420,
+   "to": 1466,
+   "phrase": 16,
+   "k": 0
+  },
+  {
+   "from": 1466,
+   "to": 1491,
+   "phrase": 16,
+   "k": 1
+  },
+  {
+   "from": 1491,
+   "to": 1501,
+   "phrase": 16,
+   "k": 2
+  },
+  {
+   "from": 1501,
+   "to": 1550,
+   "phrase": 17,
+   "k": 0
+  },
+  {
+   "from": 1550,
+   "to": 1593,
+   "phrase": 17,
+   "k": 1
+  },
+  {
+   "from": 1593,
+   "to": 1606,
+   "phrase": 17,
+   "k": 2
+  },
+  {
+   "from": 1606,
+   "to": 1617,
+   "phrase": 17,
+   "k": 3
+  },
+  {
+   "from": 1617,
+   "to": 1684,
+   "phrase": 18,
+   "k": 0
+  },
+  {
+   "from": 1684,
+   "to": 1726,
+   "phrase": 18,
+   "k": 1
+  },
+  {
+   "from": 1726,
+   "to": 1775,
+   "phrase": 19,
+   "k": 0
+  },
+  {
+   "from": 1775,
+   "to": 1909,
+   "phrase": 20,
+   "k": 0
+  },
+  {
+   "from": 1909,
+   "to": 1948,
+   "phrase": 20,
+   "k": 1
+  },
+  {
+   "from": 1948,
+   "to": 1990,
+   "phrase": 21,
+   "k": 0
+  },
+  {
+   "from": 1990,
+   "to": 2041,
+   "phrase": 21,
+   "k": 1
+  },
+  {
+   "from": 2041,
+   "to": 2146,
+   "phrase": 22,
+   "k": 0
+  },
+  {
+   "from": 2146,
+   "to": 2227,
+   "phrase": 23,
+   "k": 0
+  },
+  {
+   "from": 2227,
+   "to": 2295,
+   "phrase": 24,
+   "k": 0
+  },
+  {
+   "from": 2295,
+   "to": 2366,
+   "phrase": 25,
+   "k": 0
+  }
+ ],
+ "subs": [
+  {
+   "from": 0,
+   "to": 47,
+   "text": "Honestly, I don't know what to wear tonight."
+  },
+  {
+   "from": 47,
+   "to": 106,
+   "text": "I want to be casual and simple."
+  },
+  {
+   "from": 106,
+   "to": 228,
+   "text": "I love these jeans. They're from Zara, and lately I've been obsessed with them."
+  },
+  {
+   "from": 228,
+   "to": 294,
+   "text": "And this is the belt I'm gonna use."
+  },
+  {
+   "from": 294,
+   "to": 369,
+   "text": "It's been with me for decades."
+  },
+  {
+   "from": 369,
+   "to": 457,
+   "text": "It's giving the seat belt in the airplane."
+  },
+  {
+   "from": 457,
+   "to": 596,
+   "text": "And I have this long sleeve that I want to wear tonight. This is from a Russian brand."
+  },
+  {
+   "from": 596,
+   "to": 721,
+   "text": "I really like the sleeves because they're giving the same vibe as the jeans."
+  },
+  {
+   "from": 721,
+   "to": 828,
+   "text": "For the shoes, I'm gonna wear these boots. They're also from Zara."
+  },
+  {
+   "from": 828,
+   "to": 966,
+   "text": "And now the hardest part is to choose which coat I want to wear."
+  },
+  {
+   "from": 966,
+   "to": 1094,
+   "text": "I know that I have one coat that's gonna be very nice in this outfit,"
+  },
+  {
+   "from": 1094,
+   "to": 1211,
+   "text": "but I don't want to wear it because I've been wearing this for the last week, non-stop."
+  },
+  {
+   "from": 1211,
+   "to": 1242,
+   "text": "You see, it's nice."
+  },
+  {
+   "from": 1242,
+   "to": 1329,
+   "text": "The first option is a leather jacket."
+  },
+  {
+   "from": 1329,
+   "to": 1358,
+   "text": "Actually, it's not bad."
+  },
+  {
+   "from": 1358,
+   "to": 1420,
+   "text": "This is another option with another leather jacket."
+  },
+  {
+   "from": 1420,
+   "to": 1501,
+   "text": "I really like this washed brown color."
+  },
+  {
+   "from": 1501,
+   "to": 1617,
+   "text": "Okay, the last one is a bit oversized black coat."
+  },
+  {
+   "from": 1617,
+   "to": 1726,
+   "text": "I think it looks nice too, but I don't know if it's a vibe."
+  },
+  {
+   "from": 1726,
+   "to": 1775,
+   "text": "I think we're ready!"
+  },
+  {
+   "from": 1775,
+   "to": 1948,
+   "text": "I decided to go with this almost black leather jacket and this bag that I wanted."
+  },
+  {
+   "from": 1948,
+   "to": 2041,
+   "text": "I made some messy hair. I have my favorite rings on."
+  },
+  {
+   "from": 2041,
+   "to": 2146,
+   "text": "For the perfume, I decided to go with Kilian, A Taste of Heaven."
+  },
+  {
+   "from": 2146,
+   "to": 2227,
+   "text": "I'm obsessed with heavy smells."
+  },
+  {
+   "from": 2227,
+   "to": 2295,
+   "text": "Let me know, guys: what do you think about this look?"
+  },
+  {
+   "from": 2295,
+   "to": 2366,
+   "text": "Bye! I'm gonna get drunk."
+  }
+ ]
+}
