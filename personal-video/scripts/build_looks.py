@@ -71,7 +71,7 @@ for pi, ph in enumerate(cfg["phrases"]):
             pieces.append({"from": frame, "to": frame + n, "phrase": pi, "k": k})
             frame += n
             k += 1
-    subs.append({"from": f0, "to": frame, "text": ph["text"]})
+    subs.append({"from": f0, "to": frame, "text": ph["text"], "item": ph.get("item", "")})
     print(pi, round((frame - f0) / FPS, 2), ph["text"], flush=True)
 
 lst = os.path.join(TMP, NAME + "_list.txt")

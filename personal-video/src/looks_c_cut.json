@@ -1,0 +1,273 @@
+{
+ "name": "looks_c",
+ "frames": 1519,
+ "title": "tonight's look",
+ "pieces": [
+  {
+   "from": 0,
+   "to": 47,
+   "phrase": 0,
+   "k": 0
+  },
+  {
+   "from": 47,
+   "to": 100,
+   "phrase": 1,
+   "k": 0
+  },
+  {
+   "from": 100,
+   "to": 169,
+   "phrase": 1,
+   "k": 1
+  },
+  {
+   "from": 169,
+   "to": 235,
+   "phrase": 2,
+   "k": 0
+  },
+  {
+   "from": 235,
+   "to": 323,
+   "phrase": 3,
+   "k": 0
+  },
+  {
+   "from": 323,
+   "to": 462,
+   "phrase": 4,
+   "k": 0
+  },
+  {
+   "from": 462,
+   "to": 469,
+   "phrase": 5,
+   "k": 0
+  },
+  {
+   "from": 469,
+   "to": 529,
+   "phrase": 5,
+   "k": 1
+  },
+  {
+   "from": 529,
+   "to": 569,
+   "phrase": 5,
+   "k": 2
+  },
+  {
+   "from": 569,
+   "to": 656,
+   "phrase": 6,
+   "k": 0
+  },
+  {
+   "from": 656,
+   "to": 685,
+   "phrase": 7,
+   "k": 0
+  },
+  {
+   "from": 685,
+   "to": 747,
+   "phrase": 8,
+   "k": 0
+  },
+  {
+   "from": 747,
+   "to": 793,
+   "phrase": 9,
+   "k": 0
+  },
+  {
+   "from": 793,
+   "to": 818,
+   "phrase": 9,
+   "k": 1
+  },
+  {
+   "from": 818,
+   "to": 828,
+   "phrase": 9,
+   "k": 2
+  },
+  {
+   "from": 828,
+   "to": 877,
+   "phrase": 10,
+   "k": 0
+  },
+  {
+   "from": 877,
+   "to": 920,
+   "phrase": 10,
+   "k": 1
+  },
+  {
+   "from": 920,
+   "to": 933,
+   "phrase": 10,
+   "k": 2
+  },
+  {
+   "from": 933,
+   "to": 944,
+   "phrase": 10,
+   "k": 3
+  },
+  {
+   "from": 944,
+   "to": 1011,
+   "phrase": 11,
+   "k": 0
+  },
+  {
+   "from": 1011,
+   "to": 1053,
+   "phrase": 11,
+   "k": 1
+  },
+  {
+   "from": 1053,
+   "to": 1102,
+   "phrase": 12,
+   "k": 0
+  },
+  {
+   "from": 1102,
+   "to": 1236,
+   "phrase": 13,
+   "k": 0
+  },
+  {
+   "from": 1236,
+   "to": 1275,
+   "phrase": 13,
+   "k": 1
+  },
+  {
+   "from": 1275,
+   "to": 1380,
+   "phrase": 14,
+   "k": 0
+  },
+  {
+   "from": 1380,
+   "to": 1448,
+   "phrase": 15,
+   "k": 0
+  },
+  {
+   "from": 1448,
+   "to": 1519,
+   "phrase": 16,
+   "k": 0
+  }
+ ],
+ "subs": [
+  {
+   "from": 0,
+   "to": 47,
+   "text": "Honestly, I don't know what to wear tonight.",
+   "item": ""
+  },
+  {
+   "from": 47,
+   "to": 169,
+   "text": "I love these jeans. They're from Zara, and lately I've been obsessed with them.",
+   "item": "jeans \u00b7 Zara"
+  },
+  {
+   "from": 169,
+   "to": 235,
+   "text": "And this is the belt I'm gonna use.",
+   "item": "belt \u00b7 vintage"
+  },
+  {
+   "from": 235,
+   "to": 323,
+   "text": "It's giving the seat belt in the airplane.",
+   "item": ""
+  },
+  {
+   "from": 323,
+   "to": 462,
+   "text": "And I have this long sleeve that I want to wear tonight. This is from a Russian brand.",
+   "item": "long sleeve"
+  },
+  {
+   "from": 462,
+   "to": 569,
+   "text": "For the shoes, I'm gonna wear these boots. They're also from Zara.",
+   "item": "boots \u00b7 Zara"
+  },
+  {
+   "from": 569,
+   "to": 656,
+   "text": "The first option is a leather jacket.",
+   "item": ""
+  },
+  {
+   "from": 656,
+   "to": 685,
+   "text": "Actually, it's not bad.",
+   "item": ""
+  },
+  {
+   "from": 685,
+   "to": 747,
+   "text": "This is another option with another leather jacket.",
+   "item": ""
+  },
+  {
+   "from": 747,
+   "to": 828,
+   "text": "I really like this washed brown color.",
+   "item": ""
+  },
+  {
+   "from": 828,
+   "to": 944,
+   "text": "Okay, the last one is a bit oversized black coat.",
+   "item": ""
+  },
+  {
+   "from": 944,
+   "to": 1053,
+   "text": "I think it looks nice too, but I don't know if it's a vibe.",
+   "item": ""
+  },
+  {
+   "from": 1053,
+   "to": 1102,
+   "text": "I think we're ready!",
+   "item": ""
+  },
+  {
+   "from": 1102,
+   "to": 1275,
+   "text": "I decided to go with this almost black leather jacket and this bag that I wanted.",
+   "item": "leather jacket + bag"
+  },
+  {
+   "from": 1275,
+   "to": 1380,
+   "text": "For the perfume, I decided to go with Kilian, A Taste of Heaven.",
+   "item": "perfume \u00b7 Kilian"
+  },
+  {
+   "from": 1380,
+   "to": 1448,
+   "text": "Let me know, guys: what do you think about this look?",
+   "item": ""
+  },
+  {
+   "from": 1448,
+   "to": 1519,
+   "text": "Bye! I'm gonna get drunk.",
+   "item": ""
+  }
+ ]
+}
