@@ -7,7 +7,7 @@
  },
  "segments": [
   {
-   "src": 5,
+   "src": 5.1,
    "beats": 4,
    "kind": "title"
   },
@@ -17,32 +17,32 @@
    "product": 0
   },
   {
-   "src": 102,
+   "src": 102.0,
    "beats": 3
   },
   {
-   "src": 221,
+   "src": 222.1,
    "beats": 3
   },
   {
-   "src": 261.5,
+   "src": 266.5,
    "beats": 4,
    "product": 1
   },
   {
-   "src": 277.2,
+   "src": 277.4,
    "beats": 3
   },
   {
-   "src": 287,
+   "src": 286.3,
+   "beats": 4
+  },
+  {
+   "src": 439.1,
    "beats": 3
   },
   {
-   "src": 360.4,
-   "beats": 3
-  },
-  {
-   "src": 414,
+   "src": 350.9,
    "beats": 2
   },
   {
@@ -51,11 +51,11 @@
    "product": 2
   },
   {
-   "src": 456,
+   "src": 459.1,
    "beats": 2
   },
   {
-   "src": 479,
+   "src": 475.2,
    "beats": 3
   },
   {
@@ -64,24 +64,28 @@
    "product": 3
   },
   {
-   "src": 551,
+   "src": 537.0,
    "beats": 3
   },
   {
-   "src": 683,
+   "src": 551.0,
+   "beats": 3
+  },
+  {
+   "src": 683.0,
    "beats": 2
   },
   {
-   "src": 766.5,
+   "src": 775.3,
    "beats": 4,
    "product": 4
   },
   {
-   "src": 791,
+   "src": 793.1,
    "beats": 3
   },
   {
-   "src": 839,
+   "src": 839.0,
    "beats": 2
   },
   {
@@ -89,12 +93,12 @@
    "beats": 3
   },
   {
-   "src": 925.6,
+   "src": 925.8,
    "beats": 2
   },
   {
-   "src": 931.25,
-   "beats": 7,
+   "src": 931.6,
+   "beats": 3,
    "kind": "end",
    "play": 1.4
   }
