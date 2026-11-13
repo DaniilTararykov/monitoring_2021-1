@@ -140,9 +140,9 @@ const Title: React.FC<{ dur: number }> = ({ dur }) => {
   return (
     <AbsoluteFill style={{ opacity: o }}>
       <div style={{ position: "absolute", left: 100, top: 300, fontFamily: SANS, fontWeight: 800, fontSize: 84, lineHeight: 1.08, color: WHITE, textShadow: shadow, letterSpacing: "-0.01em" }}>
-        my morning
-        <br />
-        routine
+        {((data as { title?: string[] }).title ?? ["my morning", "routine"]).map((l, i) => (
+          <div key={i}>{l}</div>
+        ))}
       </div>
       <Boil id="title">
         <Draw d="M102,506 C190,490 300,516 400,498 S440,494 452,502" a={10} b={24} w={9} />

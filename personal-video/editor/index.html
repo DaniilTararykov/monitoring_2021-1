@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Редактор ролика</title>
+<style>
+  :root { --bg:#141210; --card:#211e1a; --line:#38332c; --text:#f4efe6; --sub:#a39b8e; --acc:#ff5a36; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.4 -apple-system, system-ui, sans-serif; padding-bottom:110px; }
+  header { position:sticky; top:0; z-index:5; background:var(--bg); }
+  video { display:block; width:100%; background:#000; aspect-ratio:16/9; }
+  .bar { display:flex; gap:8px; padding:8px 12px; align-items:center; border-bottom:1px solid var(--line); }
+  .bar .t { margin-left:auto; color:var(--sub); font-variant-numeric:tabular-nums; font-size:14px; }
+  button { font:inherit; color:var(--text); background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px 12px; min-height:44px; }
+  button.acc { background:var(--acc); border-color:var(--acc); color:#fff; font-weight:700; }
+  button:disabled { opacity:.45; }
+  section { padding:12px; }
+  h2 { font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--sub); margin:6px 0 8px; }
+  .seg { display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--card); border:1px solid var(--line); border-radius:12px; margin-bottom:6px; }
+  .seg.sel { border-color:var(--acc); }
+  .seg .n { width:26px; color:var(--sub); font-variant-numeric:tabular-nums; }
+  .seg .k { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .seg .k small { color:var(--sub); display:block; }
+  .seg .d { color:var(--sub); font-variant-numeric:tabular-nums; font-size:14px; text-align:right; }
+  .panel { background:var(--card); border:1px solid var(--acc); border-radius:12px; padding:12px; margin:-2px 0 10px; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:8px 0; }
+  .row > span { color:var(--sub); font-size:14px; width:100%; }
+  .row button { flex:1; padding:10px 4px; }
+  input[type=range] { width:100%; height:36px; accent-color:var(--acc); }
+  input[type=text], select { font:inherit; width:100%; color:var(--text); background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px; min-height:44px; }
+  details { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin-bottom:8px; }
+  summary { font-weight:600; }
+  .prod { border-top:1px solid var(--line); margin-top:10px; padding-top:10px; display:grid; gap:6px; }
+  footer { position:fixed; left:0; right:0; bottom:0; background:var(--bg); border-top:1px solid var(--line); padding:10px 12px calc(10px + env(safe-area-inset-bottom)); display:flex; gap:8px; align-items:center; }
+  footer .st { flex:1; font-size:14px; color:var(--sub); }
+  #result video { border-radius:12px; margin:8px 0; }
+  a { color:var(--acc); }
+</style>
+</head>
+<body>
+<header>
+  <video id="v" src="/strip.mp4" playsinline muted controls preload="metadata"></video>
+  <div class="bar">
+    <button id="playSeg">▶ Кадр</button>
+    <button id="playAll">▶ Весь ролик</button>
+    <span class="t" id="total"></span>
+  </div>
+</header>
+
+<section>
+  <h2>Кадры по порядку</h2>
+  <div id="list"></div>
+  <button id="add" style="width:100%">+ Добавить кадр в конец</button>
+</section>
+
+<section>
+  <details>
+    <summary>Тексты: заголовок и продукты</summary>
+    <div class="prod">
+      <input type="text" id="t0" placeholder="Заголовок, строка 1">
+      <input type="text" id="t1" placeholder="Заголовок, строка 2">
+    </div>
+    <div id="prods"></div>
+  </details>
+  <div id="result"></div>
+</section>
+
+<footer>
+  <div class="st" id="status">Загрузка…</div>
+  <button class="acc" id="render">Собрать ролик</button>
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const v = $("v");
+let cfg = null, sel = 0, beat = 0.5, stopAt = null, chain = null, saveTimer = null, lastDone = 0;
+
+const fmt = (t) => { const m = Math.floor(t / 60); return m + ":" + (t - m * 60).toFixed(1).padStart(4, "0"); };
+const dur = (s) => s.beats * beat;
+const kind = (i) => i === 0 ? "Заставка" : i === cfg.segments.length - 1 ? "Финал" : "Кадр";
+
+function save() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    cfg.segments.forEach((s, i) => { if (i === 0) s.kind = "title"; else if (i === cfg.segments.length - 1) s.kind = "end"; else delete s.kind; if (i !== cfg.segments.length - 1) delete s.play; });
+    await fetch("/api/config", { method: "POST", body: JSON.stringify(cfg) });
+    $("status").textContent = "Сохранено";
+  }, 400);
+}
+
+function seek(t) { stopAt = null; chain = null; v.pause(); v.currentTime = t; }
+
+function draw() {
+  const total = cfg.segments.reduce((n, s) => n + dur(s), 0);
+  $("total").textContent = "Длина ролика: " + total.toFixed(1) + " с";
+  const list = $("list"); list.innerHTML = "";
+  cfg.segments.forEach((s, i) => {
+    const p = s.product !== undefined ? cfg.products[s.product] : null;
+    const row = document.createElement("div");
+    row.className = "seg" + (i === sel ? " sel" : "");
+    row.innerHTML = `<div class="n">${i + 1}</div><div class="k">${p ? "Продукт: " + p.brand : kind(i)}<small>начало ${fmt(s.src)}</small></div><div class="d">${dur(s).toFixed(1)} с</div>`;
+    row.onclick = () => { sel = i; seek(s.src); draw(); };
+    list.appendChild(row);
+    if (i === sel) list.appendChild(panel(s, i));
+  });
+}
+
+function btn(label, fn) { const b = document.createElement("button"); b.textContent = label; b.onclick = (e) => { e.stopPropagation(); fn(); }; return b; }
+function row(title, ...els) { const r = document.createElement("div"); r.className = "row"; const sp = document.createElement("span"); sp.textContent = title; r.appendChild(sp); els.forEach((e) => r.appendChild(e)); return r; }
+
+function panel(s, i) {
+  const el = document.createElement("div"); el.className = "panel";
+  const setSrc = (t) => { s.src = Math.max(0, Math.min((v.duration || 936) - 0.5, Math.round(t * 10) / 10)); seek(s.src); save(); draw(); };
+  const rng = document.createElement("input"); rng.type = "range"; rng.min = 0; rng.max = Math.floor(v.duration || 936); rng.step = 0.5; rng.value = s.src;
+  rng.oninput = () => { s.src = +rng.value; v.currentTime = s.src; };
+  rng.onchange = () => { save(); draw(); };
+  el.appendChild(row("Начало кадра: " + fmt(s.src) + " (двигай ползунок или перемотай видео сверху)", rng));
+  el.appendChild(row("", btn("−5 с", () => setSrc(s.src - 5)), btn("−1 с", () => setSrc(s.src - 1)), btn("−0.1", () => setSrc(s.src - 0.1)), btn("+0.1", () => setSrc(s.src + 0.1)), btn("+1 с", () => setSrc(s.src + 1)), btn("+5 с", () => setSrc(s.src + 5))));
+  el.appendChild(row("", btn("Начать с момента, который сейчас на видео", () => setSrc(v.currentTime))));
+  el.appendChild(row("Длина: " + dur(s).toFixed(1) + " с", btn("− короче", () => { s.beats = Math.max(1, s.beats - 1); save(); draw(); }), btn("+ длиннее", () => { s.beats = Math.min(16, s.beats + 1); save(); draw(); })));
+  if (i === cfg.segments.length - 1) {
+    const pl = s.play ?? 0;
+    el.appendChild(row(pl ? "Стоп-кадр через " + pl.toFixed(1) + " с после начала, дальше картинка замирает" : "Без стоп-кадра", btn("− раньше", () => { s.play = Math.max(0.2, (s.play ?? 1) - 0.1); save(); draw(); }), btn("+ позже", () => { s.play = Math.min(dur(s), (s.play ?? 1) + 0.1); save(); draw(); }), btn("Убрать", () => { delete s.play; save(); draw(); })));
+  }
+  const selP = document.createElement("select");
+  selP.innerHTML = `<option value="">обычный кадр, без подписи</option>` + cfg.products.map((p, k) => `<option value="${k}">подпись продукта ${k + 1}: ${p.brand}</option>`).join("");
+  selP.value = s.product ?? "";
+  selP.onchange = () => { if (selP.value === "") delete s.product; else s.product = +selP.value; save(); draw(); };
+  selP.onclick = (e) => e.stopPropagation();
+  el.appendChild(row("Что это за кадр", selP));
+  const mv = (d) => { const j = i + d; if (j < 0 || j >= cfg.segments.length) return; [cfg.segments[i], cfg.segments[j]] = [cfg.segments[j], cfg.segments[i]]; sel = j; save(); draw(); };
+  el.appendChild(row("Порядок и удаление", btn("↑ Выше", () => mv(-1)), btn("↓ Ниже", () => mv(1)), btn("Копия", () => { cfg.segments.splice(i + 1, 0, { src: s.src, beats: s.beats }); sel = i + 1; save(); draw(); }), btn("Удалить", () => { if (cfg.segments.length > 2 && confirm("Удалить кадр " + (i + 1) + "?")) { cfg.segments.splice(i, 1); sel = Math.min(sel, cfg.segments.length - 1); save(); draw(); } })));
+  return el;
+}
+
+function drawTexts() {
+  cfg.title = cfg.title || ["my morning", "routine"];
+  [0, 1].forEach((k) => { const inp = $("t" + k); inp.value = cfg.title[k] || ""; inp.oninput = () => { cfg.title = [$("t0").value, $("t1").value].filter((x) => x); save(); }; });
+  const box = $("prods"); box.innerHTML = "";
+  cfg.products.forEach((p, k) => {
+    const d = document.createElement("div"); d.className = "prod";
+    d.innerHTML = `<div style="color:var(--sub)">Продукт ${k + 1}</div>`;
+    [["step", "Шаг (cleanser, toner…)"], ["brand", "Марка, крупно"], ["name", "Название, мелко"]].forEach(([f, ph]) => {
+      const inp = document.createElement("input"); inp.type = "text"; inp.placeholder = ph; inp.value = p[f] || "";
+      inp.oninput = () => { p[f] = inp.value; save(); };
+      inp.onchange = draw;
+      d.appendChild(inp);
+    });
+    box.appendChild(d);
+  });
+}
+
+v.addEventListener("timeupdate", () => {
+  if (stopAt !== null && v.currentTime >= stopAt) {
+    if (chain !== null && chain + 1 < cfg.segments.length) { chain++; sel = chain; const s = cfg.segments[chain]; v.currentTime = s.src; stopAt = s.src + (s.play ?? dur(s)); draw(); }
+    else { v.pause(); stopAt = null; chain = null; }
+  }
+});
+$("playSeg").onclick = () => { const s = cfg.segments[sel]; chain = null; v.currentTime = s.src; stopAt = s.src + dur(s); v.play(); };
+$("playAll").onclick = () => { chain = 0; sel = 0; const s = cfg.segments[0]; v.currentTime = s.src; stopAt = s.src + dur(s); draw(); v.play(); };
+$("add").onclick = () => { const last = cfg.segments.length - 1; cfg.segments.splice(last, 0, { src: Math.round(v.currentTime * 10) / 10, beats: 3 }); sel = last; save(); draw(); };
+
+async function poll() {
+  const st = await (await fetch("/api/status")).json();
+  $("render").disabled = st.running;
+  if (st.running) $("status").textContent = "Собираю: " + st.step + "…";
+  else if (st.error) $("status").textContent = "Ошибка: " + st.error.slice(-160);
+  else if (st.done !== lastDone) {
+    lastDone = st.done;
+    $("status").textContent = "Готово";
+    const u = "/out.mp4?t=" + Date.now();
+    $("result").innerHTML = `<h2>Готовый ролик</h2><video src="${u}" controls playsinline></video><a href="${u}" download="morning-routine.mp4">Скачать ролик</a>`;
+    $("result").scrollIntoView({ behavior: "smooth" });
+  }
+  if (st.running) setTimeout(poll, 2000);
+}
+$("render").onclick = async () => {
+  clearTimeout(saveTimer);
+  await fetch("/api/config", { method: "POST", body: JSON.stringify(cfg) });
+  await fetch("/api/render", { method: "POST" });
+  $("status").textContent = "Собираю, это займёт 2–3 минуты…";
+  $("render").disabled = true;
+  setTimeout(poll, 1500);
+};
+
+(async () => {
+  cfg = await (await fetch("/api/config")).json();
+  beat = 60 / cfg.bpm;
+  const st = await (await fetch("/api/status")).json(); lastDone = st.done;
+  draw(); drawTexts();
+  $("status").textContent = "Выбери кадр и правь";
+  v.addEventListener("loadedmetadata", draw, { once: true });
+  v.currentTime = cfg.segments[0].src;
+  if (st.running) poll();
+})();
+</script>
+</body>
+</html>
