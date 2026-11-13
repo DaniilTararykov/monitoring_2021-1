@@ -36,6 +36,21 @@
   summary { font-weight: 600; min-height: 28px; }
   .prod { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 10px; display: grid; gap: 6px; }
   .empty { color: var(--sub); padding: 24px 0; }
+  .trim { position: fixed; inset: 0; z-index: 20; background: #000; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .trim[hidden] { display: none; }
+  .trim .view { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+  .trim .big { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background: #000 no-repeat; background-size: 1000% 1000%; }
+  .trim .stripwrap { position: relative; height: 64px; }
+  .trim .strip { display: flex; height: 64px; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .trim .strip::-webkit-scrollbar { display: none; }
+  .trim .strip .t { flex: none; width: 64px; height: 64px; background: #111 no-repeat; background-size: 1000% 1000%; filter: brightness(.55); }
+  .trim .pad { flex: none; }
+  .trim .win { position: absolute; top: -3px; bottom: -3px; border: 3px solid #fff; border-radius: 8px; pointer-events: none; box-shadow: 0 0 0 2000px rgba(0,0,0,.0); backdrop-filter: brightness(1.8); -webkit-backdrop-filter: brightness(1.8); }
+  .trim .len { text-align: center; padding: 10px 0 2px; font-variant-numeric: tabular-nums; }
+  .trim .len small { color: var(--sub); }
+  .trim .ctl { display: flex; gap: 8px; align-items: center; padding-block: 10px 14px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .trim .ctl .sp { flex: 1; }
+  .trim .ok { background: #19c8d6; border-color: #19c8d6; color: #00181b; font-weight: 700; }
   footer { position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg); border-top: 1px solid var(--line); padding-block: 10px calc(10px + env(safe-area-inset-bottom, 0px)); }
   footer .in { display: flex; gap: 10px; align-items: center; }
   footer .st { flex: 1; min-width: 0; font-size: 14px; color: var(--sub); }
@@ -67,6 +82,22 @@
     </div>
     <div id="prods"></div>
   </details>
+</div>
+
+<div class="trim" id="trim" hidden>
+  <div class="view"><div class="big" id="big"></div></div>
+  <div class="stripwrap">
+    <div class="strip" id="strip"></div>
+    <div class="win" id="win"></div>
+  </div>
+  <div class="len"><span id="tlen"></span> <small id="tpos"></small></div>
+  <div class="ctl">
+    <button type="button" id="tback" aria-label="Назад без изменений">‹</button>
+    <button type="button" id="tminus">− короче</button>
+    <button type="button" id="tplus">+ длиннее</button>
+    <span class="sp"></span>
+    <button type="button" class="ok" id="tok">Подтвердить</button>
+  </div>
 </div>
 
 <footer>
@@ -152,14 +183,7 @@ function draw() {
 
 function panel(s, i) {
   const n = cfg.segments.length, box = el("div", "panel");
-  const label = el("span", "", "Начало кадра: " + fmt(s.src));
-  const rng = el("input"); rng.type = "range"; rng.id = "start-slider"; rng.min = 0; rng.max = LAST; rng.step = STEP; rng.value = s.src;
-  rng.setAttribute("aria-label", "Начало кадра");
-  rng.oninput = () => { stop(); s.src = +rng.value; show(s.src); label.textContent = "Начало кадра: " + fmt(s.src); };
-  rng.onchange = () => { save(); draw(); };
-  const r1 = el("div", "row"); r1.appendChild(label); r1.appendChild(rng); box.appendChild(r1);
-  const nudge = (d) => () => { stop(); s.src = clampT(s.src + d); show(s.src); save(); draw(); };
-  box.appendChild(row("", btn("−5 с", nudge(-5)), btn("−0.5", nudge(-0.5)), btn("+0.5", nudge(0.5)), btn("+5 с", nudge(5))));
+  box.appendChild(row("Начало кадра: " + fmt(s.src), btn("Выбрать момент на ленте", () => openTrim(i))));
   box.appendChild(row("Длина: " + dur(s).toFixed(1) + " с", btn("− короче", () => { s.beats = Math.max(1, s.beats - 1); save(); draw(); }), btn("+ длиннее", () => { s.beats = Math.min(16, s.beats + 1); save(); draw(); })));
   if (i === n - 1) {
     box.appendChild(row(s.play ? "Картинка замирает через " + s.play.toFixed(1) + " с после начала" : "Без стоп-кадра",
@@ -199,6 +223,51 @@ function drawTexts() {
     box.appendChild(d);
   });
 }
+
+/* Trim view: the whole take as a film strip that scrolls under a fixed window. */
+const PX = 32, THUMB = 2; // 32 px per second, one thumbnail per 2 s
+let trim = null, loop = null, settle = null;
+function buildStrip() {
+  const st = $("strip"); if (st.childElementCount) return;
+  const pad = () => el("div", "pad");
+  st.appendChild(pad());
+  for (let t = 0; t <= LAST; t += THUMB) { const d = el("div", "t"); paint(d, t); st.appendChild(d); }
+  st.appendChild(pad());
+}
+function trimLayout() {
+  const st = $("strip"), w = st.clientWidth, len = trim.beats * beat, ww = Math.max(18, len * PX);
+  const left = Math.max(16, (w - ww) / 2);
+  st.firstChild.style.width = left + "px"; st.lastChild.style.width = (w - left) + "px";
+  const win = $("win"); win.style.left = left + "px"; win.style.width = ww + "px";
+  $("tlen").textContent = len.toFixed(1) + " с";
+}
+function trimShow(t) { paint($("big"), t); $("tpos").textContent = "с " + fmt(trim.src); }
+function trimLoop() {
+  clearInterval(loop); let t = trim.src; trimShow(t);
+  loop = setInterval(() => { t += STEP; if (t >= trim.src + trim.beats * beat) t = trim.src; trimShow(t); }, STEP * 1000);
+}
+function openTrim(i) {
+  stop(); const s = cfg.segments[i];
+  trim = { i, src: s.src, beats: s.beats };
+  $("trim").hidden = false; buildStrip(); trimLayout();
+  $("strip").scrollLeft = trim.src * PX; trimLoop();
+}
+function closeTrim(apply) {
+  clearInterval(loop); clearTimeout(settle); $("trim").hidden = true;
+  if (apply) { const s = cfg.segments[trim.i]; s.src = trim.src; s.beats = trim.beats; save(); }
+  trim = null; draw(); show(cfg.segments[sel].src);
+}
+$("strip").addEventListener("scroll", () => {
+  if (!trim) return;
+  trim.src = clampT($("strip").scrollLeft / PX);
+  clearInterval(loop); trimShow(trim.src);
+  clearTimeout(settle); settle = setTimeout(trimLoop, 350);
+}, { passive: true });
+$("tminus").onclick = () => { trim.beats = Math.max(1, trim.beats - 1); trimLayout(); trimLoop(); };
+$("tplus").onclick = () => { trim.beats = Math.min(16, trim.beats + 1); trimLayout(); trimLoop(); };
+$("tback").onclick = () => closeTrim(false);
+$("tok").onclick = () => closeTrim(true);
+window.addEventListener("resize", () => { if (trim) { trimLayout(); $("strip").scrollLeft = trim.src * PX; } });
 
 $("playSeg").onclick = () => cfg && (timer ? stop() : play(sel, false));
 $("playAll").onclick = () => cfg && (timer ? stop() : play(0, true));
