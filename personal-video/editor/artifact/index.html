@@ -1,0 +1,229 @@
+<title>Монтажный стол</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* Layout: sticky frame viewer on top, the shot list under it, one open shot with its sliders. Single dark look, like an edit suite. */
+  :root {
+    color-scheme: dark;
+    --bg: #131110; --panel: #1f1c19; --line: #37322c; --text: #f3eee5; --sub: #a0988b; --hot: #ff5a36; --ok: #8fd18a;
+    --ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); }
+  body { color: var(--text); font: 16px/1.4 var(--ui); padding-bottom: 96px; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); max-width: 720px; margin: 0 auto; }
+  header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .frame { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background: #000 no-repeat; background-size: 1000% 1000%; border-radius: 0 0 10px 10px; position: relative; overflow: hidden; }
+  .frame .tc { position: absolute; left: 8px; bottom: 8px; background: rgba(0,0,0,.6); padding: 2px 8px; border-radius: 6px; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .bar { display: flex; gap: 8px; padding-block: 8px; align-items: center; }
+  .bar .t { margin-left: auto; color: var(--sub); font-size: 14px; font-variant-numeric: tabular-nums; text-align: right; }
+  button { font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-height: 44px; }
+  button:focus-visible, input:focus-visible, select:focus-visible, .seg:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+  h2 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--sub); margin: 18px 0 8px; font-weight: 600; }
+  .seg { display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 6px; width: 100%; text-align: left; }
+  .seg.sel { border-color: var(--hot); }
+  .seg .th { width: 80px; flex: none; aspect-ratio: 16 / 9; border-radius: 7px; background: #000 no-repeat; background-size: 1000% 1000%; }
+  .seg .k { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .seg .k small { color: var(--sub); display: block; font-variant-numeric: tabular-nums; }
+  .seg .d { color: var(--sub); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .panel { background: var(--panel); border: 1px solid var(--hot); border-radius: 12px; padding: 12px; margin: -2px 0 10px; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 10px 0 0; }
+  .row > span { color: var(--sub); font-size: 14px; width: 100%; }
+  .row button { flex: 1; padding: 10px 4px; }
+  input[type=range] { width: 100%; height: 44px; accent-color: var(--hot); margin: 0; }
+  input[type=text], select { font: inherit; width: 100%; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-height: 44px; }
+  details { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-top: 14px; }
+  summary { font-weight: 600; min-height: 28px; }
+  .prod { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 10px; display: grid; gap: 6px; }
+  .empty { color: var(--sub); padding: 24px 0; }
+  footer { position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg); border-top: 1px solid var(--line); padding-block: 10px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  footer .in { display: flex; gap: 10px; align-items: center; }
+  footer .st { flex: 1; min-width: 0; font-size: 14px; color: var(--sub); }
+  footer .st b { color: var(--ok); font-weight: 600; }
+  footer .st.err b { color: var(--hot); }
+</style>
+
+<header>
+  <div class="wrap">
+    <div class="frame" id="frame"><div class="tc" id="tc">0:00.0</div></div>
+    <div class="bar">
+      <button id="playSeg">▶ Кадр</button>
+      <button id="playAll">▶ Весь ролик</button>
+      <span class="t" id="total"></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <h2>Кадры по порядку</h2>
+  <div id="list"><div class="empty">Загружаю монтаж…</div></div>
+  <button id="add" style="width:100%" hidden>+ Добавить кадр перед финалом</button>
+
+  <details id="texts" hidden>
+    <summary>Тексты: заголовок и продукты</summary>
+    <div class="prod">
+      <input type="text" id="t0" placeholder="Заголовок, строка 1">
+      <input type="text" id="t1" placeholder="Заголовок, строка 2">
+    </div>
+    <div id="prods"></div>
+  </details>
+</div>
+
+<footer>
+  <div class="wrap in">
+    <div class="st" id="status">Подключаюсь…</div>
+  </div>
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const STEP = 0.5, LAST = 935.5, PER = 100;
+let db = null, ref = null, cfg = null, sel = 0, beat = 0.5, timer = null, saving = false, dirty = false, saveT = null;
+
+const fmt = (t) => { const m = Math.floor(t / 60); return m + ":" + (t - m * 60).toFixed(1).padStart(4, "0"); };
+const dur = (s) => s.beats * beat;
+const clampT = (t) => Math.max(0, Math.min(LAST, Math.round(t / STEP) * STEP));
+function paint(el, t) {
+  const i = Math.round(clampT(t) / STEP), k = i % PER;
+  el.style.backgroundImage = `url(s/f${String(Math.floor(i / PER) + 1).padStart(2, "0")}.jpg)`;
+  el.style.backgroundPosition = `${(k % 10) / 9 * 100}% ${Math.floor(k / 10) / 9 * 100}%`;
+}
+function show(t) { paint($("frame"), t); $("tc").textContent = fmt(t); }
+function status(html, err) { const s = $("status"); s.innerHTML = html; s.classList.toggle("err", !!err); }
+
+function save() {
+  dirty = true;
+  status("Есть несохранённые правки…");
+  clearTimeout(saveT);
+  saveT = setTimeout(flush, 700);
+}
+async function flush() {
+  if (!ref || saving || !dirty) return;
+  saving = true; dirty = false;
+  const n = cfg.segments.length;
+  cfg.segments.forEach((s, i) => { if (i === 0) s.kind = "title"; else if (i === n - 1) s.kind = "end"; else delete s.kind; if (i !== n - 1) delete s.play; });
+  try {
+    await ref.set({ json: JSON.stringify(cfg), savedAt: new Date().toISOString() });
+    status("<b>Сохранено.</b> Напиши в чат «собери», и я пришлю ролик.");
+  } catch (e) {
+    dirty = true;
+    status("<b>Не сохранилось.</b> Правки остались на странице, попробую ещё раз при следующем изменении.", true);
+  }
+  saving = false;
+  if (dirty) saveT = setTimeout(flush, 700);
+}
+
+function stop() { clearInterval(timer); timer = null; }
+function play(from, all) {
+  stop();
+  let i = from, s = cfg.segments[i], t = s.src;
+  const end = () => s.src + (s.play ?? dur(s));
+  sel = i; draw(); show(t);
+  timer = setInterval(() => {
+    t += STEP;
+    if (t >= end()) {
+      if (all && i + 1 < cfg.segments.length) { i++; s = cfg.segments[i]; t = s.src; sel = i; draw(); }
+      else { stop(); return; }
+    }
+    show(t);
+  }, STEP * 1000);
+}
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
+function btn(label, fn) { const b = el("button", "", label); b.type = "button"; b.onclick = fn; return b; }
+function row(title, ...kids) { const r = el("div", "row"); if (title) r.appendChild(el("span", "", title)); kids.forEach((k) => r.appendChild(k)); return r; }
+
+function draw() {
+  const n = cfg.segments.length;
+  $("total").textContent = "Ролик " + cfg.segments.reduce((a, s) => a + dur(s), 0).toFixed(1) + " с";
+  const list = $("list"); list.textContent = "";
+  cfg.segments.forEach((s, i) => {
+    const p = s.product !== undefined ? cfg.products[s.product] : null;
+    const b = el("button", "seg" + (i === sel ? " sel" : "")); b.type = "button";
+    const th = el("div", "th"); paint(th, s.src); b.appendChild(th);
+    const k = el("div", "k", p ? "Продукт: " + (p.brand || "без названия") : i === 0 ? "Заставка" : i === n - 1 ? "Финал" : "Кадр " + (i + 1));
+    k.appendChild(el("small", "", "с " + fmt(s.src))); b.appendChild(k);
+    b.appendChild(el("div", "d", dur(s).toFixed(1) + " с"));
+    b.onclick = () => { stop(); sel = i; show(s.src); draw(); };
+    list.appendChild(b);
+    if (i === sel) list.appendChild(panel(s, i));
+  });
+}
+
+function panel(s, i) {
+  const n = cfg.segments.length, box = el("div", "panel");
+  const label = el("span", "", "Начало кадра: " + fmt(s.src));
+  const rng = el("input"); rng.type = "range"; rng.id = "start-slider"; rng.min = 0; rng.max = LAST; rng.step = STEP; rng.value = s.src;
+  rng.setAttribute("aria-label", "Начало кадра");
+  rng.oninput = () => { stop(); s.src = +rng.value; show(s.src); label.textContent = "Начало кадра: " + fmt(s.src); };
+  rng.onchange = () => { save(); draw(); };
+  const r1 = el("div", "row"); r1.appendChild(label); r1.appendChild(rng); box.appendChild(r1);
+  const nudge = (d) => () => { stop(); s.src = clampT(s.src + d); show(s.src); save(); draw(); };
+  box.appendChild(row("", btn("−5 с", nudge(-5)), btn("−0.5", nudge(-0.5)), btn("+0.5", nudge(0.5)), btn("+5 с", nudge(5))));
+  box.appendChild(row("Длина: " + dur(s).toFixed(1) + " с", btn("− короче", () => { s.beats = Math.max(1, s.beats - 1); save(); draw(); }), btn("+ длиннее", () => { s.beats = Math.min(16, s.beats + 1); save(); draw(); })));
+  if (i === n - 1) {
+    box.appendChild(row(s.play ? "Картинка замирает через " + s.play.toFixed(1) + " с после начала" : "Без стоп-кадра",
+      btn("− раньше", () => { s.play = Math.max(0.2, Math.round(((s.play ?? 1) - 0.1) * 10) / 10); save(); draw(); }),
+      btn("+ позже", () => { s.play = Math.min(dur(s), Math.round(((s.play ?? 1) + 0.1) * 10) / 10); save(); draw(); }),
+      btn("Убрать", () => { delete s.play; save(); draw(); })));
+  }
+  const sp = el("select"); sp.id = "kind-select"; sp.setAttribute("aria-label", "Тип кадра");
+  sp.appendChild(new Option("обычный кадр, без подписи", ""));
+  cfg.products.forEach((p, k) => sp.appendChild(new Option("подпись продукта " + (k + 1) + ": " + (p.brand || ""), String(k))));
+  sp.value = s.product === undefined ? "" : String(s.product);
+  sp.onchange = () => { if (sp.value === "") delete s.product; else s.product = +sp.value; save(); draw(); };
+  box.appendChild(row("Что это за кадр", sp));
+  const mv = (d) => () => { const j = i + d; if (j < 0 || j >= n) return; [cfg.segments[i], cfg.segments[j]] = [cfg.segments[j], cfg.segments[i]]; sel = j; save(); draw(); };
+  let armed = false;
+  const del = btn("Удалить", () => {
+    if (n <= 2) return;
+    if (!armed) { armed = true; del.textContent = "Точно удалить?"; setTimeout(() => { armed = false; del.textContent = "Удалить"; }, 3000); return; }
+    cfg.segments.splice(i, 1); sel = Math.min(sel, cfg.segments.length - 1); save(); draw();
+  });
+  box.appendChild(row("Порядок", btn("↑ Выше", mv(-1)), btn("↓ Ниже", mv(1)), btn("Копия", () => { cfg.segments.splice(i + 1, 0, { src: s.src, beats: s.beats }); sel = i + 1; save(); draw(); }), del));
+  return box;
+}
+
+function drawTexts() {
+  cfg.title = cfg.title || [];
+  [0, 1].forEach((k) => { const inp = $("t" + k); inp.value = cfg.title[k] || ""; inp.oninput = () => { cfg.title = [$("t0").value, $("t1").value].filter(Boolean); save(); }; });
+  const box = $("prods"); box.textContent = "";
+  cfg.products.forEach((p, k) => {
+    const d = el("div", "prod"); d.appendChild(el("div", "", "Продукт " + (k + 1)));
+    [["step", "Шаг: cleanser, toner…"], ["brand", "Марка, крупно"], ["name", "Название, мелко"]].forEach(([f, ph]) => {
+      const inp = el("input"); inp.type = "text"; inp.id = "p" + k + f; inp.placeholder = ph; inp.value = p[f] || "";
+      inp.oninput = () => { p[f] = inp.value; save(); };
+      inp.onchange = draw;
+      d.appendChild(inp);
+    });
+    box.appendChild(d);
+  });
+}
+
+$("playSeg").onclick = () => cfg && (timer ? stop() : play(sel, false));
+$("playAll").onclick = () => cfg && (timer ? stop() : play(0, true));
+$("add").onclick = () => { const last = cfg.segments.length - 1; const cur = cfg.segments[sel]; cfg.segments.splice(last, 0, { src: cur.src, beats: 3 }); sel = last; save(); draw(); };
+
+function start(c) {
+  cfg = c; beat = 60 / cfg.bpm; sel = 0;
+  $("add").hidden = false; $("texts").hidden = false;
+  draw(); drawTexts(); show(cfg.segments[0].src);
+  status("Выбери кадр и двигай ползунок. Всё сохраняется само.");
+}
+
+(async () => {
+  const giveUp = setTimeout(() => { if (!cfg) { $("list").innerHTML = '<div class="empty">Не получилось загрузить монтаж. Открой страницу ещё раз чуть позже.</div>'; status("<b>Нет связи с хранилищем.</b>", true); } }, 10000);
+  db = await window.claude?.use?.("db");
+  if (!db) { clearTimeout(giveUp); $("list").innerHTML = '<div class="empty">Редактор работает только для вошедшего в аккаунт владельца страницы.</div>'; status("<b>Хранилище недоступно.</b>", true); return; }
+  ref = db.doc("edits/routine");
+  try {
+    const snap = await ref.get();
+    clearTimeout(giveUp);
+    if (snap.exists && snap.data().json) start(JSON.parse(snap.data().json));
+    else { $("list").innerHTML = '<div class="empty">Монтаж ещё не загружен. Напиши в чат, и я положу сюда текущую версию ролика.</div>'; status("Пусто"); }
+  } catch (e) {
+    clearTimeout(giveUp);
+    $("list").innerHTML = '<div class="empty">Не получилось прочитать монтаж. Открой страницу ещё раз.</div>'; status("<b>Ошибка чтения.</b>", true);
+  }
+})();
+</script>
