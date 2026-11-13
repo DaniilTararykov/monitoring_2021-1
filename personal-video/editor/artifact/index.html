@@ -42,8 +42,12 @@
   .big { position: relative; }
   .trim .view { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
   .trim .big { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background: #000 no-repeat; background-size: 1000% 1000%; }
-  .trim .stripwrap { position: relative; height: 64px; }
-  .trim .strip { display: flex; height: 64px; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .trim .stripwrap { position: relative; height: 64px; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; }
+  .trim .track { display: flex; height: 64px; will-change: transform; }
+  .trim .fine { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .trim .nud { display: flex; gap: 6px; }
+  .trim .nud button { flex: 1; padding: 8px 4px; }
+  .trim .strip { height: 64px; overflow: hidden; }
   .trim .strip::-webkit-scrollbar { display: none; }
   .trim .strip .t { flex: none; width: 64px; height: 64px; background: #111 no-repeat; background-size: 1000% 1000%; filter: brightness(.55); }
   .trim .pad { flex: none; }
@@ -88,11 +92,20 @@
 
 <div class="trim" id="trim" hidden>
   <div class="view"><div class="big" id="big"></div></div>
-  <div class="stripwrap">
-    <div class="strip" id="strip"></div>
+  <div class="stripwrap" id="stripwrap">
+    <div class="strip" id="strip"><div class="track" id="track"></div></div>
     <div class="win" id="win"></div>
   </div>
   <div class="len"><span id="tlen"></span> <small id="tpos"></small></div>
+  <div class="fine">
+    <input type="range" id="tslider" min="0" max="935.5" step="0.1" aria-label="Начало кадра по всему видео">
+    <div class="nud">
+      <button type="button" id="tm1">−1 с</button>
+      <button type="button" id="tm01">−0.1</button>
+      <button type="button" id="tp01">+0.1</button>
+      <button type="button" id="tp1">+1 с</button>
+    </div>
+  </div>
   <div class="ctl">
     <button type="button" id="tback" aria-label="Назад без изменений">‹</button>
     <button type="button" id="tminus">− короче</button>
@@ -249,48 +262,83 @@ function drawTexts() {
   });
 }
 
-/* Trim view: the whole take as a film strip that scrolls under a fixed window. */
+/* Trim view: the whole take as a film strip dragged under a fixed window. Own pointer dragging, so no native scroll is needed. */
 const PX = 32, THUMB = 2; // 32 px per second, one thumbnail per 2 s
-let trim = null, loop = null, settle = null;
+let trim = null, settle = null, winLeft = 16, drag = null, glide = 0;
 function buildStrip() {
-  const st = $("strip"); if (st.childElementCount) return;
-  const pad = () => el("div", "pad");
-  st.appendChild(pad());
-  for (let t = 0; t <= LAST; t += THUMB) { const d = el("div", "t"); paint(d, t); st.appendChild(d); }
-  st.appendChild(pad());
+  const tr = $("track"); if (tr.childElementCount) return;
+  for (let t = 0; t <= LAST; t += THUMB) { const d = el("div", "t"); paint(d, t); tr.appendChild(d); }
 }
 function trimLayout() {
-  const st = $("strip"), w = st.clientWidth, len = trim.beats * beat, ww = Math.max(18, len * PX);
-  const left = Math.max(16, (w - ww) / 2);
-  st.firstChild.style.width = left + "px"; st.lastChild.style.width = (w - left) + "px";
-  const win = $("win"); win.style.left = left + "px"; win.style.width = ww + "px";
+  const w = $("strip").clientWidth, len = trim.beats * beat, ww = Math.max(18, len * PX);
+  winLeft = Math.max(16, (w - ww) / 2);
+  const win = $("win"); win.style.left = winLeft + "px"; win.style.width = ww + "px";
   $("tlen").textContent = len.toFixed(1) + " с";
 }
-function trimShow(t) { paint($("big"), t); $("tpos").textContent = "с " + fmt(trim.src); }
+function trimMove(t, live) {
+  trim.src = clampT(t);
+  $("track").style.transform = "translate3d(" + (winLeft - trim.src * PX) + "px,0,0)";
+  $("tslider").value = trim.src;
+  paint($("big"), trim.src); $("tpos").textContent = "с " + fmt(trim.src);
+  trimPlayer.stop(); clearTimeout(settle);
+  if (!live) settle = setTimeout(trimLoop, 300);
+}
 const trimPlayer = mkPlayer($("big"));
-function trimLoop() { trimShow(trim.src); trimPlayer.play(trim.src, trim.src + trim.beats * beat, true); }
+function trimLoop() { if (trim) trimPlayer.play(trim.src, trim.src + trim.beats * beat, true); }
 function openTrim(i) {
   stop(); const s = cfg.segments[i];
   trim = { i, src: s.src, beats: s.beats };
-  $("trim").hidden = false; buildStrip(); trimLayout();
-  $("strip").scrollLeft = trim.src * PX; trimLoop();
+  $("trim").hidden = false; buildStrip(); trimLayout(); trimMove(trim.src);
 }
 function closeTrim(apply) {
-  trimPlayer.stop(); clearTimeout(settle); $("trim").hidden = true;
+  trimPlayer.stop(); clearTimeout(settle); cancelAnimationFrame(glide); $("trim").hidden = true;
   if (apply) { const s = cfg.segments[trim.i]; s.src = trim.src; s.beats = trim.beats; save(); }
   trim = null; draw(); show(cfg.segments[sel].src);
 }
-$("strip").addEventListener("scroll", () => {
-  if (!trim) return;
-  trim.src = clampT($("strip").scrollLeft / PX);
-  trimPlayer.stop(); trimShow(trim.src);
-  clearTimeout(settle); settle = setTimeout(trimLoop, 300);
-}, { passive: true });
-$("tminus").onclick = () => { trim.beats = Math.max(1, trim.beats - 1); trimLayout(); trimLoop(); };
-$("tplus").onclick = () => { trim.beats = Math.min(16, trim.beats + 1); trimLayout(); trimLoop(); };
+(function () {
+  const sw = $("stripwrap");
+  sw.addEventListener("pointerdown", (e) => {
+    if (!trim) return;
+    cancelAnimationFrame(glide);
+    drag = { x: e.clientX, src: trim.src, lastX: e.clientX, lastT: performance.now(), v: 0 };
+    try { sw.setPointerCapture(e.pointerId); } catch (err) {}
+    e.preventDefault();
+  });
+  sw.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const now = performance.now(), dt = Math.max(1, now - drag.lastT);
+    drag.v = 0.7 * drag.v + 0.3 * ((e.clientX - drag.lastX) / dt);
+    drag.lastX = e.clientX; drag.lastT = now;
+    trimMove(drag.src - (e.clientX - drag.x) / PX, true);
+    e.preventDefault();
+  });
+  const end = () => {
+    if (!drag) return;
+    let v = performance.now() - drag.lastT > 80 ? 0 : drag.v; // px per ms
+    drag = null;
+    let last = performance.now(), pos = trim.src;
+    const step = (now) => {
+      if (!trim || Math.abs(v) < 0.03) { if (trim) trimMove(trim.src); return; }
+      const dt = now - last; last = now;
+      pos -= (v * dt) / PX; v *= Math.pow(0.995, dt);
+      trimMove(pos, true);
+      if (trim.src <= 0 || trim.src >= LAST) { trimMove(trim.src); return; }
+      glide = requestAnimationFrame(step);
+    };
+    glide = requestAnimationFrame(step);
+  };
+  sw.addEventListener("pointerup", end);
+  sw.addEventListener("pointercancel", end);
+  sw.addEventListener("touchmove", (e) => { if (drag) e.preventDefault(); }, { passive: false });
+})();
+$("tslider").oninput = () => { cancelAnimationFrame(glide); trimMove(+$("tslider").value, true); };
+$("tslider").onchange = () => trimMove(+$("tslider").value);
+[["tm1", -1], ["tm01", -0.1], ["tp01", 0.1], ["tp1", 1]].forEach(([id, d]) => { $(id).onclick = () => { cancelAnimationFrame(glide); trimMove(trim.src + d); }; });
+$("tminus").onclick = () => { trim.beats = Math.max(1, trim.beats - 1); trimLayout(); trimMove(trim.src); };
+$("tplus").onclick = () => { trim.beats = Math.min(16, trim.beats + 1); trimLayout(); trimMove(trim.src); };
 $("tback").onclick = () => closeTrim(false);
 $("tok").onclick = () => closeTrim(true);
-window.addEventListener("resize", () => { if (trim) { trimLayout(); $("strip").scrollLeft = trim.src * PX; } });
+window.addEventListener("resize", () => { if (trim) { trimLayout(); trimMove(trim.src); } });
 
 $("playSeg").onclick = () => cfg && (timer ? stop() : play(sel, false));
 $("playAll").onclick = () => cfg && (timer ? stop() : play(0, true));
