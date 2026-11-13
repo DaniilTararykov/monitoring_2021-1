@@ -14,7 +14,7 @@
   .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); max-width: 720px; margin: 0 auto; }
   header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
   .frame { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background: #000 no-repeat; background-size: 1000% 1000%; border-radius: 0 0 10px 10px; position: relative; overflow: hidden; }
-  .frame .tc { position: absolute; left: 8px; bottom: 8px; background: rgba(0,0,0,.6); padding: 2px 8px; border-radius: 6px; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .frame .tc { z-index: 1; position: absolute; left: 8px; bottom: 8px; background: rgba(0,0,0,.6); padding: 2px 8px; border-radius: 6px; font-size: 13px; font-variant-numeric: tabular-nums; }
   .bar { display: flex; gap: 8px; padding-block: 8px; align-items: center; }
   .bar .t { margin-left: auto; color: var(--sub); font-size: 14px; font-variant-numeric: tabular-nums; text-align: right; }
   button { font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-height: 44px; }
@@ -38,6 +38,8 @@
   .empty { color: var(--sub); padding: 24px 0; }
   .trim { position: fixed; inset: 0; z-index: 20; background: #000; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
   .trim[hidden] { display: none; }
+  .frame video, .big video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+  .big { position: relative; }
   .trim .view { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
   .trim .big { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; background: #000 no-repeat; background-size: 1000% 1000%; }
   .trim .stripwrap { position: relative; height: 64px; }
@@ -113,9 +115,9 @@ let db = null, ref = null, cfg = null, sel = 0, beat = 0.5, timer = null, saving
 
 const fmt = (t) => { const m = Math.floor(t / 60); return m + ":" + (t - m * 60).toFixed(1).padStart(4, "0"); };
 const dur = (s) => s.beats * beat;
-const clampT = (t) => Math.max(0, Math.min(LAST, Math.round(t / STEP) * STEP));
+const clampT = (t) => Math.max(0, Math.min(LAST, Math.round(t * 10) / 10));
 function paint(el, t) {
-  const i = Math.round(clampT(t) / STEP), k = i % PER;
+  const i = Math.max(0, Math.min(1871, Math.floor(t / STEP))), k = i % PER;
   el.style.backgroundImage = `url(s/f${String(Math.floor(i / PER) + 1).padStart(2, "0")}.jpg)`;
   el.style.backgroundPosition = `${(k % 10) / 9 * 100}% ${Math.floor(k / 10) / 9 * 100}%`;
 }
@@ -144,20 +146,43 @@ async function flush() {
   if (dirty) saveT = setTimeout(flush, 700);
 }
 
-function stop() { clearInterval(timer); timer = null; }
+/* Real video for playback: one-minute clips published next to the page. Stills stay on the sprite sheets. */
+const STARTS = [0, 60.5, 120.5, 180.5, 240.5, 300.5, 360.5, 420.5, 480.5, 540.5, 600.5, 660.5, 720.5, 780.5, 840.5, 900.5, 936];
+function mkPlayer(box) {
+  const v = document.createElement("video");
+  v.muted = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.preload = "auto"; v.hidden = true;
+  box.appendChild(v);
+  let a = 0, b = 0, loop = false, onEnd = null, chunk = -1, active = false, token = 0, raf = 0;
+  const now = () => STARTS[chunk] + v.currentTime;
+  function load(t) {
+    let c = 0; while (c < 15 && t >= STARTS[c + 1]) c++;
+    const my = ++token, local = Math.max(0, t - STARTS[c]);
+    const go = () => { if (my !== token) return; v.currentTime = local; const pr = v.play(); if (pr) pr.then(() => { if (my === token && active) v.hidden = false; }).catch(() => {}); };
+    if (c !== chunk) { chunk = c; v.src = "v/c" + String(c).padStart(2, "0") + ".mp4"; v.addEventListener("loadedmetadata", go, { once: true }); v.load(); } else go();
+  }
+  function done() { if (loop) load(a); else { const f = onEnd; halt(); if (f) f(); } }
+  function tick() {
+    if (!active) return;
+    if (!v.hidden && !v.seeking && now() >= b) done();
+    raf = requestAnimationFrame(tick);
+  }
+  v.addEventListener("ended", () => { if (!active) return; const t = STARTS[chunk + 1]; if (t < b - 0.05) load(t); else done(); });
+  function halt() { active = false; token++; cancelAnimationFrame(raf); v.pause(); v.hidden = true; }
+  return {
+    play(from, to, lp, end) { halt(); a = from; b = to; loop = lp; onEnd = end || null; active = true; load(a); raf = requestAnimationFrame(tick); },
+    stop: halt,
+  };
+}
+const mainPlayer = mkPlayer($("frame"));
+function stop() { mainPlayer.stop(); timer = null; }
 function play(from, all) {
   stop();
-  let i = from, s = cfg.segments[i], t = s.src;
-  const end = () => s.src + (s.play ?? dur(s));
-  sel = i; draw(); show(t);
-  timer = setInterval(() => {
-    t += STEP;
-    if (t >= end()) {
-      if (all && i + 1 < cfg.segments.length) { i++; s = cfg.segments[i]; t = s.src; sel = i; draw(); }
-      else { stop(); return; }
-    }
-    show(t);
-  }, STEP * 1000);
+  const run = (i) => {
+    const s = cfg.segments[i];
+    sel = i; draw(); show(s.src); timer = 1;
+    mainPlayer.play(s.src, s.src + (s.play ?? dur(s)), false, () => { if (all && i + 1 < cfg.segments.length) run(i + 1); else { timer = null; show(s.src); } });
+  };
+  run(from);
 }
 
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
@@ -242,10 +267,8 @@ function trimLayout() {
   $("tlen").textContent = len.toFixed(1) + " с";
 }
 function trimShow(t) { paint($("big"), t); $("tpos").textContent = "с " + fmt(trim.src); }
-function trimLoop() {
-  clearInterval(loop); let t = trim.src; trimShow(t);
-  loop = setInterval(() => { t += STEP; if (t >= trim.src + trim.beats * beat) t = trim.src; trimShow(t); }, STEP * 1000);
-}
+const trimPlayer = mkPlayer($("big"));
+function trimLoop() { trimShow(trim.src); trimPlayer.play(trim.src, trim.src + trim.beats * beat, true); }
 function openTrim(i) {
   stop(); const s = cfg.segments[i];
   trim = { i, src: s.src, beats: s.beats };
@@ -253,15 +276,15 @@ function openTrim(i) {
   $("strip").scrollLeft = trim.src * PX; trimLoop();
 }
 function closeTrim(apply) {
-  clearInterval(loop); clearTimeout(settle); $("trim").hidden = true;
+  trimPlayer.stop(); clearTimeout(settle); $("trim").hidden = true;
   if (apply) { const s = cfg.segments[trim.i]; s.src = trim.src; s.beats = trim.beats; save(); }
   trim = null; draw(); show(cfg.segments[sel].src);
 }
 $("strip").addEventListener("scroll", () => {
   if (!trim) return;
   trim.src = clampT($("strip").scrollLeft / PX);
-  clearInterval(loop); trimShow(trim.src);
-  clearTimeout(settle); settle = setTimeout(trimLoop, 350);
+  trimPlayer.stop(); trimShow(trim.src);
+  clearTimeout(settle); settle = setTimeout(trimLoop, 300);
 }, { passive: true });
 $("tminus").onclick = () => { trim.beats = Math.max(1, trim.beats - 1); trimLayout(); trimLoop(); };
 $("tplus").onclick = () => { trim.beats = Math.min(16, trim.beats + 1); trimLayout(); trimLoop(); };
