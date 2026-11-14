@@ -30,6 +30,12 @@ Personal videos (GRWM, reels, photos). Talk to the client in Russian. Not relate
 - `scripts/grwm_cuts2.py`: the GRWM edit lists; each line names its source take and why.
 - Python video tools: `/opt/video-venv` (faster-whisper, scenedetect, librosa, pyloudnorm, mediapipe,
   opencv, auto-editor), installed by the environment's setup script.
+- Voice clean-up: `/opt/video-bin/deep-filter -o <out_dir> <in.wav>` (DeepFilterNet 3, 48 kHz mono wav,
+  removes room noise; check by ear-level stats before using it on a whole cut).
+- Remotion agent skills (official, `npx remotion skills add`): `.agents/skills/remotion-*`, linked from
+  `.claude/skills/`. Start with `remotion-best-practices`; `remotion-captions`, `remotion-markup`,
+  `remotion-render` for captions, animation and export.
+- Colour: ffmpeg `lut3d` takes `.cube` LUTs; `loudnorm` / pyloudnorm for -14 LUFS social loudness.
 
 ## Before sending anything
 1. Transcribe the finished voice with a filler-aware prompt ("Umm, uh, ah…") and read it: no fillers,
