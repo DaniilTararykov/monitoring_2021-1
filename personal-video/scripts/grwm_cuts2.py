@@ -55,7 +55,7 @@ BOOTS = {True: L((658.3, 661.2), (661.25, 662.26), (686.7, 687.72), v=[LIP(upto=
          False: L((658.3, 659.6), (661.28, 662.26), (686.7, 687.72), v=[LIP(upto=1), VO(664.9, 1.3), VO(681.6)])}
 GREY = L((706.31, 707.97), (714.61, 717.3), v=[LIP(upto=1), LIP(1.2), VO(722.6)])  # putting the grey coat on under the voice
 GREY_SEE = L((731.3, 732.4))
-GREY_NO = L((747.95, 750.45))
+GREY_NO = L((747.95, 750.4))
 LEATHER = L((767.6, 770.5), (771.5, 773.3), (774.2, 780.35), v=[VO(766.9, 0.6), LIP()])  # jacket wipe in
 LEATHER_SLEEVE = L((788.0, 794.6))
 LEATHER_OK = L((803.2, 805.65), (806.55, 809.4), v=[VO(796.6, 2.4), LIP()])  # puts it on while he says "actually..."
@@ -124,7 +124,29 @@ V6 = [HELLO, NO_IDEA, JEANS_FAST, TANK[True], BELT_FATHER, BELT_FAST, SLEEVE_FAS
       GREY_FAST, GREY_NO, LEATHER_SHORT, LEATHER_FAST, BROWN_SHORT, BLACK_SHORT, BAG_BRAND, BAG_NO, REVEAL, FINAL,
       KILIAN, BYE]
 
-CUTS = {"grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6}
+# ---------------------------------------------------------------- round three: V3 and V6 fixed
+# - "decades" is no longer cut right after the word: the line runs on to "old vintage vibe"
+# - the leather jacket keeps "it's a vintage one ... dark brown, blackish color"
+# - in order of the shoot: coat talk (still in socks) comes before the boots; no boots-on footage,
+#   just "I'm gonna wear these boots ... let's try them on" and then standing in them: "They look nice."
+# - the story beats: what he wants (casual), why not the usual coat (worn five days, photos tonight),
+#   the leather jacket as "maybe", the bags settle it, the leather-ish perfume to finish
+BELT3 = L((333.5, 335.8), (340.3, 345.6), (345.95, 351.1))
+LEATHER3 = L((767.6, 771.56), (771.56, 773.3), (774.2, 780.35), v=[VO(766.9, 0.8), LIP()])
+BOOTS3 = [L((658.3, 661.2), (661.25, 662.26)), L((686.7, 687.72))]
+ENDING3 = [REVEAL, FINAL, PERFUME_B, ASK, BYE]
+
+V3C = ([HELLO, NO_IDEA, CASUAL, JEANS[True], TANK[True], BELT3, SLEEVE[True], SLEEVE_ON, COAT_WHY, HARDEST] + BOOTS3
+       + [GREY, GREY_NO, LEATHER3, LEATHER_SLEEVE, LEATHER_OK, BROWN_SHORT, BLACK, BAG_LIKE, BAG_BRAND, BAG_NO]
+       + ENDING3)
+
+SLEEVE_FAST3 = L((456.1, 460.7), (472.9, 475.05), v=[LIP(upto=1), VO(476.0, speed=3.0)])  # "...B3. And let's see how it will be."
+V6C = ([HELLO, NO_IDEA, CASUAL, JEANS_FAST, TANK[True], BELT3, BELT_ON, SLEEVE_FAST3, VIBE, COAT_WHY, HARDEST] + BOOTS3
+       + [GREY_FAST, GREY_NO, LEATHER3, LEATHER_FAST, BROWN_SHORT, BLACK, BAG_LIKE, BAG_BRAND, BAG_NO]
+       + ENDING3)
+
+CUTS = {"grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+        "grwm3_coats": V3C, "grwm3_speed": V6C}
 
 if __name__ == "__main__":
     for name, segs in CUTS.items():
