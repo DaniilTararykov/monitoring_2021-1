@@ -203,7 +203,18 @@ PERFUME10 = [L((1147.9, 1151.0)),
 V10 = ([HELLO5, CASUAL, JEANS10, BELT9, SLEEVE10, SLEEVE_ON9] + BOOTS10 + [LEATHER10, REVEAL, HAIR_RINGS] + PERFUME10
        + [ASK, BYE])
 
-CUTS = {"grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round eight: the minute, tightened (build with TIGHT=1)
+# no walk-away wipe before the jacket; the perfume is the real spray at the neck, with its hiss
+LEATHER11 = L((769.4, 771.56), (803.2, 805.65), v=[LIP(upto=1), VO(796.6, 1.6), LIP()])
+SPRAY = {"a": [[1208.55, 1209.75]], "raw": True, "vol": 1.0}
+PERFUME11 = [L((1147.9, 1151.0)), SPRAY, L((1199.5, 1201.95), (1204.4, 1207.4))]
+BELT11 = L((333.5, 335.8), (340.6, 343.2), (349.78, 351.1))  # no "uh" before "it's been with me"
+SLEEVE_ON11 = L((573.45, 577.85), v=[VO(481.6, 3.0), LIP()])  # no "uh" before "I really like"
+PERFUME11[0] = L((1147.9, 1151.15))  # the whole word "perfume"
+V11 = ([HELLO5, CASUAL, JEANS10, BELT11, SLEEVE10, SLEEVE_ON11] + BOOTS10 + [LEATHER11, REVEAL, HAIR_RINGS] + PERFUME11
+       + [ASK, BYE])
+
+CUTS = {"grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":

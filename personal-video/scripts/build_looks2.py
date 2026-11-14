@@ -13,7 +13,7 @@ Each segment of the JSON list:
   Without "v" every sound piece shows its own picture.
 - "breathe": keep a little air before the first word and after the last one (up to the range ends).
 - "file": "intro" reads the segment from the intro clip (fifth argument).
-Set DRY=1 to print the running time without rendering, AUDIO=1 to write only the voice track to <out>.
+Set TIGHT=1 to cut every pause down (no air around lines). Set DRY=1 to print the running time without rendering, AUDIO=1 to write only the voice track to <out>.
 
 usage: python build_looks2.py <source.mov> <edit.json> <tmp_dir> <out.mp4> [intro.mov]
 """
@@ -28,6 +28,7 @@ import soundfile as sf
 SRC, CFG, TMP, OUT = sys.argv[1:5]
 INTRO = sys.argv[5] if len(sys.argv) > 5 else None  # segments with "file": "intro" read from here
 FPS = 30
+TIGHT = bool(os.environ.get("TIGHT"))  # no pauses: shorter gaps kept inside lines, no air around them
 NAME = os.path.splitext(os.path.basename(OUT))[0]
 os.makedirs(TMP, exist_ok=True)
 wav = os.path.join(TMP, "full48.wav")
@@ -42,7 +43,7 @@ if INTRO:
     AUD["intro"] = sf.read(iw, dtype="float32")[0]
 
 
-def speech(a, b, f="main"):
+def speech(a, b, f="main", tight=False):
     audio = AUD[f]
     x = audio[int(a * sr):int(b * sr)]
     hop = int(0.02 * sr)
@@ -58,12 +59,13 @@ def speech(a, b, f="main"):
             start = None
     merged = []
     for s, e in iv:
-        if merged and s - merged[-1][1] < 0.30:
+        if merged and s - merged[-1][1] < (0.12 if tight else 0.30):
             merged[-1][1] = e
         else:
             merged.append([s, e])
     merged = [m for m in merged if m[1] - m[0] >= 0.12]
-    return [[max(a, a + s - 0.08), min(b, a + e + 0.10)] for s, e in merged]
+    pre, post = (0.04, 0.06) if tight else (0.08, 0.10)
+    return [[max(a, a + s - pre), min(b, a + e + post)] for s, e in merged]
 
 
 shots, sound, loud, timeline = [], [], [], []
@@ -83,10 +85,10 @@ for seg in json.load(open(CFG)):
     pieces, first = [], []  # first[k]: index of the first piece cut from range k
     for a, b in seg["a"]:
         first.append(len(pieces))
-        for s, e in ([[a, b]] if seg.get("raw") else speech(a, b, f)):
+        for s, e in ([[a, b]] if seg.get("raw") else speech(a, b, f, TIGHT)):
             s = round(s * FPS) / FPS
             pieces.append((f, s, max(3, round((e - s) * FPS))))
-    if seg.get("breathe") and pieces and not seg.get("raw"):
+    if seg.get("breathe") and pieces and not seg.get("raw") and not TIGHT:
         # let the sentence land: a little air before the first word and after the last one,
         # never past the range the edit list gives (those ends sit before the next word)
         f0, s0, n0 = pieces[0]
