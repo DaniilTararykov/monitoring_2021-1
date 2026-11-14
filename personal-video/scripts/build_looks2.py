@@ -13,6 +13,7 @@ Each segment of the JSON list:
   Without "v" every sound piece shows its own picture.
 - "breathe": keep a little air before the first word and after the last one (up to the range ends).
 - "file": "intro" reads the segment from the intro clip (fifth argument).
+CLEAN_MAIN/CLEAN_INTRO=<denoised wav> use a cleaned voice for spoken lines, LOUDNORM=1 masters to -14 LUFS.
 Set TIGHT=1 to cut every pause down (no air around lines). Set DRY=1 to print the running time without rendering, AUDIO=1 to write only the voice track to <out>.
 
 usage: python build_looks2.py <source.mov> <edit.json> <tmp_dir> <out.mp4> [intro.mov]
@@ -37,6 +38,13 @@ if not os.path.exists(wav):
 audio, sr = sf.read(wav, dtype="float32")
 AUD = {"main": audio}
 SRCS = {"main": SRC, "intro": INTRO}
+# CLEAN_MAIN / CLEAN_INTRO: denoised voice tracks (same length, 48 kHz mono), used for spoken lines;
+# raw segments keep the original sound (a perfume spray, footsteps) unless they say "clean": true
+CLEAN = {}
+if os.environ.get("CLEAN_MAIN"):
+    CLEAN["main"] = sf.read(os.environ["CLEAN_MAIN"], dtype="float32")[0]
+if os.environ.get("CLEAN_INTRO"):
+    CLEAN["intro"] = sf.read(os.environ["CLEAN_INTRO"], dtype="float32")[0]
 if INTRO:
     iw = os.path.join(TMP, "intro48.wav")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", INTRO, "-vn", "-ac", "1", "-ar", "48000", iw], check=True)
@@ -71,8 +79,8 @@ def speech(a, b, f="main", tight=False):
 shots, sound, loud, timeline = [], [], [], []
 
 
-def clip(s, n, f="main"):
-    audio = AUD[f]
+def clip(s, n, f="main", clean=False):
+    audio = CLEAN[f] if clean and f in CLEAN else AUD[f]
     seg = audio[int(s * sr):int(s * sr) + int(n / FPS * sr)].copy()
     f = int(0.008 * sr)
     seg[:f] *= np.linspace(0, 1, f)
@@ -100,7 +108,7 @@ for seg in json.load(open(CFG)):
     total = sum(n for _, _, n in pieces)
     timeline.append((sum(x[2] for x in shots) / FPS, total / FPS, seg["a"][0][0], f))
     for _, s, n in pieces:
-        c = clip(s, n, f) * seg.get("vol", 1.0)
+        c = clip(s, n, f, seg.get("clean", not seg.get("raw"))) * seg.get("vol", 1.0)
         sound.append(c)
         if not seg.get("raw"):
             loud.append(c)
@@ -176,6 +184,7 @@ v = np.tanh(v / (np.percentile(np.abs(ref), 99.5) + 1e-9) * 1.1) * 0.85 if np.ab
 voice = os.path.join(TMP, NAME + "_voice.wav")
 sf.write(voice, v, sr)
 dur = sum(x[2] for x in shots) / FPS
-subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", vid, "-i", voice, "-c:v", "libx264", "-preset", "medium", "-crf", "18",
-                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", OUT], check=True)
+af = ["-af", "loudnorm=I=-14:TP=-1.5:LRA=11"] if os.environ.get("LOUDNORM") else []  # social-media loudness
+subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", vid, "-i", voice] + af + ["-c:v", "libx264", "-preset", "medium", "-crf", "18",
+                "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-shortest", "-movflags", "+faststart", OUT], check=True)
 print("total", round(dur, 2), "s,", len(shots), "shots")

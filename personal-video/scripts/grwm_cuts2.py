@@ -214,7 +214,15 @@ PERFUME11[0] = L((1147.9, 1151.15))  # the whole word "perfume"
 V11 = ([HELLO5, CASUAL, JEANS10, BELT11, SLEEVE10, SLEEVE_ON11] + BOOTS10 + [LEATHER11, REVEAL, HAIR_RINGS] + PERFUME11
        + [ASK, BYE])
 
-CUTS = {"grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round nine: the perfume actually applied
+# (build with TIGHT=1 LOUDNORM=1 and the denoised voice). Two sprays at the neck with their own sound:
+# 19:57 both hands bring the bottle to the neck and spray, 20:09 the second, audible spray.
+SPRAYS = [{"a": [[1197.3, 1199.7]], "raw": True, "vol": 1.0}, {"a": [[1208.55, 1209.75]], "raw": True, "vol": 1.0}]
+PERFUME12 = [L((1147.9, 1151.15))] + SPRAYS + [L((1199.5, 1201.95), (1204.4, 1207.4))]
+V12 = ([HELLO5, CASUAL, JEANS10, BELT11, SLEEVE10, SLEEVE_ON11] + BOOTS10 + [LEATHER11, REVEAL, HAIR_RINGS] + PERFUME12
+       + [ASK, BYE])
+
+CUTS = {"grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
