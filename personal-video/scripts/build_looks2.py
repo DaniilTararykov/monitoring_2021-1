@@ -8,8 +8,11 @@ Each segment of the JSON list:
 - "v": picture for the segment. {"sync": k} shows the picture of the first k sound pieces in sync;
   {"src": t, "dur": d} shows other footage from t; the last item stretches to fill the segment.
   Without "v" every sound piece shows its own picture.
+- "breathe": keep a little air before the first word and after the last one (up to the range ends).
+- "file": "intro" reads the segment from the intro clip (fifth argument).
+Set DRY=1 to print the running time without rendering.
 
-usage: python build_looks2.py <source.mov> <edit.json> <tmp_dir> <out.mp4>
+usage: python build_looks2.py <source.mov> <edit.json> <tmp_dir> <out.mp4> [intro.mov]
 """
 import json
 import os
@@ -79,6 +82,15 @@ for seg in json.load(open(CFG)):
         for s, e in ([[a, b]] if seg.get("raw") else speech(a, b, f)):
             s = round(s * FPS) / FPS
             pieces.append((f, s, max(3, round((e - s) * FPS))))
+    if seg.get("breathe") and pieces and not seg.get("raw"):
+        # let the sentence land: a little air before the first word and after the last one,
+        # never past the range the edit list gives (those ends sit before the next word)
+        f0, s0, n0 = pieces[0]
+        ns = max(round(seg["a"][0][0] * FPS) / FPS, round((s0 - 0.12) * FPS) / FPS)
+        pieces[0] = (f0, ns, n0 + round((s0 - ns) * FPS))
+        f1, s1, n1 = pieces[-1]
+        ne = min(seg["a"][-1][1], s1 + n1 / FPS + 0.30)
+        pieces[-1] = (f1, s1, max(n1, round((ne - s1) * FPS)))
     total = sum(n for _, _, n in pieces)
     for _, s, n in pieces:
         c = clip(s, n, f) * seg.get("vol", 1.0)
@@ -103,6 +115,9 @@ for seg in json.load(open(CFG)):
                 used += n
     assert used == total, (seg, used, total)
 
+if os.environ.get("DRY"):
+    print("total", round(sum(n for _, _, n in shots) / FPS, 2), "s,", len(shots), "shots")
+    sys.exit()
 parts = []
 for i, (f, s, n) in enumerate(shots):
     part = os.path.join(TMP, f"{NAME}_p{i:03d}.mp4")
