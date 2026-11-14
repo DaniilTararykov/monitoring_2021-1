@@ -48,7 +48,7 @@ BELT_ON = L((361.45, 363.5))  # threading it, in sync
 SEAT_BELT = L((397.45, 400.85))
 SIMPLE = L((408.18, 412.95), (414.3, 416.72))
 SLEEVE = {True: L((456.1, 460.7)), False: L((456.1, 458.22))}
-SLEEVE_ON = L((471.9, 472.7), (472.9, 475.05), (573.2, 577.95), v=[LIP(upto=1), VO(481.6, 4.8), LIP()])  # over the head, then the jeans vibe
+SLEEVE_ON = L((471.9, 472.7), (472.9, 475.05), (573.2, 577.85), v=[LIP(upto=1), VO(481.6, 4.8), LIP()])  # over the head, then the jeans vibe
 COAT_WHY = L((533.7, 537.12), (538.4, 539.92), (546.5, 552.0), (553.0, 556.84), (557.7, 561.55))  # no "have a have a"
 HARDEST = L((578.5, 583.94), (585.7, 587.4))
 BOOTS = {True: L((658.3, 661.2), (661.25, 662.26), (686.7, 687.72), v=[LIP(upto=1), VO(664.9, 1.3), VO(681.6)]),
@@ -115,7 +115,7 @@ JEANS_FAST = L((83.1, 84.75), (85.72, 87.48), (87.84, 88.37), (88.55, 89.18), (2
                v=[LIP(upto=1), VO(93.6, 2.6, speed=2.5), VO(103.0, 0.0, speed=2.5)])
 BELT_FAST = L((361.45, 363.5), (397.45, 400.85), v=[LIP(upto=1), VOU(364.0, 1, speed=1.0), LIP()])
 SLEEVE_FAST = L((456.1, 460.7), (471.9, 472.7), (472.9, 475.05), v=[LIP(upto=2), VO(476.0, speed=3.0)])
-VIBE = L((573.2, 577.95))
+VIBE = L((573.2, 577.85))
 BOOTS_FAST = L((658.3, 661.2), (661.25, 662.26), (578.5, 583.94), (585.7, 587.4), (686.7, 687.72),
                v=[LIP(upto=1), VOU(663.4, 4, speed=3.6), LIP()])
 GREY_FAST = L((706.31, 707.97), (714.61, 717.3), (731.3, 732.4), v=[LIP(upto=1), VOU(720.3, 2, speed=2.0), LIP()])
@@ -145,8 +145,29 @@ V6C = ([HELLO, NO_IDEA, CASUAL, JEANS_FAST, TANK[True], BELT3, BELT_ON, SLEEVE_F
        + [GREY_FAST, GREY_NO, LEATHER3, LEATHER_FAST, BROWN_SHORT, BLACK, BAG_LIKE, BAG_BRAND, BAG_NO]
        + ENDING3)
 
+# ---------------------------------------------------------------- round four
+# the bags as a real decision: both are Elijah; the big black one he wears too often, so the baggy brown one;
+# it does not go with the black coat -> the leather jacket with the bag he wanted
+BAGS4 = [L((1009.2, 1010.5), (1014.05, 1015.15)),                       # "So for the bags, I really like this bag."
+         L((1038.45, 1041.3)),                                          # "They're both from the same brand, which is Elijah."
+         L((1042.31, 1045.71), (1047.21, 1048.17), (1048.17, 1051.6), (1052.5, 1053.85)),
+         # "But I don't want to wear this one today because I've been wearing this very often,
+         #  so I think I'm gonna have this one, a bit baggy."
+         BAG_NO]                                                        # "...with this coat it's not matching ... final look."
+WHICH = L((920.2, 921.98))  # "I think I know which one is better."
+PHOTOS = L((553.0, 556.84), (557.7, 561.55))  # "And today probably I'm gonna take some videos and photos..."
+
+V3D = ([HELLO, NO_IDEA, CASUAL, JEANS[True], TANK[True], BELT3, SLEEVE[True], SLEEVE_ON, COAT_WHY, HARDEST] + BOOTS3
+       + [GREY, GREY_NO, LEATHER3, LEATHER_SLEEVE, LEATHER_OK, BROWN_SHORT, THIRD, WHICH, BLACK_SHORT] + BAGS4 + ENDING3)
+V6D = ([HELLO, NO_IDEA, CASUAL, JEANS_FAST, TANK[True], BELT3, BELT_ON, SLEEVE_FAST3, VIBE, COAT_WHY, HARDEST] + BOOTS3
+       + [GREY_FAST, GREY_NO, LEATHER3, LEATHER_FAST, BROWN_SHORT, THIRD, WHICH, BLACK_SHORT] + BAGS4 + ENDING3)
+# no grey coat: the hardest part is the top, the vintage leather jacket is the first option,
+# then the washed brown leather against the black coat, and the bags decide
+V7 = ([HELLO, NO_IDEA, CASUAL, JEANS[True], TANK[True], BELT3, SLEEVE[True], SLEEVE_ON, PHOTOS, HARDEST] + BOOTS3
+      + [LEATHER3, LEATHER_SLEEVE, LEATHER_OK, BROWN, THIRD, WHICH, BLACK_SHORT] + BAGS4 + ENDING3)
+
 CUTS = {"grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
-        "grwm3_coats": V3C, "grwm3_speed": V6C}
+        "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
     for name, segs in CUTS.items():
