@@ -177,7 +177,20 @@ V8 = ([HELLO5, NO_IDEA, CASUAL, JEANS[True], TANK[True], BELT5, SEAT_BELT, SLEEV
       + BOOTS3 + [LEATHER3, LEATHER_SLEEVE, LEATHER_OK, BROWN, THIRD, WHICH, BLACK_SHORT] + BAGS4
       + [REVEAL, FINAL5, HAIR_RINGS, PERFUME_B, ASK, BYE])
 
-CUTS = {"grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round six: short, one jacket
+# follows his own re-edit (no "don't know what to wear", "This is from B3", "...this jacket ... kind of nice"),
+# then: only the leather jacket (no other options, no "first option"), no "I'm gonna wear it" before the
+# sleeve goes on (it plays under "I really like these sleeves"), no second "you can see I've been wearing it"
+BELT9 = L((333.5, 335.8), (340.3, 343.2), (349.78, 351.1))
+SLEEVE9 = L((456.1, 458.22), (458.3, 458.75), (460.05, 460.7))  # "And I have this long sleeve ... This is from B3."
+SLEEVE_ON9 = L((573.2, 577.85), v=[VO(481.6, 3.0), LIP()])
+LEATHER9 = L((769.4, 771.56), (771.56, 773.3), (774.2, 780.35), v=[VO(766.9, 0.8), LIP()])  # "A leather jacket, it's a vintage one..."
+LEATHER_ON9 = L((788.0, 789.85), (803.2, 805.65), v=[LIP(upto=1), VO(796.6, 1.4), LIP()])  # not sure -> puts it on -> not bad
+FINAL9 = L((1117.65, 1119.6), (1122.0, 1124.7), (1127.36, 1128.2))  # "...with this jacket with this bag that I wanted and I think it's kind of nice"
+V9 = ([HELLO5, CASUAL, JEANS[True], TANK[True], BELT9, SEAT_BELT, SLEEVE9, SLEEVE_ON9] + BOOTS3
+      + [LEATHER9, LEATHER_ON9, REVEAL, FINAL9, HAIR_RINGS, PERFUME_B, ASK, BYE])
+
+CUTS = {"grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
