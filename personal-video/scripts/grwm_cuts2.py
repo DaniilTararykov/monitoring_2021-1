@@ -166,7 +166,18 @@ V6D = ([HELLO, NO_IDEA, CASUAL, JEANS_FAST, TANK[True], BELT3, BELT_ON, SLEEVE_F
 V7 = ([HELLO, NO_IDEA, CASUAL, JEANS[True], TANK[True], BELT3, SLEEVE[True], SLEEVE_ON, PHOTOS, HARDEST] + BOOTS3
       + [LEATHER3, LEATHER_SLEEVE, LEATHER_OK, BROWN, THIRD, WHICH, BLACK_SHORT] + BAGS4 + ENDING3)
 
-CUTS = {"grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round five: the no-grey cut, filled in
+# no "it's Friday" in the hello; the belt ends on "decades" (cut before the next word, so it is heard whole)
+# and buckles up as an airplane seat belt; hair and rings shown close up before the perfume
+HELLO5 = L((6.3, 7.8), (9.25, 12.3), file="intro")  # "Hi everyone! Let's get ready with me for drinks with my friends."
+BELT5 = L((333.5, 335.8), (340.3, 343.2), (345.95, 351.1))
+FINAL5 = L((1117.65, 1119.56), (1120.7, 1126.75), (1127.36, 1128.2))  # "...kind of okay, it's kind of nice."
+HAIR_RINGS = L((1133.5, 1134.9), (1141.95, 1143.6), (1145.9, 1147.1))
+V8 = ([HELLO5, NO_IDEA, CASUAL, JEANS[True], TANK[True], BELT5, SEAT_BELT, SLEEVE[True], SLEEVE_ON, PHOTOS, HARDEST]
+      + BOOTS3 + [LEATHER3, LEATHER_SLEEVE, LEATHER_OK, BROWN, THIRD, WHICH, BLACK_SHORT] + BAGS4
+      + [REVEAL, FINAL5, HAIR_RINGS, PERFUME_B, ASK, BYE])
+
+CUTS = {"grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
