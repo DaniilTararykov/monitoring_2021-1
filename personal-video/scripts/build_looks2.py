@@ -20,6 +20,7 @@ import numpy as np
 import soundfile as sf
 
 SRC, CFG, TMP, OUT = sys.argv[1:5]
+INTRO = sys.argv[5] if len(sys.argv) > 5 else None  # segments with "file": "intro" read from here
 FPS = 30
 NAME = os.path.splitext(os.path.basename(OUT))[0]
 os.makedirs(TMP, exist_ok=True)
@@ -27,9 +28,16 @@ wav = os.path.join(TMP, "full48.wav")
 if not os.path.exists(wav):
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", SRC, "-vn", "-ac", "1", "-ar", "48000", wav], check=True)
 audio, sr = sf.read(wav, dtype="float32")
+AUD = {"main": audio}
+SRCS = {"main": SRC, "intro": INTRO}
+if INTRO:
+    iw = os.path.join(TMP, "intro48.wav")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", INTRO, "-vn", "-ac", "1", "-ar", "48000", iw], check=True)
+    AUD["intro"] = sf.read(iw, dtype="float32")[0]
 
 
-def speech(a, b):
+def speech(a, b, f="main"):
+    audio = AUD[f]
     x = audio[int(a * sr):int(b * sr)]
     hop = int(0.02 * sr)
     n = len(x) // hop
@@ -55,7 +63,8 @@ def speech(a, b):
 shots, sound, loud = [], [], []
 
 
-def clip(s, n):
+def clip(s, n, f="main"):
+    audio = AUD[f]
     seg = audio[int(s * sr):int(s * sr) + int(n / FPS * sr)].copy()
     f = int(0.008 * sr)
     seg[:f] *= np.linspace(0, 1, f)
@@ -64,14 +73,15 @@ def clip(s, n):
 
 
 for seg in json.load(open(CFG)):
+    f = seg.get("file", "main")
     pieces = []
     for a, b in seg["a"]:
-        for s, e in ([[a, b]] if seg.get("raw") else speech(a, b)):
+        for s, e in ([[a, b]] if seg.get("raw") else speech(a, b, f)):
             s = round(s * FPS) / FPS
-            pieces.append((s, max(3, round((e - s) * FPS))))
-    total = sum(n for _, n in pieces)
-    for s, n in pieces:
-        c = clip(s, n) * seg.get("vol", 1.0)
+            pieces.append((f, s, max(3, round((e - s) * FPS))))
+    total = sum(n for _, _, n in pieces)
+    for _, s, n in pieces:
+        c = clip(s, n, f) * seg.get("vol", 1.0)
         sound.append(c)
         if not seg.get("raw"):
             loud.append(c)
@@ -83,20 +93,20 @@ for seg in json.load(open(CFG)):
     for k, item in enumerate(v):
         last = k == len(v) - 1
         if "sync" in item:
-            for s, n in pieces[: item["sync"]]:
-                shots.append((s, n))
+            for pf, s, n in pieces[: item["sync"]]:
+                shots.append((pf, s, n))
                 used += n
         else:
             n = total - used if last else min(round(item["dur"] * FPS), total - used)
             if n > 0:
-                shots.append((item["src"], n))
+                shots.append((item.get("file", "main"), item["src"], n))
                 used += n
     assert used == total, (seg, used, total)
 
 parts = []
-for i, (s, n) in enumerate(shots):
+for i, (f, s, n) in enumerate(shots):
     part = os.path.join(TMP, f"{NAME}_p{i:03d}.mp4")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-t", f"{n / FPS + 0.5:.3f}", "-i", SRC, "-an",
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{s:.4f}", "-t", f"{n / FPS + 0.5:.3f}", "-i", SRCS[f], "-an",
                     "-vf", f"scale=1080:1920,fps={FPS}", "-frames:v", str(n), "-c:v", "libx264", "-preset", "fast",
                     "-crf", "17", "-g", "10", "-pix_fmt", "yuv420p", part], check=True)
     parts.append(part)
@@ -109,7 +119,7 @@ ref = np.concatenate(loud) if loud else v
 v = np.tanh(v / (np.percentile(np.abs(ref), 99.5) + 1e-9) * 1.1) * 0.85 if np.abs(ref).max() > 0 else v
 voice = os.path.join(TMP, NAME + "_voice.wav")
 sf.write(voice, v, sr)
-dur = sum(n for _, n in shots) / FPS
+dur = sum(n for _, _, n in shots) / FPS
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", vid, "-i", voice, "-vf", f"fade=t=out:st={dur - 0.25:.3f}:d=0.25",
                 "-af", f"afade=t=out:st={dur - 0.25:.3f}:d=0.25", "-c:v", "libx264", "-preset", "medium", "-crf", "18",
                 "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", OUT], check=True)
