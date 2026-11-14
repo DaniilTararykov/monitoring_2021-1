@@ -97,3 +97,14 @@ description: Use for ANY task about Instagram stories, reels, video editing (м�
 - Композиция `EditorReel` (`remotion/src/EditorReel.tsx`) повторяет логику превью: кадр i начинается на доле i×beatsPerCut, последний держится до конца трека.
 - Финальная версия («как финал»): в конфиг добавь `fades:false, drift:0, gradeAmount:1.3, film:true` (без переходов, грейд +30 %, плёночная кривая, виньетка, мягкая тень под заголовком). Горизонт выравнивай `rot` у клипа (градусы, + по часовой), кроп — `zoom`/`fx`/`fy`. Если видео длиннее трека, не используй `loop`: склей трек по 8-тактовым фразам (каждая копия встаёт на 32-ю долю предыдущей), положи в `public/music/final-*.mp3`, а сетку долей передай в `beats` и `audio`. Пример: `editor/saved/two-recipes-final.json`.
 - Нужные полноразмерные клипы — в `remotion/public/videos/reel/<id>.mp4` (в .gitignore); если сессия новая — заново скачать папку Content с Drive и сделать прокси 1080p.
+
+## 9. Pro-монтаж (инструменты)
+- Окружение для анализа: venv с `faster-whisper opencv-python scenedetect librosa soundfile pyloudnorm` (`python3 -m venv <scratchpad>/venv && <venv>/bin/pip install ...`).
+- `tools/pro_edit.py` (запускать этим venv):
+  - `scenes <video>` — где в клипе склейки (PySceneDetect);
+  - `beats <audio> --every 2` — сетка долей трека для монтажа в бит (librosa);
+  - `steady <video> --win 3` — самый ровный и резкий кусок нужной длины;
+  - `loud <in> <out>` — мастеринг звука до −14 LUFS (Instagram), двухпроходный loudnorm;
+  - `grade <in> <out> warm|clean|night` — пресеты цвета бренда.
+- `tools/stabilize.sh` — vidstab для дрожащих планов; `tools/panettone_reel.py` — пример монтажа по сценарию из одного статичного плана (титры ffmpeg drawtext фирменными шрифтами, фейд в финальное фото).
+- Правила клиента для рилс: кадр ровный (горизонт), текст никогда не перекрывает людей и еду и держится весь ролик, если так в референсе; не брать кадры, где человек выглядит недовольным; музыку из референса — только если клиент просит, иначе трек ставится в Instagram.
