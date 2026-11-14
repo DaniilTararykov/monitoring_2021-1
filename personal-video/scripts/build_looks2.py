@@ -51,38 +51,71 @@ if INTRO:
     AUD["intro"] = sf.read(iw, dtype="float32")[0]
 
 
+def quietest(audio, t, win):
+    """the quietest 10 ms point within t ± win: where a cut does not go through a word"""
+    hop = int(0.01 * sr)
+    i0, i1 = max(0, int((t - win) * sr)), int((t + win) * sr)
+    x = audio[i0:i1]
+    n = len(x) // hop
+    if n < 1:
+        return t
+    r = np.sqrt((x[: n * hop].reshape(n, hop) ** 2).mean(1))
+    return (i0 + int(np.argmin(r)) * hop + hop // 2) / sr
+
+
 def speech(a, b, f="main", tight=False):
     audio = AUD[f]
+    if tight:  # snap the range ends into the nearest silence, so no word is clipped and no fragment leaks in
+        a, b = quietest(audio, a, 0.03), quietest(audio, b, 0.03)
     x = audio[int(a * sr):int(b * sr)]
     hop = int(0.02 * sr)
     n = len(x) // hop
     rms = np.sqrt((x[: n * hop].reshape(n, hop) ** 2).mean(1) + 1e-12)
-    on = rms > max(0.004, 0.12 * np.percentile(rms, 95))
+    p95 = np.percentile(rms, 95)
+    on = rms > max(0.004, 0.12 * p95)
     iv, start = [], None
     for i, v in enumerate(list(on) + [False]):
         if v and start is None:
             start = i
         if not v and start is not None:
-            iv.append([start * 0.02, i * 0.02])
+            iv.append([start, i])
             start = None
     merged = []
     for s, e in iv:
-        if merged and s - merged[-1][1] < (0.12 if tight else 0.30):
+        if merged and (s - merged[-1][1]) * 0.02 < (0.12 if tight else 0.30):
             merged[-1][1] = e
         else:
             merged.append([s, e])
-    merged = [m for m in merged if m[1] - m[0] >= 0.12]
-    pre, post = (0.04, 0.06) if tight else (0.08, 0.10)
-    return [[max(a, a + s - pre), min(b, a + e + post)] for s, e in merged]
+    merged = [m for m in merged if (m[1] - m[0]) * 0.02 >= 0.12]
+    if not tight:
+        return [[max(a, a + s * 0.02 - 0.08), min(b, a + e * 0.02 + 0.10)] for s, e in merged]
+    # tight: remove real pauses only (>= 0.25 s of near-silence); words are found with a low threshold so that
+    # soft onsets and decaying endings stay whole, and cuts fall in the silence between them
+    on = rms > max(0.002, 0.04 * p95)
+    iv, start = [], None
+    for i, v in enumerate(list(on) + [False]):
+        if v and start is None:
+            start = i
+        if not v and start is not None:
+            iv.append([start, i])
+            start = None
+    merged = []
+    for s, e in iv:
+        if merged and (s - merged[-1][1]) * 0.02 < 0.25:
+            merged[-1][1] = e
+        else:
+            merged.append([s, e])
+    merged = [m for m in merged if (m[1] - m[0]) * 0.02 >= 0.10]
+    return [[max(a, a + s * 0.02 - 0.05), min(b, a + e * 0.02 + 0.05)] for s, e in merged]
 
 
-shots, sound, loud, timeline = [], [], [], []
+shots, sound, loud, timeline, edges = [], [], [], [], []
 
 
 def clip(s, n, f="main", clean=False):
     audio = CLEAN[f] if clean and f in CLEAN else AUD[f]
     seg = audio[int(s * sr):int(s * sr) + int(n / FPS * sr)].copy()
-    f = int(0.008 * sr)
+    f = int(0.012 * sr)
     seg[:f] *= np.linspace(0, 1, f)
     seg[-f:] *= np.linspace(1, 0, f)
     return seg
@@ -105,6 +138,8 @@ for seg in json.load(open(CFG)):
         f1, s1, n1 = pieces[-1]
         ne = min(seg["a"][-1][1], s1 + n1 / FPS + 0.30)
         pieces[-1] = (f1, s1, max(n1, round((ne - s1) * FPS)))
+    for pf, ps, pn in pieces:
+        edges.append((len(timeline), pf, ps, ps + pn / FPS, seg.get("raw", False)))
     total = sum(n for _, _, n in pieces)
     timeline.append((sum(x[2] for x in shots) / FPS, total / FPS, seg["a"][0][0], f))
     for _, s, n in pieces:
@@ -160,6 +195,16 @@ if os.environ.get("AUDIO"):  # voice only, to check the words before rendering a
 if os.environ.get("DRY"):
     for t0, d, a0, f in timeline:
         print(f"{t0:7.2f} +{d:5.2f}  {f} {a0}")
+    # cuts that go through sound: loud right outside a spoken piece = a clipped word or a stray fragment
+    for k, f, s0, e0, raw in edges:
+        if raw:
+            continue
+        au = AUD[f]
+        lvl = lambda t0, t1: float(np.sqrt((au[int(t0 * sr):int(t1 * sr)] ** 2).mean() + 1e-12))
+        ref = np.percentile(np.abs(au[int(s0 * sr):int(e0 * sr)]), 95) / 2 + 1e-9
+        pre, post = lvl(s0 - 0.03, s0) / ref, lvl(e0, e0 + 0.03) / ref
+        if pre > 0.15 or post > 0.15:
+            print(f"  cut through sound: seg {k} {f} {s0:.2f}-{e0:.2f} before={pre:.2f} after={post:.2f}")
     print("total", round(sum(x[2] for x in shots) / FPS, 2), "s,", len(shots), "shots")
     sys.exit()
 parts = []

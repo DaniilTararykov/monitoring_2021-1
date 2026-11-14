@@ -12,7 +12,10 @@ Personal videos (GRWM, reels, photos). Talk to the client in Russian. Not relate
 - No subtitles or on-screen text, no zooms or punch-ins, no reframing, no music unless asked: only his voice.
 - Every sentence whole: never cut mid-thought, never leave a stumble, "uh"/"a" filler, false start,
   repeated word or grammar slip. Pick the cleanest take of each line, not the first one.
-- No pauses: tighten (build with `TIGHT=1`).
+- No pauses: tighten (build with `TIGHT=1`), but never at the cost of a word: every line starts before its
+  first sound and ends after its last one (word endings like "tonight", "decades", "bottom" decay slowly),
+  and no fragment of the neighbouring word may leak in. Set line edges from a 20 ms loudness profile, then
+  run `DRY=1` and fix every "cut through sound" it reports.
 - Talking on screen = picture in sync. Voice-over only over action shots (dressing, putting things on,
   spraying perfume). Never a shot where he is silent and doing nothing, never a shot of his back while
   silent, never an empty room.

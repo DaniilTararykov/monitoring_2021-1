@@ -222,7 +222,23 @@ PERFUME12 = [L((1147.9, 1151.15))] + SPRAYS + [L((1199.5, 1201.95), (1204.4, 120
 V12 = ([HELLO5, CASUAL, JEANS10, BELT11, SLEEVE10, SLEEVE_ON11] + BOOTS10 + [LEATHER11, REVEAL, HAIR_RINGS] + PERFUME12
        + [ASK, BYE])
 
-CUTS = {"grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round ten: every edge in the silence
+# Each line now starts before its first sound and ends after its last one (read off 20 ms loudness),
+# so no word is clipped ("why", "jeans", "one", "on", "worse") and no neighbour leaks in.
+HELLO13 = L((6.3, 7.93), (9.0, 12.3), file="intro")       # "Hi everyone! And let's get ready with me for drinks with my friends."
+CASUAL13 = L((79.04, 80.99))                               # "Tonight I want to be casual and simple." (the whole "tonight")
+JEANS13 = L((83.1, 84.0), (87.69, 88.37), (88.555, 89.2), v=[LIP(upto=1), VO(106.8)])  # "I love these jeans. Why not wear them today?"
+BELT13 = L((333.5, 335.8), (340.66, 343.24), (349.76, 351.0))  # the "s" of "decades" ends at 343.22
+SLEEVE13 = L((456.1, 458.29))
+SLEEVE_ON13 = L((573.52, 578.01), v=[VO(481.6, 3.0), LIP()])
+BOOTS13 = [L((658.39, 659.6)), L((686.7, 687.72))]
+LEATHER13 = L((769.4, 771.72), (803.12, 805.7), v=[LIP(upto=1), VO(796.6, 1.6), LIP()])
+HAIR13 = L((1133.5, 1134.97), (1141.95, 1143.75), (1145.9, 1147.22))
+PERFUME13 = [L((1147.86, 1151.25))] + SPRAYS + [L((1199.53, 1202.02), (1204.4, 1207.4))]
+V13 = ([HELLO13, CASUAL13, JEANS13, BELT13, SLEEVE13, SLEEVE_ON13] + BOOTS13 + [LEATHER13, REVEAL, HAIR13] + PERFUME13
+       + [ASK, BYE])
+
+CUTS = {"grwm10_clean": V13, "grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
