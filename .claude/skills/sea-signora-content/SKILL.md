@@ -108,3 +108,8 @@ description: Use for ANY task about Instagram stories, reels, video editing (м�
   - `grade <in> <out> warm|clean|night` — пресеты цвета бренда.
 - `tools/stabilize.sh` — vidstab для дрожащих планов; `tools/panettone_reel.py` — пример монтажа по сценарию из одного статичного плана (титры ffmpeg drawtext фирменными шрифтами, фейд в финальное фото).
 - Правила клиента для рилс: кадр ровный (горизонт), текст никогда не перекрывает людей и еду и держится весь ролик, если так в референсе; не брать кадры, где человек выглядит недовольным; музыку из референса — только если клиент просит, иначе трек ставится в Instagram.
+
+## 10. Remotion 4.0.543 и официальные навыки Remotion
+- Проект обновлён до Remotion 4.0.543 (рендер старых сторис проверен: кадры идентичны). Добавлены `@remotion/media`, `@remotion/transitions`, `@remotion/effects`.
+- В `.claude/skills/` лежат официальные навыки Remotion (remotion-dev/skills, 4.0.543): `remotion-markup` (анимация, переходы, свет, цвет, текст, matting), `remotion-captions` (субтитры по словам), `remotion-render`, `remotion-multimedia`, `remotion-interactivity`, `remotion-upgrade`. Обновлять: `npx remotion upgrade` в `remotion/`.
+- **Ограничение облака:** WebGL-эффекты `@remotion/effects` (vignette, lightLeak и т. п.) здесь не рендерятся — нет GPU, с `gl: 'swangle'` кадр выходит пустым. Цвет, виньетку и зерно делаем ffmpeg (`tools/pro_edit.py grade`), переходы — `@remotion/transitions` или CSS/interpolate.
