@@ -105,7 +105,8 @@ open(lst, "w").write("".join(f"file '{p}'\n" for p in parts))
 vid = os.path.join(TMP, NAME + "_video.mp4")
 subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", vid], check=True)
 v = np.concatenate(sound)
-v = np.tanh(v / (np.percentile(np.abs(np.concatenate(loud)), 99.5) + 1e-9) * 1.1) * 0.85
+ref = np.concatenate(loud) if loud else v
+v = np.tanh(v / (np.percentile(np.abs(ref), 99.5) + 1e-9) * 1.1) * 0.85 if np.abs(ref).max() > 0 else v
 voice = os.path.join(TMP, NAME + "_voice.wav")
 sf.write(voice, v, sr)
 dur = sum(n for _, n in shots) / FPS
