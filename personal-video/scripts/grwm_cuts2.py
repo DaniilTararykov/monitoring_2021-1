@@ -190,7 +190,20 @@ FINAL9 = L((1117.65, 1119.6), (1122.0, 1124.7), (1127.36, 1128.2))  # "...with t
 V9 = ([HELLO5, CASUAL, JEANS[True], TANK[True], BELT9, SEAT_BELT, SLEEVE9, SLEEVE_ON9] + BOOTS3
       + [LEATHER9, LEATHER_ON9, REVEAL, FINAL9, HAIR_RINGS, PERFUME_B, ASK, BYE])
 
-CUTS = {"grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round seven: one minute, simplest story
+# hello -> jeans (robe off) -> father's belt -> long sleeve over the head -> boots -> vintage leather jacket on
+# -> ready, arms out -> hair, rings -> perfume sprayed on the neck -> bye. No brands (Elijah went with the bags).
+JEANS10 = L((83.1, 83.92), (87.84, 88.37), (88.55, 89.18), v=[LIP(upto=1), VO(106.8)])  # "I love these jeans. Why not wear them today?"
+SLEEVE10 = L((456.1, 458.22))
+BOOTS10 = [L((658.3, 659.6)), L((686.7, 687.72))]  # "I'm gonna wear these boots." ... "They look nice."
+LEATHER10 = L((769.4, 771.56), (803.2, 805.65), v=[VO(766.9, 0.8), LIP(upto=1), VO(796.6, 1.6), LIP()])
+# "A leather jacket, it's a vintage one." / puts it on: "Actually, it's not bad. I thought it's gonna be worse."
+PERFUME10 = [L((1147.9, 1151.0)),
+             L((1199.5, 1201.95), (1204.4, 1207.4), v=[VO(1196.9, 2.4), LIP()])]  # sprays the neck, then "very heavy, leather-ish..."
+V10 = ([HELLO5, CASUAL, JEANS10, BELT9, SLEEVE10, SLEEVE_ON9] + BOOTS10 + [LEATHER10, REVEAL, HAIR_RINGS] + PERFUME10
+       + [ASK, BYE])
+
+CUTS = {"grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
