@@ -24,6 +24,17 @@ Back to the table: Monday, from 19:00.
 ```
 - **Варианты призыва:** reserve · book a table
 
+### W8-1mon-3p-pour-decisions · Вино · фото · 7.0 с
+- **На экране:** POUR DECISIONS / FROM OUR WINE LIST
+- **Фото:** w9/bo426.jpg · музыка: none
+
+```
+Pour decisions, from our wine list.
+
+#seasignora #wine #vino #brera
+```
+- **Варианты призыва:** reserve · book a table
+
 ## Tue 17.11
 
 ### W8-2tue-1v-tuna-show · ДР · тунец (рекап) · 10.2 с
@@ -49,6 +60,17 @@ Akami, culatello e porcini: on the menu at Sea, Signora.
 ```
 - **Варианты призыва:** book a table · reserve
 
+### W8-2tue-3v-the-team · ДР · команда (рекап) · 10.2 с
+- **На экране:** THE TEAM BEHIND THE NIGHT / GRAZIE, RAGAZZI
+- **Фото:** w9/2583.mp4, w9/2717.mp4 · музыка: none
+
+```
+The team behind the night. Grazie, ragazzi.
+
+#seasignora #team #hospitality #brera
+```
+- **Варианты призыва:** reserve · book a table
+
 ## Wed 18.11
 
 ### W8-3wed-1v-open-kitchen · Кухня · часы · 10.1 с
@@ -73,6 +95,17 @@ Panettone, dressed for dessert: cherries and crema. Panettone season at Sea, Sig
 ```
 - **Варианты призыва:** reserve · book a table
 
+### W8-3wed-3p-tagliolini · Блюдо-герой · окно · 7.0 с
+- **На экране:** TAGLIOLINI / CALAMARI E FINFERLI
+- **Фото:** w9/bo103.jpg · музыка: none
+
+```
+Tagliolini, calamari e finferli.
+
+#seasignora #pasta #tagliolini #brera
+```
+- **Варианты призыва:** book a table · reserve
+
 ## Thu 19.11
 
 ### W8-4thu-1v-at-the-bar · Бар · вечер + кнопка · 10.8 с
@@ -95,6 +128,17 @@ Thursday: meet me at the bar, from 19:00.
 One more? Our cocktails come with a story.
 
 #seasignora #cocktails #bar #brera
+```
+- **Варианты призыва:** reserve · book a table
+
+### W8-4thu-3v-whole-table · Ивенты · компании · 10.2 с
+- **На экране:** PRIVATE EVENTS / BRING THE WHOLE TABLE / GROUPS UP TO 150 GUESTS
+- **Фото:** w9/2633.mp4, w9/2684.mp4 · музыка: none
+
+```
+Bring the whole table: we host private events for up to 150 guests. Write to info@seasignorarest.com.
+
+#seasignora #events #privatedining #brera #milano
 ```
 - **Варианты призыва:** reserve · book a table
 
@@ -122,6 +166,17 @@ The Tomahawk, for two. Share it. Or don't.
 ```
 - **Варианты призыва:** book a table · reserve
 
+### W8-5fri-3p-to-the-weekend · Коктейли · окно · 7.0 с
+- **На экране:** FRIDAY / TO THE WEEKEND / COCKTAILS FROM 19:00
+- **Фото:** w9/bo419.jpg · музыка: none
+
+```
+Friday: to the weekend. Cocktails from 19:00.
+
+#seasignora #cocktails #friday #brera
+```
+- **Варианты призыва:** reserve · book a table
+
 ## Sat 21.11
 
 ### W8-6sat-1v-saturday · Атмосфера · зал + часы · 10.0 с
@@ -147,6 +202,17 @@ Gift the sea: Holy Shell, our limited-edition candle by The Candle Cluub.
 ```
 - **Варианты призыва:** shop the candle · get yours
 
+### W8-6sat-3p-something-new · Новое меню · окно · 7.0 с
+- **На экране:** SOMETHING NEW / FROM OUR NEW MENU
+- **Фото:** w9/bn481.jpg · музыка: none
+
+```
+Something new, from our new menu.
+
+#seasignora #newmenu #brera #milanofood
+```
+- **Варианты призыва:** book a table · reserve
+
 ## Sun 22.11
 
 ### W8-7sun-1v-sunday-plans · Гости · воскресенье + часы · 10.0 с
@@ -168,5 +234,16 @@ Sunday plans: see you at Sea, Signora. Open 12:30–15:30 and 19:00–00:00.
 Golden. Panettone season at Sea, Signora.
 
 #seasignora #panettone #christmas #brera
+```
+- **Варианты призыва:** reserve · book a table
+
+### W8-7sun-3p-candlelight · Атмосфера · свечи · 7.0 с
+- **На экране:** SUNDAY NIGHT / BY CANDLELIGHT / 19:00—00:00
+- **Фото:** w9/bo073.jpg · музыка: none
+
+```
+Sunday night, by candlelight. Open until midnight.
+
+#seasignora #candlelight #sunday #brera
 ```
 - **Варианты призыва:** reserve · book a table

@@ -1,7 +1,7 @@
 import type {Block, Overlay, Scene, Story} from './types';
 
 // Week 16–22.11 (client 15.11: «from the latest folders»). The account's own style (as week7): full-frame video or photo,
-// ivory Skanaus + mono on the night gradient, orange kickers. Two stories a day: video, then photo.
+// ivory Skanaus + mono on the night gradient, orange kickers. Three stories a day (client 15.11): video, photo, then a third of either kind.
 // Material never used in stories before: the birthday night (12.11, folder 1Eshu8dH…, steady windows picked by measured
 // camera shift), Blackout pro photos #024 (Holy Shell candle), #113 (Akami), #411 (cocktail), panettone #91 / #56,
 // the Tomahawk platter, Shooting 9 #44. Landscape photos sit in a window, never stretched.
@@ -36,7 +36,14 @@ export const week8: Story[] = [
     overlay: top(H('Back to the table'), sub('monday, from 19:00')),
     caption: 'Back to the table: Monday, from 19:00.',
     hashtags: tags('#monday', '#brera', '#milanofood'), ctaVariants: ['reserve', 'book a table'],
+  },  {
+    id: 'W8-1mon-3p-pour-decisions', day: 'Mon 16.11', rubric: 'Вино · фото', music: silent,
+    scenes: [ph('bo426', 7, {fy: 55})],
+    overlay: top(H('Pour decisions'), sub('from our wine list')),
+    caption: 'Pour decisions, from our wine list.',
+    hashtags: tags('#wine', '#vino', '#brera'), ctaVariants: ['reserve', 'book a table'],
   },
+
 
   // ───────────────────────── Tue 17.11
   {
@@ -53,7 +60,14 @@ export const week8: Story[] = [
     cta: {label: 'book a table', color: 'orange'},
     caption: 'Akami, culatello e porcini: on the menu at Sea, Signora.',
     hashtags: tags('#tuna', '#akami', '#newmenu', '#brera'), ctaVariants: ['book a table', 'reserve'],
+  },  {
+    id: 'W8-2tue-3v-the-team', day: 'Tue 17.11', rubric: 'ДР · команда (рекап)', music: silent,
+    scenes: [v('2583', 13.1, 6.2), v('2717', 3.3, 4)],
+    overlay: top(H('The team behind the night'), sub('grazie, ragazzi')),
+    caption: 'The team behind the night. Grazie, ragazzi.',
+    hashtags: tags('#team', '#hospitality', '#brera'), ctaVariants: ['reserve', 'book a table'],
   },
+
 
   // ───────────────────────── Wed 18.11
   {
@@ -69,7 +83,14 @@ export const week8: Story[] = [
     overlay: top(kick('panettone season'), H('Dressed for dessert'), sub('cherries & crema')),
     caption: 'Panettone, dressed for dessert: cherries and crema. Panettone season at Sea, Signora.',
     hashtags: tags('#panettone', '#dessert', '#christmas', '#brera'), ctaVariants: ['reserve', 'book a table'],
+  },  {
+    id: 'W8-3wed-3p-tagliolini', day: 'Wed 18.11', rubric: 'Блюдо-герой · окно', music: silent,
+    scenes: [ph('bo103', 7, {window: {top: 560, bottom: 600, side: 64}, fx: 50, fy: 50})],
+    overlay: bottom(H('Tagliolini'), sub('calamari e finferli')),
+    caption: 'Tagliolini, calamari e finferli.',
+    hashtags: tags('#pasta', '#tagliolini', '#brera'), ctaVariants: ['book a table', 'reserve'],
   },
+
 
   // ───────────────────────── Thu 19.11
   {
@@ -86,7 +107,14 @@ export const week8: Story[] = [
     overlay: bottom(H('One more?'), sub('cocktails with a story')),
     caption: 'One more? Our cocktails come with a story.',
     hashtags: tags('#cocktails', '#bar', '#brera'), ctaVariants: ['reserve', 'book a table'],
+  },  {
+    id: 'W8-4thu-3v-whole-table', day: 'Thu 19.11', rubric: 'Ивенты · компании', music: silent,
+    scenes: [v('2633', 0.5, 4.8), v('2684', 0.6, 5.4)],
+    overlay: top(kick('private events'), H('Bring the whole table'), sub('groups up to 150 guests')),
+    caption: 'Bring the whole table: we host private events for up to 150 guests. Write to info@seasignorarest.com.',
+    hashtags: tags('#events', '#privatedining', '#brera', '#milano'), ctaVariants: ['reserve', 'book a table'],
   },
+
 
   // ───────────────────────── Fri 20.11
   {
@@ -102,7 +130,14 @@ export const week8: Story[] = [
     overlay: bottom(kick('for two'), H("Share it.\nOr don't.", 70), sub('the tomahawk')),
     caption: "The Tomahawk, for two. Share it. Or don't.",
     hashtags: tags('#tomahawk', '#steak', '#weekend', '#brera'), ctaVariants: ['book a table', 'reserve'],
+  },  {
+    id: 'W8-5fri-3p-to-the-weekend', day: 'Fri 20.11', rubric: 'Коктейли · окно', music: silent,
+    scenes: [ph('bo419', 7, {window: {top: 560, bottom: 600, side: 64}, fx: 50, fy: 45})],
+    overlay: top(kick('friday'), H('To the weekend'), sub('cocktails from 19:00')),
+    caption: 'Friday: to the weekend. Cocktails from 19:00.',
+    hashtags: tags('#cocktails', '#friday', '#brera'), ctaVariants: ['reserve', 'book a table'],
   },
+
 
   // ───────────────────────── Sat 21.11
   {
@@ -119,7 +154,14 @@ export const week8: Story[] = [
     cta: {label: 'shop the candle', color: 'orange'},
     caption: 'Gift the sea: Holy Shell, our limited-edition candle by The Candle Cluub.',
     hashtags: tags('#candle', '#holyshell', '#thecandlecluub', '#gift'), ctaVariants: ['shop the candle', 'get yours'],
+  },  {
+    id: 'W8-6sat-3p-something-new', day: 'Sat 21.11', rubric: 'Новое меню · окно', music: silent,
+    scenes: [ph('bn481', 7, {window: {top: 560, bottom: 600, side: 64}, fx: 50, fy: 50})],
+    overlay: bottom(H('Something new'), sub('from our new menu')),
+    caption: 'Something new, from our new menu.',
+    hashtags: tags('#newmenu', '#brera', '#milanofood'), ctaVariants: ['book a table', 'reserve'],
   },
+
 
   // ───────────────────────── Sun 22.11
   {
@@ -135,5 +177,12 @@ export const week8: Story[] = [
     overlay: top(kick('panettone season'), giant('Golden'), sub('at sea, signora')),
     caption: 'Golden. Panettone season at Sea, Signora.',
     hashtags: tags('#panettone', '#christmas', '#brera'), ctaVariants: ['reserve', 'book a table'],
+  },  {
+    id: 'W8-7sun-3p-candlelight', day: 'Sun 22.11', rubric: 'Атмосфера · свечи', music: silent,
+    scenes: [ph('bo073', 7, {fy: 55})],
+    overlay: top(kick('sunday night'), H('By candlelight'), sub('19:00—00:00')),
+    caption: 'Sunday night, by candlelight. Open until midnight.',
+    hashtags: tags('#candlelight', '#sunday', '#brera'), ctaVariants: ['reserve', 'book a table'],
   },
+
 ];
