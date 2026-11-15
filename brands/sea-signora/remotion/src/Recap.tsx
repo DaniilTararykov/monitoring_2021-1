@@ -32,7 +32,7 @@ const ROT: Record<number, number> = {3: -3, 9: -6, 12: 3, 16: -3, 17: 1.5, 26: 3
 
 // a shot of the client's cut (s = index, at = optional start) or, for collages, another moment of the evening that is
 // not in the cut (clip = original proxy in bd/, at = start) — so nothing on the page repeats; fx/fy = framing (%)
-type Shot = {s?: number; clip?: string; at?: number; fx?: number; fy?: number};
+type Shot = {s?: number; clip?: string; at?: number; fx?: number; fy?: number; z?: number};
 const PAGE = {green: brandPalette.green5605, orange: brandPalette.orange158, sand: brandPalette.sand454};
 type Seg =
   | {k: 'full'; n: number; v: Shot; punch?: boolean}
@@ -78,31 +78,36 @@ const A: Seg[] = [
 ];
 
 // ───────────────────────────── B · Tagli
+// Client 15.11: every shot of the cut once (no strobing the same shot), collages = two clean stacked halves framed on
+// people / plates with a thin brand-green divider (no narrow strips), the «1» only where it reads — a standing person:
+// Antonio on the chorus, Antonio at the end.
 const B: Seg[] = [
   {k: 'word', n: 1, text: 'Un', bg: PAGE.green}, {k: 'word', n: 1, text: 'anno', bg: PAGE.orange, ink: PAGE.green},
   {k: 'full', n: 2, v: {s: 1}, punch: true}, {k: 'full', n: 2, v: {s: 2}, punch: true}, {k: 'full', n: 2, v: {s: 3}, punch: true},
-  {k: 'full', n: 2, v: {s: 4}}, {k: 'one', n: 1, v: {s: 5}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 5, at: 14.1}},
-  {k: 'duo', n: 2, vs: [{s: 6}, {s: 7}], bg: colors.night}, {k: 'full', n: 2, v: {s: 8}, punch: true}, {k: 'full', n: 2, v: {s: 9}},
-  {k: 'full', n: 2, v: {s: 10}, punch: true}, {k: 'full', n: 2, v: {s: 11}},
-  {k: 'tri', n: 3, vs: [{s: 9, at: 18.2}, {s: 10, at: 19.7}, {s: 11, at: 21.0}], bg: colors.night},
-  {k: 'full', n: 2, v: {s: 12}, punch: true}, {k: 'word', n: 1, text: 'Sea,', bg: PAGE.green, mark: true},
-  {k: 'word', n: 1, text: 'Signora', bg: PAGE.green, mark: true}, {k: 'full', n: 2, v: {s: 12, at: 22.9}},
-  {k: 'full', n: 2, v: {s: 13}},
-  // chorus 1 — the «1» strobes with the full frame
-  {k: 'one', n: 1, v: {s: 13, at: 24.2}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 13, at: 24.75}}, {k: 'one', n: 1, v: {s: 13, at: 25.0}, bg: PAGE.orange},
-  {k: 'full', n: 1, v: {s: 14}}, {k: 'full', n: 2, v: {s: 14, at: 25.9}, punch: true}, {k: 'one', n: 1, v: {s: 15}, bg: PAGE.orange},
-  {k: 'full', n: 2, v: {s: 15, at: 27.45}}, {k: 'full', n: 2, v: {s: 16}, punch: true}, {k: 'one', n: 1, v: {s: 17}, bg: PAGE.orange},
-  {k: 'full', n: 2, v: {s: 18}}, {k: 'full', n: 1, v: {s: 19}},
+  {k: 'full', n: 2, v: {s: 4}}, {k: 'full', n: 2, v: {s: 5}},
+  {k: 'duo', n: 2, vs: [{s: 6, fy: 30}, {s: 7, fy: 42}], bg: PAGE.green, dir: 'h'},
+  {k: 'full', n: 2, v: {s: 8}, punch: true}, {k: 'full', n: 2, v: {s: 9}}, {k: 'full', n: 2, v: {s: 10}, punch: true}, {k: 'full', n: 2, v: {s: 11}},
+  {k: 'duo', n: 2, vs: [{clip: 'IMG_2647', at: 8.7, fy: 38}, {clip: 'IMG_2624', at: 0.1, fy: 40}], bg: PAGE.green, dir: 'h'},
+  {k: 'full', n: 2, v: {s: 12}, punch: true},
+  {k: 'word', n: 1, text: 'Sea,', bg: PAGE.green, mark: true}, {k: 'word', n: 1, text: 'Signora', bg: PAGE.green, mark: true},
+  {k: 'duo', n: 2, vs: [{clip: 'IMG_2611', at: 0.3, fy: 50}, {clip: 'IMG_2576', at: 3.9, fy: 45}], bg: PAGE.green, dir: 'h'},
+  {k: 'full', n: 1, v: {clip: 'IMG_2642', at: 8.0}},
+  {k: 'word', n: 2, text: 'Tonno', bg: PAGE.orange, ink: PAGE.green},
+  // chorus 1 — the tuna show; the «1» once, on the loin
+  {k: 'full', n: 2, v: {s: 13}}, {k: 'full', n: 2, v: {s: 14}, punch: true}, {k: 'full', n: 2, v: {s: 15}},
+  {k: 'one', n: 2, v: {s: 16, z: 1.2, fx: 36, fy: 42}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 17}}, {k: 'full', n: 2, v: {s: 18}}, {k: 'full', n: 1, v: {s: 19}},
+  {k: 'full', n: 1, v: {s: 20}}, {k: 'full', n: 2, v: {clip: 'IMG_2663', at: 0.0}, punch: true},
   // verse 2 — the table
-  {k: 'word', n: 1, text: 'Amici', bg: PAGE.orange, ink: PAGE.green}, {k: 'full', n: 1, v: {s: 20}},
-  {k: 'duo', n: 2, vs: [{s: 21}, {s: 22}], bg: colors.night}, {k: 'full', n: 3, v: {s: 23}, punch: true}, {k: 'full', n: 3, v: {s: 24}, punch: true},
-  {k: 'duo', n: 2, vs: [{s: 25}, {s: 26}], bg: colors.night, dir: 'h'}, {k: 'full', n: 2, v: {s: 26, at: 42.5}}, {k: 'full', n: 3, v: {s: 27}},
-  {k: 'one', n: 1, v: {s: 28}, bg: PAGE.orange}, {k: 'full', n: 2, v: {s: 28, at: 45.5}}, {k: 'full', n: 1, v: {s: 29}},
-  {k: 'full', n: 2, v: {s: 30}, punch: true}, {k: 'tri', n: 3, vs: [{s: 22, at: 35.4}, {s: 25, at: 41.0}, {s: 27, at: 43.5}], bg: colors.night},
+  {k: 'word', n: 1, text: 'Amici', bg: PAGE.orange, ink: PAGE.green},
+  {k: 'full', n: 2, v: {s: 21}}, {k: 'full', n: 2, v: {s: 22}, punch: true}, {k: 'full', n: 3, v: {s: 23}}, {k: 'full', n: 3, v: {s: 24}, punch: true},
+  {k: 'duo', n: 2, vs: [{s: 25, fy: 55}, {s: 26, fy: 38}], bg: PAGE.green, dir: 'h'}, {k: 'full', n: 3, v: {s: 27}},
+  {k: 'full', n: 2, v: {s: 28}, punch: true}, {k: 'full', n: 1, v: {s: 29}}, {k: 'full', n: 2, v: {s: 30}},
+  {k: 'duo', n: 2, vs: [{clip: 'IMG_2699', at: 1.0, fy: 55}, {clip: 'IMG_2705', at: 8.7, fy: 50}], bg: PAGE.green, dir: 'h'},
+  {k: 'full', n: 2, v: {clip: 'IMG_2692', at: 0.6}, punch: true},  {k: 'full', n: 2, v: {clip: 'IMG_2699', at: 8.4}},
   {k: 'word', n: 1, text: 'Torta', bg: PAGE.green},
-  // chorus 2 — the cake, the «1», the thanks
-  {k: 'full', n: 3, v: {s: 31}}, {k: 'one', n: 1, v: {s: 32}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 32, at: 51.3}},
-  {k: 'full', n: 2, v: {s: 33}, punch: true}, {k: 'full', n: 3, v: {s: 34}}, {k: 'full', n: 2, v: {s: 35}},
+  // chorus 2 — the cake; the «1» on the cake, then the thanks
+  {k: 'full', n: 3, v: {s: 31}}, {k: 'full', n: 2, v: {s: 32}}, {k: 'full', n: 2, v: {s: 33}, punch: true},
+  {k: 'full', n: 3, v: {s: 34}}, {k: 'full', n: 2, v: {s: 35}},
   {k: 'word', n: 1, text: 'Grazie', bg: PAGE.green}, {k: 'word', n: 1, text: 'a tutti', bg: PAGE.orange, ink: PAGE.green},
   {k: 'end', n: 99, v: {s: 36}, bg: PAGE.orange, ink: PAGE.green},
 ];
@@ -136,7 +141,7 @@ const Vid: React.FC<{v: Shot; sec: number; zoom?: number}> = ({v, sec, zoom = 1}
     <AbsoluteFill style={{overflow: 'hidden'}}>
       <OffthreadVideo src={staticFile(v.clip ? `bd/${v.clip}.mp4` : 'rc/b.mp4')} startFrom={Math.round(startOf(v, sec) * FPS)} playbackRate={rateOf(v, sec)} muted
         style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${v.fx ?? 50}% ${v.fy ?? 50}%`,
-          transform: `rotate(${r}deg) scale(${cover * zoom})`}} />
+          transform: `rotate(${r}deg) scale(${cover * zoom * (v.z ?? 1)})`, transformOrigin: `${v.fx ?? 50}% ${v.fy ?? 50}%`}} />
     </AbsoluteFill>
   );
 };
