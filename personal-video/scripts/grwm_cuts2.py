@@ -250,7 +250,18 @@ ASK14 = L((1293.28, 1295.55), v=[VO(1116.3, 1.4), LIP()])
 V14 = ([HELLO13, CASUAL14, JEANS13, BELT13, SLEEVE13, SLEEVE_ON13] + BOOTS13 + [LEATHER14, HAIR13] + PERFUME13
        + [ASK14, BYE])
 
-CUTS = {"grwm11_story": V14, "grwm10_clean": V13, "grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round twelve: the real spray, found by movement
+# 19:57 and 20:09 were not sprays (he smells the cap / looks at it; the round thing he holds is the mic).
+# The spray is at 20:36-20:40: bottle to the neck, head back, a second spray behind the head, cap on;
+# right after it he says "And we're done!". It plays under "It's very heavy, leather-ish..." (no spray sound there).
+BELT15 = L((333.5, 335.8), (340.66, 343.24), (349.76, 351.25))  # "father" ends at 351.25 ("-ther" is softer)
+PERF_A = L((1147.86, 1151.25))                                 # "And I think we need the last touch, which is the perfume."
+PERF_B = L((1199.53, 1202.02), (1204.4, 1207.4), v=[VO(1236.5, 3.8), LIP()])
+DONE15 = L((1242.3, 1243.0))                                   # "And we're done!" (just after the cap goes back on)
+V15 = ([HELLO13, CASUAL14, JEANS13, BELT15, SLEEVE13, SLEEVE_ON13] + BOOTS13 + [LEATHER14, HAIR13, PERF_A, PERF_B,
+       DONE15, ASK14, BYE])
+
+CUTS = {"grwm12_spray": V15, "grwm11_story": V14, "grwm10_clean": V13, "grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":

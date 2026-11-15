@@ -46,6 +46,10 @@ Personal videos (GRWM, reels, photos). Talk to the client in Russian. Not relate
 - A stop consonant (p, t, k, b, d) makes a 50–100 ms silence inside a word ("sim-ple"): never treat a gap
   shorter than 120 ms as the end of a word.
 
+- Find actions by what is seen, not by sound: a hiss can be anything. He holds a round microphone near his
+  mouth most of the time, so "hand at the neck" on a wide shot is often just the mic. The perfume spray is
+  at 20:36–20:40 of IMG_2769 (bottle to the neck, head back, second spray behind the head).
+
 ## Before sending anything
 1. Transcribe the finished voice with a filler-aware prompt ("Umm, uh, ah…") and read it: no fillers,
    no repeats, no cut words, every sentence complete.
