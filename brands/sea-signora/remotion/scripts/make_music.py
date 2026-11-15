@@ -138,7 +138,7 @@ def track(name, length=26):
 if __name__ == '__main__':
     out = sys.argv[1]; os.makedirs(out, exist_ok=True)
     for name in (sys.argv[2:] or TRACKS):
-        x = np.clip(track(name), -.98, .98)
+        x = np.clip(track(name, float(os.environ.get("TRACK_LEN", 26))), -.98, .98)
         st = np.stack([x, np.roll(x, 220)], 1)
         wav = os.path.join(out, name + '.wav')
         with wave.open(wav, 'w') as w:
