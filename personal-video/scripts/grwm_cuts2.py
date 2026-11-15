@@ -261,7 +261,23 @@ DONE15 = L((1242.3, 1243.0))                                   # "And we're done
 V15 = ([HELLO13, CASUAL14, JEANS13, BELT15, SLEEVE13, SLEEVE_ON13] + BOOTS13 + [LEATHER14, HAIR13, PERF_A, PERF_B,
        DONE15, ASK14, BYE])
 
-CUTS = {"grwm12_spray": V15, "grwm11_story": V14, "grwm10_clean": V13, "grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round thirteen: brands named, bag and bottle shown
+JEANS16 = L((83.1, 84.74), (87.69, 88.37), (88.555, 89.2), v=[LIP(upto=1), VO(106.8)])  # "...they're from Zara. So why not wear them today?"
+TANK16 = L((306.5, 310.08))                         # "Now I have just a black tank top from H&M"
+SLEEVE16 = L((456.1, 458.29), (458.3, 458.75), (460.05, 460.7))  # "...that I want to wear tonight. This is from B3."
+BOOTS16 = [L((658.39, 661.25)), L((686.7, 687.72))]  # "I'm gonna wear these boots. They're also from Zara." / "They look nice."
+KILIAN16 = L((1191.6, 1196.0))                      # close up with the bottle: "For the perfume I decided to go with Kilian..."
+V16 = ([HELLO13, CASUAL14, JEANS16, TANK16, BELT15, SLEEVE16, SLEEVE_ON13] + BOOTS16 + [LEATHER14, FINAL9, HAIR13,
+       KILIAN16, PERF_B, DONE15, ASK14, BYE])
+
+TANK17 = L((305.05, 305.5), (307.6, 310.08))          # "Now I have a black tank top from H&M" (no drawn-out "just...")
+SLEEVE17 = L((456.1, 458.29), (458.3, 460.7))         # "...wear tonight. This is from the Russian brand. It's called B3."
+DETAILS17 = L((463.9, 466.45), (470.4, 471.5))        # "Such long sleeves, with some details." ("and it has" is said twice)        # close to camera: "And it has such long sleeves, with some details."
+FINAL17 = L((1117.65, 1119.6), (1122.0, 1124.12))     # "So I decided to go with this jacket with this bag that I wanted."
+V17 = ([HELLO13, JEANS16, TANK17, BELT15, SLEEVE17, DETAILS17, SLEEVE_ON13] + BOOTS16 + [LEATHER14, FINAL17, HAIR13,
+       KILIAN16, PERF_B, ASK14, BYE])
+
+CUTS = {"grwm14_details": V17, "grwm13_brands": V16, "grwm12_spray": V15, "grwm11_story": V14, "grwm10_clean": V13, "grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
