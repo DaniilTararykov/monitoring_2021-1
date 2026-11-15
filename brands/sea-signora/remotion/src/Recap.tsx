@@ -74,13 +74,13 @@ const B: Seg[] = [
   {k: 'full', n: 2, v: {s: 4}}, {k: 'one', n: 1, v: {s: 5}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 5, at: 14.1}},
   {k: 'duo', n: 2, vs: [{s: 6}, {s: 7}], bg: colors.night}, {k: 'full', n: 2, v: {s: 8}, punch: true}, {k: 'full', n: 2, v: {s: 9}},
   {k: 'full', n: 2, v: {s: 10}, punch: true}, {k: 'full', n: 2, v: {s: 11}},
-  {k: 'tri', n: 3, vs: [{s: 9, at: 18.2}, {s: 10, at: 19.7}, {s: 11, at: 21.0}], bg: colors.night, build: true},
+  {k: 'tri', n: 3, vs: [{s: 9, at: 18.2}, {s: 10, at: 19.7}, {s: 11, at: 21.0}], bg: colors.night},
   {k: 'full', n: 2, v: {s: 12}, punch: true}, {k: 'word', n: 1, text: 'Sea,', bg: PAGE.green, mark: true},
   {k: 'word', n: 1, text: 'Signora', bg: PAGE.green, mark: true}, {k: 'full', n: 2, v: {s: 12, at: 22.9}},
   {k: 'full', n: 2, v: {s: 13}},
   // chorus 1 — the «1» strobes with the full frame
   {k: 'one', n: 1, v: {s: 13, at: 24.2}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 13, at: 24.75}}, {k: 'one', n: 1, v: {s: 13, at: 25.0}, bg: PAGE.orange},
-  {k: 'full', n: 1, v: {s: 14}}, {k: 'full', n: 2, v: {s: 14, at: 25.9}, punch: true}, {k: 'one', n: 1, v: {s: 15}, bg: PAGE.green},
+  {k: 'full', n: 1, v: {s: 14}}, {k: 'full', n: 2, v: {s: 14, at: 25.9}, punch: true}, {k: 'one', n: 1, v: {s: 15}, bg: PAGE.orange},
   {k: 'full', n: 2, v: {s: 15, at: 27.45}}, {k: 'full', n: 2, v: {s: 16}, punch: true}, {k: 'one', n: 1, v: {s: 17}, bg: PAGE.orange},
   {k: 'full', n: 2, v: {s: 18}}, {k: 'full', n: 1, v: {s: 19}},
   // verse 2 — the table
@@ -88,7 +88,7 @@ const B: Seg[] = [
   {k: 'duo', n: 2, vs: [{s: 21}, {s: 22}], bg: colors.night}, {k: 'full', n: 3, v: {s: 23}, punch: true}, {k: 'full', n: 3, v: {s: 24}, punch: true},
   {k: 'duo', n: 2, vs: [{s: 25}, {s: 26}], bg: colors.night, dir: 'h'}, {k: 'full', n: 2, v: {s: 26, at: 42.5}}, {k: 'full', n: 3, v: {s: 27}},
   {k: 'one', n: 1, v: {s: 28}, bg: PAGE.orange}, {k: 'full', n: 2, v: {s: 28, at: 45.5}}, {k: 'full', n: 1, v: {s: 29}},
-  {k: 'full', n: 2, v: {s: 30}, punch: true}, {k: 'tri', n: 3, vs: [{s: 22, at: 35.4}, {s: 25, at: 41.0}, {s: 27, at: 43.5}], bg: colors.night, build: true},
+  {k: 'full', n: 2, v: {s: 30}, punch: true}, {k: 'tri', n: 3, vs: [{s: 22, at: 35.4}, {s: 25, at: 41.0}, {s: 27, at: 43.5}], bg: colors.night},
   {k: 'word', n: 1, text: 'Torta', bg: PAGE.green},
   // chorus 2 — the cake, the «1», the thanks
   {k: 'full', n: 3, v: {s: 31}}, {k: 'one', n: 1, v: {s: 32}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 32, at: 51.3}},
