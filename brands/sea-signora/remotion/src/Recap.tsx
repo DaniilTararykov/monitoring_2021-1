@@ -47,34 +47,37 @@ type Seg =
   | {k: 'end'; n: number; v: Shot; bg: string; ink?: string};
 
 // ───────────────────────────── A · Pagina
-// Every shot of the client's cut appears once (framed OR full, never both); collages use other moments of the night.
+// Client 15.11 (2nd round): a take is shown once — framed OR full (S29/S30, S32/S33, S34/S36, S6/S7 are the same takes);
+// no porthole on raw fish; the contact sheet uses only steady, static moments (measured camera shift, no zooms) that
+// are not in the client's cut; no collage of the same people twice. clip 'CUT' = the client's cut at an absolute time.
 const G = PAGE.green, O = PAGE.orange, SA = PAGE.sand;
 const A: Seg[] = [
   // verse 1 — the welcome, green page
   {k: 'frame', n: 2, v: {s: 1}, bg: G}, {k: 'frame', n: 2, v: {s: 2}, bg: G}, {k: 'frame', n: 2, v: {s: 3}, bg: G},
-  {k: 'wide', n: 3, v: {s: 4, fy: 38}, bg: G}, {k: 'port', n: 2, v: {s: 5}, bg: G}, {k: 'duo', n: 2, vs: [{s: 6}, {s: 7}], bg: G},
+  {k: 'wide', n: 3, v: {s: 4, fy: 38}, bg: G}, {k: 'port', n: 2, v: {s: 5}, bg: G},
+  {k: 'frame', n: 2, v: {clip: 'CUT', at: 14.65}, bg: G}, {k: 'full', n: 1, v: {clip: 'CUT', at: 15.83}},
   {k: 'full', n: 2, v: {s: 8}}, {k: 'frame', n: 3, v: {s: 9}, bg: G}, {k: 'wide', n: 2, v: {s: 10, fy: 48}, bg: G}, {k: 'full', n: 2, v: {s: 11}},
-  {k: 'tri', n: 3, vs: [{clip: 'IMG_2647', at: 8.7}, {clip: 'IMG_2624', at: 0.1}, {clip: 'IMG_2607', at: 2.9}], bg: G, build: true},
-  {k: 'duo', n: 2, vs: [{clip: 'IMG_2611', at: 0.3, fx: 60}, {clip: 'IMG_2576', at: 3.9, fy: 40}], bg: G, dir: 'h'},
+  {k: 'wide', n: 2, v: {clip: 'IMG_2623', at: 0.1, fy: 45}, bg: G},
+  {k: 'wide', n: 2, v: {clip: 'IMG_2611', at: 0.3, fx: 60}, bg: G},
   {k: 'frame', n: 3, v: {s: 12}, bg: G},
   {k: 'word', n: 2, text: 'Tonno', bg: O, ink: G},
-  // chorus 1 — the tuna show, orange page, full-bleed hits
-  {k: 'full', n: 3, v: {s: 13}}, {k: 'frame', n: 2, v: {s: 14}, bg: O},
-  {k: 'duo', n: 2, vs: [{s: 15}, {clip: 'IMG_2642', at: 8.0}], bg: O}, {k: 'frame', n: 2, v: {s: 16}, bg: O},
+  // chorus 1 — the tuna show, orange page
+  {k: 'full', n: 3, v: {s: 13}}, {k: 'frame', n: 2, v: {s: 14}, bg: O}, {k: 'full', n: 2, v: {s: 15}}, {k: 'frame', n: 2, v: {s: 16}, bg: O},
   {k: 'full', n: 1, v: {s: 17}}, {k: 'frame', n: 3, v: {s: 18}, bg: O}, {k: 'full', n: 1, v: {s: 20}},
-  // verse 2 — at the table, sand page: a contact sheet of other moments (plates and people alternate), then the room
+  // verse 2 — at the table, sand page: a contact sheet of steady moments (longest-held tiles = steadiest windows)
   {k: 'sheet', n: 10, vs: [
-    {clip: 'IMG_2699', at: 1.0}, {clip: 'IMG_2692', at: 0.6}, {clip: 'IMG_2705', at: 8.7},
-    {clip: 'IMG_2687', at: 0.4}, {clip: 'IMG_2674', at: 16.0}, {clip: 'IMG_2674', at: 3.4, fy: 35},
-    {clip: 'IMG_2699', at: 8.4}, {clip: 'IMG_2690', at: 9.5}, {clip: 'IMG_2664', at: 2.6}], bg: SA},
+    {clip: 'IMG_2698', at: 3.6}, {clip: 'IMG_2643', at: 3.5}, {clip: 'IMG_2647', at: 6.0},
+    {clip: 'IMG_2700', at: 1.3}, {clip: 'IMG_2665', at: 3.8}, {clip: 'IMG_2666', at: 15.4},
+    {clip: 'IMG_2705', at: 9.0}, {clip: 'IMG_2690', at: 8.3}, {clip: 'IMG_2618', at: 4.0}], bg: SA},
   {k: 'wide', n: 2, v: {s: 21, fy: 58}, bg: SA}, {k: 'full', n: 2, v: {s: 22}}, {k: 'frame', n: 2, v: {s: 23}, bg: SA},
   {k: 'full', n: 3, v: {s: 24}}, {k: 'frame', n: 2, v: {s: 25}, bg: SA},
   {k: 'duo', n: 2, vs: [{s: 26, fy: 45}, {s: 27, fy: 72}], bg: SA, dir: 'h'},
-  {k: 'port', n: 2, v: {s: 28}, bg: SA}, {k: 'full', n: 1, v: {s: 29}}, {k: 'frame', n: 2, v: {s: 30}, bg: SA},
+  {k: 'full', n: 2, v: {s: 28}}, {k: 'frame', n: 3, v: {s: 30}, bg: SA},
   {k: 'word', n: 2, text: 'Torta', bg: G, ink: colors.ivory},
-  // chorus 2 — the cake, full-bleed
-  {k: 'full', n: 3, v: {s: 31}}, {k: 'frame', n: 2, v: {s: 32}, bg: G}, {k: 'full', n: 2, v: {s: 33}}, {k: 'full', n: 3, v: {s: 34}},
-  {k: 'full', n: 2, v: {s: 35}}, {k: 'end', n: 99, v: {s: 36}, bg: G},
+  // chorus 2 — the cake
+  {k: 'full', n: 3, v: {s: 31}}, {k: 'frame', n: 2, v: {s: 33}, bg: G}, {k: 'full', n: 3, v: {s: 34}}, {k: 'full', n: 2, v: {s: 35}},
+  {k: 'frame', n: 2, v: {clip: 'IMG_2717', at: 3.3}, bg: G},
+  {k: 'end', n: 99, v: {clip: 'IMG_2588', at: 7.3}, bg: G},
 ];
 
 // ───────────────────────────── B · Tagli
@@ -139,7 +142,7 @@ const Vid: React.FC<{v: Shot; sec: number; zoom?: number}> = ({v, sec, zoom = 1}
   const cover = Math.cos((Math.abs(r) * Math.PI) / 180) + (1920 / 1080) * Math.sin((Math.abs(r) * Math.PI) / 180);
   return (
     <AbsoluteFill style={{overflow: 'hidden'}}>
-      <OffthreadVideo src={staticFile(v.clip ? `bd/${v.clip}.mp4` : 'rc/b.mp4')} startFrom={Math.round(startOf(v, sec) * FPS)} playbackRate={rateOf(v, sec)} muted
+      <OffthreadVideo src={staticFile(v.clip && v.clip !== 'CUT' ? `bd/${v.clip}.mp4` : 'rc/b.mp4')} startFrom={Math.round(startOf(v, sec) * FPS)} playbackRate={rateOf(v, sec)} muted
         style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${v.fx ?? 50}% ${v.fy ?? 50}%`,
           transform: `rotate(${r}deg) scale(${cover * zoom * (v.z ?? 1)})`, transformOrigin: `${v.fx ?? 50}% ${v.fy ?? 50}%`}} />
     </AbsoluteFill>
@@ -195,7 +198,7 @@ const SegView: React.FC<{s: Seg; i: number; frames: number; no: number; pagina: 
     }
     case 'wide': {
       const ink = inkOn(s.bg);
-      return <AbsoluteFill style={{background: s.bg}}><Framed v={s.v} sec={sec} box={{left: 80, top: 520, width: 920, height: 800}} line={ink} />{pagina ? <Chrome ink={ink} no={no} /> : null}</AbsoluteFill>;
+      return <AbsoluteFill style={{background: s.bg}}><Framed v={s.v} sec={sec} box={{left: 80, top: 470, width: 920, height: 800}} line={ink} />{pagina ? <Chrome ink={ink} no={no} /> : null}</AbsoluteFill>;
     }
     case 'port': {
       const ink = inkOn(s.bg);
