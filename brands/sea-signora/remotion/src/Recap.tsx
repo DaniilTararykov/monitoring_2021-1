@@ -30,11 +30,15 @@ const CUTS = [0, 8.37, 9.57, 10.73, 11.90, 13.47, 14.60, 15.43, 16.50, 17.67, 19
 // straightening (deg, clockwise +), measured on verticals and checked by eye
 const ROT: Record<number, number> = {3: -3, 9: -6, 12: 3, 16: -3, 17: 1.5, 26: 3, 30: 6, 34: 5};
 
-type Shot = {s: number; at?: number}; // shot index, optional explicit start (s)
+// a shot of the client's cut (s = index, at = optional start) or, for collages, another moment of the evening that is
+// not in the cut (clip = original proxy in bd/, at = start) — so nothing on the page repeats; fx/fy = framing (%)
+type Shot = {s?: number; clip?: string; at?: number; fx?: number; fy?: number};
 const PAGE = {green: brandPalette.green5605, orange: brandPalette.orange158, sand: brandPalette.sand454};
 type Seg =
   | {k: 'full'; n: number; v: Shot; punch?: boolean}
   | {k: 'frame'; n: number; v: Shot; bg: string}
+  | {k: 'wide'; n: number; v: Shot; bg: string}
+  | {k: 'port'; n: number; v: Shot; bg: string}
   | {k: 'duo'; n: number; vs: [Shot, Shot]; bg: string; dir?: 'v' | 'h'}
   | {k: 'tri'; n: number; vs: Shot[]; bg: string; build?: boolean}
   | {k: 'sheet'; n: number; vs: Shot[]; bg: string}
@@ -43,28 +47,34 @@ type Seg =
   | {k: 'end'; n: number; v: Shot; bg: string; ink?: string};
 
 // ───────────────────────────── A · Pagina
+// Every shot of the client's cut appears once (framed OR full, never both); collages use other moments of the night.
+const G = PAGE.green, O = PAGE.orange, SA = PAGE.sand;
 const A: Seg[] = [
   // verse 1 — the welcome, green page
-  {k: 'frame', n: 2, v: {s: 1}, bg: PAGE.green}, {k: 'frame', n: 2, v: {s: 2}, bg: PAGE.green}, {k: 'frame', n: 2, v: {s: 3}, bg: PAGE.green},
-  {k: 'full', n: 2, v: {s: 4}}, {k: 'frame', n: 2, v: {s: 5}, bg: PAGE.green}, {k: 'duo', n: 2, vs: [{s: 6}, {s: 7}], bg: PAGE.green},
-  {k: 'frame', n: 2, v: {s: 8}, bg: PAGE.green}, {k: 'full', n: 2, v: {s: 9}}, {k: 'frame', n: 2, v: {s: 10}, bg: PAGE.green},
-  {k: 'frame', n: 2, v: {s: 11}, bg: PAGE.green}, {k: 'tri', n: 4, vs: [{s: 4, at: 12.5}, {s: 10, at: 19.6}, {s: 11, at: 21.2}], bg: PAGE.green, build: true},
-  {k: 'frame', n: 2, v: {s: 12}, bg: PAGE.green}, {k: 'full', n: 2, v: {s: 12, at: 22.9}}, {k: 'frame', n: 2, v: {s: 13}, bg: PAGE.green},
-  {k: 'word', n: 2, text: 'Tonno', bg: PAGE.orange, ink: PAGE.green},
+  {k: 'frame', n: 2, v: {s: 1}, bg: G}, {k: 'frame', n: 2, v: {s: 2}, bg: G}, {k: 'frame', n: 2, v: {s: 3}, bg: G},
+  {k: 'wide', n: 3, v: {s: 4, fy: 38}, bg: G}, {k: 'port', n: 2, v: {s: 5}, bg: G}, {k: 'duo', n: 2, vs: [{s: 6}, {s: 7}], bg: G},
+  {k: 'full', n: 2, v: {s: 8}}, {k: 'frame', n: 3, v: {s: 9}, bg: G}, {k: 'wide', n: 2, v: {s: 10, fy: 48}, bg: G}, {k: 'full', n: 2, v: {s: 11}},
+  {k: 'tri', n: 3, vs: [{clip: 'IMG_2647', at: 8.7}, {clip: 'IMG_2624', at: 0.1}, {clip: 'IMG_2607', at: 2.9}], bg: G, build: true},
+  {k: 'duo', n: 2, vs: [{clip: 'IMG_2611', at: 0.3, fx: 60}, {clip: 'IMG_2576', at: 3.9, fy: 40}], bg: G, dir: 'h'},
+  {k: 'frame', n: 3, v: {s: 12}, bg: G},
+  {k: 'word', n: 2, text: 'Tonno', bg: O, ink: G},
   // chorus 1 — the tuna show, orange page, full-bleed hits
-  {k: 'full', n: 3, v: {s: 13, at: 24.0}}, {k: 'frame', n: 2, v: {s: 14}, bg: PAGE.orange}, {k: 'full', n: 2, v: {s: 15}},
-  {k: 'frame', n: 2, v: {s: 16}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 17}}, {k: 'frame', n: 2, v: {s: 18}, bg: PAGE.orange},
-  {k: 'full', n: 1, v: {s: 19}}, {k: 'frame', n: 1, v: {s: 20}, bg: PAGE.orange},
-  // verse 2 — at the table, sand page: a contact sheet built on the beat, then the room
-  {k: 'sheet', n: 10, vs: [{s: 21}, {s: 22}, {s: 23}, {s: 24}, {s: 25}, {s: 26}, {s: 27}, {s: 28}, {s: 18}], bg: PAGE.sand},
-  {k: 'full', n: 2, v: {s: 22}}, {k: 'frame', n: 2, v: {s: 23}, bg: PAGE.sand}, {k: 'full', n: 3, v: {s: 24}},
-  {k: 'frame', n: 2, v: {s: 25}, bg: PAGE.sand}, {k: 'duo', n: 2, vs: [{s: 26}, {s: 27}], bg: PAGE.sand, dir: 'h'},
-  {k: 'full', n: 2, v: {s: 27, at: 43.9}}, {k: 'frame', n: 3, v: {s: 28}, bg: PAGE.sand}, {k: 'full', n: 1, v: {s: 29}},
-  {k: 'frame', n: 2, v: {s: 30}, bg: PAGE.sand},
-  {k: 'word', n: 2, text: 'Torta', bg: PAGE.green, ink: colors.ivory},
+  {k: 'full', n: 3, v: {s: 13}}, {k: 'frame', n: 2, v: {s: 14}, bg: O},
+  {k: 'duo', n: 2, vs: [{s: 15}, {clip: 'IMG_2642', at: 8.0}], bg: O}, {k: 'frame', n: 2, v: {s: 16}, bg: O},
+  {k: 'full', n: 1, v: {s: 17}}, {k: 'frame', n: 3, v: {s: 18}, bg: O}, {k: 'full', n: 1, v: {s: 20}},
+  // verse 2 — at the table, sand page: a contact sheet of other moments (plates and people alternate), then the room
+  {k: 'sheet', n: 10, vs: [
+    {clip: 'IMG_2699', at: 1.0}, {clip: 'IMG_2692', at: 0.6}, {clip: 'IMG_2705', at: 8.7},
+    {clip: 'IMG_2687', at: 0.4}, {clip: 'IMG_2674', at: 16.0}, {clip: 'IMG_2674', at: 3.4, fy: 35},
+    {clip: 'IMG_2699', at: 8.4}, {clip: 'IMG_2690', at: 9.5}, {clip: 'IMG_2664', at: 2.6}], bg: SA},
+  {k: 'wide', n: 2, v: {s: 21, fy: 58}, bg: SA}, {k: 'full', n: 2, v: {s: 22}}, {k: 'frame', n: 2, v: {s: 23}, bg: SA},
+  {k: 'full', n: 3, v: {s: 24}}, {k: 'frame', n: 2, v: {s: 25}, bg: SA},
+  {k: 'duo', n: 2, vs: [{s: 26, fy: 45}, {s: 27, fy: 72}], bg: SA, dir: 'h'},
+  {k: 'port', n: 2, v: {s: 28}, bg: SA}, {k: 'full', n: 1, v: {s: 29}}, {k: 'frame', n: 2, v: {s: 30}, bg: SA},
+  {k: 'word', n: 2, text: 'Torta', bg: G, ink: colors.ivory},
   // chorus 2 — the cake, full-bleed
-  {k: 'full', n: 3, v: {s: 31}}, {k: 'frame', n: 2, v: {s: 32}, bg: PAGE.green}, {k: 'full', n: 2, v: {s: 33}}, {k: 'full', n: 3, v: {s: 34}},
-  {k: 'full', n: 2, v: {s: 35}}, {k: 'end', n: 99, v: {s: 36}, bg: PAGE.green},
+  {k: 'full', n: 3, v: {s: 31}}, {k: 'frame', n: 2, v: {s: 32}, bg: G}, {k: 'full', n: 2, v: {s: 33}}, {k: 'full', n: 3, v: {s: 34}},
+  {k: 'full', n: 2, v: {s: 35}}, {k: 'end', n: 99, v: {s: 36}, bg: G},
 ];
 
 // ───────────────────────────── B · Tagli
@@ -105,19 +115,28 @@ const SUBS: [number, number, string][] = [
 ];
 
 // ───────────────────────────── pieces
+// never run past the shot's own cut: a shot shorter than its slot is slowed down a little instead (≥ 0.7×)
+const rateOf = (v: Shot, sec: number) => {
+  if (v.clip) return 1;
+  const len = CUTS[v.s! + 1] - CUTS[v.s!] - 0.1;
+  return sec > len ? Math.max(0.7, len / sec) : 1;
+};
 const startOf = (v: Shot, sec: number) => {
-  const a = CUTS[v.s] + 0.05, b = CUTS[v.s + 1] - 0.05;
-  const t = v.at ?? (a + b) / 2 - sec / 2;
-  return Math.max(a, Math.min(t, b - sec));
+  if (v.clip) return v.at ?? 0;
+  const a = CUTS[v.s!] + 0.05, b = CUTS[v.s! + 1] - 0.05;
+  const span = sec * rateOf(v, sec);
+  const t = v.at ?? (a + b) / 2 - span / 2;
+  return Math.max(a, Math.min(t, b - span));
 };
 
 const Vid: React.FC<{v: Shot; sec: number; zoom?: number}> = ({v, sec, zoom = 1}) => {
-  const r = ROT[v.s] ?? 0;
+  const r = v.s !== undefined ? ROT[v.s] ?? 0 : 0;
   const cover = Math.cos((Math.abs(r) * Math.PI) / 180) + (1920 / 1080) * Math.sin((Math.abs(r) * Math.PI) / 180);
   return (
     <AbsoluteFill style={{overflow: 'hidden'}}>
-      <OffthreadVideo src={staticFile('rc/b.mp4')} startFrom={Math.round(startOf(v, sec) * FPS)} muted
-        style={{width: '100%', height: '100%', objectFit: 'cover', transform: `rotate(${r}deg) scale(${cover * zoom})`}} />
+      <OffthreadVideo src={staticFile(v.clip ? `bd/${v.clip}.mp4` : 'rc/b.mp4')} startFrom={Math.round(startOf(v, sec) * FPS)} playbackRate={rateOf(v, sec)} muted
+        style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${v.fx ?? 50}% ${v.fy ?? 50}%`,
+          transform: `rotate(${r}deg) scale(${cover * zoom})`}} />
     </AbsoluteFill>
   );
 };
@@ -127,11 +146,11 @@ const Chrome: React.FC<{ink: string; no: number}> = ({ink, no}) => (
   <>
     <div style={{position: 'absolute', left: 80, right: 80, top: 262, display: 'flex', justifyContent: 'space-between', fontFamily: fonts.mono,
       fontWeight: 500, fontSize: 24, letterSpacing: 6, color: ink, textTransform: 'uppercase'}}>
-      <span>Sea, Signora</span><span>uno</span>
+      <span>Sea, Signora</span><span>Milano</span>
     </div>
     <div style={{position: 'absolute', left: 80, right: 80, top: 1556, display: 'flex', justifyContent: 'space-between', fontFamily: fonts.mono,
       fontWeight: 500, fontSize: 24, letterSpacing: 6, color: ink, textTransform: 'uppercase'}}>
-      <span>Milano · Brera</span><span>N° {String(no).padStart(2, '0')}</span>
+      <span>Compleanno</span><span>Un anno</span>
     </div>
   </>
 );
@@ -168,6 +187,20 @@ const SegView: React.FC<{s: Seg; i: number; frames: number; no: number; pagina: 
     case 'frame': {
       const ink = inkOn(s.bg);
       return <AbsoluteFill style={{background: s.bg}}><Framed v={s.v} sec={sec} line={ink} />{pagina ? <Chrome ink={ink} no={no} /> : null}</AbsoluteFill>;
+    }
+    case 'wide': {
+      const ink = inkOn(s.bg);
+      return <AbsoluteFill style={{background: s.bg}}><Framed v={s.v} sec={sec} box={{left: 80, top: 520, width: 920, height: 800}} line={ink} />{pagina ? <Chrome ink={ink} no={no} /> : null}</AbsoluteFill>;
+    }
+    case 'port': {
+      const ink = inkOn(s.bg);
+      return (
+        <AbsoluteFill style={{background: s.bg}}>
+          <div style={{position: 'absolute', left: 120, top: 480, width: 840, height: 840, borderRadius: '50%', overflow: 'hidden',
+            outline: `2px solid ${ink}`, outlineOffset: 10}}><Vid v={s.v} sec={sec} /></div>
+          {pagina ? <Chrome ink={ink} no={no} /> : null}
+        </AbsoluteFill>
+      );
     }
     case 'duo': {
       const h = s.dir === 'h'; const ink = inkOn(s.bg);
