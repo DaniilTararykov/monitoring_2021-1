@@ -56,11 +56,12 @@ const A: Seg[] = [
   {k: 'frame', n: 2, v: {s: 1}, bg: G}, {k: 'frame', n: 2, v: {s: 2}, bg: G}, {k: 'frame', n: 2, v: {s: 3}, bg: G},
   {k: 'wide', n: 3, v: {s: 4, fy: 38}, bg: G}, {k: 'port', n: 2, v: {s: 5}, bg: G},
   {k: 'frame', n: 2, v: {clip: 'CUT', at: 14.65}, bg: G}, {k: 'full', n: 1, v: {clip: 'CUT', at: 15.83}},
-  {k: 'full', n: 2, v: {s: 8}}, {k: 'frame', n: 3, v: {s: 9}, bg: G}, {k: 'wide', n: 2, v: {s: 10, fy: 48}, bg: G}, {k: 'full', n: 2, v: {s: 11}},
+  {k: 'frame', n: 3, v: {s: 9}, bg: G}, {k: 'wide', n: 2, v: {s: 10, fy: 48}, bg: G}, {k: 'full', n: 2, v: {s: 11}},
   {k: 'wide', n: 2, v: {clip: 'IMG_2623', at: 0.1, fy: 45}, bg: G},
-  {k: 'wide', n: 2, v: {clip: 'IMG_2611', at: 0.3, fx: 60}, bg: G},
-  {k: 'frame', n: 3, v: {s: 12}, bg: G},
+  // TONNO comes before any tuna is shown (client 15.11)
   {k: 'word', n: 2, text: 'Tonno', bg: O, ink: G},
+  {k: 'full', n: 2, v: {s: 8}}, {k: 'wide', n: 2, v: {clip: 'IMG_2611', at: 0.3, fx: 60}, bg: O},
+  {k: 'frame', n: 3, v: {s: 12}, bg: O},
   // chorus 1 — the tuna show, orange page
   {k: 'full', n: 3, v: {s: 13}}, {k: 'frame', n: 2, v: {s: 14}, bg: O}, {k: 'full', n: 2, v: {s: 15}}, {k: 'frame', n: 2, v: {s: 16}, bg: O},
   {k: 'full', n: 1, v: {s: 17}}, {k: 'frame', n: 3, v: {s: 18}, bg: O}, {k: 'full', n: 1, v: {s: 20}},
@@ -81,37 +82,31 @@ const A: Seg[] = [
 ];
 
 // ───────────────────────────── B · Tagli
-// Client 15.11: every shot of the cut once (no strobing the same shot), collages = two clean stacked halves framed on
-// people / plates with a thin brand-green divider (no narrow strips), the «1» only where it reads — a standing person:
-// Antonio on the chorus, Antonio at the end.
+// Client 15.11 (2nd round): no collage of the same people, TONNO / TORTA before any tuna / cake is shown, the «1» only at the end, with just «Sea, Signora».
 const B: Seg[] = [
   {k: 'word', n: 1, text: 'Un', bg: PAGE.green}, {k: 'word', n: 1, text: 'anno', bg: PAGE.orange, ink: PAGE.green},
   {k: 'full', n: 2, v: {s: 1}, punch: true}, {k: 'full', n: 2, v: {s: 2}, punch: true}, {k: 'full', n: 2, v: {s: 3}, punch: true},
   {k: 'full', n: 2, v: {s: 4}}, {k: 'full', n: 2, v: {s: 5}},
-  {k: 'duo', n: 2, vs: [{s: 6, fy: 30}, {s: 7, fy: 42}], bg: PAGE.green, dir: 'h'},
-  {k: 'full', n: 2, v: {s: 8}, punch: true}, {k: 'full', n: 2, v: {s: 9}}, {k: 'full', n: 2, v: {s: 10}, punch: true}, {k: 'full', n: 2, v: {s: 11}},
-  {k: 'duo', n: 2, vs: [{clip: 'IMG_2647', at: 8.7, fy: 38}, {clip: 'IMG_2624', at: 0.1, fy: 40}], bg: PAGE.green, dir: 'h'},
-  {k: 'full', n: 2, v: {s: 12}, punch: true},
+  {k: 'full', n: 2, v: {clip: 'CUT', at: 14.65}, punch: true}, {k: 'full', n: 1, v: {clip: 'CUT', at: 15.83}},
+  {k: 'full', n: 2, v: {s: 9}}, {k: 'full', n: 2, v: {s: 10}, punch: true}, {k: 'full', n: 2, v: {s: 11}},
+  {k: 'full', n: 1, v: {s: 17}}, {k: 'full', n: 2, v: {clip: 'IMG_2643', at: 3.5}},
   {k: 'word', n: 1, text: 'Sea,', bg: PAGE.green, mark: true}, {k: 'word', n: 1, text: 'Signora', bg: PAGE.green, mark: true},
-  {k: 'duo', n: 2, vs: [{clip: 'IMG_2611', at: 0.3, fy: 50}, {clip: 'IMG_2576', at: 3.9, fy: 45}], bg: PAGE.green, dir: 'h'},
-  {k: 'full', n: 1, v: {clip: 'IMG_2642', at: 8.0}},
   {k: 'word', n: 2, text: 'Tonno', bg: PAGE.orange, ink: PAGE.green},
-  // chorus 1 — the tuna show; the «1» once, on the loin
-  {k: 'full', n: 2, v: {s: 13}}, {k: 'full', n: 2, v: {s: 14}, punch: true}, {k: 'full', n: 2, v: {s: 15}},
-  {k: 'one', n: 2, v: {s: 16, z: 1.2, fx: 36, fy: 42}, bg: PAGE.orange}, {k: 'full', n: 1, v: {s: 17}}, {k: 'full', n: 2, v: {s: 18}}, {k: 'full', n: 1, v: {s: 19}},
-  {k: 'full', n: 1, v: {s: 20}}, {k: 'full', n: 2, v: {clip: 'IMG_2663', at: 0.0}, punch: true},
-  // verse 2 — the table
+  // the tuna show
+  {k: 'full', n: 2, v: {s: 8}, punch: true}, {k: 'full', n: 1, v: {clip: 'IMG_2611', at: 0.4}}, {k: 'full', n: 2, v: {s: 12}, punch: true},
+  {k: 'full', n: 3, v: {s: 13}}, {k: 'full', n: 3, v: {s: 14}, punch: true}, {k: 'full', n: 3, v: {s: 15}},
+  {k: 'full', n: 2, v: {s: 16}},
+  {k: 'full', n: 2, v: {s: 18}}, {k: 'full', n: 2, v: {s: 20}, punch: true},
+  // the table
   {k: 'word', n: 1, text: 'Amici', bg: PAGE.orange, ink: PAGE.green},
-  {k: 'full', n: 2, v: {s: 21}}, {k: 'full', n: 2, v: {s: 22}, punch: true}, {k: 'full', n: 3, v: {s: 23}}, {k: 'full', n: 3, v: {s: 24}, punch: true},
+  {k: 'full', n: 2, v: {s: 21}}, {k: 'full', n: 2, v: {s: 22}, punch: true}, {k: 'full', n: 3, v: {s: 23}}, {k: 'full', n: 2, v: {clip: 'IMG_2700', at: 2.2}}, {k: 'full', n: 3, v: {s: 24}, punch: true},
   {k: 'duo', n: 2, vs: [{s: 25, fy: 55}, {s: 26, fy: 38}], bg: PAGE.green, dir: 'h'}, {k: 'full', n: 3, v: {s: 27}},
-  {k: 'full', n: 2, v: {s: 28}, punch: true}, {k: 'full', n: 1, v: {s: 29}}, {k: 'full', n: 2, v: {s: 30}},
-  {k: 'duo', n: 2, vs: [{clip: 'IMG_2699', at: 1.0, fy: 55}, {clip: 'IMG_2705', at: 8.7, fy: 50}], bg: PAGE.green, dir: 'h'},
-  {k: 'full', n: 2, v: {clip: 'IMG_2692', at: 0.6}, punch: true},  {k: 'full', n: 2, v: {clip: 'IMG_2699', at: 8.4}},
+  {k: 'full', n: 2, v: {s: 28}, punch: true}, {k: 'full', n: 2, v: {clip: 'IMG_2690', at: 8.3}}, {k: 'full', n: 3, v: {s: 30}},
+  {k: 'duo', n: 2, vs: [{clip: 'IMG_2698', at: 4.7, fy: 50}, {clip: 'IMG_2705', at: 9.0, fy: 50}], bg: PAGE.green, dir: 'h'},
   {k: 'word', n: 1, text: 'Torta', bg: PAGE.green},
-  // chorus 2 — the cake; the «1» on the cake, then the thanks
-  {k: 'full', n: 3, v: {s: 31}}, {k: 'full', n: 2, v: {s: 32}}, {k: 'full', n: 2, v: {s: 33}, punch: true},
-  {k: 'full', n: 3, v: {s: 34}}, {k: 'full', n: 2, v: {s: 35}},
-  {k: 'word', n: 1, text: 'Grazie', bg: PAGE.green}, {k: 'word', n: 1, text: 'a tutti', bg: PAGE.orange, ink: PAGE.green},
+  // the cake
+  {k: 'full', n: 3, v: {s: 31}}, {k: 'full', n: 2, v: {s: 33}, punch: true},
+  {k: 'full', n: 3, v: {s: 34}}, {k: 'full', n: 2, v: {s: 35}}, {k: 'full', n: 2, v: {clip: 'IMG_2717', at: 3.3}},
   {k: 'end', n: 99, v: {s: 36}, bg: PAGE.orange, ink: PAGE.green},
 ];
 export const RECAP = {A, B};
@@ -279,7 +274,7 @@ const SegView: React.FC<{s: Seg; i: number; frames: number; no: number; pagina: 
           )}
           <div style={{position: 'absolute', left: 0, right: 0, top: pagina ? 1290 : 1360, textAlign: 'center', color: ink}}>
             <div style={{fontFamily: fonts.display, fontSize: 104, lineHeight: 1}}>Sea, Signora</div>
-            <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 26, letterSpacing: 8, marginTop: 26, textTransform: 'uppercase'}}>un anno · grazie a tutti</div>
+            {pagina ? <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 26, letterSpacing: 8, marginTop: 26, textTransform: 'uppercase'}}>un anno · grazie a tutti</div> : null}
           </div>
         </AbsoluteFill>
       );
