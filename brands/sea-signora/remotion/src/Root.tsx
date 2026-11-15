@@ -28,12 +28,14 @@ import {week7z} from './week7z';
 import {week7t} from './week7t';
 import {week7w} from './week7w';
 import {Fighter} from './Fighter';
+import {BirthdayUno, FPS as UNO_FPS, UNO, unoFrames} from './BirthdayUno';
 import type {Story} from './types';
 
 const Story: React.FC<{story: Story; guides?: boolean}> = (p) => <StoryVideo {...p} />;
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition id="BirthdayUno" component={BirthdayUno} durationInFrames={unoFrames(UNO)} fps={UNO_FPS} width={1080} height={1920} />
     <Composition id="BrandSheet" component={BrandSheet} durationInFrames={300} fps={video.fps} width={2600} height={1500} />
     {['a', 'b', 'c', 'd'].map((v) => (
       <Composition key={v} id={v === 'a' ? 'BlackoutReel' : `BlackoutReel-${v}`} component={BlackoutReel} durationInFrames={Math.round(DURATION_S * FPS)} fps={FPS} width={1080} height={1920} defaultProps={{withAudio: true, variant: v}} />
