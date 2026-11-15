@@ -40,6 +40,12 @@ Personal videos (GRWM, reels, photos). Talk to the client in Russian. Not relate
   `remotion-render` for captions, animation and export.
 - Colour: ffmpeg `lut3d` takes `.cube` LUTs; `loudnorm` / pyloudnorm for -14 LUFS social loudness.
 
+## Story logic (check before every render)
+- Read the final transcript as a story: every reaction needs its setup ("Actually, it's not bad" only after
+  "I'm not sure about this"), and "I think we're ready" comes last, after hair, jewellery and perfume.
+- A stop consonant (p, t, k, b, d) makes a 50–100 ms silence inside a word ("sim-ple"): never treat a gap
+  shorter than 120 ms as the end of a word.
+
 ## Before sending anything
 1. Transcribe the finished voice with a filler-aware prompt ("Umm, uh, ah…") and read it: no fillers,
    no repeats, no cut words, every sentence complete.

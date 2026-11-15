@@ -238,7 +238,19 @@ PERFUME13 = [L((1147.86, 1151.25))] + SPRAYS + [L((1199.53, 1202.02), (1204.4, 1
 V13 = ([HELLO13, CASUAL13, JEANS13, BELT13, SLEEVE13, SLEEVE_ON13] + BOOTS13 + [LEATHER13, REVEAL, HAIR13] + PERFUME13
        + [ASK, BYE])
 
-CUTS = {"grwm10_clean": V13, "grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
+# ---------------------------------------------------------------- round eleven: the story in a logical order
+# jacket: "A leather jacket, it's a vintage one. I'm not sure about this." -> puts it on -> "Actually, it's not bad..."
+# then hair, rings, perfume, and only then "I think we're ready!" (it was said before the hair and perfume)
+CASUAL14 = L((79.04, 81.3))  # "simple" ends at 81.34: its "p" makes a short silence inside the word
+LEATHER14 = L((769.4, 771.72), (788.18, 789.88), (803.12, 805.7), v=[LIP(upto=2), VO(796.6, 1.6), LIP()])
+REVEAL14 = {"a": [[1115.2, 1117.6]], "raw": True, "vol": 1.0, "clean": True}
+# the finale: no walk-away from camera; the turn with arms out plays under "Let me know, guys",
+# then "what do you think about this look?" in sync
+ASK14 = L((1293.28, 1295.55), v=[VO(1116.3, 1.4), LIP()])
+V14 = ([HELLO13, CASUAL14, JEANS13, BELT13, SLEEVE13, SLEEVE_ON13] + BOOTS13 + [LEATHER14, HAIR13] + PERFUME13
+       + [ASK14, BYE])
+
+CUTS = {"grwm11_story": V14, "grwm10_clean": V13, "grwm9_perfume": V12, "grwm8_tight": V11, "grwm7_minute": V10, "grwm6_short": V9, "grwm5_nogrey": V8, "grwm2_v1_full": full(True), "grwm2_v3_coats": V3, "grwm2_v5_rewind": V5, "grwm2_v6_speed": V6,
         "grwm3_coats": V3C, "grwm3_speed": V6C, "grwm4_coats": V3D, "grwm4_speed": V6D, "grwm4_nogrey": V7}
 
 if __name__ == "__main__":
