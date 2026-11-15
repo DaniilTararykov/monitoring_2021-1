@@ -10,8 +10,8 @@ loadBrandFonts();
 // arranged track (scripts/make_reel_track.py «uno», 124 bpm, 31 bars = 60 s):
 //  · Antonio at the aquarium says it himself; his words come up as Skanaus captions above his head (it + en mono);
 //  · on «cin cin» the drop: a brand-orange «1» filled with the spritz pour, and we fly through it;
-//  · chapters follow the evening's real programme: 19:00 aperitivo · 19:30 the tuna show · a tavola · 22:00 la torta;
-//    the times are giant Skanaus numbers with the footage inside them; we fly through the numbers into the chapter;
+//  · a recap, not an announcement (client 15.11): no programme, no times — two giant Skanaus words carry the night,
+//    TONNO and TORTA, with the footage inside the letters; we fly through the word into the moment;
 //  · triptychs, a 2×2 table of plates built on the beat, punch-ins and beat pulses, a flash on every drop;
 //  · finale: Antonio laughing closes back into the «1» on orange — THE FIRST OF MANY.
 // Video only (muted): the voice and the track are mixed afterwards (tools/birthday_mix.py), then mastered to −14 LUFS.
@@ -38,8 +38,8 @@ type Seg =
 // ───────────────────────────── the edit (bars)
 export const UNO: Seg[] = [
   {k: 'intro', bars: 5, v: {clip: 'IMG_2591', at: 1.36}},
-  // 19:00 · aperitivo (drop A)
-  {k: 'one', bars: 0.5, v: {clip: 'IMG_2673', at: 2.2}, label: {time: '19:00', word: 'Aperitivo', bars: 1.5}},
+  // the welcome, spritz and guests (drop A)
+  {k: 'one', bars: 0.5, v: {clip: 'IMG_2673', at: 2.2}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2673', at: 2.2 + 0.5 * 240 / BPM, zoom: [1.06, 1.14], fy: 40}, flash: true},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2568', at: 8.1, zoom: [1.0, 1.18], fx: 45, fy: 55}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2607', at: 2.9}, pulse: true},
@@ -48,8 +48,8 @@ export const UNO: Seg[] = [
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2626', at: 3.7}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2673', at: 6.6, zoom: [1.0, 1.1], fy: 30}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2619', at: 0.4}, pulse: true},
-  // 19:30 · the tuna show (fill, then drop B)
-  {k: 'type', bars: 1, text: '19:30', sub: 'the tuna show', bg: brandPalette.green5605, v: {clip: 'IMG_2583', at: 11.0}},
+  // TONNO — the tuna show (fill, then drop B)
+  {k: 'type', bars: 1, text: 'Tonno', sub: 'the tuna show', bg: brandPalette.green5605, v: {clip: 'IMG_2583', at: 11.0}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2583', at: 11.0 + 240 / BPM}, flash: true},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2611', at: 0.2, zoom: [1.0, 1.25], fx: 62, fy: 48}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2576', at: 3.9}, pulse: true},
@@ -62,16 +62,15 @@ export const UNO: Seg[] = [
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2674', at: 16.0, zoom: [1.0, 1.1]}},
   {k: 'clip', bars: 1, v: {clip: 'IMG_2674', at: 3.2, zoom: [1.0, 1.08], fy: 35}},
   // a tavola (groove)
-  {k: 'grid', bars: 1, vs: [{clip: 'IMG_2699', at: 1.0}, {clip: 'IMG_2705', at: 8.7}, {clip: 'IMG_2703', at: 0.6}, {clip: 'IMG_2674', at: 17.0}],
-    label: {time: 'dinner', word: 'A tavola', bars: 1}},
+  {k: 'grid', bars: 1, vs: [{clip: 'IMG_2699', at: 1.0}, {clip: 'IMG_2705', at: 8.7}, {clip: 'IMG_2703', at: 0.6}, {clip: 'IMG_2674', at: 17.0}]},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2690', at: 9.5, zoom: [1.12, 1.0]}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2699', at: 8.3}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2692', at: 0.6}, pulse: true},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2687', at: 0.4}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2680', at: 7.3, zoom: [1.0, 1.1]}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2684', at: 0.4}},
-  // 22:00 · la torta (breakdown, build, drop C)
-  {k: 'type', bars: 1, text: '22:00', sub: 'la torta', bg: brandPalette.orange158, ink: brandPalette.green5605, v: {clip: 'IMG_2716', at: 2.0}},
+  // TORTA — the cake (breakdown, build, drop C)
+  {k: 'type', bars: 1, text: 'Torta', sub: 'one pearl, one year', bg: brandPalette.orange158, ink: brandPalette.green5605, v: {clip: 'IMG_2716', at: 2.0}},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2716', at: 2.0 + 240 / BPM}, flash: true},
   {k: 'clip', bars: 0.5, v: {clip: 'IMG_2713', at: 8.6}},
   {k: 'clip', bars: 1, v: {clip: 'IMG_2719', at: 3.4, zoom: [1.0, 1.12], fy: 55}},
@@ -262,7 +261,7 @@ const Finale: React.FC<{s: Extract<Seg, {k: 'finale'}>}> = ({s}) => {
         <div style={{fontFamily: fonts.display, fontSize: 80, textTransform: 'uppercase', letterSpacing: 2, ...tr(CLOSE - 6)}}>The first of many</div>
         <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 24, letterSpacing: 6, textTransform: 'uppercase', marginTop: 24, ...tr(CLOSE + 4)}}>one year of</div>
         <div style={{fontFamily: fonts.display, fontSize: 80, letterSpacing: 1, marginTop: 8, color: colors.ivory, ...tr(CLOSE + 9)}}>Sea, Signora</div>
-        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 22, letterSpacing: 6, marginTop: 22, ...tr(CLOSE + 16)}}>12.11 · VIA FIORI CHIARI, 32</div>
+        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 22, letterSpacing: 6, marginTop: 22, ...tr(CLOSE + 16)}}>GRAZIE A TUTTI</div>
       </div>
     </AbsoluteFill>
   );
@@ -284,7 +283,7 @@ const Segment: React.FC<{s: Seg; i: number}> = ({s, i}) => {
         <Flash color={colors.ivory} />
       </AbsoluteFill>
     );
-    case 'type': return <Through id={`type-${i}`} lines={[[s.text.slice(0, 2), 860], [s.text.slice(3), 1400]]} size={720} cy={960} stretch={1.05} bg={s.bg} v={s.v} dur={dur} hold={Math.round(dur * 0.7)} sub={s.sub} subY={1470} ink={s.ink} settle outline />;
+    case 'type': return <Through id={`type-${i}`} lines={[[s.text.toUpperCase(), 1180]]} size={640} cy={960} stretch={0.5} bg={s.bg} v={s.v} dur={dur} hold={Math.round(dur * 0.7)} sub={s.sub} subY={1280} ink={s.ink} settle outline />;
     case 'split': return <AbsoluteFill><Split s={s} />{s.flash ? <Flash /> : null}</AbsoluteFill>;
     case 'grid': return <Grid s={s} />;
     case 'finale': return <Finale s={s} />;
