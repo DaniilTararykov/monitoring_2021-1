@@ -36,6 +36,7 @@ import {FRESH3} from './Fresh3';
 import {FRESH4} from './Fresh4';
 import {FRESH5} from './Fresh5';
 import {ATMOSFERA, AtmosferaView} from './Atmosfera';
+import {ReviewAquarium} from './ReviewStill';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
 import {week7y} from './week7y';
@@ -56,6 +57,7 @@ export const RemotionRoot: React.FC = () => (
     {DESIGNS.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {[...week11words, ...week11live].map((p) => <Composition key={p.id} id={p.id} component={ParolaView} durationInFrames={Math.round(p.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{p}} />)}
     {week11designs.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
+    <Composition id="R-01p-review-aquarium" component={ReviewAquarium} durationInFrames={150} fps={30} width={1080} height={1920} />
     {ATMOSFERA.map((a) => <Composition key={a.id} id={a.id} component={AtmosferaView} durationInFrames={Math.round(a.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{a}} />)}
     {FRESH5.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {FRESH4.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
