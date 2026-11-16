@@ -2,14 +2,14 @@
 
 ## Mon 16.11
 
-### W8-1mon-1v-open-kitchen · Кухня · часы недели · 10.1 с
+### W8-1mon-1v-open-kitchen · Кухня · часы недели · 10.2 с
 - **На экране:** OPEN KITCHEN / — MONDAY—FRIDAY 19:00—00:00 / — SATURDAY—SUNDAY 12:30—15:30 | 19:00—00:00
-- **Фото:** w9/2666.mp4, w9/2665.mp4 · музыка: none
+- **Фото:** w9/nm0671.mp4, w9/nm0681.mp4 · музыка: none
 
 ```
 Open kitchen. Monday to Friday 19:00–00:00, Saturday and Sunday 12:30–15:30 and 19:00–00:00.
 
-#seasignora #openkitchen #brera #milano
+#seasignora #openkitchen #pasta #brera #milano
 ```
 - **Варианты призыва:** reserve · book a table
 
@@ -24,47 +24,47 @@ Meet the team: chef Roberto Godi, the head of our kitchen.
 ```
 - **Варианты призыва:** reserve · book a table
 
-### W8-1mon-3p-monday-table · Атмосфера · стол · 7.0 с
-- **На экране:** BACK TO THE TABLE / MONDAY, FROM 19:00
-- **Фото:** w9/sh44.jpg · музыка: none
+### W8-1mon-3p-from-the-rain · Адрес · вход · 7.0 с
+- **На экране:** COME IN FROM THE RAIN / VIA FIORI CHIARI, 32 · FROM 19:00
+- **Фото:** w9/p0194.jpg · музыка: none
 
 ```
-Back to the table: Monday, from 19:00.
+Come in from the rain: Via Fiori Chiari 32, Brera, from 19:00.
 
-#seasignora #monday #brera #milanofood
+#seasignora #brera #milano #viafiorichiari
 ```
 - **Варианты призыва:** reserve · book a table
 
 ## Tue 17.11
 
-### W8-2tue-1v-long-tables · Гости · длинный стол · 10.2 с
-- **На экране:** LONG TABLES, LONGER NIGHTS
-- **Фото:** w9/2698.mp4, w9/2684.mp4 · музыка: none
-
-```
-Long tables, longer nights. Bring everyone.
-
-#seasignora #dinner #friends #brera
-```
-- **Варианты призыва:** reserve · book a table
-
-### W8-2tue-2p-akami · Блюдо-герой · окно · 7.0 с
+### W8-2tue-1v-akami · Блюдо-герой · видео · 10.0 с
 - **На экране:** ON THE MENU / AKAMI / CULATELLO E PORCINI
-- **Фото:** w9/bo113.jpg · музыка: none
+- **Фото:** w9/nm0638.mp4, w9/nm0639.mp4 · музыка: none
 
 ```
 Akami, culatello e porcini: on the menu at Sea, Signora.
 
-#seasignora #tuna #akami #brera
+#seasignora #tuna #akami #chef #brera
 ```
 - **Варианты призыва:** book a table · reserve
 
-### W8-2tue-3v-your-problem · Your problem / Our solution · 10.1 с
-- **На экране:** Your problem / Our solution: it's raining in milan · my friends never agree · i need a little drama
-- **Фото:** w9/bo350.jpg, w9/bo199.jpg, w9/bo387.jpg · музыка: none
+### W8-2tue-2p-tonights-choice · Гости · меню · 7.0 с
+- **На экране:** TONIGHT'S CHOICE / THE HARDEST DECISION OF THE DAY
+- **Фото:** w9/p0289.jpg · музыка: none
 
 ```
-Rain, indecisive friends, a need for drama: we have solutions.
+Tonight's choice: the hardest decision of the day.
+
+#seasignora #menu #dinner #brera
+```
+- **Варианты призыва:** reserve · book a table
+
+### W8-2tue-3v-your-problem · Your problem / Our solution · 10.1 с
+- **На экране:** Your problem / Our solution: it's cold outside · my friends never agree · i need a little drama
+- **Фото:** w9/p0205.jpg, w9/p0322.jpg, w9/bo350.jpg · музыка: none
+
+```
+Cold outside, indecisive friends, a need for drama: we have solutions.
 
 #seasignora #brera #milano #milanofood
 ```
@@ -72,16 +72,16 @@ Rain, indecisive friends, a need for drama: we have solutions.
 
 ## Wed 18.11
 
-### W8-3wed-1v-midweek · Атмосфера · зал · 10.0 с
-- **На экране:** WEDNESDAY / MIDWEEK, FULL ROOM
-- **Фото:** w9/2626.mp4, w9/2690.mp4 · музыка: none
+### W8-3wed-1v-polpo · Блюдо-герой · сборка · 10.0 с
+- **На экране:** ON THE MENU / POLPO / ZUCCA, NOCCIOLE E SCORZANERA
+- **Фото:** w9/nm0656.mp4, w9/nm0660.mp4 · музыка: none
 
 ```
-Wednesday, and the room is full. Midweek at Sea, Signora.
+Polpo, zucca, nocciole e scorzanera: on the menu at Sea, Signora.
 
-#seasignora #midweek #fullhouse #brera
+#seasignora #polpo #octopus #chef #brera
 ```
-- **Варианты призыва:** reserve · book a table
+- **Варианты призыва:** book a table · reserve
 
 ### W8-3wed-2p-panettone-dressed · Панеттоне · десерт · 7.0 с
 - **На экране:** PANETTONE SEASON / DRESSED FOR DESSERT / CHERRIES & CREMA
@@ -214,13 +214,13 @@ King crab, hands on. Puglian cicatelli with king crab, on the menu.
 
 ## Sun 22.11
 
-### W8-7sun-1v-holy-shell · Свеча · видео + кнопка · 10.6 с
-- **На экране:** HOLY SHELL / FRESHLY POURED / OUR CANDLE BY THE CANDLE CLUUB
+### W8-7sun-1v-holy-shell · Свеча · заливка + кнопка · 10.5 с
+- **На экране:** HOLY SHELL / POURED BY HAND / OUR CANDLE BY THE CANDLE CLUUB
 - **Стикер-ссылка:** «shop the candle» (поставь настоящий link-стикер на место плашки)
-- **Фото:** w9/tccIMG28692.mp4, w9/tccIMG28952.mp4 · музыка: none
+- **Фото:** w9/nm0759.mp4, w9/nm0774.mp4, w9/nm0778.mp4 · музыка: none
 
 ```
-Freshly poured: Holy Shell, our limited-edition candle by The Candle Cluub. A little piece of the sea, at home.
+Poured by hand: Holy Shell, our limited-edition candle by The Candle Cluub. A little piece of the sea, at home.
 
 #seasignora #candle #holyshell #thecandlecluub #gift
 ```

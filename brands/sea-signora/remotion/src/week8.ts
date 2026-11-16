@@ -26,11 +26,12 @@ export const week8: Story[] = [
   // ───────────────────────── Mon 16.11 · the week starts
   {
     id: 'W8-1mon-1v-open-kitchen', day: 'Mon 16.11', rubric: 'Кухня · часы недели', music: silent,
-    scenes: [v('2666', 15.05, 3.9), v('2665', 1.3, 6.2)],
+    scenes: [v('nm0671', 15.7, 5), v('nm0681', 6.5, 5.2)],
     overlay: top(H('Open kitchen'), gap(6), {t: 'list', items: ['monday—friday 19:00—00:00', `saturday—sunday ${HOURS_WE}`], size: 28}),
     caption: 'Open kitchen. Monday to Friday 19:00–00:00, Saturday and Sunday 12:30–15:30 and 19:00–00:00.',
-    hashtags: tags('#openkitchen', '#brera', '#milano'), ctaVariants: ['reserve', 'book a table'],
+    hashtags: tags('#openkitchen', '#pasta', '#brera', '#milano'), ctaVariants: ['reserve', 'book a table'],
   },
+
   {
     id: 'W8-1mon-2p-chef', day: 'Mon 16.11', rubric: 'Команда · шеф', music: silent,
     scenes: [ph('npchefRoberto', 7, {fy: 40})],
@@ -39,48 +40,52 @@ export const week8: Story[] = [
     hashtags: tags('#chef', '#team', '#brera'), ctaVariants: ['reserve', 'book a table'],
   },
   {
-    id: 'W8-1mon-3p-monday-table', day: 'Mon 16.11', rubric: 'Атмосфера · стол', music: silent,
-    scenes: [ph('sh44', 7, {fy: 60})],
-    overlay: top(H('Back to the table'), sub('monday, from 19:00')),
-    caption: 'Back to the table: Monday, from 19:00.',
-    hashtags: tags('#monday', '#brera', '#milanofood'), ctaVariants: ['reserve', 'book a table'],
+    id: 'W8-1mon-3p-from-the-rain', day: 'Mon 16.11', rubric: 'Адрес · вход', music: silent,
+    scenes: [ph('p0194', 7, {fy: 55})],
+    overlay: top(H('Come in\nfrom the rain', 70), sub('via fiori chiari, 32 · from 19:00')),
+    caption: 'Come in from the rain: Via Fiori Chiari 32, Brera, from 19:00.',
+    hashtags: tags('#brera', '#milano', '#viafiorichiari'), ctaVariants: ['reserve', 'book a table'],
   },
+
 
   // ───────────────────────── Tue 17.11 · the table
   {
-    id: 'W8-2tue-1v-long-tables', day: 'Tue 17.11', rubric: 'Гости · длинный стол', music: silent,
-    scenes: [v('2698', 4.1, 5), v('2684', 0.2, 5.2)],
-    overlay: top(H('Long tables,\nlonger nights', 70)),
-    caption: 'Long tables, longer nights. Bring everyone.',
-    hashtags: tags('#dinner', '#friends', '#brera'), ctaVariants: ['reserve', 'book a table'],
-  },
-  {
-    id: 'W8-2tue-2p-akami', day: 'Tue 17.11', rubric: 'Блюдо-герой · окно', music: silent,
-    scenes: [ph('bo113', 7, {window: WIN, fx: 50, fy: 55})],
+    id: 'W8-2tue-1v-akami', day: 'Tue 17.11', rubric: 'Блюдо-герой · видео', music: silent,
+    scenes: [v('nm0638', 0.9, 4.5, {shift: 140}), v('nm0639', 3.0, 5.5, {shift: 140})],
     overlay: top(kick('on the menu'), H('Akami'), sub('culatello e porcini')),
     caption: 'Akami, culatello e porcini: on the menu at Sea, Signora.',
-    hashtags: tags('#tuna', '#akami', '#brera'), ctaVariants: ['book a table', 'reserve'],
+    hashtags: tags('#tuna', '#akami', '#chef', '#brera'), ctaVariants: ['book a table', 'reserve'],
   },
+
+  {
+    id: 'W8-2tue-2p-tonights-choice', day: 'Tue 17.11', rubric: 'Гости · меню', music: silent,
+    scenes: [ph('p0289', 7, {fy: 55})],
+    overlay: top(H("Tonight's choice"), sub('the hardest decision of the day')),
+    caption: "Tonight's choice: the hardest decision of the day.",
+    hashtags: tags('#menu', '#dinner', '#brera'), ctaVariants: ['reserve', 'book a table'],
+  },
+
   {
     id: 'W8-2tue-3v-your-problem', day: 'Tue 17.11', rubric: 'Your problem / Our solution', music: silent,
     scenes: [],
     chat: [
-      {problem: "it's raining in milan", solution: 'w9/bo350.jpg'},
-      {problem: 'my friends never agree', solution: 'w9/bo199.jpg'},
-      {problem: 'i need a little drama', solution: 'w9/bo387.jpg'},
+      {problem: "it's cold outside", solution: 'w9/p0205.jpg'},
+      {problem: 'my friends never agree', solution: 'w9/p0322.jpg'},
+      {problem: 'i need a little drama', solution: 'w9/bo350.jpg'},
     ],
-    caption: 'Rain, indecisive friends, a need for drama: we have solutions.',
+    caption: 'Cold outside, indecisive friends, a need for drama: we have solutions.',
     hashtags: tags('#brera', '#milano', '#milanofood'), ctaVariants: ['reserve', 'book a table'],
   },
 
   // ───────────────────────── Wed 18.11 · midweek
   {
-    id: 'W8-3wed-1v-midweek', day: 'Wed 18.11', rubric: 'Атмосфера · зал', music: silent,
-    scenes: [v('2626', 3.1, 5), v('2690', 8.9, 5)],
-    overlay: top(kick('wednesday'), H('Midweek, full room')),
-    caption: 'Wednesday, and the room is full. Midweek at Sea, Signora.',
-    hashtags: tags('#midweek', '#fullhouse', '#brera'), ctaVariants: ['reserve', 'book a table'],
+    id: 'W8-3wed-1v-polpo', day: 'Wed 18.11', rubric: 'Блюдо-герой · сборка', music: silent,
+    scenes: [v('nm0656', 4.3, 5), v('nm0660', 1.0, 5)],
+    overlay: top(kick('on the menu'), H('Polpo'), sub('zucca, nocciole e scorzanera')),
+    caption: 'Polpo, zucca, nocciole e scorzanera: on the menu at Sea, Signora.',
+    hashtags: tags('#polpo', '#octopus', '#chef', '#brera'), ctaVariants: ['book a table', 'reserve'],
   },
+
   {
     id: 'W8-3wed-2p-panettone-dressed', day: 'Wed 18.11', rubric: 'Панеттоне · десерт', music: silent,
     scenes: [ph('pan91', 7, {fy: 62})],
@@ -169,13 +174,14 @@ export const week8: Story[] = [
 
   // ───────────────────────── Sun 22.11 · slow sunday
   {
-    id: 'W8-7sun-1v-holy-shell', day: 'Sun 22.11', rubric: 'Свеча · видео + кнопка', music: silent,
-    scenes: [v('tccIMG28692', 0.2, 4.6), v('tccIMG28952', 0.2, 6)],
-    overlay: top(kick('holy shell'), H('Freshly poured'), sub('our candle by the candle cluub')),
+    id: 'W8-7sun-1v-holy-shell', day: 'Sun 22.11', rubric: 'Свеча · заливка + кнопка', music: silent,
+    scenes: [v('nm0759', 8.8, 4), v('nm0774', 0.2, 3.2), v('nm0778', 1.0, 3.3)],
+    overlay: top(kick('holy shell'), H('Poured by hand'), sub('our candle by the candle cluub')),
     cta: {label: 'shop the candle', color: 'orange'},
-    caption: 'Freshly poured: Holy Shell, our limited-edition candle by The Candle Cluub. A little piece of the sea, at home.',
+    caption: 'Poured by hand: Holy Shell, our limited-edition candle by The Candle Cluub. A little piece of the sea, at home.',
     hashtags: tags('#candle', '#holyshell', '#thecandlecluub', '#gift'), ctaVariants: ['shop the candle', 'get yours'],
   },
+
   {
     id: 'W8-7sun-2p-golden', day: 'Sun 22.11', rubric: 'Панеттоне · огромное слово', music: silent,
     scenes: [ph('pan56', 7)],
