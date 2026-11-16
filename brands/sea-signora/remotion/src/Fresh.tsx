@@ -509,7 +509,7 @@ const Adesivi: React.FC = () => {
 // 17 · triptych: fire, pan, table
 const Trittico: React.FC = () => {
   const f = useCurrentFrame();
-  const cols: [M, string][] = [[v('w10/kf0113', 20, {fx: 50}), '1 · la cucina'], [v('w10/nm0688', 0.5, {fx: 50}), '2 · la padella'],
+  const cols: [M, string][] = [[v('w10/kf0113', 20, {fx: 50}), '1 · la cucina'], [v('w10/nm0681', 1, {fx: 50}), '2 · la padella'],
     [v('w10/nm0742', 1, {fx: 45}), '3 · la tavola']];
   return (
     <AbsoluteFill style={{background: I}}>
