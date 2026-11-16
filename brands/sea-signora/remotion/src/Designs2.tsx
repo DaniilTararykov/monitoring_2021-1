@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Img, OffthreadVideo, Sequence, staticFile} from 'remotion';
+import {AbsoluteFill, Img, OffthreadVideo, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {brandPalette, colors, fonts} from '../../tokens';
 import {Chip} from './components/Visual';
 import {loadBrandFonts} from './fonts';
@@ -21,7 +21,7 @@ const Media: React.FC<{m: M; style?: React.CSSProperties}> = ({m, style}) => {
   return m.src.endsWith('.mp4') ? <OffthreadVideo src={staticFile(`videos/${m.src}`)} startFrom={Math.round((m.at ?? 0) * FPS)} muted style={st} />
     : <Img src={staticFile(`photos/${m.src}`)} style={st} />;
 };
-const Box: React.FC<{b: React.CSSProperties; m: M}> = ({b, m}) => <div style={{position: 'absolute', overflow: 'hidden', ...b}}><Media m={m} /></div>;
+const Box: React.FC<{b: React.CSSProperties; m: M; st?: React.CSSProperties}> = ({b, m, st}) => <div style={{position: 'absolute', overflow: 'hidden', ...b}}><Media m={m} style={st} /></div>;
 const mono = (size: number, color: string, x: React.CSSProperties = {}): React.CSSProperties => ({fontFamily: fonts.mono, fontWeight: 500, fontSize: size,
   letterSpacing: size >= 28 ? 3 : 5, textTransform: 'uppercase', color, ...x});
 const disp = (size: number, color: string, x: React.CSSProperties = {}): React.CSSProperties => ({fontFamily: fonts.display, fontSize: size,
@@ -40,7 +40,7 @@ const Pass: React.FC = () => {
     <AbsoluteFill style={{background: G}}>
       <div style={{...center, top: 280, ...mono(22, I)}}>boarding pass</div>
       <div style={{position: 'absolute', left: 110, width: 860, top: 340, height: 1180, background: I, borderRadius: 34, overflow: 'hidden'}}>
-        <Box b={{left: 0, top: 0, width: 860, height: 440}} m={v('w10/kf0103', 8.9)} />
+        <Box b={{left: 0, top: 0, width: 860, height: 440}} m={p('w11/f62', {fy: 55})} st={{transform: `scale(${1.04 + useCurrentFrame() / 3000})`}} />
         <div style={{position: 'absolute', left: 60, right: 60, top: 490}}>
           <div style={mono(16, G)}>destination</div>
           <div style={{...mark(104, G), marginTop: 12}}>Sea, Signora</div>

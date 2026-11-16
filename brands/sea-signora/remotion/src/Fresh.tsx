@@ -275,8 +275,8 @@ const Loading: React.FC = () => {
   return (
     <AbsoluteFill style={{background: G}}>
       <div style={{position: 'absolute', left: 70, width: 940, top: 290, height: 480, borderRadius: 24, overflow: 'hidden'}}>
-        <Media m={p('w11/f62')} style={{filter: 'blur(26px)', transform: 'scale(1.1)'}} />
-        <div style={{position: 'absolute', inset: 0, clipPath: `inset(0 0 ${(1 - pr) * 100}% 0)`}}><Media m={p('w11/f62')} /></div>
+        <Media m={p('w11/f49')} style={{filter: 'blur(26px)', transform: 'scale(1.1)'}} />
+        <div style={{position: 'absolute', inset: 0, clipPath: `inset(0 0 ${(1 - pr) * 100}% 0)`}}><Media m={p('w11/f49')} /></div>
       </div>
       <div style={{position: 'absolute', left: 70, width: 940, top: 810, display: 'flex', justifyContent: 'space-between'}}>
         <span style={mono(22, SA)}>loading dinner</span><span style={mono(22, I)}>{Math.round(pr * 100)}%</span>
