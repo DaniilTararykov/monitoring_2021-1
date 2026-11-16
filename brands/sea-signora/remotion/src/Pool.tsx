@@ -289,22 +289,18 @@ const S22: React.FC = () => {
     </AbsoluteFill>
   );
 };
-const S23: React.FC = () => {
-  const f = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{background: N}}>
-      <Img src={staticFile('photos/w17/bo10.jpg')} style={ab({top: 0, height: 1920, width: 2880, maxWidth: 'none', objectFit: 'cover', left: -ip(f, 0, 210, 0, 1800, Easing.inOut(Easing.quad))})} />
-      {shadeBot(620, 0.75)}
-      <div style={ab({left: 80, top: 1400})}><In at={20}><div style={ital(74, I)}>Lit before you arrive.</div></In></div>
-    </AbsoluteFill>
-  );
-};
+const S23: React.FC = () => (
+  <AbsoluteFill style={{background: N}}>
+    <Media m={V('v0100', 1.6)} />{shadeBot(620, 0.75)}
+    <div style={ab({left: 80, top: 1400})}><In at={20}><div style={ital(74, I)}>Lit before you arrive.</div></In></div>
+  </AbsoluteFill>
+);
 const S24: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{background: G}}>
       <div style={ab({left: 90, top: 330, width: 900, height: 900, overflow: 'hidden', borderRadius: 20})}>
-        <Media m={P(12)} style={{transform: `rotate(${ip(f, 0, 210, -6, 4, Easing.linear)}deg) scale(1.3)`}} />
+        <Media m={V('v7428', 15.2)} style={{transform: `rotate(${ip(f, 0, 210, -6, 4, Easing.linear)}deg) scale(1.3)`}} />
       </div>
       <div style={ab({left: 90, top: 1290})}><In at={14}><div style={ital(70, I)}>{'Read slowly.\nOrder generously.'}</div></In></div>
     </AbsoluteFill>
@@ -314,27 +310,22 @@ const S25: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{background: N}}>
-      <Box b={{left: 140, top: 500, width: 800, height: 800, borderRadius: 30}} m={P(24, {fx: 50})} st={{filter: `brightness(${0.95 + 0.08 * Math.sin(f / 7)})`}} />
+      <Box b={{left: 140, top: 500, width: 800, height: 800, borderRadius: 30}} m={V('ds_IMG_2064', 0, 0.8)} st={{filter: `brightness(${0.95 + 0.08 * Math.sin(f / 7)})`}} />
       <div style={ab({left: 0, right: 0, top: 300, textAlign: 'center'})}><In><div style={mono(20, SA)}>house rule no. 1</div></In></div>
       <div style={ab({left: 0, right: 0, top: 1360, textAlign: 'center'})}><In at={18}><div style={ital(60, I)}>{'one candle per table.\nminimum.'}</div></In></div>
     </AbsoluteFill>
   );
 };
-const S26: React.FC = () => {
-  const f = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{background: SA}}>
-      <div style={ab({left: 0, top: 560, width: 1080, height: 800, overflow: 'hidden'})}>
-        <Img src={staticFile('photos/w17/bo35.jpg')} style={ab({top: 0, height: 800, width: 1200, maxWidth: 'none', objectFit: 'cover', left: -ip(f, 0, 210, 0, 120, Easing.linear)})} />
-      </div>
-      <div style={ab({left: 80, top: 300})}><In><div style={disp(110, G)}>{'BOOTHS'}</div></In></div>
-      <div style={ab({left: 80, top: 1420})}><In at={22}><div style={ital(54, G)}>built for long dinners</div></In></div>
-    </AbsoluteFill>
-  );
-};
+const S26: React.FC = () => (
+  <AbsoluteFill style={{background: SA}}>
+    <Box b={{left: 0, top: 560, width: 1080, height: 800}} m={V('v0133', 5.3)} />
+    <div style={ab({left: 80, top: 300})}><In><div style={disp(110, G)}>{'CORNER TABLE'}</div></In></div>
+    <div style={ab({left: 80, top: 1420})}><In at={22}><div style={ital(54, G)}>candlelit, for two</div></In></div>
+  </AbsoluteFill>
+);
 const S27: React.FC = () => (
   <AbsoluteFill style={{background: G}}>
-    <Box b={{left: 360, top: 0, width: 720, height: 1920}} m={P(39, {fx: 60})} />
+    <Box b={{left: 360, top: 0, width: 720, height: 1920}} m={V('ds_IMG_2063', 1.9, 1, {fx: 55})} />
     <div style={ab({left: 50, top: 320, width: 280})}>
       <In><div style={mono(18, SA)}>the red room</div></In>
       <In at={16}><div style={{...ital(52, I), marginTop: 20}}>{'velvet,\nlow light,\nno rush'}</div></In>
@@ -345,7 +336,7 @@ const S28: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{background: N}}>
-      <Media m={P(42, {fx: 45})} style={{transform: `scale(${ip(f, 0, 210, 1.6, 1.05, io)})`}} />{shadeTop(600, 0.65)}
+      <Media m={V('ds_IMG_2065', 7.9)} style={{transform: `scale(${ip(f, 0, 210, 1.6, 1.05, io)})`}} />{shadeTop(600, 0.65)}
       <div style={ab({left: 0, right: 0, top: 300, textAlign: 'center'})}><In at={20}><div style={ital(76, I)}>Dinner, under water.</div></In></div>
     </AbsoluteFill>
   );
@@ -365,21 +356,17 @@ const S30: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{background: N}}>
-      <Media m={P(85)} style={{filter: `blur(${ip(f, 0, 50, 22, 0, io)}px)`}} />{shadeBot(600, 0.7)}
+      <Media m={V('ds_IMG_2045', 0, 0.8)} style={{filter: `blur(${ip(f, 0, 50, 22, 0, io)}px)`}} />{shadeBot(600, 0.7)}
       <div style={ab({left: 80, top: 1420})}><In at={50}><div style={ital(64, I)}>Candlelight is our main light.</div></In></div>
     </AbsoluteFill>
   );
 };
-const S31: React.FC = () => {
-  const f = useCurrentFrame();
-  return (
-    <AbsoluteFill style={{background: N}}>
-      <Img src={staticFile('photos/w17/bo86.jpg')} style={ab({top: 0, height: 1920, width: 2880, maxWidth: 'none', objectFit: 'cover', left: -ip(f, 0, 210, 1500, 300, Easing.inOut(Easing.quad))})} />
-      {shadeTop(560, 0.6)}
-      <div style={ab({left: 80, top: 300})}><In><div style={mono(20, SA)}>the tank</div></In><In at={14}><div style={{...ital(62, I), marginTop: 10}}>two metres of sea, in Brera</div></In></div>
-    </AbsoluteFill>
-  );
-};
+const S31: React.FC = () => (
+  <AbsoluteFill style={{background: N}}>
+    <Media m={V('nf_9212', 0)} />{shadeTop(560, 0.6)}
+    <div style={ab({left: 80, top: 300})}><In><div style={mono(20, SA)}>the tank</div></In><In at={14}><div style={{...ital(62, I), marginTop: 10}}>two metres of sea, in Brera</div></In></div>
+  </AbsoluteFill>
+);
 const S32: React.FC = () => (
   <AbsoluteFill style={{background: G}}>
     <Box b={{left: 190, top: 440, width: 700, height: 900, borderRadius: '50%'}} m={P(150, {fx: 52})} />
@@ -395,14 +382,14 @@ const S33: React.FC = () => (
 );
 const S34: React.FC = () => (
   <AbsoluteFill style={{background: N}}>
-    <Media m={P(170, {fy: 40})} />{shadeTop(560, 0.6)}
-    <div style={ab({left: 0, right: 0, top: 290, textAlign: 'center', ...disp(150, 'transparent', {WebkitTextStroke: `3px ${I}`})})}>BEHIND</div>
-    <div style={ab({left: 0, right: 0, top: 440, textAlign: 'center', ...mono(20, I)})}>the bar · sea, signora</div>
+    <Media m={V('v4240', 11.3, 1, {fy: 70})} />{shadeBot(620, 0.7)}
+    <div style={ab({left: 0, right: 0, top: 1300, textAlign: 'center', ...disp(150, 'transparent', {WebkitTextStroke: `3px ${I}`})})}>BEHIND</div>
+    <div style={ab({left: 0, right: 0, top: 1450, textAlign: 'center', ...mono(20, I)})}>the bar · sea, signora</div>
   </AbsoluteFill>
 );
 const S35: React.FC = () => (
   <AbsoluteFill style={{background: N}}>
-    <Media m={P(211, {fx: 50})} />{shadeBot(700, 0.8)}
+    <Media m={V('g2691', 2.3)} />{shadeBot(700, 0.8)}
     <div style={ab({left: 80, top: 1340, width: 700})}><In><div style={ital(80, I)}>To the next one.</div></In><In at={20}><div style={{...mono(18, SA), marginTop: 20}}>raised at sea, signora</div></In></div>
   </AbsoluteFill>
 );
@@ -422,7 +409,7 @@ const S37: React.FC = () => (
 );
 const S38: React.FC = () => (
   <AbsoluteFill style={{background: N}}>
-    <Media m={P(300, {fy: 40})} />{shadeBot(560, 0.75)}
+    <Media m={V('ds_IMG_2073', 0.6)} />{shadeBot(560, 0.75)}
     <div style={ab({left: 80, right: 80, top: 1440, borderTop: `2px solid ${I}`, paddingTop: 22, display: 'flex', justifyContent: 'space-between'})}>
       <span style={ital(46, I)}>At your service.</span><span style={mono(18, SA)}>sea, signora</span>
     </div>
@@ -452,7 +439,7 @@ const S41: React.FC = () => {
 };
 const S42: React.FC = () => (
   <AbsoluteFill style={{background: I}}>
-    <Box b={{left: 260, top: 330, width: 560, height: 980}} m={P(436, {fx: 60})} />
+    <Box b={{left: 260, top: 330, width: 560, height: 980}} m={V('v7466', 5.4)} />
     <div style={ab({left: 0, right: 0, top: 1360, textAlign: 'center'})}><In><div style={disp(96, G, {letterSpacing: 6})}>WHITE · COLD · RIGHT</div></In></div>
   </AbsoluteFill>
 );
@@ -461,7 +448,7 @@ const S43: React.FC = () => {
   const n = Math.round(ip(f, 10, 80, 0, 100, Easing.out(Easing.quad)));
   return (
     <AbsoluteFill style={{background: N}}>
-      <Media m={P(374, {fx: 40})} />{shadeTop(620, 0.7)}
+      <Media m={V('nf_9220', 2)} />{shadeTop(620, 0.7)}
       <div style={ab({left: 80, top: 290, ...disp(200, I)})}>{n}%</div>
       <div style={ab({left: 84, top: 480, ...mono(20, I)})}>full · sea, signora · brera</div>
     </AbsoluteFill>
@@ -469,13 +456,13 @@ const S43: React.FC = () => {
 };
 const S44: React.FC = () => (
   <AbsoluteFill style={{background: G}}>
-    <Box b={{left: 80, top: 300, width: 920, height: 1000}} m={P(304, {fy: 60})} />
+    <Box b={{left: 80, top: 300, width: 920, height: 1000}} m={V('nf_9216', 0, 0.75)} />
     <div style={ab({left: 80, top: 1350})}><In><div style={ital(64, I)}>Everyone gets a fork.</div></In><In at={16}><div style={{...mono(18, SA), marginTop: 16}}>dishes made to share</div></In></div>
   </AbsoluteFill>
 );
 const S45: React.FC = () => (
   <AbsoluteFill style={{background: N}}>
-    <Media m={P(183, {fx: 55})} />{shadeTop(600, 0.65)}
+    <Media m={V('nf_9224', 3.8)} />{shadeTop(600, 0.65)}
     <div style={ab({left: 0, right: 0, top: 300, textAlign: 'center'})}><In><div style={ital(70, I)}>Table of six. No rush.</div></In></div>
   </AbsoluteFill>
 );
@@ -484,7 +471,7 @@ const S46: React.FC = () => {
   return (
     <AbsoluteFill style={{background: SA}}>
       {[0, 1, 2].map((i) => <Box key={i} b={{left: 70 + i * 40, top: 420 + i * 40, width: 860, height: 1000, opacity: i === 2 ? 1 : 0.35, boxShadow: '0 20px 40px rgba(0,0,0,0.25)'}}
-        m={P(207, {fx: 40 + i * 10})} st={{transform: `scale(${1 + (2 - i) * 0.08})`}} />)}
+        m={V('ds_IMG_2053', 11.8, 1, {fx: 40 + i * 10})} st={{transform: `scale(${1 + (2 - i) * 0.08})`}} />)}
       <div style={ab({left: 80, top: 300})}><In><div style={mono(20, G)}>friends, mostly</div></In></div>
       <div style={ab({left: 80, top: 1500, ...ital(48, G), opacity: ip(f, 30, 44)})}>and whoever they brought</div>
     </AbsoluteFill>
@@ -562,7 +549,7 @@ export const POOL: Spec[] = [
   s(23, 'lit', 7, S23, 'Lit before you arrive.', 'Lit before you arrive.', '#candlelight', '#brera'),
   s(24, 'read-slowly', 7, S24, 'Read slowly. Order generously.', 'Read slowly. Order generously.', '#menu', '#brera'),
   s(25, 'house-rule', 6, S25, 'house rule no. 1 / one candle per table. minimum.', 'House rule no. 1: one candle per table, minimum.', '#candlelight', '#brera'),
-  s(26, 'booths', 7, S26, 'BOOTHS / built for long dinners', 'Booths, built for long dinners.', '#interiors', '#brera'),
+  s(26, 'corner-table', 7, S26, 'CORNER TABLE / candlelit, for two', 'A corner table, candlelit, for two.', '#interiors', '#brera'),
   s(27, 'red-room', 6, S27, 'the red room / velvet, low light, no rush', 'The red room: velvet, low light, no rush.', '#interiors', '#brera'),
   s(28, 'under-water', 7, S28, 'Dinner, under water.', 'Dinner, under water.', '#aquarium', '#brera'),
   s(29, 'table-for-twelve', 7, S29, 'table for twelve · candles included', 'Table for twelve, candles included.', '#friends', '#brera'),

@@ -1,6 +1,6 @@
 # Sea, Signora — пул 50 креативов
 
-Только материалы, которые нигде раньше не использовались (видео года, не попавшие ни в один монтаж, и неиспользованные кадры Pixieset). 50 разных макетов, каждый один раз. Только английский, без команды, без дней недели и часов.
+Только материалы, которые нигде раньше не использовались (видео года, не попавшие ни в один монтаж, и только часть — Pixieset (13 из 50)). 50 разных макетов, каждый один раз. Только английский, без команды, без дней недели и часов.
 
 **Q-01v-signora** (6 с)
 - На экране: MEET THE SIGNORA / she keeps an eye on every table
@@ -127,9 +127,9 @@
 - Подпись: House rule no. 1: one candle per table, minimum.
 - Хештеги: #seasignora #candlelight #brera
 
-**Q-26v-booths** (7 с)
-- На экране: BOOTHS / built for long dinners
-- Подпись: Booths, built for long dinners.
+**Q-26v-corner-table** (7 с)
+- На экране: CORNER TABLE / candlelit, for two
+- Подпись: A corner table, candlelit, for two.
 - Хештеги: #seasignora #interiors #brera
 
 **Q-27v-red-room** (6 с)
