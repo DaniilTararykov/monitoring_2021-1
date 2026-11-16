@@ -55,12 +55,12 @@ export const DishCardView: React.FC<{d: DishCard}> = ({d}) => (
 );
 const t = (...x: string[]) => ['#seasignora', ...x];
 export const DISH_CARDS: DishCard[] = [
-  {id: 'R-02p-tagliolini', img: 'bo108.jpg', fy: 55, band: true, textTop: 1320, label: 'new', name: 'Tagliolini', line: 'with seafood and fresh herbs',
-    caption: 'New on the menu: tagliolini with seafood and fresh herbs.', hashtags: t('#tagliolini', '#pasta', '#brera')},
-  {id: 'R-03p-akami', img: 'bo120.jpg', fy: 60, textTop: 460, label: 'new', name: 'Akami', line: 'lean red tuna, fennel, mint',
-    caption: 'New on the menu: akami, lean red tuna with fennel and mint.', hashtags: t('#akami', '#tuna', '#brera')},
-  {id: 'R-04p-capesante', img: 'bo268.jpg', fy: 45, textTop: 1360, label: 'new', name: 'Capesante', line: 'black mushrooms, hazelnuts',
-    caption: 'New on the menu: capesante with black mushrooms and hazelnuts.', hashtags: t('#capesante', '#scallops', '#brera')},
+  {id: 'R-02p-tagliolini', img: 'bo108.jpg', fy: 55, band: true, textTop: 1320, label: 'pasta', name: 'Tagliolini', line: 'seafood, fresh herbs, made to order',
+    caption: 'Tagliolini with seafood and fresh herbs, made to order.', hashtags: t('#tagliolini', '#pasta', '#brera')},
+  {id: 'R-03p-akami', img: 'bo120.jpg', fy: 60, textTop: 460, label: 'raw bar', name: 'Akami', line: 'lean red tuna, fennel, mint',
+    caption: 'From the raw bar: akami, lean red tuna with fennel and mint.', hashtags: t('#akami', '#tuna', '#brera')},
+  {id: 'R-04p-capesante', img: 'bo268.jpg', fy: 45, textTop: 1360, label: "chef's pick", name: 'Capesante', line: 'black mushrooms, hazelnuts',
+    caption: "Chef's pick: capesante with black mushrooms and hazelnuts.", hashtags: t('#capesante', '#scallops', '#brera')},
   {id: 'R-05p-caviar', img: 'bo476.jpg', fy: 35, label: 'dessert', name: 'Cream & caviar', line: 'finished with caviar at the pass',
     caption: 'Cream, finished with caviar at the pass.', hashtags: t('#caviar', '#dessert', '#brera')},
   {id: 'R-06p-red', img: 'bo347.jpg', fy: 40, label: 'the bar', name: 'Red', line: 'our red cocktail, served cold',
