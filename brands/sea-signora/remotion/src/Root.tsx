@@ -40,6 +40,7 @@ import {DISH_CARDS, DishCardView, ReviewAquarium} from './ReviewStill';
 import {FRESH6} from './Fresh6';
 import {CUTOUT} from './Cutout';
 import {FILM, FILM_V1, FilmView} from './Film';
+import {TIPS, TipView} from './OrderThis';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
 import {week7y} from './week7y';
@@ -60,6 +61,7 @@ export const RemotionRoot: React.FC = () => (
     {DESIGNS.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {[...week11words, ...week11live].map((p) => <Composition key={p.id} id={p.id} component={ParolaView} durationInFrames={Math.round(p.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{p}} />)}
     {week11designs.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
+    {TIPS.map((t) => <Composition key={t.id} id={t.id} component={TipView} durationInFrames={210} fps={30} width={1080} height={1920} defaultProps={{t}} />)}
     {[...FILM_V1, ...FILM].map((s) => <Composition key={s.id} id={s.id} component={FilmView} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
     {CUTOUT.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {FRESH6.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
