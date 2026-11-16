@@ -88,15 +88,15 @@ const Segno: React.FC = () => {
 // 3 · weather app: the forecast for a night in Brera
 const Meteo: React.FC = () => {
   const f = useCurrentFrame();
-  const hours: [string, string, M][] = [['19:00', 'aperitivo', p('w11/f10', {fy: 40})], ['20:00', 'ostriche', p('w11/f36')], ['21:00', 'crudo', p('w11/f23')],
-    ['22:00', 'pasta', p('w11/f112')], ['23:00', 'dolce', p('w10/pan86', {fy: 60})]];
+  const hours: [string, string, M][] = [['19:00', 'aperitivo', p('w10/p0342', {fy: 50})], ['20:00', 'gamberi', p('w10/k0119', {fy: 40})], ['21:00', 'tartare', p('w10/p0347', {fy: 60})],
+    ['22:00', 'pasta', p('w10/p0338', {fy: 55})], ['23:00', 'dolce', p('w10/pan86', {fy: 60})]];
   return (
     <AbsoluteFill style={{background: G}}>
       <Box b={{left: 0, top: 0, width: 1080, height: 1010}} m={p('w10/p0194', {fy: 52})} />
       <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 700, background: 'linear-gradient(rgba(11,11,11,0.6), rgba(11,11,11,0))'}} />
       <div style={{position: 'absolute', left: 80, top: 290, ...mono(22, I)}}>meteo · brera</div>
       <div style={{position: 'absolute', left: 74, top: 330, ...serif(210, I, {lineHeight: 1})}}>100%</div>
-      <div style={{position: 'absolute', left: 84, top: 560, ...ital(52, I)}}>chance of oysters</div>
+      <div style={{position: 'absolute', left: 84, top: 560, ...ital(52, I)}}>chance of a long dinner</div>
       <div style={{position: 'absolute', left: 60, width: 960, top: 1040, height: 500, borderRadius: 40, background: G, boxSizing: 'border-box', padding: '36px 40px',
         transform: `translateY(${ip(f, 6, 30, 80, 0)}px)`, opacity: ip(f, 6, 24)}}>
         <div style={mono(18, SA)}>hourly forecast</div>
@@ -127,8 +127,8 @@ const Meteo: React.FC = () => {
 const AZ = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const Tabellone: React.FC = () => {
   const f = useCurrentFrame();
-  const rows: [string, string, string, M][] = [['OSTRICHE', 'raw bar', 'al tavolo', p('w11/f36')], ['CRUDO', 'raw bar', 'al tavolo', p('w11/f23')],
-    ['FUSILLONE', 'cucina', 'in arrivo', p('w11/f112')], ['GRANCHIO', 'cucina', 'in arrivo', p('w11/f115')], ['TONNO', 'cucina', 'in arrivo', p('w11/f88')],
+  const rows: [string, string, string, M][] = [['GAMBERI', 'aquarium', 'al tavolo', p('w10/k0122', {fy: 40})], ['CRUDO', 'raw bar', 'al tavolo', p('w11/f23')],
+    ['FUSILLONE', 'cucina', 'in arrivo', p('w11/f112')], ['GRANCHIO', 'cucina', 'in arrivo', p('w11/f115')], ['AGNELLO', 'cucina', 'in arrivo', p('w11/f65')],
     ['DOLCE', 'pasticceria', 'per ultimo', p('w10/pan86', {fy: 60})]];
   return (
     <AbsoluteFill style={{background: N}}>
@@ -271,7 +271,7 @@ const Cinema: React.FC = () => {
 const Loading: React.FC = () => {
   const f = useCurrentFrame();
   const pr = interpolate(f, [0, 40, 60, 100, 120, 150], [0, 0.35, 0.42, 0.78, 0.85, 1], {extrapolateRight: 'clamp'});
-  const list = ['ice, freshly crushed', 'oysters, opened to order', 'wine, breathing', 'table, set'];
+  const list = ['ice, freshly crushed', 'pasta, in the pan', 'wine, breathing', 'table, set'];
   return (
     <AbsoluteFill style={{background: G}}>
       <div style={{position: 'absolute', left: 70, width: 940, top: 290, height: 480, borderRadius: 24, overflow: 'hidden'}}>
@@ -304,9 +304,9 @@ const Loading: React.FC = () => {
 // 10 · bingo card
 const Bingo: React.FC = () => {
   const f = useCurrentFrame();
-  const cells: [string, M][] = [['ostriche', p('w11/f36')], ['burrata', p('w11/f44', {fy: 55})], ['vino', p('w11/f10', {fy: 40})],
+  const cells: [string, M][] = [['gamberi', p('w10/k0121', {fy: 40})], ['burrata', p('w11/f44', {fy: 55})], ['vino', p('w10/bo462', {fy: 40})],
     ['crudo', p('w11/f23')], ['granchio reale', p('w11/f115')], ['tonno', p('w11/f88')],
-    ['fusillone', p('w11/f112')], ['agnello', p('w11/f65')], ['panettone', p('w10/pan86', {fy: 60})]];
+    ['pasta', p('w11/f109')], ['agnello', p('w11/f65')], ['panettone', p('w10/pan86', {fy: 60})]];
   const stamps: Record<number, number> = {1: 28, 0: 52, 4: 76, 8: 100};
   const cx = (i: number) => 70 + (i % 3) * 320 + 150, cy = (i: number) => 470 + Math.floor(i / 3) * 320 + 125;
   const ln = ip(f, 120, 140, 0, 1, Easing.inOut(Easing.quad));
@@ -384,8 +384,8 @@ const Karaoke: React.FC = () => {
 // 13 · slot machine: every spin wins
 const Slot: React.FC = () => {
   const f = useCurrentFrame();
-  const pics: M[] = [p('w11/f36'), p('w11/f10', {fy: 40}), p('w11/f23'), p('w11/f112'), p('w11/f115'), p('w11/f44', {fy: 55}), p('w11/f88'), p('w10/pan86', {fy: 60})];
-  const labels = ['ostriche', 'vino', 'crudo'];
+  const pics: M[] = [p('w10/k0119', {fy: 40}), p('w10/bo422', {fy: 40}), p('w11/f120'), p('w11/f112'), p('w11/f23'), p('w11/f44', {fy: 55}), p('w11/f88'), p('w10/pan86', {fy: 60})];
+  const labels = ['gamberi', 'vino', 'granchio'];
   const P = 288, W = 268;
   const off = (i: number, fr: number) => (24 + i) * P * ip(fr, 8, 66 + i * 24, 0, 1, Easing.out(Easing.cubic));
   return (
@@ -415,7 +415,7 @@ const Slot: React.FC = () => {
           {labels.map((l, i) => <div key={l} style={{width: W, textAlign: 'center', ...mono(20, G), opacity: ip(f, 66 + i * 24, 76 + i * 24)}}>{l}</div>)}
         </div>
         <div style={{...center, top: 760, ...disp(120, I, {letterSpacing: 8}), transform: `scale(${f >= 125 ? 0.6 + 0.4 * pop(f, 125) : 0})`}}>JACKPOT</div>
-        <div style={{...center, top: 910, ...ital(48, G), opacity: ip(f, 140, 155)}}>oysters, wine, crudo.</div>
+        <div style={{...center, top: 910, ...ital(48, G), opacity: ip(f, 140, 155)}}>red prawns, wine, king crab.</div>
         <div style={{...center, top: 990, ...mono(18, G), opacity: ip(f, 150, 165)}}>every combination wins at sea, signora</div>
       </div>
     </AbsoluteFill>
@@ -429,13 +429,13 @@ const Tendina: React.FC = () => {
   const W = 940, T = 470, H = 1060;
   return (
     <AbsoluteFill style={{background: G}}>
-      <div style={{...center, top: 285, ...disp(84, I, {letterSpacing: 6})}}>OSTRICHE</div>
+      <div style={{...center, top: 285, ...disp(84, I, {letterSpacing: 6})}}>VINO</div>
       <div style={{position: 'absolute', left: 70, width: W, top: 400, display: 'flex', justifyContent: 'space-between'}}>
-        <span style={mono(20, SA)}>← al naturale</span><span style={mono(20, O)}>con caviale →</span>
+        <span style={mono(20, SA)}>← bianco</span><span style={mono(20, O)}>rosso →</span>
       </div>
       <div style={{position: 'absolute', left: 70, width: W, top: T, height: H, borderRadius: 26, overflow: 'hidden'}}>
-        <Media m={p('w11/f28', {fy: 45})} />
-        <div style={{position: 'absolute', inset: 0, clipPath: `inset(0 0 0 ${x}px)`}}><Media m={p('w11/f97', {fy: 50})} /></div>
+        <Media m={p('w11/f10', {fy: 40})} />
+        <div style={{position: 'absolute', inset: 0, clipPath: `inset(0 0 0 ${x}px)`}}><Media m={p('w11/f7', {fy: 40})} /></div>
         <div style={{position: 'absolute', left: x - 3, top: 0, width: 6, height: H, background: I}} />
         <div style={{position: 'absolute', left: x - 48, top: H / 2 - 48, width: 96, height: 96, borderRadius: '50%', background: I, display: 'flex', alignItems: 'center',
           justifyContent: 'center', boxShadow: '0 6px 20px rgba(0,0,0,0.35)'}}>
@@ -479,7 +479,7 @@ const Lente: React.FC = () => {
 // 16 · sticker pack
 const Adesivi: React.FC = () => {
   const f = useCurrentFrame();
-  const st: [number, number, number, M][] = [[90, 600, -6, p('w11/f97', {fy: 45})], [610, 600, 5, p('w11/f44', {fy: 55})],
+  const st: [number, number, number, M][] = [[90, 600, -6, p('w11/f116', {fy: 50})], [610, 600, 5, p('w11/f44', {fy: 55})],
     [90, 1010, 4, p('w11/f92', {fx: 40, fy: 50})], [610, 1010, -5, p('w11/f10', {fy: 40})]];
   const pills: [string, string, string][] = [['fresh today', O, I], ["chef's pick", G, I], ['pet friendly', I, G]];
   return (
@@ -585,7 +585,7 @@ const Mare: React.FC = () => {
 // 20 · the formula
 const Formula: React.FC = () => {
   const f = useCurrentFrame();
-  const parts: [string, M][] = [['ostriche', p('w11/f36')], ['vino', p('w11/f7', {fy: 40})], ['amici', p('w11/f79', {fx: 40, fy: 35})]];
+  const parts: [string, M][] = [['pasta', p('w11/f109')], ['vino', p('w10/bo433', {fy: 40})], ['amici', p('w11/f76', {fx: 55, fy: 35})]];
   const sc = (at: number) => (f >= at ? pop(f, at) : 0);
   return (
     <AbsoluteFill style={{background: I}}>
@@ -610,7 +610,7 @@ const Formula: React.FC = () => {
 // 21 · end credits over the room
 const Titoli: React.FC = () => {
   const f = useCurrentFrame();
-  const credits: [string, string][] = [['starring', 'Ostriche Gillardeau'], ['', 'Burrata with red prawn'], ['', 'Fusillone with seafood'], ['', 'Toast with king crab'],
+  const credits: [string, string][] = [['starring', 'Red prawns from Mazara'], ['', 'Burrata with red prawn'], ['', 'Fusillone with seafood'], ['', 'Toast with king crab'], ['', 'Crispy lamb chop'],
     ['brand chef', 'Antonio Fresa'], ['chef', 'Roberto Godi'], ['general manager', 'Vincenzo De Santis'], ['sound', 'the room'], ['filmed at', 'Via Fiori Chiari 32, Milano'],
     ['and', 'you']];
   const y = interpolate(f, [0, 290], [1500, -1500], {extrapolateRight: 'clamp'});
@@ -649,10 +649,10 @@ export const FRESH: Spec[] = [
     caption: 'The sign is on and the room is warm. Come in.', hashtags: tags('#brera', '#milano', '#dinner')},
   {id: 'F-02v-segno', day: '1', sec: 8, view: Segno, screen: 'the good part, right here. / carpaccio · finished by hand',
     caption: 'Every carpaccio is finished by hand, seconds before it reaches your table.', hashtags: tags('#carpaccio', '#crudo', '#openkitchen')},
-  {id: 'F-03v-meteo', day: '1', sec: 8, view: Meteo, screen: 'meteo · brera / 100% chance of oysters / hourly: aperitivo, ostriche, crudo, pasta, dolce / sea: calm · room: warm · feels like: brera',
-    caption: 'Forecast for Brera: 100% chance of oysters, a calm sea and a warm room.', hashtags: tags('#brera', '#oysters', '#milano')},
-  {id: 'F-04v-tabellone', day: '2', sec: 8, view: Tabellone, screen: 'arrivi · in sala / Sea, Signora / OSTRICHE, CRUDO (raw bar · al tavolo) · FUSILLONE, GRANCHIO, TONNO (cucina · in arrivo) · DOLCE (pasticceria · per ultimo) / next arrival: you',
-    caption: 'Arrivals: oysters and crudo already at the table, fusillone, king crab and tuna on their way, dessert last. Next arrival: you.', hashtags: tags('#seafood', '#brera', '#milano')},
+  {id: 'F-03v-meteo', day: '1', sec: 8, view: Meteo, screen: 'meteo · brera / 100% chance of a long dinner / hourly: aperitivo, gamberi, tartare, pasta, dolce / sea: calm · room: warm · feels like: brera',
+    caption: 'Forecast for Brera: 100% chance of a long dinner, a calm sea and a warm room.', hashtags: tags('#brera', '#dinner', '#milano')},
+  {id: 'F-04v-tabellone', day: '2', sec: 8, view: Tabellone, screen: 'arrivi · in sala / Sea, Signora / GAMBERI (aquarium) and CRUDO (raw bar) al tavolo · FUSILLONE, GRANCHIO, AGNELLO (cucina · in arrivo) · DOLCE (pasticceria · per ultimo) / next arrival: you',
+    caption: 'Arrivals: red prawns and crudo already at the table, fusillone, king crab and lamb on their way, dessert last. Next arrival: you.', hashtags: tags('#seafood', '#brera', '#milano')},
   {id: 'F-05v-photobooth', day: '2', sec: 7, view: Booth, screen: 'photobooth / SAY CRUDO / four frames, one evening / via fiori chiari 32',
     caption: 'Say crudo. Four frames from one evening at Sea, Signora.', hashtags: tags('#friends', '#dinner', '#brera')},
   {id: 'F-06v-sipario', day: '2', sec: 8, view: Sipario, screen: 'stasera in sala / IL SIPARIO SI APRE → the room is ready / your seat: front row',
@@ -661,30 +661,30 @@ export const FRESH: Spec[] = [
     caption: 'Our first courses, highlighted: start with the fusillone with seafood, then the spaghetti with Cantabrian anchovy, butter and Osetra caviar.', hashtags: tags('#pasta', '#fusillone', '#caviar')},
   {id: 'F-08v-cinemascope', day: '3', sec: 9, view: Cinema, screen: 'sea, signora presents / a short film about pasta / — Pasta for the table? — Tossed in the pan, right now. — Then we stay for dessert. / Sea, Signora · now showing · via fiori chiari 32',
     caption: 'Now showing: pasta for the table, tossed in the pan, right now. Stay for dessert.', hashtags: tags('#pasta', '#openkitchen', '#brera')},
-  {id: 'F-09v-loading', day: '3', sec: 8, view: Loading, screen: 'loading dinner 0→100% / ice, freshly crushed · oysters, opened to order · wine, breathing · table, set / you: still missing / ready when you are.', cta: 'book a table',
-    caption: 'Ice crushed, oysters opened, wine breathing, table set. Only you are missing.', hashtags: tags('#oysters', '#dinner', '#brera')},
-  {id: 'F-10v-bingo', day: '4', sec: 8, view: Bingo, screen: 'BINGO / sea, signora edition · how many tonight / ostriche, burrata, vino, crudo, granchio reale, tonno, fusillone, agnello, panettone', cta: 'book a table',
-    caption: 'Sea, Signora bingo: oysters, burrata, king crab, panettone. How many can you tick tonight?', hashtags: tags('#seafood', '#sharing', '#brera')},
+  {id: 'F-09v-loading', day: '3', sec: 8, view: Loading, screen: 'loading dinner 0→100% / ice, freshly crushed · pasta, in the pan · wine, breathing · table, set / you: still missing / ready when you are.', cta: 'book a table',
+    caption: 'Ice crushed, pasta in the pan, wine breathing, table set. Only you are missing.', hashtags: tags('#dinner', '#pasta', '#brera')},
+  {id: 'F-10v-bingo', day: '4', sec: 8, view: Bingo, screen: 'BINGO / sea, signora edition · how many tonight / gamberi, burrata, vino, crudo, granchio reale, tonno, pasta, agnello, panettone', cta: 'book a table',
+    caption: 'Sea, Signora bingo: red prawns, burrata, king crab, panettone. How many can you tick tonight?', hashtags: tags('#seafood', '#sharing', '#brera')},
   {id: 'F-11p-strappo', day: '4', sec: 7, view: Strappo, screen: 'fuori MILANO / dentro IL MARE / via fiori chiari 32 · brera',
     caption: 'Outside, Milano. Inside, the sea. Via Fiori Chiari 32, Brera.', hashtags: tags('#brera', '#milano', '#seafood')},
   {id: 'F-12v-recensione', day: '4', sec: 9, view: Karaoke, screen: '★★★★★ google review / “Exceptional restaurant with top quality seafood. Professional knowledgeable service within a beautifully designed atmosphere. Highly recommend, we will be back. Thank you.” / thank you. see you soon.',
     caption: '“Exceptional restaurant with top quality seafood… we will be back.” Thank you, we will be here.', hashtags: tags('#review', '#brera', '#milano')},
-  {id: 'F-13v-jackpot', day: '5', sec: 7, view: Slot, screen: 'Sea, Signora / every spin wins / ostriche · vino · crudo / JACKPOT / oysters, wine, crudo. / every combination wins at sea, signora',
-    caption: 'Every spin wins: oysters, wine and crudo. Jackpot.', hashtags: tags('#oysters', '#crudo', '#brera')},
-  {id: 'F-14v-tendina', day: '5', sec: 8, view: Tendina, screen: 'OSTRICHE / ← al naturale · con caviale →',
-    caption: 'Oysters: al naturale, or with caviar and a red prawn on top. How do you take yours?', hashtags: tags('#oysters', '#caviar', '#rawbar')},
+  {id: 'F-13v-jackpot', day: '5', sec: 7, view: Slot, screen: 'Sea, Signora / every spin wins / gamberi · vino · granchio / JACKPOT / red prawns, wine, king crab. / every combination wins at sea, signora',
+    caption: 'Every spin wins: red prawns, wine and king crab. Jackpot.', hashtags: tags('#redprawns', '#kingcrab', '#brera')},
+  {id: 'F-14v-tendina', day: '5', sec: 8, view: Tendina, screen: 'VINO / ← bianco · rosso →',
+    caption: 'Vino: bianco or rosso? Slide to choose, our team will help with the rest.', hashtags: tags('#wine', '#vino', '#brera')},
   {id: 'F-15v-trittico', day: '5', sec: 8, view: Trittico, screen: 'FROM THE FIRE TO YOUR TABLE / 1 · la cucina · 2 · la padella · 3 · la tavola',
     caption: 'From the fire to your table: the kitchen, the pan, the table.', hashtags: tags('#openkitchen', '#pasta', '#brera')},
   {id: 'F-16v-adesivi', day: '6', sec: 7, view: Adesivi, screen: 'sticker pack · sea, signora / COLLECT THEM ALL / fresh today · chef\'s pick · pet friendly',
-    caption: 'Sticker pack: oysters, burrata, a glass of wine and our four-legged regulars. Collect them all at the table.', hashtags: tags('#petfriendly', '#oysters', '#brera')},
+    caption: 'Sticker pack: king crab, burrata, a glass of wine and our four-legged regulars. Collect them all at the table.', hashtags: tags('#petfriendly', '#kingcrab', '#brera')},
   {id: 'F-17v-lente', day: '6', sec: 9, view: Lente, screen: 'look closer / Crudo (raw bar) → Burrata with red prawn (appetizers) → Ostriche (aquarium) → Wagyu carpaccio (appetizers)',
     caption: 'Look closer: crudo, burrata with red prawn, oysters and wagyu carpaccio, all on one table.', hashtags: tags('#sharing', '#seafood', '#brera')},
   {id: 'F-18v-prenotazioni', day: '6', sec: 7, view: Prenota, screen: 'Prenotazioni / tavolo · chi · coperti: a first date, the whole office, a birthday, the regulars, walk-in, you', cta: 'book a table',
     caption: 'The book is filling up: a first date, the whole office, the regulars. One line left, with your name on it.', hashtags: tags('#reservations', '#brera', '#milano')},
   {id: 'F-19v-mare', day: '7', sec: 7, view: Mare, screen: 'MA / RE / il mare, nel cuore di brera / Sea, Signora',
     caption: 'Il mare, nel cuore di Brera.', hashtags: tags('#aquarium', '#brera', '#milano')},
-  {id: 'F-20v-formula', day: '7', sec: 7, view: Formula, screen: 'LA FORMULA / ostriche + vino + amici = una bella serata',
-    caption: 'The formula: oysters + wine + friends = una bella serata.', hashtags: tags('#friends', '#oysters', '#brera')},
-  {id: 'F-21v-titoli', day: '7', sec: 12, view: Titoli, screen: 'Sea, Signora presents A NIGHT IN BRERA / starring Ostriche Gillardeau, Burrata with red prawn, Fusillone with seafood, Toast with king crab / brand chef Antonio Fresa / chef Roberto Godi / general manager Vincenzo De Santis / sound: the room / filmed at Via Fiori Chiari 32, Milano / and you / next screening: tonight', cta: 'book a table',
-    caption: 'Starring oysters, burrata and fusillone. Brand chef Antonio Fresa, chef Roberto Godi. Next screening: tonight.', hashtags: tags('#brera', '#milano', '#dinner')},
+  {id: 'F-20v-formula', day: '7', sec: 7, view: Formula, screen: 'LA FORMULA / pasta + vino + amici = una bella serata',
+    caption: 'The formula: pasta + wine + friends = una bella serata.', hashtags: tags('#friends', '#pasta', '#brera')},
+  {id: 'F-21v-titoli', day: '7', sec: 12, view: Titoli, screen: 'Sea, Signora presents A NIGHT IN BRERA / starring Red prawns from Mazara, Burrata with red prawn, Fusillone with seafood, Toast with king crab, Crispy lamb chop / brand chef Antonio Fresa / chef Roberto Godi / general manager Vincenzo De Santis / sound: the room / filmed at Via Fiori Chiari 32, Milano / and you / next screening: tonight', cta: 'book a table',
+    caption: 'Starring red prawns, burrata, fusillone and lamb chop. Brand chef Antonio Fresa, chef Roberto Godi. Next screening: tonight.', hashtags: tags('#brera', '#milano', '#dinner')},
 ];

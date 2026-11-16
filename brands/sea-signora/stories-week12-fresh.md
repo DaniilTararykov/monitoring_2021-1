@@ -16,15 +16,15 @@
 - Хештеги: #seasignora #carpaccio #crudo #openkitchen
 
 **F-03v-meteo** (8 с)
-- На экране: meteo · brera / 100% chance of oysters / hourly: aperitivo, ostriche, crudo, pasta, dolce / sea: calm · room: warm · feels like: brera
-- Подпись: Forecast for Brera: 100% chance of oysters, a calm sea and a warm room.
-- Хештеги: #seasignora #brera #oysters #milano
+- На экране: meteo · brera / 100% chance of a long dinner / hourly: aperitivo, gamberi, tartare, pasta, dolce / sea: calm · room: warm · feels like: brera
+- Подпись: Forecast for Brera: 100% chance of a long dinner, a calm sea and a warm room.
+- Хештеги: #seasignora #brera #dinner #milano
 
 ## День 2
 
 **F-04v-tabellone** (8 с)
-- На экране: arrivi · in sala / Sea, Signora / OSTRICHE, CRUDO (raw bar · al tavolo) · FUSILLONE, GRANCHIO, TONNO (cucina · in arrivo) · DOLCE (pasticceria · per ultimo) / next arrival: you
-- Подпись: Arrivals: oysters and crudo already at the table, fusillone, king crab and tuna on their way, dessert last. Next arrival: you.
+- На экране: arrivi · in sala / Sea, Signora / GAMBERI (aquarium) and CRUDO (raw bar) al tavolo · FUSILLONE, GRANCHIO, AGNELLO (cucina · in arrivo) · DOLCE (pasticceria · per ultimo) / next arrival: you
+- Подпись: Arrivals: red prawns and crudo already at the table, fusillone, king crab and lamb on their way, dessert last. Next arrival: you.
 - Хештеги: #seasignora #seafood #brera #milano
 
 **F-05v-photobooth** (7 с)
@@ -50,16 +50,16 @@
 - Хештеги: #seasignora #pasta #openkitchen #brera
 
 **F-09v-loading** (8 с)
-- На экране: loading dinner 0→100% / ice, freshly crushed · oysters, opened to order · wine, breathing · table, set / you: still missing / ready when you are.
-- Подпись: Ice crushed, oysters opened, wine breathing, table set. Only you are missing.
-- Хештеги: #seasignora #oysters #dinner #brera
+- На экране: loading dinner 0→100% / ice, freshly crushed · pasta, in the pan · wine, breathing · table, set / you: still missing / ready when you are.
+- Подпись: Ice crushed, pasta in the pan, wine breathing, table set. Only you are missing.
+- Хештеги: #seasignora #dinner #pasta #brera
 - Призыв (link-стикер): book a table / reserve / see the menu
 
 ## День 4
 
 **F-10v-bingo** (8 с)
-- На экране: BINGO / sea, signora edition · how many tonight / ostriche, burrata, vino, crudo, granchio reale, tonno, fusillone, agnello, panettone
-- Подпись: Sea, Signora bingo: oysters, burrata, king crab, panettone. How many can you tick tonight?
+- На экране: BINGO / sea, signora edition · how many tonight / gamberi, burrata, vino, crudo, granchio reale, tonno, pasta, agnello, panettone
+- Подпись: Sea, Signora bingo: red prawns, burrata, king crab, panettone. How many can you tick tonight?
 - Хештеги: #seasignora #seafood #sharing #brera
 - Призыв (link-стикер): book a table / reserve / see the menu
 
@@ -76,14 +76,14 @@
 ## День 5
 
 **F-13v-jackpot** (7 с)
-- На экране: Sea, Signora / every spin wins / ostriche · vino · crudo / JACKPOT / oysters, wine, crudo. / every combination wins at sea, signora
-- Подпись: Every spin wins: oysters, wine and crudo. Jackpot.
-- Хештеги: #seasignora #oysters #crudo #brera
+- На экране: Sea, Signora / every spin wins / gamberi · vino · granchio / JACKPOT / red prawns, wine, king crab. / every combination wins at sea, signora
+- Подпись: Every spin wins: red prawns, wine and king crab. Jackpot.
+- Хештеги: #seasignora #redprawns #kingcrab #brera
 
 **F-14v-tendina** (8 с)
-- На экране: OSTRICHE / ← al naturale · con caviale →
-- Подпись: Oysters: al naturale, or with caviar and a red prawn on top. How do you take yours?
-- Хештеги: #seasignora #oysters #caviar #rawbar
+- На экране: VINO / ← bianco · rosso →
+- Подпись: Vino: bianco or rosso? Slide to choose, our team will help with the rest.
+- Хештеги: #seasignora #wine #vino #brera
 
 **F-15v-trittico** (8 с)
 - На экране: FROM THE FIRE TO YOUR TABLE / 1 · la cucina · 2 · la padella · 3 · la tavola
@@ -94,8 +94,8 @@
 
 **F-16v-adesivi** (7 с)
 - На экране: sticker pack · sea, signora / COLLECT THEM ALL / fresh today · chef's pick · pet friendly
-- Подпись: Sticker pack: oysters, burrata, a glass of wine and our four-legged regulars. Collect them all at the table.
-- Хештеги: #seasignora #petfriendly #oysters #brera
+- Подпись: Sticker pack: king crab, burrata, a glass of wine and our four-legged regulars. Collect them all at the table.
+- Хештеги: #seasignora #petfriendly #kingcrab #brera
 
 **F-17v-lente** (9 с)
 - На экране: look closer / Crudo (raw bar) → Burrata with red prawn (appetizers) → Ostriche (aquarium) → Wagyu carpaccio (appetizers)
@@ -116,12 +116,12 @@
 - Хештеги: #seasignora #aquarium #brera #milano
 
 **F-20v-formula** (7 с)
-- На экране: LA FORMULA / ostriche + vino + amici = una bella serata
-- Подпись: The formula: oysters + wine + friends = una bella serata.
-- Хештеги: #seasignora #friends #oysters #brera
+- На экране: LA FORMULA / pasta + vino + amici = una bella serata
+- Подпись: The formula: pasta + wine + friends = una bella serata.
+- Хештеги: #seasignora #friends #pasta #brera
 
 **F-21v-titoli** (12 с)
-- На экране: Sea, Signora presents A NIGHT IN BRERA / starring Ostriche Gillardeau, Burrata with red prawn, Fusillone with seafood, Toast with king crab / brand chef Antonio Fresa / chef Roberto Godi / general manager Vincenzo De Santis / sound: the room / filmed at Via Fiori Chiari 32, Milano / and you / next screening: tonight
-- Подпись: Starring oysters, burrata and fusillone. Brand chef Antonio Fresa, chef Roberto Godi. Next screening: tonight.
+- На экране: Sea, Signora presents A NIGHT IN BRERA / starring Red prawns from Mazara, Burrata with red prawn, Fusillone with seafood, Toast with king crab, Crispy lamb chop / brand chef Antonio Fresa / chef Roberto Godi / general manager Vincenzo De Santis / sound: the room / filmed at Via Fiori Chiari 32, Milano / and you / next screening: tonight
+- Подпись: Starring red prawns, burrata, fusillone and lamb chop. Brand chef Antonio Fresa, chef Roberto Godi. Next screening: tonight.
 - Хештеги: #seasignora #brera #milano #dinner
 - Призыв (link-стикер): book a table / reserve / see the menu
