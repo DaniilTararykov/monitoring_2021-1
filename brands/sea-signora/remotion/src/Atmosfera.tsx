@@ -44,7 +44,6 @@ export const ATMOSFERA: A[] = [
   s('K-03v-ice', '2', 'pC028', 5.4, 8, 'Ice first.', tags('#cocktails', '#bar', '#brera')),
   s('K-04v-dinner-for-two', '2', 'pC060', 0.2, 8, 'Dinner for two, everything to share.', tags('#dinner', '#sharing', '#brera')),
   s('K-06v-by-the-kitchen', '3', 'pC071', 9.1, 8, 'A seat by the open kitchen.', tags('#openkitchen', '#brera', '#milan')),
-  s('K-07v-strain', '4', 'pC029', 11.6, 8, 'Strained, slowly.', tags('#cocktails', '#bar', '#brera')),
   s('K-09v-the-shaker', '5', 'pC036', 15.8, 8, 'Shaken at the counter.', tags('#cocktails', '#bar', '#brera'), {low: true}),
   s('K-10v-the-coupe', '5', 'pC021', 6.8, 8, 'Served in a coupe.', tags('#cocktails', '#bar', '#brera'), {low: true}),
   s('K-11v-candlelight', '6', 'pC075', 9.0, 7, 'Candlelight, bread and a good bottle.', tags('#candlelight', '#dinner', '#brera')),
