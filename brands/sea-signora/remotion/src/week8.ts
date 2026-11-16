@@ -3,9 +3,9 @@ import type {Block, Overlay, Scene, Story} from './types';
 // Week 16–22.11 — a regular content-plan week, NOT about the birthday (client 16.11). From the birthday night only
 // seated guests, the room and the kitchen (steady windows by measured camera shift). Material from the latest folders,
 // never used in stories: Blackout Night 29.10 pro photos (flambé, guests, cocktails, aquarium), the team portraits from
-// «Newspaper» (chef Roberto, sous chef Federico, Antonio), the Holy Shell candle being packed (TCC), panettone #91 / #56,
+// «Newspaper» (chef Roberto, sous chef Federico, Antonio), panettone #91 / #56,
 // the Tomahawk, Shooting 9 #44, Akami #113. Account style (as week7): ivory Skanaus + mono, orange kickers.
-// Three a day (video first). Link chips on three days only: Thu (reserve), Fri (book a table), Sun (the candle).
+// Three a day (video first). Link chips on three days only: Thu (reserve), Fri (book a table), Sun (reserve). No candle (client 16.11).
 
 const S = 30;
 const v = (name: string, start: number, sec: number, o: Partial<Scene> = {}): Scene => ({src: `w9/${name}.mp4`, start, frames: Math.round(sec * S), ...o});
@@ -174,13 +174,14 @@ export const week8: Story[] = [
 
   // ───────────────────────── Sun 22.11 · slow sunday
   {
-    id: 'W8-7sun-1v-holy-shell', day: 'Sun 22.11', rubric: 'Свеча · заливка + кнопка', music: silent,
-    scenes: [v('nm0759', 8.8, 4), v('nm0774', 0.2, 3.2), v('nm0778', 1.0, 3.3)],
-    overlay: top(kick('holy shell'), H('Poured by hand'), sub('our candle by the candle cluub')),
-    cta: {label: 'shop the candle', color: 'orange'},
-    caption: 'Poured by hand: Holy Shell, our limited-edition candle by The Candle Cluub. A little piece of the sea, at home.',
-    hashtags: tags('#candle', '#holyshell', '#thecandlecluub', '#gift'), ctaVariants: ['shop the candle', 'get yours'],
+    id: 'W8-7sun-1v-sunday-table', day: 'Sun 22.11', rubric: 'Гости · воскресенье + кнопка', music: silent,
+    scenes: [v('2698', 4.1, 5), v('2684', 0.2, 5.2)],
+    overlay: top(kick('sunday'), H('Long tables,\nslow sundays', 70), sub(HOURS_WE)),
+    cta: {label: 'reserve', color: 'orange'},
+    caption: 'Long tables, slow Sundays. Open today 12:30–15:30 and 19:00–00:00.',
+    hashtags: tags('#sunday', '#friends', '#brera', '#milano'), ctaVariants: ['reserve', 'book a table'],
   },
+
 
   {
     id: 'W8-7sun-2p-golden', day: 'Sun 22.11', rubric: 'Панеттоне · огромное слово', music: silent,
@@ -192,8 +193,8 @@ export const week8: Story[] = [
   {
     id: 'W8-7sun-3p-sunday-slow', day: 'Sun 22.11', rubric: 'Аквариум · часы', music: silent,
     scenes: [ph('bo157', 7, {fy: 50})],
-    overlay: top(H('Sunday, slow'), sub(HOURS_WE)),
-    caption: 'Sunday, slow. Open 12:30–15:30 and 19:00–00:00.',
+    overlay: top(H('Sunday, slow'), sub('the aquarium never rushes')),
+    caption: 'Sunday, slow. The aquarium never rushes, and neither should you.',
     hashtags: tags('#sunday', '#aquarium', '#brera'), ctaVariants: ['reserve', 'book a table'],
   },
 ];

@@ -214,17 +214,17 @@ King crab, hands on. Puglian cicatelli with king crab, on the menu.
 
 ## Sun 22.11
 
-### W8-7sun-1v-holy-shell · Свеча · заливка + кнопка · 10.5 с
-- **На экране:** HOLY SHELL / POURED BY HAND / OUR CANDLE BY THE CANDLE CLUUB
-- **Стикер-ссылка:** «shop the candle» (поставь настоящий link-стикер на место плашки)
-- **Фото:** w9/nm0759.mp4, w9/nm0774.mp4, w9/nm0778.mp4 · музыка: none
+### W8-7sun-1v-sunday-table · Гости · воскресенье + кнопка · 10.2 с
+- **На экране:** SUNDAY / LONG TABLES, SLOW SUNDAYS / 12:30—15:30 | 19:00—00:00
+- **Стикер-ссылка:** «reserve» (поставь настоящий link-стикер на место плашки)
+- **Фото:** w9/2698.mp4, w9/2684.mp4 · музыка: none
 
 ```
-Poured by hand: Holy Shell, our limited-edition candle by The Candle Cluub. A little piece of the sea, at home.
+Long tables, slow Sundays. Open today 12:30–15:30 and 19:00–00:00.
 
-#seasignora #candle #holyshell #thecandlecluub #gift
+#seasignora #sunday #friends #brera #milano
 ```
-- **Варианты призыва:** shop the candle · get yours
+- **Варианты призыва:** reserve · book a table
 
 ### W8-7sun-2p-golden · Панеттоне · огромное слово · 7.0 с
 - **На экране:** PANETTONE SEASON / GOLDEN / AT SEA, SIGNORA
@@ -238,11 +238,11 @@ Golden. Panettone season at Sea, Signora.
 - **Варианты призыва:** reserve · book a table
 
 ### W8-7sun-3p-sunday-slow · Аквариум · часы · 7.0 с
-- **На экране:** SUNDAY, SLOW / 12:30—15:30 | 19:00—00:00
+- **На экране:** SUNDAY, SLOW / THE AQUARIUM NEVER RUSHES
 - **Фото:** w9/bo157.jpg · музыка: none
 
 ```
-Sunday, slow. Open 12:30–15:30 and 19:00–00:00.
+Sunday, slow. The aquarium never rushes, and neither should you.
 
 #seasignora #sunday #aquarium #brera
 ```
