@@ -12,7 +12,7 @@ loadBrandFonts();
 
 const FPS = 30;
 const G = brandPalette.green5605, O = brandPalette.orange158, SA = brandPalette.sand454, I = colors.ivory;
-type Shot = {fx: number; fy: number; z0: number; z1: number; pan?: [number, number]};
+type Shot = {fx: number; fy: number; z0: number; z1: number; pan?: [number, number]; img?: string};
 type Spec = {id: string; img: string; land?: boolean; bg: string; ink: string; word: string; kicker: string; shots: [Shot, Shot, Shot];
   caption: string; hashtags: string[]};
 const ip = (f: number, a: number, b: number, c: number, d: number, e: (t: number) => number = Easing.inOut(Easing.quad)) =>
@@ -24,7 +24,7 @@ const ShotView: React.FC<{s: Spec; sh: Shot; len: number}> = ({s, sh, len}) => {
   const px = sh.pan ? ip(f, 0, len, sh.pan[0], sh.pan[1]) : sh.fx;
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
-      <Img src={staticFile(`photos/w16/${s.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${px}% ${sh.fy}%`,
+      <Img src={staticFile(`photos/w16/${sh.img ?? s.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${px}% ${sh.fy}%`,
         transform: `scale(${z})`, transformOrigin: `${sh.fx}% ${sh.fy}%`}} />
     </AbsoluteFill>
   );
@@ -43,7 +43,7 @@ const Card: React.FC<{s: Spec; end?: boolean}> = ({s, end}) => {
       ) : (
         <div style={{textAlign: 'center', transform: `scale(${sc})`}}>
           <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 22, letterSpacing: 8, textTransform: 'uppercase', color: s.ink, marginBottom: 30}}>{s.kicker}</div>
-          <div style={{fontFamily: fonts.display, fontSize: 260, color: s.ink, lineHeight: 0.9, textTransform: 'uppercase'}}>{s.word}</div>
+          <div style={{fontFamily: fonts.display, fontSize: Math.min(260, Math.floor(1600 / s.word.length)), color: s.ink, lineHeight: 0.9, textTransform: 'uppercase'}}>{s.word}</div>
         </div>
       )}
     </AbsoluteFill>
@@ -63,8 +63,31 @@ export const FilmView: React.FC<{s: Spec}> = ({s}) => (
 );
 
 const tags = (...t: string[]) => ['#seasignora', ...t];
-const sh = (fx: number, fy: number, z0: number, z1: number, pan?: [number, number]): Shot => ({fx, fy, z0, z1, pan});
+const sh = (fx: number, fy: number, z0: number, z1: number, pan?: [number, number], img?: string): Shot => ({fx, fy, z0, z1, pan, img});
+const ph = (img: string, fx: number, fy: number, z0: number, z1: number, pan?: [number, number]): Shot => ({fx, fy, z0, z1, pan, img});
+// round 2 (client: «не бери блюда, которые уже были»): Pixieset frames of dishes that never appeared in any story —
+// the new-menu tagliolini, akami and capesante shot by the photographer, the cream with caviar, the red cocktail, the toast.
 export const FILM: Spec[] = [
+  {id: 'N-11v-tagliolini', img: 'bo108.jpg', bg: O, ink: I, word: 'Tagliolini', kicker: 'new on the menu',
+    shots: [ph('bo108.jpg', 50, 55, 1.7, 1.5), ph('bo105.jpg', 50, 50, 1.08, 1.0), ph('bo104.jpg', 50, 50, 1.0, 1.0, [20, 80])],
+    caption: 'Tagliolini, new on the menu: shot close, closer, and on the table.', hashtags: tags('#tagliolini', '#pasta', '#brera')},
+  {id: 'N-12v-akami', img: 'bo123.jpg', bg: G, ink: SA, word: 'Akami', kicker: 'new on the menu',
+    shots: [ph('bo123.jpg', 50, 45, 1.5, 1.35), ph('bo116.jpg', 45, 50, 1.05, 1.0), ph('bo120.jpg', 50, 55, 1.0, 1.06)],
+    caption: 'Akami, the lean cut of red tuna. New on the menu.', hashtags: tags('#akami', '#tuna', '#brera')},
+  {id: 'N-13v-capesante', img: 'bo145.jpg', bg: SA, ink: G, word: 'Capesante', kicker: 'new on the menu',
+    shots: [ph('bo145.jpg', 40, 50, 1.25, 1.1), ph('bo268.jpg', 50, 55, 1.12, 1.0), ph('bo270.jpg', 50, 50, 1.0, 1.0, [0, 100])],
+    caption: 'Capesante, new on the menu. One plate, or one for everyone.', hashtags: tags('#capesante', '#scallops', '#brera')},
+  {id: 'N-14v-cream', img: 'bo475.jpg', bg: I, ink: G, word: 'Cream', kicker: 'with caviar',
+    shots: [ph('bo475.jpg', 55, 35, 1.4, 1.25), ph('bo476.jpg', 50, 40, 1.1, 1.0), ph('bo484.jpg', 50, 55, 1.0, 1.06)],
+    caption: 'Cream, finished with caviar at the pass.', hashtags: tags('#caviar', '#brera', '#milan')},
+  {id: 'N-15v-red', img: 'bo350.jpg', bg: G, ink: O, word: 'Red', kicker: 'at the bar',
+    shots: [ph('bo350.jpg', 50, 50, 1.6, 1.4), ph('bo347.jpg', 50, 45, 1.1, 1.0), ph('bo345.jpg', 50, 50, 1.0, 1.06)],
+    caption: 'Red, cold, and poured at the bar.', hashtags: tags('#cocktails', '#bar', '#brera')},
+  {id: 'N-16v-cheers', img: 'bo421.jpg', bg: O, ink: G, word: 'Cheers', kicker: 'the table',
+    shots: [ph('bo421.jpg', 50, 40, 2.2, 1.9), ph('bo419.jpg', 50, 50, 1.0, 1.0, [10, 90]), ph('bo421.jpg', 50, 50, 1.0, 1.0, [90, 10])],
+    caption: 'Glasses up. Cheers from Sea, Signora.', hashtags: tags('#cheers', '#friends', '#brera')},
+];
+export const FILM_V1: Spec[] = [
   {id: 'N-01v-crab', img: 'f119.jpg', bg: O, ink: I, word: 'Crab', kicker: 'king crab', shots: [sh(55, 32, 3.0, 2.6), sh(50, 40, 1.7, 1.5), sh(50, 50, 1.0, 1.06)],
     caption: 'King crab, shown three ways: up close, closer, all of it.', hashtags: tags('#kingcrab', '#seafood', '#brera')},
   {id: 'N-02v-raw', img: 'f25.jpg', bg: G, ink: SA, word: 'Raw', kicker: 'crudo', shots: [sh(42, 42, 3.2, 2.8), sh(60, 30, 1.8, 1.6), sh(50, 50, 1.0, 1.06)],
