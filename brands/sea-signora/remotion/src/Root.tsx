@@ -31,6 +31,7 @@ import {PAROLE, ParolaView} from './Parola';
 import {DESIGNS} from './Designs';
 import {DESIGNS2} from './Designs2';
 import {FRESH} from './Fresh';
+import {FRESH2} from './Fresh2';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
 import {week7y} from './week7y';
@@ -51,6 +52,7 @@ export const RemotionRoot: React.FC = () => (
     {DESIGNS.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {[...week11words, ...week11live].map((p) => <Composition key={p.id} id={p.id} component={ParolaView} durationInFrames={Math.round(p.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{p}} />)}
     {week11designs.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
+    {FRESH2.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {FRESH.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {DESIGNS2.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     <Composition id="Recap-A" component={Recap} durationInFrames={recapFrames()} fps={RC_FPS} width={1080} height={1920} defaultProps={{variant: 'A' as const}} />
