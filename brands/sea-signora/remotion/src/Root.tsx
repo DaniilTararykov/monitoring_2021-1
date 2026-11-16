@@ -25,6 +25,8 @@ import {week7} from './week7';
 import {week8} from './week8';
 import {week9} from './week9';
 import {week9x} from './week9x';
+import {CreativeStory, FPS as CR_FPS} from './Creative';
+import {week10c} from './week10c';
 import {week7x} from './week7x';
 import {week7y} from './week7y';
 import {week7z} from './week7z';
@@ -39,6 +41,7 @@ const Story: React.FC<{story: Story; guides?: boolean}> = (p) => <StoryVideo {..
 
 export const RemotionRoot: React.FC = () => (
   <>
+    {week10c.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * CR_FPS)} fps={CR_FPS} width={1080} height={1920} defaultProps={{s}} />)}
     <Composition id="Recap-A" component={Recap} durationInFrames={recapFrames()} fps={RC_FPS} width={1080} height={1920} defaultProps={{variant: 'A' as const}} />
     <Composition id="Recap-B" component={Recap} durationInFrames={recapFrames()} fps={RC_FPS} width={1080} height={1920} defaultProps={{variant: 'B' as const}} />
     <Composition id="BirthdayUno" component={BirthdayUno} durationInFrames={unoFrames(UNO)} fps={UNO_FPS} width={1080} height={1920} />
