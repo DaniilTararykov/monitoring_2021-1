@@ -113,8 +113,8 @@ export const RECAP = {A, B};
 
 // Antonio's words, static Italian subtitles (clip time = output time)
 const SUBS: [number, number, string][] = [
-  [0.0, 1.62, 'E finalmente'], [1.62, 2.72, 'è passato un anno'], [2.72, 3.78, 'il nostro\ncompleanno'],
-  [3.78, 4.88, 'siamo qui da\nSea, Signora'], [4.88, 6.45, 'a Milano,\nvia Fiori Chiari'], [6.45, 7.7, 'auguro a tutti'], [7.7, 8.35, 'mua!'],
+  [0.0, 1.62, 'E finalmente'], [1.62, 2.72, 'è passato un anno'], [2.72, 3.78, 'è il nostro\ncompleanno'],
+  [3.78, 4.88, 'siamo qui da\nSea, Signora'], [4.88, 6.45, 'a Milano,\nvia Fiori Chiari'], [6.45, 7.7, 'auguri a tutti'], [7.7, 8.35, 'mua!'],
 ];
 
 // ───────────────────────────── pieces
