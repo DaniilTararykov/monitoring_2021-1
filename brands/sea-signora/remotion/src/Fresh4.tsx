@@ -110,18 +110,17 @@ const Regalo: React.FC = () => {
 const Gelo: React.FC = () => {
   const f = useCurrentFrame();
   const t = interpolate(f, [10, 120], [18, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: io});
-  const H = 820;
   return (
     <AbsoluteFill style={{background: N}}>
       <Box b={{left: 0, top: 620, width: 1080, height: 1300}} m={v('kf0102', 0, {rate: 0.9, fy: 60})} />
       <div style={{position: 'absolute', left: 0, right: 0, top: 560, height: 140, background: 'linear-gradient(#0B0B0B, rgba(11,11,11,0))'}} />
       <div style={{position: 'absolute', left: 80, top: 285, ...mono(20, I)}}>the raw bar</div>
       <div style={{position: 'absolute', left: 80, top: 322, ...ital(70, I)}}>served on ice</div>
-      <div style={{position: 'absolute', right: 90, top: 300, width: 150, height: H + 150, borderRadius: 75, background: 'rgba(248,246,245,0.85)', boxShadow: '0 12px 30px rgba(0,0,0,0.4)'}}>
-        <div style={{position: 'absolute', left: 55, top: 40, width: 40, height: H - 40, borderRadius: 20, background: 'rgba(27,47,28,0.15)'}}>
-          <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: `${10 + (t / 18) * 85}%`, borderRadius: 20, background: O}} />
+      <div style={{position: 'absolute', left: 400, top: 470, width: 600, height: 70, borderRadius: 35, background: 'rgba(248,246,245,0.9)'}}>
+        <div style={{position: 'absolute', left: 90, top: 22, width: 480, height: 26, borderRadius: 13, background: 'rgba(27,47,28,0.15)'}}>
+          <div style={{position: 'absolute', left: 0, top: 0, bottom: 0, width: `${8 + (t / 18) * 92}%`, borderRadius: 13, background: O}} />
         </div>
-        <div style={{position: 'absolute', left: 25, top: H - 10, width: 100, height: 100, borderRadius: '50%', background: O}} />
+        <div style={{position: 'absolute', left: 10, top: -15, width: 100, height: 100, borderRadius: '50%', background: O}} />
       </div>
       <div style={{position: 'absolute', left: 80, top: 430, ...serif(140, I, {textShadow: '0 4px 20px rgba(0,0,0,0.6)'})}}>{Math.round(t)}°C</div>
     </AbsoluteFill>
