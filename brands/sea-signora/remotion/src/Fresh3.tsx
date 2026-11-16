@@ -43,13 +43,13 @@ const io = Easing.inOut(Easing.cubic);
 // 1 · contents page of the evening
 const Sommario: React.FC = () => {
   const f = useCurrentFrame();
-  const rows: [string, string, string, M][] = [['04', 'Il crudo', 'raw bar, carpaccio, tartare', p('w11/f25', {fy: 50})],
-    ['12', 'La pasta', 'fusillone, tagliolini, risotto', p('w11/f109')], ['20', 'Il bar', 'aperitivo al bancone', p('w12/bo287', {fy: 45})],
-    ['28', 'La sala', 'candles, aquarium, Brera', p('w12/bo16', {fx: 30})]];
+  const rows: [string, string, string, M][] = [['04', 'Raw bar', 'carpaccio, tartare, red prawns', p('w11/f25', {fy: 50})],
+    ['12', 'Pasta', 'fusillone, tagliolini, risotto', p('w11/f109')], ['20', 'The bar', 'drinks at the counter', p('w12/bo287', {fy: 45})],
+    ['28', 'The room', 'candles, aquarium, Brera', p('w12/bo16', {fx: 30})]];
   return (
     <AbsoluteFill style={{background: I}}>
-      <div style={{position: 'absolute', left: 90, top: 285, ...mono(18, O)}}>sea, signora · il numero della sera</div>
-      <div style={{position: 'absolute', left: 84, top: 325, ...disp(120, G, {letterSpacing: 6})}}>SOMMARIO</div>
+      <div style={{position: 'absolute', left: 90, top: 285, ...mono(18, O)}}>sea, signora · tonight's issue</div>
+      <div style={{position: 'absolute', left: 84, top: 325, ...disp(120, G, {letterSpacing: 6})}}>CONTENTS</div>
       <div style={{position: 'absolute', left: 90, right: 90, top: 470, height: 4, background: G}} />
       {rows.map(([n, t, s, m], i) => {
         const a = ip(f, 12 + i * 12, 30 + i * 12);
@@ -84,8 +84,8 @@ const Fuoco: React.FC = () => {
         <Img src={staticFile('photos/w12/bo165.jpg')} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%', filter: 'url(#duo) contrast(1.15)',
           transform: `scale(${1.05 + f / 2000})`}} />
       </div>
-      <div style={{position: 'absolute', left: 80, top: 285, ...mono(20, SA)}}>la cucina a vista</div>
-      <div style={{position: 'absolute', left: 72, top: 320, ...disp(230, O, {letterSpacing: 8}), clipPath: `inset(0 ${100 - ip(f, 6, 40, 0, 100)}% 0 0)`}}>FUOCO</div>
+      <div style={{position: 'absolute', left: 80, top: 285, ...mono(20, SA)}}>open kitchen</div>
+      <div style={{position: 'absolute', left: 72, top: 320, ...disp(230, O, {letterSpacing: 8}), clipPath: `inset(0 ${100 - ip(f, 6, 40, 0, 100)}% 0 0)`}}>FIRE</div>
       <div style={{position: 'absolute', left: 80, top: 560, width: 920, display: 'flex', justifyContent: 'space-between', ...mono(18, I), opacity: ip(f, 30, 45)}}>
         <span>sea, signora</span><span>via fiori chiari 32</span>
       </div>
@@ -109,7 +109,7 @@ const Persiane: React.FC = () => {
       </div>
       <div style={{opacity: 1 - ip(f, 18, 28)}}>
         <div style={{...center, top: 820, ...mono(22, G)}}>sea, signora</div>
-        <div style={{...center, top: 870, ...disp(130, G, {letterSpacing: 6})}}>BUONASERA</div>
+        <div style={{...center, top: 870, ...disp(130, G, {letterSpacing: 6})}}>GOOD EVENING</div>
       </div>
       <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 560, background: 'linear-gradient(rgba(11,11,11,0.7), rgba(11,11,11,0))', opacity: ip(f, 80, 95)}} />
       <div style={{...center, top: 285, ...ital(72, I), opacity: ip(f, 85, 100)}}>open till midnight</div>
@@ -124,7 +124,7 @@ const Fiammiferi: React.FC = () => {
   const t = ip(f, 30, 70, 0, 1, io);
   return (
     <AbsoluteFill style={{background: O}}>
-      <div style={{...center, top: 285, ...mono(20, G)}}>per accendere la serata</div>
+      <div style={{...center, top: 285, ...mono(20, G)}}>light up the evening</div>
       <div style={{...center, top: 325, ...ital(72, I)}}>strike for dinner</div>
       <div style={{position: 'absolute', left: 170, width: 740, top: 560 + t * 0, height: 460 + t * 420, overflow: 'visible'}}>
         <div style={{position: 'absolute', left: 30, right: 30, top: 60 + t * 400, height: 400, background: I, borderRadius: 6, overflow: 'hidden', boxShadow: '0 10px 24px rgba(0,0,0,0.25)'}}>
@@ -133,7 +133,7 @@ const Fiammiferi: React.FC = () => {
         <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 460, background: G, borderRadius: 10, boxShadow: '0 20px 40px rgba(0,0,0,0.3)'}}>
           <div style={{position: 'absolute', inset: 22, border: `2px solid ${SA}`, borderRadius: 6}} />
           <div style={{...center, top: 120, ...mark(104, I)}}>Sea, Signora</div>
-          <div style={{...center, top: 260, ...mono(18, SA)}}>ristorante di pesce · milano</div>
+          <div style={{...center, top: 260, ...mono(18, SA)}}>seafood restaurant · milan</div>
           <div style={{...center, top: 300, ...mono(18, SA)}}>via fiori chiari 32</div>
           <div style={{position: 'absolute', left: 60, right: 60, bottom: 40, height: 34, borderRadius: 4,
             background: 'repeating-linear-gradient(90deg, #5a3a22 0 6px, #7a5034 6px 12px)'}} />
@@ -151,7 +151,7 @@ const Tavolo: React.FC = () => {
     [620, 890, p('w11/f88', {fy: 55}), 1, 0], [350, 1180, p('w11/f65', {fy: 55}), 0, 1]];
   return (
     <AbsoluteFill style={{background: `radial-gradient(circle at 50% 45%, #2a4a2b, ${G} 70%)`}}>
-      <div style={{...center, top: 285, ...mono(20, SA)}}>il tavolo si riempie</div>
+      <div style={{...center, top: 285, ...mono(20, SA)}}>the table fills up</div>
       <div style={{...center, top: 322, ...ital(64, I)}}>order for the table</div>
       {pl.map(([x, y, m, dx, dy], i) => {
         const s = pop(f, 14 + i * 14);
@@ -167,27 +167,26 @@ const Tavolo: React.FC = () => {
   );
 };
 
-// 6 · the team, card by card
-const Squadra: React.FC = () => {
+// 6 · door hanger: do not disturb, dinner in progress
+const Cartello: React.FC = () => {
   const f = useCurrentFrame();
-  const cards: [M, string, string][] = [[p('w10/npAntonio3', {fy: 30}), 'brand chef', 'Antonio Fresa'], [p('w10/npchefRoberto2', {fy: 35}), 'chef', 'Roberto Godi'],
-    [p('w10/npFedericosouschef2', {fy: 35}), 'sous chef', 'Federico']];
-  const L = 76;
+  const sw = Math.sin(f / 8) * 7 * Math.exp(-f / 60);
   return (
-    <AbsoluteFill style={{background: G}}>
-      <div style={{...center, top: 285, ...mono(20, SA)}}>la squadra di sea, signora</div>
-      {cards.map(([m, r, n], i) => {
-        const inn = i === 0 ? 1 : ip(f, i * L - 14, i * L, 0, 1, io), out = i === cards.length - 1 ? 0 : ip(f, (i + 1) * L - 14, (i + 1) * L, 0, 1, io);
-        return (
-          <div key={n} style={{position: 'absolute', left: 160, width: 760, top: 350, height: 1140, background: I, borderRadius: 18, overflow: 'hidden',
-            transform: `translateX(${(1 - inn) * 1000 - out * 1000}px) rotate(${(1 - inn) * 8 - out * 8}deg)`, boxShadow: '0 24px 50px rgba(0,0,0,0.4)'}}>
-            <div style={{position: 'absolute', left: 30, right: 30, top: 30, height: 860, overflow: 'hidden', borderRadius: 8}}><Media m={m} /></div>
-            <div style={{position: 'absolute', left: 40, top: 920, ...mono(20, O)}}>{r}</div>
-            <div style={{position: 'absolute', left: 36, top: 962, ...disp(80, G)}}>{n}</div>
-            <div style={{position: 'absolute', right: 40, top: 920, ...mono(20, G)}}>{String(i + 1).padStart(2, '0')}/03</div>
-          </div>
-        );
-      })}
+    <AbsoluteFill style={{background: SA}}>
+      <div style={{position: 'absolute', left: 540, top: 250, width: 0, height: 0}}>
+        <div style={{position: 'absolute', left: -60, top: -10, width: 120, height: 40, background: '#8d7f63', borderRadius: 8}} />
+      </div>
+      <div style={{position: 'absolute', left: 190, top: 280, width: 700, height: 1260, transformOrigin: '50% 0', transform: `rotate(${sw}deg)`,
+        background: G, borderRadius: '350px 350px 40px 40px / 350px 350px 40px 40px', boxShadow: '0 30px 60px rgba(0,0,0,0.3)'}}>
+        <div style={{position: 'absolute', left: 230, top: 60, width: 240, height: 240, borderRadius: '50%', background: SA}} />
+        <div style={{position: 'absolute', left: 60, top: 300, width: 580, height: 3, background: O}} />
+        <div style={{...center, top: 350, ...disp(104, I, {letterSpacing: 4, lineHeight: 1.02})}}>{'DO NOT\nDISTURB'}</div>
+        <div style={{...center, top: 580, ...ital(56, SA)}}>dinner in progress</div>
+        <div style={{position: 'absolute', left: 60, top: 690, width: 580, height: 400, overflow: 'hidden', borderRadius: 12}}>
+          <Media m={p('w11/f62')} style={{transform: `scale(${1.04 + f / 3000})`}} />
+        </div>
+        <div style={{...center, top: 1150, ...mark(44, I)}}>Sea, Signora</div>
+      </div>
     </AbsoluteFill>
   );
 };
@@ -198,8 +197,8 @@ const Sottobicchiere: React.FC = () => {
   const R = 352;
   return (
     <AbsoluteFill style={{background: SA}}>
-      <div style={{...center, top: 285, ...mono(20, G)}}>il bar</div>
-      <div style={{...center, top: 322, ...ital(64, G)}}>aperitivo at the counter</div>
+      <div style={{...center, top: 285, ...mono(20, G)}}>the bar</div>
+      <div style={{...center, top: 322, ...ital(64, G)}}>drinks at the counter</div>
       <div style={{position: 'absolute', left: 130, top: 500, width: 820, height: 820, borderRadius: '50%', background: I, boxShadow: '0 20px 40px rgba(0,0,0,0.2)'}}>
         <div style={{position: 'absolute', inset: 14, borderRadius: '50%', border: `3px solid ${G}`}} />
         <div style={{position: 'absolute', left: 120, top: 120, width: 580, height: 580, borderRadius: '50%', overflow: 'hidden'}}>
@@ -208,11 +207,11 @@ const Sottobicchiere: React.FC = () => {
         <svg width={820} height={820} style={{position: 'absolute', inset: 0, transform: `rotate(${f * 0.8}deg)`}}>
           <defs><path id="ring" d={`M 410 ${410 - R} a ${R} ${R} 0 1 1 -0.1 0`} /></defs>
           <text fontFamily={fonts.mono} fontWeight={500} fontSize={30} letterSpacing={7} fill={G}>
-            <textPath href="#ring" textLength={2 * Math.PI * R - 10} lengthAdjust="spacing">APERITIVO AL BANCONE · SEA, SIGNORA · BRERA · CIN CIN · FIORI CHIARI 32 · </textPath>
+            <textPath href="#ring" textLength={2 * Math.PI * R - 10} lengthAdjust="spacing">DRINKS AT THE COUNTER · SEA, SIGNORA · BRERA · CHEERS · FIORI CHIARI 32 · </textPath>
           </text>
         </svg>
       </div>
-      <div style={{...center, top: 1400, ...mono(20, G), opacity: ip(f, 30, 45)}}>via fiori chiari 32 · milano</div>
+      <div style={{...center, top: 1400, ...mono(20, G), opacity: ip(f, 30, 45)}}>via fiori chiari 32 · milan</div>
     </AbsoluteFill>
   );
 };
@@ -221,12 +220,12 @@ const Sottobicchiere: React.FC = () => {
 const Venn: React.FC = () => {
   const f = useCurrentFrame();
   const D = 520;
-  const cs: [number, number, string, string, number, number][] = [[400, 830, O, 'Milano', -1, 0], [680, 830, G, 'il mare', 1, 0], [540, 1070, SA, 'la cucina', 0, 1]];
-  const lbl: [number, number, string][] = [[270, 760, 'Milano'], [810, 760, 'il mare'], [540, 1220, 'la cucina']];
+  const cs: [number, number, string, string, number, number][] = [[400, 830, O, 'Milan', -1, 0], [680, 830, G, 'the sea', 1, 0], [540, 1070, SA, 'the kitchen', 0, 1]];
+  const lbl: [number, number, string][] = [[270, 760, 'Milan'], [810, 760, 'the sea'], [540, 1220, 'the kitchen']];
   return (
     <AbsoluteFill style={{background: I}}>
       <div style={{...center, top: 285, ...mono(20, O)}}>sea, signora · a diagram</div>
-      <div style={{...center, top: 322, ...ital(64, G)}}>where Milano meets the sea</div>
+      <div style={{...center, top: 322, ...ital(64, G)}}>where Milan meets the sea</div>
       {cs.map(([x, y, c, , dx, dy], i) => {
         const s = ip(f, 8 + i * 10, 40 + i * 10, 0, 1, io);
         return <div key={i} style={{position: 'absolute', left: x - D / 2, top: y - D / 2, width: D, height: D, borderRadius: '50%', background: c, opacity: 0.88,
@@ -277,12 +276,12 @@ const Biglietto: React.FC = () => {
           <div style={{...face, background: G}}>
             <div style={{position: 'absolute', inset: 26, border: `2px solid ${SA}`, borderRadius: 8}} />
             <div style={{...center, top: 170, ...mark(120, I)}}>Sea, Signora</div>
-            <div style={{...center, top: 330, ...mono(20, SA)}}>ristorante di pesce · milano</div>
+            <div style={{...center, top: 330, ...mono(20, SA)}}>seafood restaurant · milan</div>
           </div>
           <div style={{...face, background: I, transform: 'rotateY(180deg)'}}>
             <div style={{position: 'absolute', left: 70, top: 70, ...mark(56, G)}}>Sea, Signora</div>
             <div style={{position: 'absolute', left: 70, top: 170, width: 720, height: 3, background: O}} />
-            {['via fiori chiari 32, milano', 'cena · 19:00 — 00:00', 'crudo · pesce · vino'].map((t, i) => (
+            {['via fiori chiari 32, milan', 'dinner · 19:00 — 00:00', 'raw bar · seafood · wine'].map((t, i) => (
               <div key={t} style={{position: 'absolute', left: 70, top: 220 + i * 70, ...mono(26, G, {letterSpacing: 3})}}>{t}</div>
             ))}
           </div>
@@ -296,7 +295,7 @@ const Biglietto: React.FC = () => {
 // 11 · the menu, scrolled
 const Scroll: React.FC = () => {
   const f = useCurrentFrame();
-  const it: [string, M][] = [['Rosso di Mazara', p('w10/k0121', {fy: 40})], ['Burrata with red prawn', p('w11/f44', {fy: 52})], ['Red tuna', p('w11/f88', {fy: 55})],
+  const it: [string, M][] = [['Red prawns from Mazara', p('w10/k0121', {fy: 40})], ['Burrata with red prawn', p('w11/f44', {fy: 52})], ['Red tuna', p('w11/f88', {fy: 55})],
     ['Fusillone with seafood', p('w11/f112')], ['Crispy lamb chop', p('w11/f65', {fy: 55})], ['King crab', p('w11/f116')], ['Panettone', p('w10/pan86', {fy: 60})]];
   const L = 34;
   const pos = interpolate(f, it.flatMap((_, i) => [i * L + 6, i * L + L]), it.flatMap((_, i) => [i, i]).map((x, j) => (j % 2 ? x : Math.max(0, x - 1)) + 0),
@@ -307,7 +306,7 @@ const Scroll: React.FC = () => {
       <div style={{position: 'absolute', left: 70, width: 940, top: 280, height: 560, borderRadius: 24, overflow: 'hidden'}}>
         {it.map(([, m], i) => <div key={i} style={{position: 'absolute', inset: 0, opacity: Math.max(0, 1 - Math.abs(pos - i) * 1.6)}}><Media m={m} /></div>)}
       </div>
-      <div style={{position: 'absolute', left: 70, top: 880, ...mono(18, SA)}}>il menu, in breve</div>
+      <div style={{position: 'absolute', left: 70, top: 880, ...mono(18, SA)}}>the menu, in short</div>
       <div style={{position: 'absolute', left: 0, right: 0, top: 930, height: 620, overflow: 'hidden',
         WebkitMaskImage: 'linear-gradient(transparent, black 30%, black 70%, transparent)', maskImage: 'linear-gradient(transparent, black 30%, black 70%, transparent)'}}>
         {it.map(([t], i) => (
@@ -324,7 +323,7 @@ const Scroll: React.FC = () => {
 // 12 · a diary page with two photos taped in
 const Diario: React.FC = () => {
   const f = useCurrentFrame();
-  const lines = ['caro diario,', 'stasera Sea, Signora.', 'crudo, vino, risate.', 'torniamo presto.'];
+  const lines = ['dear diary,', 'tonight: Sea, Signora.', 'raw bar, wine, laughs.', 'coming back soon.'];
   const tape = (l: number, t: number, r: number) => <div style={{position: 'absolute', left: l, top: t, width: 150, height: 44, background: 'rgba(206,196,175,0.85)', transform: `rotate(${r}deg)`}} />;
   return (
     <AbsoluteFill style={{background: SA}}>
@@ -335,7 +334,7 @@ const Diario: React.FC = () => {
         <div style={{position: 'absolute', left: 470, top: 150, width: 380, height: 280, overflow: 'hidden', transform: `rotate(3deg) scale(${pop(f, 18)})`,
           border: `12px solid ${I}`, boxShadow: '0 8px 18px rgba(0,0,0,0.2)'}}><Media m={p('w11/f73', {fy: 45})} /></div>
         {f >= 6 && tape(170, 50, -8)}{f >= 18 && tape(590, 130, 6)}
-        <div style={{position: 'absolute', left: 470, top: 480, ...mono(16, O), opacity: ip(f, 30, 40)}}>sea, signora · milano</div>
+        <div style={{position: 'absolute', left: 470, top: 480, ...mono(16, O), opacity: ip(f, 30, 40)}}>sea, signora · milan</div>
         {lines.map((t, i) => (
           <div key={t} style={{position: 'absolute', left: 70, top: 742 + i * 90, ...ital(60, i === 1 ? O : G), clipPath: `inset(0 ${100 - ip(f, 40 + i * 26, 64 + i * 26, 0, 100, Easing.linear)}% 0 0)`}}>{t}</div>
         ))}
@@ -348,7 +347,7 @@ const Diario: React.FC = () => {
 const Zoom: React.FC = () => {
   const f = useCurrentFrame();
   const st: [M, number, number][] = [[p('w12/bo28', {fx: 50}), 0, 75], [p('w11/f54'), 70, 145], [p('w11/f44', {fy: 52}), 140, 210]];
-  const crumbs = ['brera', 'sea, signora', 'il tuo tavolo', 'la burrata'];
+  const crumbs = ['brera', 'sea, signora', 'your table', 'the burrata'];
   const k = f < 70 ? 1 : f < 140 ? 2 : 3;
   return (
     <AbsoluteFill style={{background: N}}>
@@ -381,7 +380,7 @@ const Chiave: React.FC = () => {
           <div style={{position: 'absolute', left: 150, top: 26, width: 60, height: 60, borderRadius: '50%', background: '#0f1d10', border: `5px solid ${MU}`, boxSizing: 'border-box'}} />
           <div style={{position: 'absolute', inset: 16, border: `2px solid ${SA}`, borderRadius: 26}} />
           <div style={{...center, top: 140, ...mark(52, I)}}>Sea, Signora</div>
-          <div style={{...center, top: 250, ...mono(22, SA)}}>tavolo</div>
+          <div style={{...center, top: 250, ...mono(22, SA)}}>table</div>
           <div style={{...center, top: 290, ...serif(230, O, {lineHeight: 1})}}>7</div>
           <div style={{...center, top: 560, ...mono(16, SA)}}>via fiori chiari 32</div>
         </div>
@@ -408,7 +407,7 @@ const Nastri: React.FC = () => {
   return (
     <AbsoluteFill style={{background: N}}>
       <Media m={v('w10/kf0117', 13)} />
-      {band('CRUDO · PASTA · GRIGLIA · VINO · ', 300, -4, O, -1)}
+      {band('RAW BAR · PASTA · GRILL · WINE · ', 300, -4, O, -1)}
       {band('SEA, SIGNORA · FIORI CHIARI 32 · BRERA · ', 1420, 3, G, 1)}
     </AbsoluteFill>
   );
@@ -434,7 +433,7 @@ const Mosaico: React.FC = () => {
           );
         })}
       </div>
-      <div style={{position: 'absolute', left: 80, top: 1070, ...mono(20, SA), opacity: ip(f, 60, 75)}}>la sala</div>
+      <div style={{position: 'absolute', left: 80, top: 1070, ...mono(20, SA), opacity: ip(f, 60, 75)}}>the room</div>
       <div style={{position: 'absolute', left: 74, top: 1110, ...disp(96, I, {lineHeight: 1.05}), opacity: ip(f, 66, 82)}}>{'A TABLE UNDER\nTHE SIGNORA'}</div>
       <div style={{position: 'absolute', left: 80, top: 1340, ...ital(48, SA), opacity: ip(f, 76, 92)}}>candles, velvet and the lady herself</div>
     </AbsoluteFill>
@@ -449,9 +448,9 @@ const Sfoglia: React.FC = () => {
     <div style={{position: 'absolute', inset: 0, background: G}}>
       <div style={{position: 'absolute', inset: 30, border: `2px solid ${SA}`}} />
       <div style={{...center, top: 420, ...mark(110, I)}}>Sea, Signora</div>
-      <div style={{...center, top: 560, ...ital(52, SA)}}>racconti di mare</div>
+      <div style={{...center, top: 560, ...ital(52, SA)}}>stories from the sea</div>
     </div>,
-    ...([[p('w12/bo455', {fy: 40}), 'capitolo uno', 'la cucina'], [p('w11/f25'), 'capitolo due', 'il crudo'], [p('w12/bo234', {fy: 35}), 'capitolo tre', 'la sala']] as [M, string, string][])
+    ...([[p('w12/bo455', {fy: 40}), 'chapter one', 'the kitchen'], [p('w11/f25'), 'chapter two', 'raw bar'], [p('w12/bo234', {fy: 35}), 'chapter three', 'the room']] as [M, string, string][])
       .map(([m, a, b]) => (
         <div style={{position: 'absolute', inset: 0, background: '#FBFAF6'}}>
           <Box b={{left: 50, top: 50, width: W - 100, height: 820}} m={m} />
@@ -479,7 +478,7 @@ const Sfoglia: React.FC = () => {
 // 18 · a note on a napkin
 const Tovagliolo: React.FC = () => {
   const f = useCurrentFrame();
-  const lines = ['stasera', 'Fiori Chiari 32.', "I'll order the crudo."];
+  const lines = ['tonight?', 'Fiori Chiari 32.', "I'll order for the table."];
   return (
     <AbsoluteFill style={{background: N}}>
       <Media m={p('w11/f43')} style={{filter: 'blur(8px) brightness(0.6)', transform: 'scale(1.1)'}} />
@@ -488,7 +487,7 @@ const Tovagliolo: React.FC = () => {
         <div style={{position: 'absolute', right: 0, bottom: 0, width: 150, height: 150, background: 'linear-gradient(135deg, #e9e5dc 50%, transparent 50%)',
           boxShadow: '-6px -6px 12px rgba(0,0,0,0.08)'}} />
         <div style={{position: 'absolute', left: 0, right: 0, top: 70, textAlign: 'center', ...mark(54, O)}}>Sea, Signora</div>
-        <div style={{position: 'absolute', left: 0, right: 0, top: 135, textAlign: 'center', ...mono(16, O)}}>milano</div>
+        <div style={{position: 'absolute', left: 0, right: 0, top: 135, textAlign: 'center', ...mono(16, O)}}>milan</div>
         {lines.map((t, i) => (
           <div key={t} style={{position: 'absolute', left: 80, top: 260 + i * 110, ...ital(70, G), clipPath: `inset(0 ${100 - ip(f, 20 + i * 30, 46 + i * 30, 0, 100, Easing.linear)}% 0 0)`}}>{t}</div>
         ))}
@@ -503,7 +502,7 @@ const Tovagliolo: React.FC = () => {
 const Cubo: React.FC = () => {
   const f = useCurrentFrame();
   const S = 640;
-  const faces: [M, string][] = [[p('w11/f25'), 'il crudo'], [v('w10/nm0681', 1), 'la pasta'], [p('w12/bo287', {fy: 45}), 'il bar'], [p('w12/bo16', {fx: 30}), 'la sala']];
+  const faces: [M, string][] = [[p('w11/f25'), 'raw bar'], [v('w10/nm0681', 1), 'pasta'], [p('w12/bo287', {fy: 45}), 'the bar'], [p('w12/bo16', {fx: 30}), 'the room']];
   const keys = [0, 40, 58, 98, 116, 156, 174, 210], vals = [0, 0, -90, -90, -180, -180, -270, -270];
   const ry = interpolate(f, keys, vals, {extrapolateRight: 'clamp', easing: io});
   const k = Math.round(-ry / 90) % 4;
@@ -529,13 +528,13 @@ const Cubo: React.FC = () => {
 // 20 · a fragrance: eau de mare
 const Profumo: React.FC = () => {
   const f = useCurrentFrame();
-  const notes: [string, string][] = [['note di testa', 'lemon, sea salt'], ['note di cuore', 'crudo, white wine'], ['note di fondo', 'wood fire, candlelight']];
+  const notes: [string, string][] = [['top notes', 'lemon, sea salt'], ['heart notes', 'raw fish, white wine'], ['base notes', 'wood fire, candlelight']];
   const sweep = ip(f, 40, 90, -300, 700, Easing.inOut(Easing.quad));
   return (
     <AbsoluteFill style={{background: N}}>
       <Media m={p('w12/bo293')} style={{filter: 'blur(10px) brightness(0.5)', transform: 'scale(1.1)'}} />
       <div style={{...center, top: 285, ...mono(20, SA)}}>a fragrance by sea, signora</div>
-      <div style={{...center, top: 322, ...ital(80, I)}}>Eau de Mare</div>
+      <div style={{...center, top: 322, ...ital(80, I)}}>No. 32</div>
       <div style={{position: 'absolute', left: 330, top: 520, width: 420, height: 640, transform: `translateY(${(1 - pop(f, 6)) * 300}px)`}}>
         <div style={{position: 'absolute', left: 120, top: 0, width: 180, height: 120, background: G, borderRadius: 10}} />
         <div style={{position: 'absolute', left: 160, top: 110, width: 100, height: 40, background: MU}} />
@@ -544,7 +543,7 @@ const Profumo: React.FC = () => {
           <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 330, background: 'linear-gradient(rgba(239,120,24,0.55), rgba(239,120,24,0.85))'}} />
           <div style={{position: 'absolute', left: 60, right: 60, top: 150, height: 200, background: I, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
             <div style={mark(46, G)}>Sea, Signora</div>
-            <div style={{...mono(16, G), marginTop: 14}}>eau de mare</div>
+            <div style={{...mono(16, G), marginTop: 14}}>no. 32 · eau de parfum</div>
           </div>
           <div style={{position: 'absolute', top: -50, left: sweep, width: 90, height: 600, background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)', transform: 'rotate(18deg)'}} />
         </div>
@@ -564,44 +563,44 @@ const Profumo: React.FC = () => {
 type Spec = {id: string; day: string; sec: number; view: React.FC; screen: string; caption: string; hashtags: string[]; cta?: string};
 const tags = (...t: string[]) => ['#seasignora', ...t];
 export const FRESH3: Spec[] = [
-  {id: 'H-01v-sommario', day: '1', sec: 7, view: Sommario, screen: 'sea, signora · il numero della sera / SOMMARIO / 04 Il crudo: raw bar, carpaccio, tartare · 12 La pasta: fusillone, tagliolini, risotto · 20 Il bar: aperitivo al bancone · 28 La sala: candles, aquarium, Brera',
-    caption: 'Tonight’s issue: il crudo, la pasta, il bar, la sala. Start reading at the table.', hashtags: tags('#brera', '#milano', '#dinner')},
-  {id: 'H-02v-fuoco', day: '1', sec: 7, view: Fuoco, screen: 'la cucina a vista / FUOCO / sea, signora · via fiori chiari 32',
-    caption: 'Fuoco: our open kitchen, in full view of the room.', hashtags: tags('#openkitchen', '#chef', '#brera')},
-  {id: 'H-03v-persiane', day: '1', sec: 7, view: Persiane, screen: 'sea, signora / BUONASERA → open till midnight / via fiori chiari 32 · brera',
-    caption: 'The blinds go up, the room wakes up. Open till midnight in Brera.', hashtags: tags('#brera', '#milano', '#restaurant')},
-  {id: 'H-04v-fiammiferi', day: '2', sec: 7, view: Fiammiferi, screen: 'per accendere la serata / strike for dinner / matchbook: Sea, Signora · ristorante di pesce · milano · via fiori chiari 32',
-    caption: 'Strike for dinner: the kitchen lights up at Via Fiori Chiari 32.', hashtags: tags('#openkitchen', '#brera', '#milano')},
-  {id: 'H-05v-tavolo', day: '2', sec: 7, view: Tavolo, screen: 'il tavolo si riempie / order for the table',
-    caption: 'The table fills up: crudo, burrata, pasta, red tuna, lamb chop. Order for the table and share everything.', hashtags: tags('#sharing', '#seafood', '#brera')},
-  {id: 'H-06v-squadra', day: '2', sec: 8, view: Squadra, screen: 'la squadra di sea, signora / brand chef Antonio Fresa 01/03 · chef Roberto Godi 02/03 · sous chef Federico 03/03',
-    caption: 'La squadra: brand chef Antonio Fresa, chef Roberto Godi and sous chef Federico.', hashtags: tags('#chef', '#team', '#brera')},
-  {id: 'H-07v-sottobicchiere', day: '3', sec: 7, view: Sottobicchiere, screen: 'il bar / aperitivo at the counter / ring: aperitivo al bancone · sea, signora · brera · cin cin / via fiori chiari 32 · milano',
-    caption: 'Aperitivo at the counter: our bar, one glass at a time. Cin cin.', hashtags: tags('#aperitivo', '#cocktails', '#brera')},
-  {id: 'H-08v-venn', day: '3', sec: 7, view: Venn, screen: 'sea, signora · a diagram / where Milano meets the sea / Milano · il mare · la cucina → Sea, Signora / via fiori chiari 32 · brera',
-    caption: 'Where Milano meets the sea, and the kitchen: Sea, Signora.', hashtags: tags('#brera', '#milano', '#seafood')},
+  {id: 'H-01v-sommario', day: '1', sec: 7, view: Sommario, screen: "sea, signora · tonight's issue / CONTENTS / 04 Raw bar: carpaccio, tartare, red prawns · 12 Pasta: fusillone, tagliolini, risotto · 20 The bar: drinks at the counter · 28 The room: candles, aquarium, Brera",
+    caption: "Tonight's issue: the raw bar, the pasta, the bar and the room. Start reading at the table.", hashtags: tags('#brera', '#milan', '#dinner')},
+  {id: 'H-02v-fuoco', day: '1', sec: 7, view: Fuoco, screen: 'open kitchen / FIRE / sea, signora · via fiori chiari 32',
+    caption: 'Fire: our open kitchen, in full view of the room.', hashtags: tags('#openkitchen', '#chef', '#brera')},
+  {id: 'H-03v-persiane', day: '1', sec: 7, view: Persiane, screen: 'sea, signora / GOOD EVENING → open till midnight / via fiori chiari 32 · brera',
+    caption: 'The blinds go up, the room wakes up. Open till midnight in Brera.', hashtags: tags('#brera', '#milan', '#restaurant')},
+  {id: 'H-04v-fiammiferi', day: '2', sec: 7, view: Fiammiferi, screen: 'light up the evening / strike for dinner / matchbook: Sea, Signora · seafood restaurant · milan · via fiori chiari 32',
+    caption: 'Strike for dinner: the kitchen lights up at Via Fiori Chiari 32.', hashtags: tags('#openkitchen', '#brera', '#milan')},
+  {id: 'H-05v-tavolo', day: '2', sec: 7, view: Tavolo, screen: 'the table fills up / order for the table',
+    caption: 'The table fills up: raw fish, burrata, pasta, red tuna, lamb chop. Order for the table and share everything.', hashtags: tags('#sharing', '#seafood', '#brera')},
+  {id: 'H-06v-do-not-disturb', day: '2', sec: 7, view: Cartello, screen: 'DO NOT DISTURB / dinner in progress / Sea, Signora',
+    caption: 'Do not disturb: dinner in progress at Sea, Signora.', hashtags: tags('#dinner', '#brera', '#milan')},
+  {id: 'H-07v-sottobicchiere', day: '3', sec: 7, view: Sottobicchiere, screen: 'the bar / drinks at the counter / ring: drinks at the counter · sea, signora · brera · cheers · fiori chiari 32 / via fiori chiari 32 · milan',
+    caption: 'Drinks at the counter: our bar, one glass at a time. Cheers.', hashtags: tags('#cocktails', '#bar', '#brera')},
+  {id: 'H-08v-venn', day: '3', sec: 7, view: Venn, screen: 'sea, signora · a diagram / where Milan meets the sea / Milan · the sea · the kitchen → Sea, Signora / via fiori chiari 32 · brera',
+    caption: 'Where Milan meets the sea, and the kitchen: Sea, Signora.', hashtags: tags('#brera', '#milan', '#seafood')},
   {id: 'H-09v-indicazioni', day: '3', sec: 7, view: Indicazioni, screen: 'plaque: Brera · Via Fiori Chiari / Sea, Signora → 32', cta: 'book a table',
-    caption: 'Directions: Brera, Via Fiori Chiari, number 32. Your table is inside.', hashtags: tags('#brera', '#milano', '#viafiorichiari')},
-  {id: 'H-10v-biglietto', day: '4', sec: 7, view: Biglietto, screen: 'take our card / front: Sea, Signora · ristorante di pesce · milano / back: via fiori chiari 32, milano · cena 19:00 — 00:00 · crudo · pesce · vino', cta: 'book a table',
-    caption: 'Take our card: Via Fiori Chiari 32, dinner from 19:00 to midnight. Crudo, pesce, vino.', hashtags: tags('#brera', '#dinner', '#milano')},
-  {id: 'H-11v-menu', day: '4', sec: 8, view: Scroll, screen: 'il menu, in breve / 01 Rosso di Mazara · 02 Burrata with red prawn · 03 Red tuna · 04 Fusillone with seafood · 05 Crispy lamb chop · 06 King crab · 07 Panettone',
-    caption: 'Il menu, in breve: red prawns from Mazara, burrata, red tuna, fusillone, lamb chop, king crab and panettone to finish.', hashtags: tags('#menu', '#seafood', '#brera')},
-  {id: 'H-12v-diario', day: '4', sec: 8, view: Diario, screen: 'sea, signora · milano / caro diario, / stasera Sea, Signora. / crudo, vino, risate. / torniamo presto.',
-    caption: 'Caro diario: stasera Sea, Signora. Crudo, vino, risate. Torniamo presto.', hashtags: tags('#friends', '#dinner', '#brera')},
-  {id: 'H-13v-zoom', day: '5', sec: 7, view: Zoom, screen: 'brera › sea, signora › il tuo tavolo › la burrata / zoom in',
-    caption: 'Zoom in: Brera, Sea, Signora, your table, the burrata.', hashtags: tags('#burrata', '#brera', '#milano')},
-  {id: 'H-14v-chiave', day: '5', sec: 7, view: Chiave, screen: 'sea, signora / the key to your evening / tag: Sea, Signora · tavolo 7 · via fiori chiari 32', cta: 'book a table',
-    caption: 'The key to your evening: tavolo 7 is waiting.', hashtags: tags('#brera', '#dinner', '#milano')},
-  {id: 'H-15v-nastri', day: '5', sec: 6, view: Nastri, screen: 'CRUDO · PASTA · GRIGLIA · VINO / SEA, SIGNORA · FIORI CHIARI 32 · BRERA',
-    caption: 'Crudo, pasta, griglia, vino. Fiori Chiari 32, Brera.', hashtags: tags('#openkitchen', '#brera', '#milano')},
-  {id: 'H-16v-mosaico', day: '6', sec: 7, view: Mosaico, screen: 'la sala / A TABLE UNDER THE SIGNORA / candles, velvet and the lady herself',
-    caption: 'A table under the Signora: candles, velvet and the lady herself.', hashtags: tags('#interiordesign', '#brera', '#milano')},
-  {id: 'H-17v-sfoglia', day: '6', sec: 7, view: Sfoglia, screen: 'Sea, Signora · racconti di mare / capitolo uno: la cucina · capitolo due: il crudo · capitolo tre: la sala',
-    caption: 'Racconti di mare in three chapters: la cucina, il crudo, la sala.', hashtags: tags('#crudo', '#openkitchen', '#brera')},
-  {id: 'H-18v-tovagliolo', day: '6', sec: 6, view: Tovagliolo, screen: 'notes on a napkin / Sea, Signora · milano / stasera / Fiori Chiari 32. / I’ll order the crudo.',
-    caption: 'Notes on a napkin: stasera, Fiori Chiari 32. I’ll order the crudo.', hashtags: tags('#crudo', '#brera', '#dinner')},
-  {id: 'H-19v-cubo', day: '7', sec: 7, view: Cubo, screen: 'sea, signora / every side of the evening / il crudo · la pasta · il bar · la sala',
-    caption: 'Every side of the evening: il crudo, la pasta, il bar, la sala.', hashtags: tags('#brera', '#milano', '#dinner')},
-  {id: 'H-20v-eau-de-mare', day: '7', sec: 7, view: Profumo, screen: 'a fragrance by sea, signora / Eau de Mare / note di testa: lemon, sea salt · note di cuore: crudo, white wine · note di fondo: wood fire, candlelight',
-    caption: 'Eau de Mare, a fragrance by Sea, Signora: lemon and sea salt, crudo and white wine, wood fire and candlelight. Only available at the table.', hashtags: tags('#brera', '#milano', '#seafood')},
+    caption: 'Directions: Brera, Via Fiori Chiari, number 32. Your table is inside.', hashtags: tags('#brera', '#milan', '#viafiorichiari')},
+  {id: 'H-10v-biglietto', day: '4', sec: 7, view: Biglietto, screen: 'take our card / front: Sea, Signora · seafood restaurant · milan / back: via fiori chiari 32, milan · dinner · 19:00 — 00:00 · raw bar · seafood · wine', cta: 'book a table',
+    caption: 'Take our card: Via Fiori Chiari 32, dinner from 19:00 to midnight. Raw bar, seafood, wine.', hashtags: tags('#brera', '#dinner', '#milan')},
+  {id: 'H-11v-menu', day: '4', sec: 8, view: Scroll, screen: 'the menu, in short / 01 Red prawns from Mazara · 02 Burrata with red prawn · 03 Red tuna · 04 Fusillone with seafood · 05 Crispy lamb chop · 06 King crab · 07 Panettone',
+    caption: 'The menu, in short: red prawns from Mazara, burrata, red tuna, fusillone, lamb chop, king crab and panettone to finish.', hashtags: tags('#menu', '#seafood', '#brera')},
+  {id: 'H-12v-diario', day: '4', sec: 8, view: Diario, screen: 'sea, signora · milan / dear diary, / tonight: Sea, Signora. / raw bar, wine, laughs. / coming back soon.',
+    caption: 'Dear diary: tonight, Sea, Signora. Raw bar, wine, laughs. Coming back soon.', hashtags: tags('#friends', '#dinner', '#brera')},
+  {id: 'H-13v-zoom', day: '5', sec: 7, view: Zoom, screen: 'brera › sea, signora › your table › the burrata / zoom in',
+    caption: 'Zoom in: Brera, Sea, Signora, your table, the burrata.', hashtags: tags('#burrata', '#brera', '#milan')},
+  {id: 'H-14v-chiave', day: '5', sec: 7, view: Chiave, screen: 'sea, signora / the key to your evening / tag: Sea, Signora · table 7 · via fiori chiari 32', cta: 'book a table',
+    caption: 'The key to your evening: table 7 is waiting.', hashtags: tags('#brera', '#dinner', '#milan')},
+  {id: 'H-15v-nastri', day: '5', sec: 6, view: Nastri, screen: 'RAW BAR · PASTA · GRILL · WINE / SEA, SIGNORA · FIORI CHIARI 32 · BRERA',
+    caption: 'Raw bar, pasta, grill, wine. Fiori Chiari 32, Brera.', hashtags: tags('#openkitchen', '#brera', '#milan')},
+  {id: 'H-16v-mosaico', day: '6', sec: 7, view: Mosaico, screen: 'the room / A TABLE UNDER THE SIGNORA / candles, velvet and the lady herself',
+    caption: 'A table under the Signora: candles, velvet and the lady herself.', hashtags: tags('#interiordesign', '#brera', '#milan')},
+  {id: 'H-17v-sfoglia', day: '6', sec: 7, view: Sfoglia, screen: 'Sea, Signora · stories from the sea / chapter one: the kitchen · chapter two: raw bar · chapter three: the room',
+    caption: 'Stories from the sea, in three chapters: the kitchen, the raw bar, the room.', hashtags: tags('#rawbar', '#openkitchen', '#brera')},
+  {id: 'H-18v-tovagliolo', day: '6', sec: 6, view: Tovagliolo, screen: "notes on a napkin / Sea, Signora · milan / tonight? / Fiori Chiari 32. / I'll order for the table.",
+    caption: "Notes on a napkin: tonight? Fiori Chiari 32. I'll order for the table.", hashtags: tags('#dinner', '#brera', '#milan')},
+  {id: 'H-19v-cubo', day: '7', sec: 7, view: Cubo, screen: 'sea, signora / every side of the evening / raw bar · pasta · the bar · the room',
+    caption: 'Every side of the evening: the raw bar, the pasta, the bar, the room.', hashtags: tags('#brera', '#milan', '#dinner')},
+  {id: 'H-20v-no32', day: '7', sec: 7, view: Profumo, screen: 'a fragrance by sea, signora / No. 32 / top notes: lemon, sea salt · heart notes: raw fish, white wine · base notes: wood fire, candlelight',
+    caption: 'No. 32, a fragrance by Sea, Signora: lemon and sea salt, raw fish and white wine, wood fire and candlelight. Only available at the table.', hashtags: tags('#brera', '#milan', '#seafood')},
 ];
