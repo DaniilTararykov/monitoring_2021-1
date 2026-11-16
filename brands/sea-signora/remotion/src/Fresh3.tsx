@@ -220,12 +220,12 @@ const Sottobicchiere: React.FC = () => {
 const Venn: React.FC = () => {
   const f = useCurrentFrame();
   const D = 520;
-  const cs: [number, number, string, string, number, number][] = [[400, 830, O, 'Brera', -1, 0], [680, 830, G, 'Milano', 1, 0], [540, 1070, SA, 'good food', 0, 1]];
-  const lbl: [number, number, string][] = [[270, 760, 'Brera'], [810, 760, 'Milano'], [540, 1220, 'good food']];
+  const cs: [number, number, string, string, number, number][] = [[400, 830, O, 'Brera', -1, 0], [680, 830, G, 'the sea', 1, 0], [540, 1070, SA, 'good food', 0, 1]];
+  const lbl: [number, number, string][] = [[270, 760, 'Brera'], [810, 760, 'the sea'], [540, 1220, 'good food']];
   return (
     <AbsoluteFill style={{background: I}}>
       <div style={{...center, top: 285, ...mono(20, O)}}>sea, signora · a diagram</div>
-      <div style={{...center, top: 322, ...ital(64, G)}}>the sweet spot</div>
+      <div style={{...center, top: 322, ...ital(64, G)}}>where Milan meets the sea</div>
       {cs.map(([x, y, c, , dx, dy], i) => {
         const s = ip(f, 8 + i * 10, 40 + i * 10, 0, 1, io);
         return <div key={i} style={{position: 'absolute', left: x - D / 2, top: y - D / 2, width: D, height: D, borderRadius: '50%', background: c, opacity: 0.88,
@@ -577,8 +577,8 @@ export const FRESH3: Spec[] = [
     caption: 'Do not disturb: dinner in progress at Sea, Signora.', hashtags: tags('#dinner', '#brera', '#milan')},
   {id: 'H-07v-sottobicchiere', day: '3', sec: 7, view: Sottobicchiere, screen: 'the bar / drinks at the counter / ring: drinks at the counter · sea, signora · brera · cheers · fiori chiari 32 / via fiori chiari 32 · milan',
     caption: 'Drinks at the counter: our bar, one glass at a time. Cheers.', hashtags: tags('#cocktails', '#bar', '#brera')},
-  {id: 'H-08v-venn', day: '3', sec: 7, view: Venn, screen: 'sea, signora · a diagram / the sweet spot / Brera · Milano · good food → Sea, Signora / via fiori chiari 32 · brera',
-    caption: 'Brera, Milano and good food. Where they meet: Sea, Signora.', hashtags: tags('#brera', '#milano', '#seafood')},
+  {id: 'H-08v-venn', day: '3', sec: 7, view: Venn, screen: 'sea, signora · a diagram / where Milan meets the sea / Brera · the sea · good food → Sea, Signora / via fiori chiari 32 · brera',
+    caption: 'Where Milan meets the sea: Brera, the sea and good food. Sea, Signora.', hashtags: tags('#brera', '#milan', '#seafood')},
   {id: 'H-09v-indicazioni', day: '3', sec: 7, view: Indicazioni, screen: 'plaque: Brera · Via Fiori Chiari / Sea, Signora → 32', cta: 'book a table',
     caption: 'Directions: Brera, Via Fiori Chiari, number 32. Your table is inside.', hashtags: tags('#brera', '#milan', '#viafiorichiari')},
   {id: 'H-10v-biglietto', day: '4', sec: 7, view: Biglietto, screen: 'take our card / front: Sea, Signora · seafood restaurant · milan / back: via fiori chiari 32, milan · dinner · 19:00 — 00:00 · raw bar · seafood · wine', cta: 'book a table',
