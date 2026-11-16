@@ -17,9 +17,9 @@
 - Подпись: Prep list: parsley chopped, pans hot, bread warm, tables lit. Only you left.
 - Хештеги: #seasignora #openkitchen #brera #milan
 
-**U-04v-allonda** (6 с) — кадр: risotto from above
-- На экране: ALL'ONDA (waving) / risotto, loose enough to make a wave
-- Подпись: Risotto all'onda: loose enough to make a wave.
+**U-04v-the-wave** (6 с) — кадр: risotto from above
+- На экране: THE WAVE (letters ripple) / risotto, loose enough to make a wave
+- Подпись: Our risotto: loose enough to make a wave.
 - Хештеги: #seasignora #risotto #brera #milan
 
 **U-05v-sweet-red-raw** (6 с) — кадр: red prawns on blue porcelain

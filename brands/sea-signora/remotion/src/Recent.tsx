@@ -109,14 +109,14 @@ const R03: React.FC = () => {
   );
 };
 
-// 4 · risotto all'onda: the word moves like a wave
+// 4 · the wave: the word moves like the risotto
 const R04: React.FC = () => {
   const f = useCurrentFrame();
-  const w = "ALL'ONDA";
+  const w = 'THE WAVE';
   return (
     <AbsoluteFill style={{background: G}}>
       <div style={ab({left: 0, right: 0, top: 300, textAlign: 'center', whiteSpace: 'nowrap'})}>
-        {[...w].map((c, i) => <span key={i} style={{display: 'inline-block', ...disp(150, SA), transform: `translateY(${Math.sin(f / 7 - i * 0.7) * 22 * ip(f, 0, 20)}px)`}}>{c}</span>)}
+        {[...w].map((c, i) => <span key={i} style={{display: 'inline-block', width: c === ' ' ? 50 : undefined, ...disp(150, SA), transform: `translateY(${Math.sin(f / 7 - i * 0.7) * 22 * ip(f, 0, 20)}px)`}}>{c}</span>)}
       </div>
       <div style={ab({left: 0, right: 0, top: 500, textAlign: 'center', ...ital(46, I), opacity: ip(f, 20, 34)})}>{'risotto, loose enough to make a wave'}</div>
       <div style={ab({left: 90, top: 640, width: 900, height: 900, borderRadius: '50%', overflow: 'hidden', transform: `rotate(${f * 0.08}deg)`})}><Pic n="p0127" fy={52} style={{transform: 'scale(1.25)'}} /></div>
@@ -270,8 +270,8 @@ export const RECENT: Spec[] = [
     caption: 'For the record: the lamp is not a jellyfish, the fish are real, and the Signora is always watching.', hashtags: t('#interiors', '#aquarium', '#brera')},
   {id: 'U-03v-prep-list', sec: 6, view: R03, frame: 'parsley chopped at the pass', screen: 'prep list · sea, signora / ✓ parsley, chopped fine · ✓ pans, hot · ✓ bread, warm · ✓ tables, lit · you, on your way',
     caption: 'Prep list: parsley chopped, pans hot, bread warm, tables lit. Only you left.', hashtags: t('#openkitchen', '#brera', '#milan')},
-  {id: 'U-04v-allonda', sec: 6, view: R04, frame: 'risotto from above', screen: "ALL'ONDA (waving) / risotto, loose enough to make a wave",
-    caption: "Risotto all'onda: loose enough to make a wave.", hashtags: t('#risotto', '#brera', '#milan')},
+  {id: 'U-04v-the-wave', sec: 6, view: R04, frame: 'risotto from above', screen: 'THE WAVE (letters ripple) / risotto, loose enough to make a wave',
+    caption: 'Our risotto: loose enough to make a wave.', hashtags: t('#risotto', '#brera', '#milan')},
   {id: 'U-05v-sweet-red-raw', sec: 6, view: R05, frame: 'red prawns on blue porcelain', screen: 'SWEET · RED · RAW / red prawns, straight from the raw bar',
     caption: 'Sweet, red, raw: red prawns from the raw bar.', hashtags: t('#redprawns', '#rawbar', '#brera')},
   {id: 'U-06v-take-one', sec: 7, view: R06, frame: 'the chef plating at the pass', screen: 'clapperboard: production Sea, Signora · scene the pass · take 1 of many → scene: the pass · take 1',
