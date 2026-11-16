@@ -44,9 +44,9 @@
 - Хештеги: #seasignora #cocktails #bar #brera
 
 **H-08v-venn** (7 с)
-- На экране: sea, signora · a diagram / where Milan meets the sea / Milan · the sea · the kitchen → Sea, Signora / via fiori chiari 32 · brera
-- Подпись: Where Milan meets the sea, and the kitchen: Sea, Signora.
-- Хештеги: #seasignora #brera #milan #seafood
+- На экране: sea, signora · a diagram / the sweet spot / Brera · Milano · good food → Sea, Signora / via fiori chiari 32 · brera
+- Подпись: Brera, Milano and good food. Where they meet: Sea, Signora.
+- Хештеги: #seasignora #brera #milano #seafood
 
 **H-09v-indicazioni** (7 с)
 - На экране: plaque: Brera · Via Fiori Chiari / Sea, Signora → 32
