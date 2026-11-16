@@ -50,7 +50,7 @@ export const week11live: Parola[] = [
 const p = (n: string, o: Partial<Media> = {}): Media => ({src: `w11/${n}.jpg`, ...o});
 export const week11designs: CreativeSpec[] = [
   {id: 'X-14p-nuovo-menu', day: 'pool', k: 'full', sec: 7, bg: '#0B0B0B', ink: I, media: [p('k0720', {fy: 55})],
-    kicker: 'il nuovo menu', title: 'Four new reasons', sub: 'akami · tagliolini · polpo · capesante', cta: {label: 'book a table', color: 'orange'},
+    kicker: 'il nuovo menu', title: 'Four new reasons', sub: 'akami · tagliolini · polpo · capesante', cta: {label: 'book a table', color: 'orange', y: 1380},
     caption: 'Il nuovo menu, four new reasons to come back: akami, tagliolini, polpo, capesante.', hashtags: tags('#newmenu', '#brera', '#milano')},
   {id: 'X-15v-a-tavola', day: 'pool', k: 'polaroid', sec: 8, bg: O, ink: G,
     media: [p('f73', {fx: 40}), p('f80', {fy: 40}), p('f86', {fy: 40})], notes: ['il brindisi', 'la risata', 'il bis'], title: 'Una sera a tavola',
