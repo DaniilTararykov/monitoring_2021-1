@@ -36,7 +36,7 @@ import {FRESH3} from './Fresh3';
 import {FRESH4} from './Fresh4';
 import {FRESH5} from './Fresh5';
 import {ATMOSFERA, AtmosferaView} from './Atmosfera';
-import {ReviewAquarium} from './ReviewStill';
+import {DISH_CARDS, DishCardView, ReviewAquarium} from './ReviewStill';
 import {FRESH6} from './Fresh6';
 import {CUTOUT} from './Cutout';
 import {FILM, FILM_V1, FilmView} from './Film';
@@ -63,6 +63,7 @@ export const RemotionRoot: React.FC = () => (
     {[...FILM_V1, ...FILM].map((s) => <Composition key={s.id} id={s.id} component={FilmView} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
     {CUTOUT.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {FRESH6.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
+    {DISH_CARDS.map((d) => <Composition key={d.id} id={d.id} component={DishCardView} durationInFrames={150} fps={30} width={1080} height={1920} defaultProps={{d}} />)}
     <Composition id="R-01p-review-aquarium" component={ReviewAquarium} durationInFrames={150} fps={30} width={1080} height={1920} />
     {ATMOSFERA.map((a) => <Composition key={a.id} id={a.id} component={AtmosferaView} durationInFrames={Math.round(a.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{a}} />)}
     {FRESH5.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}

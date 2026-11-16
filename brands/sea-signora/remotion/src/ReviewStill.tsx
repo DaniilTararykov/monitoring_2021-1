@@ -30,3 +30,39 @@ export const ReviewAquarium: React.FC = () => (
       color: colors.ivory, textTransform: 'uppercase', letterSpacing: 0.5}}>{REVIEW}</div>
   </AbsoluteFill>
 );
+
+// «Dish card» in the client's own review layout (her caviar-pasta story): full-bleed photo, SEA, SIGNORA + a mono label
+// at the top, the dish name and one clear line at the bottom. One dish per story, photographed whole, nothing abstract.
+type DishCard = {id: string; img: string; fy?: number; textTop?: number; band?: boolean; label: string; name: string; line: string; caption: string; hashtags: string[]};
+export const DishCardView: React.FC<{d: DishCard}> = ({d}) => (
+  <AbsoluteFill style={{background: colors.night}}>
+    <Img src={staticFile(`photos/w16/${d.img}`)} style={{position: 'absolute', left: 0, top: d.band ? 500 : 0, width: '100%', height: d.band ? 760 : '100%', objectFit: 'cover', objectPosition: `50% ${d.fy ?? 50}%`}} />
+    {d.band && <div style={{position: 'absolute', left: 0, right: 0, top: 1250, bottom: 0, background: colors.night}} />}
+    <AbsoluteFill style={{background: 'rgba(11,11,11,0.18)'}} />
+    <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 620, background: 'linear-gradient(rgba(11,11,11,0.62), rgba(11,11,11,0))'}} />
+    <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 820, background: 'linear-gradient(rgba(11,11,11,0), rgba(11,11,11,0.82) 55%)'}} />
+    <div style={{position: 'absolute', left: 0, right: 0, top: 270, display: 'flex', justifyContent: 'center'}}>
+      <div>
+        <div style={{fontFamily: fonts.display, fontSize: 118, color: colors.ivory, textTransform: 'uppercase', lineHeight: 1, letterSpacing: 1}}>Sea, Signora</div>
+        <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 52, color: colors.ivory, textAlign: 'right', marginTop: 6}}>{d.label}</div>
+      </div>
+    </div>
+    <div style={{position: 'absolute', left: 60, right: 60, top: d.textTop ?? 1290, textAlign: 'center', fontFamily: fonts.display, fontSize: 104, color: colors.ivory, textTransform: 'uppercase',
+      lineHeight: 1}}>{d.name}</div>
+    <div style={{position: 'absolute', left: 80, right: 80, top: (d.textTop ?? 1290) + 130, textAlign: 'center', fontFamily: fonts.mono, fontWeight: 500, fontSize: 33, lineHeight: 1.3,
+      color: colors.ivory, textTransform: 'uppercase', letterSpacing: 0.5}}>{d.line}</div>
+  </AbsoluteFill>
+);
+const t = (...x: string[]) => ['#seasignora', ...x];
+export const DISH_CARDS: DishCard[] = [
+  {id: 'R-02p-tagliolini', img: 'bo108.jpg', fy: 55, band: true, textTop: 1320, label: 'new', name: 'Tagliolini', line: 'with seafood and fresh herbs',
+    caption: 'New on the menu: tagliolini with seafood and fresh herbs.', hashtags: t('#tagliolini', '#pasta', '#brera')},
+  {id: 'R-03p-akami', img: 'bo120.jpg', fy: 60, textTop: 460, label: 'new', name: 'Akami', line: 'lean red tuna, fennel, mint',
+    caption: 'New on the menu: akami, lean red tuna with fennel and mint.', hashtags: t('#akami', '#tuna', '#brera')},
+  {id: 'R-04p-capesante', img: 'bo268.jpg', fy: 45, textTop: 1360, label: 'new', name: 'Capesante', line: 'black mushrooms, hazelnuts',
+    caption: 'New on the menu: capesante with black mushrooms and hazelnuts.', hashtags: t('#capesante', '#scallops', '#brera')},
+  {id: 'R-05p-caviar', img: 'bo476.jpg', fy: 35, label: 'dessert', name: 'Cream & caviar', line: 'finished with caviar at the pass',
+    caption: 'Cream, finished with caviar at the pass.', hashtags: t('#caviar', '#dessert', '#brera')},
+  {id: 'R-06p-red', img: 'bo347.jpg', fy: 40, label: 'the bar', name: 'Red', line: 'our red cocktail, served cold',
+    caption: 'Our red cocktail, served cold at the bar.', hashtags: t('#cocktails', '#bar', '#brera')},
+];
