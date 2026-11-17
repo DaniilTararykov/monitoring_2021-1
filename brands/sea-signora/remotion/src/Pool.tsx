@@ -437,6 +437,14 @@ const S41: React.FC = () => {
     </AbsoluteFill>
   );
 };
+// client 17.11: the same frame as a picture, no band, a dark fade at the bottom under the words
+const S41P: React.FC = () => (
+  <AbsoluteFill style={{background: N}}>
+    <Box b={{left: 0, top: 0, width: 1080, height: 1920}} m={P(428, {fx: 0, fy: 40})} />
+    <div style={ab({left: 0, right: 0, bottom: 0, height: 900, background: 'linear-gradient(to top, rgba(11,11,11,0.92) 0%, rgba(11,11,11,0.7) 40%, rgba(11,11,11,0))'})} />
+    <div style={ab({left: 80, top: 1360, width: 920, ...ital(54, I)})}>{'Tell us what you like.\nWe’ll find the bottle.'}</div>
+  </AbsoluteFill>
+);
 const S42: React.FC = () => (
   <AbsoluteFill style={{background: I}}>
     <Box b={{left: 260, top: 330, width: 560, height: 980}} m={V('v7466', 5.4)} />
@@ -564,6 +572,7 @@ export const POOL: Spec[] = [
   s(38, 'at-your-service', 6, S38, 'At your service. · sea, signora', 'At your service.', '#service', '#brera'),
   s(39, 'the-face', 6, S39, 'The face you make when it arrives.', 'The face you make when it arrives.', '#dinner', '#brera'),
   s(40, 'date-night', 6, S40, 'DATE NIGHT, SORTED', 'Date night, sorted.', '#datenight', '#brera'),
+  {...s(41, 'the-bottle', 7, S41P, 'Tell us what you like. We’ll find the bottle.', 'Tell us what you like, we’ll find the bottle.', '#wine', '#brera'), id: 'Q-41p-the-bottle'},
   s(41, 'the-bottle', 7, S41, 'Tell us what you like. We’ll find the bottle.', 'Tell us what you like, we’ll find the bottle.', '#wine', '#brera'),
   s(42, 'white-cold-right', 6, S42, 'WHITE · COLD · RIGHT', 'White, cold, right.', '#wine', '#brera'),
   s(43, 'full', 6, S43, '100% / full · sea, signora · brera', '100% full. Book ahead.', '#brera', '#milan'),
