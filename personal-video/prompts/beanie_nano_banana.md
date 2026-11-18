@@ -86,3 +86,29 @@ Make it one real photograph, not a composite: match the light direction, softnes
 
 Tips: one change per request (background first, then light); if his face drifts, start a new chat from the original
 photo; pick the version whose shadows agree with the scene's lights.
+
+---
+
+# Video: animate the stills with Veo (Gemini app), vertical 9:16
+
+Reel concepts: 1) "One night in New York" story (taxi street -> stairs -> platform -> car window -> rooftop, cuts on
+movement); 2) "The impossible" (2-3 s surreal moments on the beat); 3) "One pose, many worlds" (profile 0775 stays
+still, the background changes on every beat; needs 4-5 background stills, no video model needed).
+
+## Platform
+Animate this photo as a vertical 9:16 video, 6 seconds: the subway train rushes past behind him in motion blur, the wind from the train moves his coat collar and the loose threads of his beanie, the fluorescent lights flicker slightly; he slowly lowers his hand from his ear and looks straight into the camera. Handheld camera, very subtle movement, realistic. Do not change his face, features, beanie with silver pins, rings or clothes. No text, letters, numbers or signs anywhere.
+
+## Subway car window (0775 A)
+Animate this photo as a vertical 9:16 video, 6 seconds: the train moves, streaks of tunnel lights sweep across his profile and the window, the car sways gently; he stays still in profile, then blinks slowly. Realistic, cinematic. Do not change his face, features, beanie with silver pins or clothes. No text, letters, numbers or signs anywhere.
+
+## Marble twin (0775, museum)
+Animate this photo as a vertical 9:16 video, 6 seconds: he stands perfectly still in profile while the giant marble bust behind him slowly turns its stone head towards him, dust falling from the marble; the camera slowly pushes in. Realistic, quiet, eerie. Do not change his face, features, beanie with silver pins or clothes. No text, letters, numbers or signs anywhere.
+
+## Posters fly away (0775 or 0788)
+Animate this photo as a vertical 9:16 video, 6 seconds: the torn posters on the wall behind him begin to peel off one by one and fly away in a silent wind, faster and faster, paper pieces passing in front of the camera; he stays completely still. Realistic, frozen calm against chaos. Do not change his face, features, beanie with silver pins or clothes. No text, letters, numbers or signs anywhere.
+
+## The brooch blooms (0795)
+Animate this photo as a vertical 9:16 video, 6 seconds: the silver rose brooch slowly turns into a real deep dark-red rose, its petals open and a few fall past his hands; his fingers move slightly. Macro, realistic, soft light. Do not change his hands, rings or coat. No text, letters, numbers or signs anywhere.
+
+## Giant (0715)
+Animate this photo as a vertical 9:16 video, 6 seconds: he, a colossal giant, takes one slow step forward in the Milan street, the ground trembles slightly, tiny cars stop at his feet, low camera at street level tilting up. Realistic, epic scale. Do not change his face, features, beanie with silver pins, coat or the rose brooch. No text, letters, numbers or signs anywhere.
