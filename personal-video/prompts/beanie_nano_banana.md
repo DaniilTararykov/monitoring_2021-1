@@ -71,3 +71,18 @@ Replace only the background of this photo: he leans against the wall inside an a
 
 ## APC_0788 3: brutalist concrete in fog
 Replace only the background of this photo: he leans against the base of a colossal brutalist concrete wall that rises into thick fog; far above, the dark silhouette of a huge airship barely visible in the mist. Cold, soft, diffused light, his soft shadow on the concrete. Same framing, photorealistic, cinematic high-fashion campaign. Do not change the man at all: same face, features, skin, hair, mustache, expression, piercings, pose, hands in pockets, rings, beanie with every silver pin, chain and cross, coat, turtleneck, belt, trousers and the silver rose brooch — move him into the new scene pixel for pixel, only relight. No text anywhere: no letters, words, numbers, signs or logos.
+
+---
+
+# Realism block (append to the end of every prompt above)
+
+Make it one real photograph, not a composite: match the light direction, softness and colour temperature of the new scene on him (the light on his face, beanie pins and coat must come from the visible light sources in the scene); add his natural contact shadow and soft shadow on the nearby surfaces; the scene's perspective and horizon line must match his camera height and lens; the background focus falls off naturally behind him like a real 35–50mm lens; the ambient colour of the scene softly reflects on the edges of his coat and face; same noise, grain, sharpness and contrast over the whole image; no cut-out edges, no halo, no glow around him, no over-smooth AI skin. Only the lighting on him may change — never his features, body, pose or clothes. Shot on a full-frame camera, natural colours, editorial photography.
+
+## Fix-ups (send as a second message in the same chat)
+- Floating, no shadow: He looks pasted on. Add his real shadow on the floor and the wall from the scene's light sources, and darken the ground where he stands (contact shadow). Change nothing else.
+- Light mismatch: The light on him doesn't match the scene. Relight only him so the light comes from the same direction and has the same colour as the lights in the background. Keep his face and clothes exactly the same.
+- Sharpness mismatch: Match the sharpness and grain of him and the background, and make the background fall out of focus naturally behind him like a real lens. Change nothing else.
+- Halo: Remove the light outline around him and blend his edges into the scene naturally. Change nothing else.
+
+Tips: one change per request (background first, then light); if his face drifts, start a new chat from the original
+photo; pick the version whose shadows agree with the scene's lights.
