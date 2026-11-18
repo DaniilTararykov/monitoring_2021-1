@@ -29,3 +29,23 @@ Edit this photo: the torn posters on the wall behind him are peeling off and fly
 
 ## APC_0780: the wall opens into the night sky
 Edit this photo: behind him the wall is tearing open like a huge sheet of paper, the torn edges curling back, and through the opening you see a deep night sky full of stars. He leans against the remaining edge, unchanged. Keep his face, pose, beanie with silver pins, coat and the rose brooch exactly the same. Photorealistic, soft starlight on his shoulder, surreal high-fashion campaign.
+
+---
+
+# "One night in New York" background swaps (no text, he stays untouched)
+
+Rules for every prompt: replace only the background, relight him to match, never redraw him; no text of any kind.
+If his face or outfit changes, send in the same chat: "Keep this new background exactly, but put the man back
+exactly as he is in my original photo — do not redraw his face or outfit."
+
+## APC_0775 A: inside the subway car
+Replace only the background of this photo: he now stands inside an empty New York subway car at night, in profile next to the window, the dark tunnel outside with streaks of passing lights in motion blur, cold fluorescent light from above, metal poles and orange seats softly out of focus behind him. Relight him to match: cool overhead fluorescent light, a faint reflection of his profile in the window. Same framing, photorealistic, high-fashion campaign. Do not change the man at all: same face, features, skin, hair, mustache, expression, piercings, pose, beanie with every silver pin, chain and cross, coat, turtleneck and the silver rose brooch — move him into the new scene pixel for pixel, only relight. No text anywhere: no letters, words, numbers, signs, logos, posters, graffiti, maps or route names.
+
+## APC_0775 B: rooftop at night
+Replace only the background of this photo: he stands in profile on a rooftop in New York at night, the Manhattan skyline glowing behind him as soft out-of-focus lights, a cold clear night. Relight him with cool blue night light and a warm city glow on the edge of his face. Same framing, photorealistic, high-fashion campaign. Do not change the man at all: same face, features, skin, hair, mustache, expression, piercings, pose, beanie with every silver pin, chain and cross, coat, turtleneck and the silver rose brooch — move him into the new scene pixel for pixel, only relight. No text anywhere: no letters, words, numbers, signs, logos, billboards or lit-up names on buildings.
+
+## APC_0788 A: tiled station wall
+Replace only the background of this photo: he leans against the plain white tiled wall of an old New York subway station, worn tiles with a dark blue tile stripe, a green steel column at the side, warm fluorescent light from above, the empty platform fading into the distance. Relight him to match the station light and add his soft shadow on the tiles. Same framing, photorealistic, high-fashion campaign. Do not change the man at all: same face, features, skin, hair, mustache, expression, piercings, pose, hands in pockets, rings, beanie with every silver pin, chain and cross, coat, turtleneck, belt, trousers and the silver rose brooch — move him into the new scene pixel for pixel, only relight. No text anywhere: no letters, words, numbers, signs, station names, mosaics with words, logos, posters or graffiti.
+
+## APC_0788 B: night street with taxis
+Replace only the background of this photo: he leans against a dark brick wall on a New York street at night, wet asphalt reflecting street lights, two yellow taxis passing in motion blur behind him, light steam rising from a manhole. Relight him with cool street light and a warm rim light on one side, his soft shadow on the bricks. Same framing, photorealistic, high-fashion campaign. Do not change the man at all: same face, features, skin, hair, mustache, expression, piercings, pose, hands in pockets, rings, beanie with every silver pin, chain and cross, coat, turtleneck, belt, trousers and the silver rose brooch — move him into the new scene pixel for pixel, only relight. No text anywhere: no letters, words, numbers, signs, neon words, logos, taxi markings, license plates, posters or graffiti.
