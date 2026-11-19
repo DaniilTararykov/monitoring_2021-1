@@ -2,218 +2,201 @@ import React from 'react';
 import {AbsoluteFill, Audio, Easing, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
 import {brandPalette, colors, fonts} from '../../tokens';
 import {loadBrandFonts} from './fonts';
-import {Clip, shade} from './VillaRecap';
+import {Clip} from './VillaRecap';
 
 loadBrandFonts();
 
-// Villa Prato, two more creative cuts (client 19.11: «более креативно»). The idea is in the edit itself, not in captions.
-// D · «Four hands, live»: the screen splits into four panels, one pair of hands each, opening one by one (1, 2, 3, 4);
-//     the four panels change together on the beat (prep → plate → serve), then the grid pulls apart into one frame of
-//     both chefs. The end card closes the same way: two halves, Sea, Signora | Villa Prato, slide into one.
-// E · «Full circle»: match cuts on circles. A painted medallion on the villa ceiling, the dome, the red wheel of the
-//     slicer, a pot from above, plates, the choux: every round thing lands on the same ring in the centre of the frame,
-//     so the cut feels like one continuous shape turning through the evening.
+// Villa Prato, the two creative cuts made faster and with one headline only (client 19.11: «более креативно»,
+// «и динамичнее, и один заголовок»). Every cut lands on the beat of our own track; each shot punches in on the cut.
+// D · «Four hands»: four panels open on four beats, the four change together on every beat (prep, plate, finish, the
+//     bar, the guests, the villa), then the grid breaks into one-beat full-frame cuts. One headline: FOUR HANDS.
+// E · «Full circle»: match cuts on circles (painted medallions, the dome, the slicer wheel, a pot, plates, the choux),
+//     every round thing landing on the same spinning ring, first on the beat, then twice as fast. One headline.
 
 const FPS = 30;
 const G = brandPalette.green5605, O = brandPalette.orange158, SA = brandPalette.sand454, I = colors.ivory;
-const sec = (s: number) => Math.round(s * FPS);
 const ip = (f: number, a: number, b: number, c = 0, d = 1, e: (t: number) => number = Easing.out(Easing.cubic)) =>
   interpolate(f, [a, b], [c, d], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: e});
 const io = Easing.inOut(Easing.cubic);
-const music = (file: string, total: number) => (
-  <Audio src={staticFile(`music/${file}`)} volume={(fr) => interpolate(fr, [0, 8, sec(total) - 36, sec(total)], [0, 0.85, 0.85, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
-);
 const mono = (s: number, c: string): React.CSSProperties => ({fontFamily: fonts.mono, fontWeight: 500, fontSize: s, letterSpacing: 6, textTransform: 'uppercase', color: c});
-
-// ───────── D · four hands, live ─────────
-type P = {n: string; at: number};
-const Panel: React.FC<{i: number; p: P; appear: number; num?: boolean; gap: number}> = ({i, p, appear, num, gap}) => {
+const music = (file: string, frames: number) => (
+  <Audio src={staticFile(`music/${file}`)} volume={(fr) => interpolate(fr, [0, 4, frames - 30, frames], [0, 0.9, 0.9, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
+);
+// a shot that punches in on the cut and keeps drifting
+const Punch: React.FC<{n: string; at: number; len: number; amt?: number; fx?: number; fy?: number}> = ({n, at, len, amt = 0.14, fx = 50, fy = 50}) => {
   const f = useCurrentFrame();
-  const c = i % 2, r = Math.floor(i / 2);
-  const s = ip(f, appear, appear + 9, 0, 1, io);
-  const out = gap; // 0..1: the grid pulls apart
-  const dx = (c ? 1 : -1) * out * 600, dy = (r ? 1 : -1) * out * 1050;
-  const n = ip(f, appear + 2, appear + 8) * (1 - ip(f, appear + 16, appear + 24));
+  const s = 1 + amt * (1 - ip(f, 0, 7)) + f * 0.002;
+  return <AbsoluteFill style={{overflow: 'hidden', transform: `scale(${s})`, transformOrigin: `${fx}% ${fy}%`}}><Clip n={n} at={at} len={len} z={[1.0, 1.0]} /></AbsoluteFill>;
+};
+const Headline: React.FC<{text: string; at: number; top: number; size?: number; kicker?: string}> = ({text, at, top, size = 200, kicker}) => {
+  const f = useCurrentFrame();
+  const a = ip(f, at, at + 6);
   return (
-    <div style={{position: 'absolute', left: c * 540 + (c ? 3 : 0), top: r * 960 + (r ? 3 : 0), width: 537, height: 957, overflow: 'hidden',
-      clipPath: `inset(${(1 - s) * 50}% ${(1 - s) * 50}% round 0)`, transform: `translate(${dx}px, ${dy}px)`}}>
-      <div style={{position: 'absolute', left: -270, top: -480, width: 1080, height: 1920, transform: 'scale(0.75)', transformOrigin: '50% 50%'}}>
-        <Clip n={p.n} at={p.at} len={6} z={[1.02, 1.06]} />
-      </div>
-      {num && <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: fonts.display, fontSize: 260,
-        color: I, opacity: n, textShadow: '0 4px 30px rgba(0,0,0,0.5)'}}>{i + 1}</div>}
+    <div style={{position: 'absolute', left: 0, right: 0, top, textAlign: 'center'}}>
+      {kicker && <div style={{...mono(22, I), opacity: ip(f, at + 6, at + 12), marginBottom: 18, textShadow: '0 2px 14px rgba(0,0,0,0.6)'}}>{kicker}</div>}
+      <div style={{fontFamily: fonts.display, fontSize: size, lineHeight: 0.9, color: I, opacity: a, transform: `scale(${1.25 - 0.25 * a})`,
+        textShadow: '0 6px 40px rgba(0,0,0,0.55)', whiteSpace: 'pre-line'}}>{text}</div>
     </div>
   );
 };
-const GRIDS: P[][] = [
+
+// ───────── D · four hands ─────────
+const BD = (60 / 122) * FPS; // one beat of brera-house in frames
+const bd = (b: number) => Math.round(b * BD);
+type P = {n: string; at: number};
+const SETS: P[][] = [
   [{n: '6090', at: 5.6}, {n: '6085', at: 2.3}, {n: '6096', at: 3.5}, {n: '6086', at: 4.8}],
   [{n: '6162', at: 1.5}, {n: '6157', at: 5.7}, {n: '6177', at: 26.2}, {n: '6178', at: 6.7}],
   [{n: '6164', at: 3.7}, {n: '6165', at: 8.9}, {n: '6138', at: 9.6}, {n: '6043', at: 4.8}],
+  [{n: '6042', at: 4.4}, {n: '6097', at: 0}, {n: '6047', at: 0}, {n: '6044', at: 15.4}],
+  [{n: '6100', at: 1.8}, {n: '6124', at: 5.3}, {n: '6125', at: 3.5}, {n: '6182', at: 1.7}],
+  [{n: '6013', at: 0.5}, {n: '5962', at: 0}, {n: '6060', at: 0}, {n: '6022', at: 0}],
 ];
-const Grid: React.FC = () => {
+const Cell: React.FC<{i: number; p: P; open: number; out: number}> = ({i, p, open, out}) => {
   const f = useCurrentFrame();
-  // 0–2.4 s panels open one by one with their number, then the four change together every 1.3 s, then pull apart
-  const set = f < sec(3.3) ? 0 : f < sec(4.6) ? 1 : 2;
-  const gap = ip(f, sec(5.9), sec(6.6), 0, 1, Easing.in(Easing.cubic));
-  const lab = ['four hands', 'plate', 'finish'][set];
+  const c = i % 2, r = Math.floor(i / 2);
+  const s = ip(f, open, open + 5, 0, 1, io);
   return (
-    <AbsoluteFill style={{background: colors.night}}>
-      <Sequence from={sec(5.9)}><Clip n="6169" at={15.6} len={2.6} z={[1.12, 1.02]} /></Sequence>
-      {GRIDS[set].map((p, i) => <Sequence key={`${set}-${i}`} from={set === 0 ? 0 : set === 1 ? sec(3.3) : sec(4.6)}>
-        <Panel i={i} p={p} appear={set === 0 ? sec(0.2 + i * 0.6) : -20} num={set === 0} gap={gap} /></Sequence>)}
-      <div style={{position: 'absolute', left: 0, right: 0, top: 944, textAlign: 'center', opacity: 1 - gap}}>
-        <span style={{background: colors.night, padding: '8px 20px', ...mono(20, SA)}}>{lab}</span>
-      </div>
-    </AbsoluteFill>
-  );
-};
-const Big: React.FC<{top: number; kicker?: string; text: string; at?: number}> = ({top, kicker, text, at = 4}) => {
-  const f = useCurrentFrame();
-  const a = ip(f, at, at + 12);
-  return (
-    <div style={{position: 'absolute', left: 90, right: 90, top}}>
-      {kicker && <div style={{...mono(20, SA), opacity: a, marginBottom: 14}}>{kicker}</div>}
-      <div style={{fontFamily: fonts.display, fontSize: 112, lineHeight: 0.95, color: I, whiteSpace: 'pre-line', opacity: a, transform: `translateY(${(1 - a) * 22}px)`}}>{text}</div>
+    <div style={{position: 'absolute', left: c * 543, top: r * 963, width: 537, height: 957, overflow: 'hidden',
+      clipPath: `inset(${(1 - s) * 50}% ${(1 - s) * 50}%)`, transform: `translate(${(c ? 1 : -1) * out * 560}px, ${(r ? 1 : -1) * out * 1000}px)`}}>
+      <div style={{position: 'absolute', left: -270, top: -480, width: 1080, height: 1920, transform: 'scale(0.62)'}}><Punch n={p.n} at={p.at} len={3} amt={0.08} /></div>
     </div>
   );
 };
-const Halves: React.FC = () => {
+const GridD: React.FC = () => {
   const f = useCurrentFrame();
-  const s = ip(f, 0, 16, 1, 0, io);
-  const x = ip(f, 16, 26);
+  // beats 0–3: the four panels open one per beat; beats 4–11: the four change together on every beat; beat 12: apart
+  const k = f < bd(4) ? 0 : Math.min(SETS.length - 1, 1 + Math.floor((f - bd(4)) / BD) % (SETS.length - 1));
+  const setStart = f < bd(4) ? 0 : bd(4 + Math.floor((f - bd(4)) / BD));
+  const out = ip(f, bd(11.5), bd(12), 0, 1, Easing.in(Easing.cubic));
   return (
     <AbsoluteFill style={{background: colors.night}}>
-      <Clip n="6239" at={4.2} len={3} z={[1.03, 1.05]} />
-      <div style={{position: 'absolute', left: -540 * s, top: 0, width: 540, height: 1920, background: G, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 34}}>
-        <div style={{fontFamily: fonts.display, fontSize: 92, color: I, textAlign: 'right', lineHeight: 1}}>{'Sea,\nSignora'.split('\n').map((l) => <div key={l}>{l}</div>)}</div>
-      </div>
-      <div style={{position: 'absolute', left: 540 + 540 * s, top: 0, width: 540, height: 1920, background: SA, display: 'flex', alignItems: 'center', paddingLeft: 34}}>
-        <div style={{fontFamily: fonts.display, fontSize: 92, color: G, lineHeight: 1}}>{'Villa\nPrato'.split('\n').map((l) => <div key={l}>{l}</div>)}</div>
-      </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 900, textAlign: 'center', fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 90, color: O, opacity: x,
-        transform: `scale(${0.6 + 0.4 * x})`}}>×</div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1300, textAlign: 'center', ...mono(20, I), opacity: ip(f, 30, 42)}}>four hands · 13.11</div>
+      {SETS[k].map((p, i) => (
+        <Sequence key={`${setStart}-${i}`} from={setStart}><Cell i={i} p={p} open={k === 0 ? bd(i) - setStart : -10} out={out} /></Sequence>
+      ))}
+      <div style={{opacity: 1 - out}}><Headline text={'FOUR\nHANDS'} at={bd(4)} top={760} size={230} kicker="sea, signora × villa prato" /></div>
     </AbsoluteFill>
   );
 };
-const D_SEG: [number, React.ReactNode][] = [
-  [8.5, <><Grid /><Sequence from={sec(6.6)}>{shade('bottom', 700)}<Big top={1400} kicker="villa prato · 13.11" text="one kitchen" /></Sequence></>],
-  [1.8, <><Clip n="6013" at={0.5} len={1.8} z={[1.0, 1.06]} /></>],
-  [1.6, <><Clip n="5962" at={0} len={1.6} /></>],
-  [1.6, <><Clip n="6060" at={0} len={1.6} />{shade('bottom', 700)}<Big top={1400} text="one table" at={2} /></>],
-  [3.4, <QuadGuests />],
-  [2.6, <><Clip n="6227" at={4.5} len={2.6} z={[1.0, 1.05]} />{shade('bottom', 640)}<Big top={1420} text="one last pour" at={2} /></>],
-  [2.2, <Clip n="6239" at={2.0} len={2.2} z={[1.0, 1.03]} />],
-  [3.0, <Halves />],
+const D_FULL: [string, number, number][] = [ // clip, start, beats
+  ['6169', 15.6, 1], ['5965', 1, 1], ['6013', 0.5, 1], ['6051', 0.2, 1], ['6042', 4.4, 1], ['6090', 5.6, 1], ['6086', 4.8, 1], ['6163', 11.8, 1],
+  ['6177', 26.2, 1], ['6138', 9.6, 1], ['6174', 2.4, 1], ['6182', 1.7, 1], ['6226', 1.7, 1], ['6124', 5.3, 1], ['6227', 4.5, 2], ['6239', 2.0, 2],
 ];
-function QuadGuests() {
-  const ps: P[] = [{n: '6100', at: 1.8}, {n: '6124', at: 5.3}, {n: '6125', at: 3.5}, {n: '6182', at: 1.7}];
+const D_GRID = 12, D_END = 6;
+export const D_FRAMES = bd(D_GRID + D_FULL.reduce((s, x) => s + x[2], 0) + D_END);
+const HalvesD: React.FC = () => {
+  const f = useCurrentFrame();
+  const s = ip(f, 0, bd(1), 1, 0, io);
   return (
     <AbsoluteFill style={{background: colors.night}}>
-      {ps.map((p, i) => <Panel key={i} i={i} p={p} appear={i * 4} gap={0} />)}
-      <div style={{position: 'absolute', left: 0, right: 0, top: 944, textAlign: 'center'}}><span style={{background: colors.night, padding: '8px 20px', ...mono(20, SA)}}>serve</span></div>
+      <Clip n="6239" at={3.0} len={2} z={[1.03, 1.05]} />
+      <div style={{position: 'absolute', left: -540 * s, top: 0, width: 540, height: 1920, background: G, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', paddingRight: 30}}>
+        <div style={{fontFamily: fonts.display, fontSize: 96, color: I, textAlign: 'right', lineHeight: 1}}><div>Sea,</div><div>Signora</div></div>
+      </div>
+      <div style={{position: 'absolute', left: 540 + 540 * s, top: 0, width: 540, height: 1920, background: SA, display: 'flex', alignItems: 'center', paddingLeft: 30}}>
+        <div style={{fontFamily: fonts.display, fontSize: 96, color: G, lineHeight: 1}}><div>Villa</div><div>Prato</div></div>
+      </div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1260, textAlign: 'center', ...mono(20, I), opacity: ip(f, bd(1.5), bd(2))}}>13 · 11</div>
     </AbsoluteFill>
   );
-}
-export const D_SEC = D_SEG.reduce((s, [l]) => s + l, 0);
+};
 export const VillaQuad: React.FC = () => {
-  let t = 0;
+  let b = D_GRID;
   return (
     <AbsoluteFill style={{background: '#000'}}>
-      {music('villa-hands.mp3', D_SEC)}
-      {D_SEG.map(([l, node], i) => { const from = sec(t); t += l; return <Sequence key={i} from={from} durationInFrames={sec(t) - from}>{node}</Sequence>; })}
+      {music('villa-hands.mp3', D_FRAMES)}
+      <Sequence durationInFrames={bd(D_GRID)}><GridD /></Sequence>
+      {D_FULL.map(([n, at, beats], i) => {
+        const from = bd(b); b += beats;
+        return <Sequence key={i} from={from} durationInFrames={bd(b) - from}><Punch n={n} at={at} len={beats * 0.5} /></Sequence>;
+      })}
+      <Sequence from={bd(b)}><HalvesD /></Sequence>
     </AbsoluteFill>
   );
 };
 
 // ───────── E · full circle ─────────
-// circle centre and radius of the round subject in each 1080×1920 frame (measured on stills at the chosen start)
-type C = {n: string; at: number; len: number; cx: number; cy: number; r: number; line?: string; top?: boolean};
+const BE = (60 / 116) * FPS; // one beat of italo-arp in frames
+const be = (b: number) => Math.round(b * BE);
+type C = {n: string; at: number; cx: number; cy: number; r: number};
 const R = 380, CX = 540, CY = 900;
-const CIRC: C[] = [
-  {n: '5965', at: 1, len: 1.5, cx: 470, cy: 732, r: 372},
-  {n: '5964', at: 1, len: 0.9, cx: 624, cy: 930, r: 348},
-  {n: '6013', at: 1, len: 1.4, cx: 553, cy: 897, r: 240, line: 'under the painted\nceilings of Villa Prato'},
-  {n: '5953', at: 1, len: 1.3, cx: 508, cy: 947, r: 348},
-  {n: '6086', at: 4.8, len: 1.5, cx: 544, cy: 890, r: 430, line: 'two kitchens'},
-  {n: '6162', at: 1.5, len: 1.5, cx: 524, cy: 948, r: 420, line: 'four hands'},
-  {n: '6138', at: 15.0, len: 1.5, cx: 588, cy: 984, r: 440},
-  {n: '6122', at: 1, len: 1.5, cx: 475, cy: 981, r: 500, line: 'one long table'},
-  {n: '6227', at: 5.0, len: 2.4, cx: 530, cy: 993, r: 240, line: 'and it all came\nfull circle'},
-];
-const Ring: React.FC<{total: number}> = ({total}) => {
-  const f = useCurrentFrame();
-  const a = ip(f, 4, 20) * (1 - ip(f, sec(total) - 12, sec(total)));
-  return (
-    <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
-      <circle cx={CX} cy={CY} r={R + 26} fill="none" stroke={I} strokeWidth={5} strokeDasharray="4 16" strokeLinecap="round" opacity={a * 0.95}
-        transform={`rotate(${f * 0.6} ${CX} ${CY})`} />
-    </svg>
-  );
+const CC: Record<string, C> = {
+  med: {n: '5965', at: 1, cx: 470, cy: 732, r: 372},
+  med2: {n: '5964', at: 1, cx: 624, cy: 930, r: 348},
+  dome: {n: '6013', at: 1, cx: 553, cy: 897, r: 240},
+  wheel: {n: '5953', at: 1, cx: 508, cy: 947, r: 348},
+  pot: {n: '6086', at: 4.8, cx: 544, cy: 890, r: 430},
+  plate: {n: '6162', at: 1.5, cx: 524, cy: 948, r: 420},
+  plate2: {n: '6138', at: 15.0, cx: 588, cy: 984, r: 440},
+  table: {n: '6122', at: 1, cx: 475, cy: 981, r: 500},
+  choux: {n: '6227', at: 5.0, cx: 530, cy: 993, r: 240},
 };
-const Matched: React.FC<{c: C}> = ({c}) => {
+// first pass one beat each, second pass half a beat each (the same shapes, later in the shot), then the choux holds
+const E_CUTS: [keyof typeof CC, number, number][] = [
+  ['med', 0, 1], ['med2', 0, 1], ['dome', 0, 1], ['wheel', 0, 1], ['pot', 0, 1], ['plate', 0, 1], ['plate2', 0, 1], ['table', 0, 1],
+  ['med', 1.2, 0.5], ['dome', 0.8, 0.5], ['wheel', 0.8, 0.5], ['pot', 1.0, 0.5], ['plate', 1.0, 0.5], ['plate2', 0.8, 0.5], ['table', 0.8, 0.5], ['med2', 0.8, 0.5],
+  ['choux', 0, 4],
+];
+const E_END = 6;
+const E_MONT = E_CUTS.reduce((s, x) => s + x[2], 0);
+export const E_FRAMES = be(E_MONT + E_END);
+const Matched: React.FC<{c: C; off: number; len: number}> = ({c, off, len}) => {
   const f = useCurrentFrame();
-  // size the round subject to the ring, but never so small that the frame shows an edge after moving it to the centre
   const k = Math.max(Math.min(1.6, Math.max(1, R / c.r)), CX / c.cx, (1080 - CX) / (1080 - c.cx), CY / c.cy, (1920 - CY) / (1920 - c.cy));
-  const drift = 1 + f / 900;  // a slow push so the cut keeps moving
+  const punch = 1 + 0.1 * (1 - ip(f, 0, 6)) + f * 0.002;
   const tx = CX - c.cx * k, ty = CY - c.cy * k;
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
       <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transformOrigin: '0 0',
-        transform: `translate(${CX}px, ${CY}px) scale(${drift}) translate(${-CX}px, ${-CY}px) translate(${tx}px, ${ty}px) scale(${k})`}}>
-        <Clip n={c.n} at={c.at} len={c.len} z={[1, 1]} />
+        transform: `translate(${CX}px, ${CY}px) scale(${punch}) translate(${-CX}px, ${-CY}px) translate(${tx}px, ${ty}px) scale(${k})`}}>
+        <Clip n={c.n} at={c.at + off} len={len} z={[1, 1]} />
       </div>
     </AbsoluteFill>
   );
 };
-const Caption: React.FC<{text: string; top?: boolean}> = ({text, top}) => {
+const RingE: React.FC = () => {
   const f = useCurrentFrame();
-  const a = ip(f, 3, 13);
+  const beat = (f % BE) / BE;
+  const pulse = 1 + 0.035 * (1 - Math.min(1, beat * 4));
+  const fast = f > be(8) ? 2.2 : 1;
   return (
-    <>
-      {shade(top ? 'top' : 'bottom', 560, 0.7)}
-      <div style={{position: 'absolute', left: 0, right: 0, top: top ? 300 : 1400, textAlign: 'center', fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 58,
-        lineHeight: 1.15, color: I, whiteSpace: 'pre-line', opacity: a}}>{text}</div>
-    </>
+    <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
+      <g transform={`translate(${CX} ${CY}) scale(${pulse}) rotate(${f * 1.2 * fast}) translate(${-CX} ${-CY})`}>
+        <circle cx={CX} cy={CY} r={R + 26} fill="none" stroke={I} strokeWidth={5} strokeDasharray="4 16" strokeLinecap="round" opacity={0.95} />
+      </g>
+    </svg>
   );
 };
-const CircleEnd: React.FC = () => {
+const EndE: React.FC = () => {
   const f = useCurrentFrame();
-  const d = ip(f, 0, 24, 0, 1, io);
-  const a = (x: number) => ip(f, x, x + 14);
+  const d = ip(f, 0, be(1.5), 0, 1, io);
+  const a = (x: number) => ip(f, x, x + 8);
   return (
     <AbsoluteFill style={{background: G}}>
       <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
-        <circle cx={CX} cy={CY} r={R + 26} fill="none" stroke={O} strokeWidth={4} strokeDasharray={`${2 * Math.PI * (R + 26) * d} 9999`}
-          transform={`rotate(-90 ${CX} ${CY})`} />
+        <circle cx={CX} cy={CY} r={R + 26} fill="none" stroke={O} strokeWidth={5} strokeDasharray={`${2 * Math.PI * (R + 26) * d} 9999`} transform={`rotate(-90 ${CX} ${CY})`} />
       </svg>
-      <div style={{position: 'absolute', left: 0, right: 0, top: CY - 150, textAlign: 'center'}}>
-        <div style={{fontFamily: fonts.display, fontSize: 96, color: I, lineHeight: 1, opacity: a(10)}}>Sea, Signora</div>
-        <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 60, color: O, margin: '10px 0', opacity: a(16)}}>×</div>
-        <div style={{fontFamily: fonts.display, fontSize: 96, color: I, lineHeight: 1, opacity: a(22)}}>Villa Prato</div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: CY - 120, textAlign: 'center'}}>
+        <div style={{fontFamily: fonts.display, fontSize: 84, color: I, lineHeight: 1, opacity: a(be(1))}}>Sea, Signora</div>
+        <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 56, color: O, margin: '8px 0', opacity: a(be(1.5))}}>×</div>
+        <div style={{fontFamily: fonts.display, fontSize: 84, color: I, lineHeight: 1, opacity: a(be(2))}}>Villa Prato</div>
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: CY + R + 90, textAlign: 'center', ...mono(20, SA), opacity: a(30)}}>cena a quattro mani · 13.11</div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: CY + R + 90, textAlign: 'center', ...mono(20, SA), opacity: a(be(2.5))}}>four hands · 13.11</div>
     </AbsoluteFill>
   );
 };
-const E_END = 3.2;
-export const E_SEC = CIRC.reduce((s, c) => s + c.len, 0) + E_END;
 export const VillaCircle: React.FC = () => {
-  let t = 0;
+  let b = 0;
   return (
     <AbsoluteFill style={{background: '#000'}}>
-      {music('villa-letter.mp3', E_SEC)}
-      {CIRC.map((c, i) => {
-        const from = sec(t); t += c.len;
-        return (
-          <Sequence key={i} from={from} durationInFrames={sec(t) - from}>
-            <Matched c={c} />
-            {c.line && <Caption text={c.line} top={c.top} />}
-          </Sequence>
-        );
+      {music('villa-circle.mp3', E_FRAMES)}
+      {E_CUTS.map(([key, off, beats], i) => {
+        const from = be(b); b += beats;
+        return <Sequence key={i} from={from} durationInFrames={be(b) - from}><Matched c={CC[key]} off={off} len={beats * 0.55} /></Sequence>;
       })}
-      <Sequence durationInFrames={sec(t)}><Ring total={t} /></Sequence>
-      <Sequence from={sec(t)}><CircleEnd /></Sequence>
+      <Sequence durationInFrames={be(E_MONT)}><RingE /></Sequence>
+      <Sequence from={be(E_MONT - 4)} durationInFrames={be(4)}><Headline text={'FULL\nCIRCLE'} at={2} top={1330} size={150} /></Sequence>
+      <Sequence from={be(E_MONT)}><EndE /></Sequence>
     </AbsoluteFill>
   );
 };
