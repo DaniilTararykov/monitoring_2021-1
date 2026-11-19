@@ -17,7 +17,7 @@ const ip = (f: number, a: number, b: number, c = 0, d = 1, e: (t: number) => num
   interpolate(f, [a, b], [c, d], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: e});
 const sec = (s: number) => Math.round(s * FPS);
 
-const Clip: React.FC<{n: string; at: number; len: number; fx?: number; fy?: number; z?: [number, number]; rate?: number}> = ({n, at, len, fx = 50, fy = 50, z = [1.02, 1.08], rate = 1}) => {
+export const Clip: React.FC<{n: string; at: number; len: number; fx?: number; fy?: number; z?: [number, number]; rate?: number}> = ({n, at, len, fx = 50, fy = 50, z = [1.02, 1.08], rate = 1}) => {
   const f = useCurrentFrame();
   const s = interpolate(f, [0, sec(len)], z, {extrapolateRight: 'clamp'});
   return (
@@ -27,11 +27,11 @@ const Clip: React.FC<{n: string; at: number; len: number; fx?: number; fy?: numb
     </AbsoluteFill>
   );
 };
-const shade = (side: 'top' | 'bottom', h = 760, a = 0.78) => (
+export const shade = (side: 'top' | 'bottom', h = 760, a = 0.78) => (
   <div style={{position: 'absolute', left: 0, right: 0, [side]: 0, height: h,
     background: `linear-gradient(${side === 'top' ? 'to bottom' : 'to top'}, rgba(11,11,11,${a}) 0%, rgba(11,11,11,${a * 0.6}) 45%, rgba(11,11,11,0) 100%)`}} />
 );
-const Line: React.FC<{top: number; at?: number; kicker?: string; head?: string; sub?: string; center?: boolean; size?: number}> = ({top, at = 4, kicker, head, sub, center, size = 96}) => {
+export const Line: React.FC<{top: number; at?: number; kicker?: string; head?: string; sub?: string; center?: boolean; size?: number}> = ({top, at = 4, kicker, head, sub, center, size = 96}) => {
   const f = useCurrentFrame();
   const a = (d: number) => ip(f, at + d, at + d + 14);
   const al: React.CSSProperties = center ? {left: 0, right: 0, textAlign: 'center'} : {left: 90, right: 90};
