@@ -45,6 +45,7 @@ import {POOL} from './Pool';
 import {TEN} from './Ten';
 import {RECENT} from './Recent';
 import {CLASSIC} from './Classic';
+import {VillaRecap, VILLA_RECAP_SEC} from './VillaRecap';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
 import {week7y} from './week7y';
@@ -65,6 +66,7 @@ export const RemotionRoot: React.FC = () => (
     {DESIGNS.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {[...week11words, ...week11live].map((p) => <Composition key={p.id} id={p.id} component={ParolaView} durationInFrames={Math.round(p.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{p}} />)}
     {week11designs.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
+    <Composition id="V-villa-prato-recap" component={VillaRecap} durationInFrames={Math.round(VILLA_RECAP_SEC * 30)} fps={30} width={1080} height={1920} />
     {CLASSIC.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {RECENT.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {TEN.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
