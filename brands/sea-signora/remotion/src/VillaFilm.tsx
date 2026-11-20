@@ -9,7 +9,7 @@ loadBrandFonts();
 // else). A strip of film in Sea, Signora orange runs up through a green frame, steadily, on the tempo of the track
 // (one film frame every two beats): sprocket holes, a frame number on every frame, a mono edge print along the side
 // (SEA, SIGNORA × VILLA PRATO · CENA A QUATTRO MANI · 13.11). Each film frame plays its own take of the evening, in order,
-// once. No cuts and no jumps: the motion is the strip itself. The headline stands still on the green until the strip
+// once; the guests at the table get their own frames (client 20.11: «гостей не хватает»). No cuts and no jumps: the motion is the strip itself. The headline stands still on the green until the strip
 // covers it; at the end the strip slows and stops on the chef with the room, then the end card.
 
 const FPS = 30;
@@ -20,7 +20,8 @@ const SPEED = PITCH / (2 * BEAT);                               // px per output
 const CLIPS: [string, number][] = [
   ['6013', 0.5], ['6022', 0], ['5962', 0], ['5983', 5.7], ['6050', 2.4], ['6093', 0.6], ['6096', 2.7], ['6047', 0],
   ['6159', 12.0], ['6165', 8.0], ['6086', 4.6], ['6090', 5.6], ['6162', 0.8], ['6177', 24.4], ['6178', 9.6], ['6138', 9.6],
-  ['6174', 1.5], ['6182', 0.6], ['6226', 0.6], ['6100', 0.6], ['6227', 5.0], ['6239', 2.0],
+  ['6174', 1.5], ['6099', 1.2], ['6124', 0.8], ['6182', 0.6], ['6123', 1.5], ['6226', 0.6], ['6224', 1.4], ['6100', 1.2],
+  ['6225', 0.4], ['6227', 5.0], ['6103', 1.7], ['6239', 2.0],
 ];
 const INTRO = Math.round(4 * BEAT);                                       // the title alone on green
 const STOP_OFF = 1920 + (CLIPS.length - 1) * PITCH + FH / 2 - 960;        // offset that centres the last frame
@@ -108,7 +109,7 @@ const End: React.FC = () => (
 );
 export const VillaFilm: React.FC = () => (
   <AbsoluteFill style={{background: G, overflow: 'hidden'}}>
-    <Audio src={staticFile('music/villa-hands.mp3')} volume={(fr) => interpolate(fr, [0, 3, FILM_FRAMES - 30, FILM_FRAMES], [0, 0.9, 0.9, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
+    <Audio src={staticFile('music/villa-film.mp3')} volume={(fr) => interpolate(fr, [0, 3, FILM_FRAMES - 30, FILM_FRAMES], [0, 0.9, 0.9, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
     <Title />
     <Strip />
     <Sequence from={FILM_FRAMES - END}><End /></Sequence>
