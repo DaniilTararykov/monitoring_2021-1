@@ -16,14 +16,19 @@ const B = (60 / 122) * FPS;
 const bt = (b: number) => Math.round(b * B);
 const mono = (s: number, c: string): React.CSSProperties => ({fontFamily: fonts.mono, fontWeight: 500, fontSize: s, letterSpacing: 6, textTransform: 'uppercase', color: c});
 
+// client 20.11 (on their copy of this cut): more guests — a little of the table with guests in the middle — and do not
+// end on the chef: end on the glasses. So: guests at the table between the bar and the kitchen, more guests in the
+// service, then wine poured, a glass at the table, the cocktails, and a hand lifting the last glass.
 const SHOTS: [string, number, number][] = [ // clip, start (s), beats
   ['6022', 0, 2], ['5962', 0, 2], ['6013', 0.5, 2], ['5983', 5.7, 2], ['6050', 2.4, 2],
   ['6093', 0.6, 2], ['6096', 2.7, 2], ['6047', 0, 2],
+  ['6099', 1.7, 2], ['6124', 5.5, 2], ['6101', 1.3, 2],
   ['6159', 12.0, 2], ['6165', 8.0, 2], ['6086', 4.6, 2], ['6090', 5.6, 2], ['6151', 6.6, 2], ['6162', 0.8, 2], ['6177', 24.4, 2], ['6138', 3.5, 2],
-  ['6174', 1.5, 2], ['6182', 0.6, 2], ['6226', 0.6, 2], ['6100', 0.6, 2],
-  ['6227', 5.0, 2], ['6239', 2.0, 4],
+  ['6174', 1.5, 2], ['6123', 1.6, 2], ['6226', 0.6, 2], ['6224', 2.4, 2], ['6100', 0.6, 2], ['6103', 1.5, 2],
+  ['6227', 5.0, 2],
+  ['6183', 1.1, 2], ['6186', 1.8, 2], ['6048', 0.5, 2], ['6049', 12.6, 4],
 ];
-const END = 4;
+const END = 3;
 const MONT = SHOTS.reduce((s, x) => s + x[2], 0);
 export const FINAL_FRAMES = bt(MONT + END);
 
