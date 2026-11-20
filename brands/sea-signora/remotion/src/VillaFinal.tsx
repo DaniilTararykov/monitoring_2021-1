@@ -22,11 +22,14 @@ const mono = (s: number, c: string): React.CSSProperties => ({fontFamily: fonts.
 const SHOTS: [string, number, number][] = [ // clip, start (s), beats
   ['6022', 0, 2], ['5962', 0, 2], ['6013', 0.5, 2], ['5983', 5.7, 2], ['6050', 2.4, 2],
   ['6093', 0.6, 2], ['6096', 2.7, 2], ['6047', 0, 2],
+  // the table with guests in the middle (client 20.11), the full room
   ['6099', 1.7, 2], ['6124', 5.5, 2], ['6101', 1.3, 2],
   ['6159', 12.0, 2], ['6165', 8.0, 2], ['6086', 4.6, 2], ['6090', 5.6, 2], ['6151', 6.6, 2], ['6162', 0.8, 2], ['6177', 24.4, 2], ['6138', 3.5, 2],
-  ['6174', 1.5, 2], ['6123', 1.6, 2], ['6226', 0.6, 2], ['6224', 2.4, 2], ['6100', 0.6, 2], ['6103', 1.5, 2],
+  // the service among the guests
+  ['6174', 1.5, 2], ['6180', 2.4, 2], ['6123', 1.6, 2], ['6226', 0.6, 2], ['6181', 0.0, 2], ['6224', 2.4, 2], ['6100', 0.6, 2], ['6103', 1.5, 2],
   ['6227', 5.0, 2],
-  ['6183', 1.1, 2], ['6186', 1.8, 2], ['6048', 0.5, 2], ['6049', 12.6, 4],
+  // end on the glasses: wine poured, the sommelier's glass, the guests raising theirs, the cocktails, the last glass lifted
+  ['6183', 1.1, 2], ['6184', 2.6, 2], ['6108', 7.4, 2], ['6048', 0.5, 2], ['6049', 12.6, 4],
 ];
 const END = 3;
 const MONT = SHOTS.reduce((s, x) => s + x[2], 0);
@@ -53,7 +56,7 @@ export const VillaFinal: React.FC = () => {
   let b = 0;
   return (
     <AbsoluteFill style={{background: '#000'}}>
-      <Audio src={staticFile('music/villa-hands.mp3')} volume={(fr) => interpolate(fr, [0, 3, FINAL_FRAMES - 30, FINAL_FRAMES], [0, 0.9, 0.9, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
+      <Audio src={staticFile('music/villa-film.mp3')} volume={(fr) => interpolate(fr, [0, 3, FINAL_FRAMES - 30, FINAL_FRAMES], [0, 0.9, 0.9, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
       {SHOTS.map(([n, at, beats], i) => {
         const from = bt(b); b += beats;
         return (
