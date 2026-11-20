@@ -19,17 +19,19 @@ const mono = (s: number, c: string): React.CSSProperties => ({fontFamily: fonts.
 // client 20.11 (on their copy of this cut): more guests — a little of the table with guests in the middle — and do not
 // end on the chef: end on the glasses. So: guests at the table between the bar and the kitchen, more guests in the
 // service, then wine poured, a glass at the table, the cocktails, and a hand lifting the last glass.
+// client 20.11: end on glasses clinking (not the cocktail alone) and only steady shots. Every window below was checked
+// on the measured camera shift (mean ≤ 1.3 px, no spike over 2.5 px at 270×480); shaky takes were dropped.
 const SHOTS: [string, number, number][] = [ // clip, start (s), beats
-  ['6022', 0, 2], ['5962', 0, 2], ['6013', 0.5, 2], ['5983', 5.7, 2], ['6050', 2.4, 2],
-  ['6093', 0.6, 2], ['6096', 2.7, 2], ['6047', 0, 2],
-  // the table with guests in the middle (client 20.11), the full room
+  ['6022', 0, 2], ['5962', 0, 2], ['5954', 0.4, 2], ['5983', 5.7, 2], ['6050', 2.4, 2],
+  ['6093', 2.4, 2], ['6096', 2.7, 2], ['6047', 1.4, 2],
+  // the table with guests in the middle
   ['6099', 1.7, 2], ['6124', 5.5, 2], ['6101', 1.3, 2],
-  ['6159', 12.0, 2], ['6165', 8.0, 2], ['6086', 4.6, 2], ['6090', 5.6, 2], ['6151', 6.6, 2], ['6162', 0.8, 2], ['6177', 24.4, 2], ['6138', 3.5, 2],
+  ['6159', 12.0, 2], ['6165', 8.0, 2], ['6086', 4.6, 2], ['6090', 5.6, 2], ['6151', 6.6, 2], ['6162', 1.4, 2], ['6177', 24.4, 2], ['6137', 3.0, 2],
   // the service among the guests
-  ['6174', 1.5, 2], ['6180', 2.4, 2], ['6123', 1.6, 2], ['6226', 0.6, 2], ['6181', 0.0, 2], ['6224', 2.4, 2], ['6100', 0.6, 2], ['6103', 1.5, 2],
+  ['6125', 3.7, 2], ['6123', 1.6, 2], ['6226', 1.9, 2], ['6224', 2.4, 2], ['6100', 1.9, 2], ['6103', 1.5, 2],
   ['6227', 5.0, 2],
-  // end on the glasses: wine poured, the sommelier's glass, the guests raising theirs, the cocktails, the last glass lifted
-  ['6183', 1.1, 2], ['6184', 2.6, 2], ['6108', 7.4, 2], ['6048', 0.5, 2], ['6049', 12.6, 4],
+  // the end: the guests clink their glasses, the cocktails, the last glass lifted
+  ['6108', 1.7, 2], ['6048', 0.5, 2], ['6049', 12.6, 4],
 ];
 const END = 3;
 const MONT = SHOTS.reduce((s, x) => s + x[2], 0);
