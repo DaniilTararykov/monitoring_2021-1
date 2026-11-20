@@ -48,6 +48,7 @@ import {CLASSIC} from './Classic';
 import {VillaRecap, VILLA_RECAP_SEC} from './VillaRecap';
 import {VillaHands, HANDS_SEC, VillaLetter, LETTER_SEC} from './VillaRecap2';
 import {VillaQuad, D_FRAMES, VillaCircle, E_FRAMES} from './VillaRecap3';
+import {VillaV1, V1_FRAMES, VillaV2, V2_FRAMES, VillaV3, V3_FRAMES, VillaV4, V4_FRAMES} from './VillaFour';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
 import {week7y} from './week7y';
@@ -68,6 +69,10 @@ export const RemotionRoot: React.FC = () => (
     {DESIGNS.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {[...week11words, ...week11live].map((p) => <Composition key={p.id} id={p.id} component={ParolaView} durationInFrames={Math.round(p.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{p}} />)}
     {week11designs.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
+    <Composition id="V-villa-v1" component={VillaV1} durationInFrames={V1_FRAMES} fps={30} width={1080} height={1920} />
+    <Composition id="V-villa-v2" component={VillaV2} durationInFrames={V2_FRAMES} fps={30} width={1080} height={1920} />
+    <Composition id="V-villa-v3" component={VillaV3} durationInFrames={V3_FRAMES} fps={30} width={1080} height={1920} />
+    <Composition id="V-villa-v4" component={VillaV4} durationInFrames={V4_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="V-villa-prato-quad" component={VillaQuad} durationInFrames={D_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="V-villa-prato-circle" component={VillaCircle} durationInFrames={E_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="V-villa-prato-hands" component={VillaHands} durationInFrames={Math.round(HANDS_SEC * 30)} fps={30} width={1080} height={1920} />
