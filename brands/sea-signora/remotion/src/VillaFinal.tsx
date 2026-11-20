@@ -23,7 +23,7 @@ const mono = (s: number, c: string): React.CSSProperties => ({fontFamily: fonts.
 // on the measured camera shift (mean ≤ 1.3 px, no spike over 2.5 px at 270×480); shaky takes were dropped.
 const SHOTS: [string, number, number][] = [ // clip, start (s), beats
   ['6022', 0, 2], ['5962', 0, 2], ['5954', 0.4, 2], ['5983', 5.7, 2], ['6050', 2.4, 2],
-  ['6093', 2.4, 2], ['6096', 2.7, 2], ['6047', 1.4, 2],
+  ['6042', 4.4, 2], ['6096', 2.7, 2], ['6047', 1.4, 2],
   // the table with guests in the middle
   ['6099', 1.7, 2], ['6124', 5.5, 2], ['6101', 1.3, 2],
   ['6159', 12.0, 2], ['6165', 8.0, 2], ['6086', 4.6, 2], ['6090', 5.6, 2], ['6151', 6.6, 2], ['6162', 1.4, 2], ['6177', 24.4, 2], ['6137', 3.0, 2],
