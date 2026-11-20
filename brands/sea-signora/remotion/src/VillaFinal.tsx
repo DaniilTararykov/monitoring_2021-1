@@ -21,17 +21,20 @@ const mono = (s: number, c: string): React.CSSProperties => ({fontFamily: fonts.
 // service, then wine poured, a glass at the table, the cocktails, and a hand lifting the last glass.
 // client 20.11: end on glasses clinking (not the cocktail alone) and only steady shots. Every window below was checked
 // on the measured camera shift (mean ≤ 1.3 px, no spike over 2.5 px at 270×480); shaky takes were dropped.
-const SHOTS: [string, number, number][] = [ // clip, start (s), beats
+// client 20.11 (3rd note): drop the last two shots, end on the glasses clinking («cin cin»), more guests, up to 40 s.
+// The toast plays from the 50 fps original at 0.6× so the clink is slow and smooth; the guests hold three beats.
+const SHOTS: [string, number, number, number?][] = [ // clip, start (s), beats, slow-motion rate (50 fps original)
   ['6022', 0, 2], ['5962', 0, 2], ['5954', 0.4, 2], ['5983', 5.7, 2], ['6050', 2.4, 2],
   ['6042', 4.4, 2], ['6096', 2.7, 2], ['6047', 1.4, 2],
   // the table with guests in the middle
-  ['6099', 1.7, 2], ['6124', 5.5, 2], ['6101', 1.3, 2],
+  ['6099', 1.4, 3], ['6124', 5.1, 3], ['6101', 1.3, 2],
   ['6159', 12.0, 2], ['6165', 8.0, 2], ['6086', 4.6, 2], ['6090', 5.6, 2], ['6151', 6.6, 2], ['6162', 1.4, 2], ['6177', 24.4, 2], ['6137', 3.0, 2],
-  // the service among the guests
-  ['6125', 3.7, 2], ['6123', 1.6, 2], ['6226', 1.9, 2], ['6224', 2.4, 2], ['6100', 1.9, 2], ['6103', 1.5, 2],
-  ['6227', 5.0, 2],
-  // the end: the guests clink their glasses, the cocktails, the last glass lifted
-  ['6108', 1.7, 2], ['6048', 0.5, 2], ['6049', 12.6, 4],
+  // the service among the guests; the chefs with the room, Robi telling the story (client: «надо добавить Роби»)
+  ['6125', 3.7, 2], ['6123', 1.6, 3], ['6226', 1.9, 2], ['6224', 1.9, 3], ['6100', 1.8, 3], ['6102', 35.3, 3], ['6239', 2.0, 2], ['6103', 1.2, 3],
+  // the caramel at the pass, then poured over the choux at the table
+  ['6227', 5.0, 2], ['6225', 0.9, 2],
+  // cin cin
+  ['6108', 0.4, 5, 0.6],
 ];
 const END = 3;
 const MONT = SHOTS.reduce((s, x) => s + x[2], 0);
@@ -59,11 +62,12 @@ export const VillaFinal: React.FC = () => {
   return (
     <AbsoluteFill style={{background: '#000'}}>
       <Audio src={staticFile('music/villa-film.mp3')} volume={(fr) => interpolate(fr, [0, 3, FINAL_FRAMES - 30, FINAL_FRAMES], [0, 0.9, 0.9, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
-      {SHOTS.map(([n, at, beats], i) => {
+      {SHOTS.map(([n, at, beats, rate], i) => {
         const from = bt(b); b += beats;
         return (
           <Sequence key={i} from={from} durationInFrames={bt(b) - from}>
-            <OffthreadVideo src={staticFile(`videos/villa/RZ4_${n}.mp4`)} startFrom={Math.round(at * FPS)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+            <OffthreadVideo src={staticFile(rate ? `videos/villa-hq/RZ4_${n}.mp4` : `videos/villa/RZ4_${n}.mp4`)} startFrom={Math.round(at * FPS)} playbackRate={rate ?? 1} muted
+              style={{width: '100%', height: '100%', objectFit: 'cover'}} />
           </Sequence>
         );
       })}
