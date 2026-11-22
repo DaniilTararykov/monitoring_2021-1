@@ -23,13 +23,13 @@
 - #seasignora #whitetruffle #tagliolini #milan
 
 **W-05v-tomahawk** (6 с)
-- На экране: from the grill / The tomahawk / a cut for sharing
-- Подпись: The tomahawk: one cut, on the bone, for the table to share.
+- На экране: scotch beef / The tomahawk / dry-aged 45 days
+- Подпись: Our Tomahawk: Scotch beef, dry-aged for 45 days, on the bone, for the table to share.
 - #seasignora #tomahawk #steak #brera
 
 **W-06v-over-the-fire** (7 с)
-- На экране: Over the fire / charcoal and open flame
-- Подпись: Over the fire: charcoal and open flame in our open kitchen.
+- На экране: Over the fire / Bavarian style, on the coals
+- Подпись: The Tomahawk, Bavarian style: over charcoal and open flame in our open kitchen.
 - #seasignora #grill #openkitchen #brera
 
 **W-07v-carved** (7 с)
@@ -38,8 +38,8 @@
 - #seasignora #tomahawk #steak #milan
 
 **W-08v-for-the-table** (7 с)
-- На экране: For the table / carved, dressed, served to share
-- Подпись: For the table: carved, dressed and served to share.
+- На экране: Osetra caviar / and a pomegranate demi-glace
+- Подпись: Tomahawk, Scotch beef dry-aged 45 days, Bavarian style, with Osetra black caviar and pomegranate demi-glace.
 - #seasignora #tomahawk #sharing #brera
 
 **W-09p-panettone** (картинка)
@@ -88,8 +88,8 @@
 - #seasignora #grill #tomahawk #brera
 
 **W-18p-dinner-for-the-table** (картинка)
-- На экране: Dinner for the table / the tomahawk, carved to share
-- Подпись: Dinner for the table: the tomahawk, carved to share.
+- На экране: Tomahawk / Osetra caviar, pomegranate demi-glace
+- Подпись: Tomahawk: Scotch beef dry-aged 45 days, Bavarian style, Osetra black caviar, pomegranate demi-glace.
 - #seasignora #tomahawk #sharing #milan
 
 **W-19p-panettone-season** (картинка)
