@@ -103,7 +103,7 @@
 - #seasignora #panettone #sharing #milan
 
 **W-21v-tonight-in-brera** (6 с)
-- На экране: via fiori chiari 32 / Tonight in Brera / under the jellyfish lamp
+- На экране: via fiori chiari 32 / Tonight in Brera
 - Подпись: Tonight in Brera, under the jellyfish lamp.
 - #seasignora #brera #milan #dinner
 
@@ -153,7 +153,7 @@
 - #seasignora #friends #sharing #brera
 
 **W-31v-we-are-open** (6 с)
-- На экране: sea, signora · brera / We are open
+- На экране: We are open
 - Подпись: We are open Monday to Friday 19:00–00:00, Saturday and Sunday 12:30–15:30 and 19:00–00:00.
 - #seasignora #brera #milan #restaurant
 

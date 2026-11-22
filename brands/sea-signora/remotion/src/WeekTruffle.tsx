@@ -84,7 +84,7 @@ const SPECS: Spec[] = [
   {id: 'W-20p-first-slice', sec: 1, src: 'IMG_3203', side: 'top', head: 'Who gets\nthe first slice?', sub: 'panettone, for the table',
     caption: 'Who gets the first slice? Panettone, for the table.', hashtags: t('#panettone', '#sharing', '#milan')},
   // Sea, Signora lifestyle
-  {id: 'W-21v-tonight-in-brera', sec: 6, src: 'S_3576', video: true, side: 'top', kicker: 'via fiori chiari 32', head: 'Tonight in Brera', sub: 'under the jellyfish lamp',
+  {id: 'W-21v-tonight-in-brera', sec: 6, src: 'S_3576', video: true, side: 'top', kicker: 'via fiori chiari 32', head: 'Tonight in Brera', sub: '',
     caption: 'Tonight in Brera, under the jellyfish lamp.', hashtags: t('#brera', '#milan', '#dinner')},
   {id: 'W-22v-aquarium', sec: 6, src: 'S_3578', video: true, side: 'top', head: 'Dinner by\nthe aquarium', sub: 'the bluest corner of Brera',
     caption: 'Dinner by the aquarium, the bluest corner of Brera.', hashtags: t('#aquarium', '#brera', '#milan')},
@@ -105,8 +105,8 @@ const SPECS: Spec[] = [
   {id: 'W-30v-good-company', sec: 6, src: 'S_3638', video: true, side: 'top', head: 'Good company', sub: 'a long table, candles, plates to share',
     caption: 'Good company: a long table, candles and plates to share.', hashtags: t('#friends', '#sharing', '#brera')},
   // client 22.11 (3rd note): hours, address and the rest (from BRAND.md / seasignorarest.com)
-  {id: 'W-31v-we-are-open', sec: 6, src: 'S_3592', video: true, side: 'top', kicker: 'sea, signora · brera', head: 'We are open', sub: '',
-    lines: ['mon–fri · 19:00–00:00', 'sat–sun · 12:30–15:30', 'and 19:00–00:00'],
+  {id: 'W-31v-we-are-open', sec: 6, src: 'S_3592', video: true, side: 'top', head: 'We are open', sub: '',
+    lines: ['mon–fri · 19:00–00:00', 'sat–sun · 12:30–15:30 | 19:00–00:00'],
     caption: 'We are open Monday to Friday 19:00–00:00, Saturday and Sunday 12:30–15:30 and 19:00–00:00.', hashtags: t('#brera', '#milan', '#restaurant')},
   {id: 'W-32v-find-us', sec: 6, src: 'S_3591', video: true, side: 'top', head: 'Find us\nin Brera', sub: 'in the heart of the old town',
     lines: ['via fiori chiari, 32', '20121 milano'],
@@ -116,7 +116,7 @@ const SPECS: Spec[] = [
   {id: 'W-34v-weekends', sec: 6, src: 'S_3594', video: true, side: 'top', head: 'Weekends,\nfrom 12:30', sub: 'sat–sun 12:30–15:30 · 19:00–00:00',
     caption: 'On weekends we open from 12:30 to 15:30, and again from 19:00 to midnight.', hashtags: t('#weekend', '#brera', '#milan')},
   {id: 'W-35v-book-a-table', sec: 6, src: 'S_3585', video: true, side: 'top', head: 'Book a table', sub: 'we keep one for you',
-    lines: ['+39 345 2831086', 'info@seasignorarest.com'],
+    lines: ['+39 345 2831086'],
     caption: 'Book a table: +39 345 2831086 or info@seasignorarest.com.', hashtags: t('#reservations', '#brera', '#milan')},
 ];
 export const WEEK_TRUFFLE = SPECS.map((s) => ({...s, view: () => <StoryView s={s} />}));
