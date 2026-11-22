@@ -118,8 +118,8 @@
 - #seasignora #interiors #brera #dinner
 
 **W-24v-chandeliers** (6 с)
-- На экране: Under the chandeliers / a Friday kind of glow
-- Подпись: Under the chandeliers: a Friday kind of glow.
+- На экране: Under the chandeliers / the warmest light in Brera
+- Подпись: Under the chandeliers, the warmest light in Brera.
 - #seasignora #interiors #brera #milan
 
 **W-25v-behind-the-bar** (6 с)
