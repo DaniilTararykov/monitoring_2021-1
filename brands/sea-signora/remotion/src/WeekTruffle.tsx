@@ -11,7 +11,7 @@ loadBrandFonts();
 // 1MZyh2Y…, stabilised (vidstab, two passes); the panettone from the still photos. English only.
 
 const SA = brandPalette.sand454, I = colors.ivory;
-type Spec = {id: string; sec: number; src: string; video?: boolean; at?: number; fy?: number; side: 'top' | 'bottom'; size?: number; textTop?: number; kicker?: string; head: string; sub: string;
+type Spec = {id: string; sec: number; src: string; video?: boolean; at?: number; fy?: number; side: 'top' | 'bottom'; size?: number; textTop?: number; lines?: string[]; kicker?: string; head: string; sub: string;
   caption: string; hashtags: string[]};
 
 const StoryView: React.FC<{s: Spec}> = ({s}) => {
@@ -27,6 +27,8 @@ const StoryView: React.FC<{s: Spec}> = ({s}) => {
         {s.kicker && <div style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 20, letterSpacing: 6, textTransform: 'uppercase', color: SA, marginBottom: 18}}>{s.kicker}</div>}
         <div style={{fontFamily: fonts.display, fontSize: s.size ?? 104, lineHeight: 0.95, color: I}}>{s.head.split("\n").map((l) => <div key={l}>{l}</div>)}</div>
         {s.sub && <div style={{fontFamily: fonts.serif, fontStyle: 'italic', fontSize: 50, lineHeight: 1.2, color: I, marginTop: 18}}>{s.sub}</div>}
+        {s.lines && <div style={{marginTop: 30}}>{s.lines.map((l) => <div key={l} style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 28, letterSpacing: 4,
+          textTransform: 'uppercase', color: I, lineHeight: 1.6}}>{l}</div>)}</div>}
       </div>
     </AbsoluteFill>
   );
@@ -102,5 +104,19 @@ const SPECS: Spec[] = [
     caption: 'Chilled and waiting, from our wine list.', hashtags: t('#wine', '#winelist', '#brera')},
   {id: 'W-30v-good-company', sec: 6, src: 'S_3638', video: true, side: 'top', head: 'Good company', sub: 'a long table, candles, plates to share',
     caption: 'Good company: a long table, candles and plates to share.', hashtags: t('#friends', '#sharing', '#brera')},
+  // client 22.11 (3rd note): hours, address and the rest (from BRAND.md / seasignorarest.com)
+  {id: 'W-31v-we-are-open', sec: 6, src: 'S_3592', video: true, side: 'top', kicker: 'sea, signora · brera', head: 'We are open', sub: '',
+    lines: ['mon–fri · 19:00–00:00', 'sat–sun · 12:30–15:30', 'and 19:00–00:00'],
+    caption: 'We are open Monday to Friday 19:00–00:00, Saturday and Sunday 12:30–15:30 and 19:00–00:00.', hashtags: t('#brera', '#milan', '#restaurant')},
+  {id: 'W-32v-find-us', sec: 6, src: 'S_3591', video: true, side: 'top', head: 'Find us\nin Brera', sub: 'in the heart of the old town',
+    lines: ['via fiori chiari, 32', '20121 milano'],
+    caption: 'Find us in the heart of Brera: Via Fiori Chiari, 32, Milano.', hashtags: t('#brera', '#viafiorichiari', '#milan')},
+  {id: 'W-33v-kitchen-wakes-up', sec: 4.5, src: 'S_3140', video: true, side: 'top', head: '19:00', sub: 'the kitchen wakes up',
+    caption: 'At 19:00 the kitchen wakes up. See you tonight.', hashtags: t('#openkitchen', '#grill', '#brera')},
+  {id: 'W-34v-weekends', sec: 6, src: 'S_3594', video: true, side: 'top', head: 'Weekends,\nfrom 12:30', sub: 'sat–sun 12:30–15:30 · 19:00–00:00',
+    caption: 'On weekends we open from 12:30 to 15:30, and again from 19:00 to midnight.', hashtags: t('#weekend', '#brera', '#milan')},
+  {id: 'W-35v-book-a-table', sec: 6, src: 'S_3585', video: true, side: 'top', head: 'Book a table', sub: 'we keep one for you',
+    lines: ['+39 345 2831086', 'info@seasignorarest.com'],
+    caption: 'Book a table: +39 345 2831086 or info@seasignorarest.com.', hashtags: t('#reservations', '#brera', '#milan')},
 ];
 export const WEEK_TRUFFLE = SPECS.map((s) => ({...s, view: () => <StoryView s={s} />}));

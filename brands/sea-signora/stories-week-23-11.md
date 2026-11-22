@@ -1,4 +1,4 @@
-# Sea, Signora — 30 сторис на неделю 23.11: трюфель, мясо, панеттоне, лайфстайл
+# Sea, Signora — 35 сторис на неделю 23.11: трюфель, мясо, панеттоне, лайфстайл
 
 Прежний стиль: кадр на весь экран, мягкий тёмный градиент, текст неподвижен. Без плашек и анимаций. Видео стабилизированы. Только английский.
 
@@ -151,3 +151,28 @@
 - На экране: Good company / a long table, candles, plates to share
 - Подпись: Good company: a long table, candles and plates to share.
 - #seasignora #friends #sharing #brera
+
+**W-31v-we-are-open** (6 с)
+- На экране: sea, signora · brera / We are open
+- Подпись: We are open Monday to Friday 19:00–00:00, Saturday and Sunday 12:30–15:30 and 19:00–00:00.
+- #seasignora #brera #milan #restaurant
+
+**W-32v-find-us** (6 с)
+- На экране: Find us in Brera / in the heart of the old town
+- Подпись: Find us in the heart of Brera: Via Fiori Chiari, 32, Milano.
+- #seasignora #brera #viafiorichiari #milan
+
+**W-33v-kitchen-wakes-up** (4.5 с)
+- На экране: 19:00 / the kitchen wakes up
+- Подпись: At 19:00 the kitchen wakes up. See you tonight.
+- #seasignora #openkitchen #grill #brera
+
+**W-34v-weekends** (6 с)
+- На экране: Weekends, from 12:30 / sat–sun 12:30–15:30 · 19:00–00:00
+- Подпись: On weekends we open from 12:30 to 15:30, and again from 19:00 to midnight.
+- #seasignora #weekend #brera #milan
+
+**W-35v-book-a-table** (6 с)
+- На экране: Book a table / we keep one for you
+- Подпись: Book a table: +39 345 2831086 or info@seasignorarest.com.
+- #seasignora #reservations #brera #milan
