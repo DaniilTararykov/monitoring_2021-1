@@ -62,6 +62,7 @@ import {WEEK_SIX} from './WeekSix';
 import {WEEK_SEVEN} from './WeekSeven';
 import {MONTAGE} from './Montage';
 import {WEEK_PEOPLE} from './WeekPeople';
+import {PEOPLE_VID} from './PeopleVid';
 import {VillaV1, V1_FRAMES, VillaV2, V2_FRAMES, VillaV3, V3_FRAMES, VillaV4, V4_FRAMES} from './VillaFour';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
@@ -83,6 +84,7 @@ export const RemotionRoot: React.FC = () => (
     {DESIGNS.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {[...week11words, ...week11live].map((p) => <Composition key={p.id} id={p.id} component={ParolaView} durationInFrames={Math.round(p.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{p}} />)}
     {week11designs.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
+    {PEOPLE_VID.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={100} fps={30} width={1080} height={1920} />)}
     {WEEK_PEOPLE.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={1} fps={30} width={1080} height={1920} />)}
     {MONTAGE.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {WEEK_SEVEN.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={1} fps={30} width={1080} height={1920} />)}
