@@ -66,6 +66,7 @@ import {PEOPLE_VID} from './PeopleVid';
 import {HOLIDAY} from './Holiday';
 import {WEEK_FRESH2} from './WeekFresh2';
 import {COLLAB} from './Collab';
+import {LOYALTY} from './Loyalty';
 import {VillaV1, V1_FRAMES, VillaV2, V2_FRAMES, VillaV3, V3_FRAMES, VillaV4, V4_FRAMES} from './VillaFour';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
@@ -90,6 +91,7 @@ export const RemotionRoot: React.FC = () => (
     {COLLAB.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {WEEK_FRESH2.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={1} fps={30} width={1080} height={1920} />)}
     {HOLIDAY.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={1} fps={30} width={1080} height={1920} />)}
+    {LOYALTY.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={1} fps={30} width={1080} height={1920} />)}
     {PEOPLE_VID.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {WEEK_PEOPLE.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={1} fps={30} width={1080} height={1920} />)}
     {MONTAGE.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
