@@ -54,6 +54,7 @@ import {VillaSlow, SLOW_FRAMES} from './VillaSlow';
 import {VillaBrand, VILLA_BRAND, villaBrandFrames} from './VillaBrand';
 import {VillaFilm, FILM_FRAMES} from './VillaFilm';
 import {WEEK_TRUFFLE} from './WeekTruffle';
+import {WEEK_TWO} from './WeekTwo';
 import {VillaV1, V1_FRAMES, VillaV2, V2_FRAMES, VillaV3, V3_FRAMES, VillaV4, V4_FRAMES} from './VillaFour';
 import {week11designs, week11live, week11words} from './week11';
 import {week7x} from './week7x';
@@ -75,6 +76,7 @@ export const RemotionRoot: React.FC = () => (
     {DESIGNS.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {[...week11words, ...week11live].map((p) => <Composition key={p.id} id={p.id} component={ParolaView} durationInFrames={Math.round(p.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{p}} />)}
     {week11designs.map((s) => <Composition key={s.id} id={s.id} component={CreativeStory} durationInFrames={Math.round(s.sec * 30)} fps={30} width={1080} height={1920} defaultProps={{s}} />)}
+    {WEEK_TWO.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     {WEEK_TRUFFLE.map((d) => <Composition key={d.id} id={d.id} component={d.view} durationInFrames={Math.round(d.sec * 30)} fps={30} width={1080} height={1920} />)}
     <Composition id="V-villa-pellicola" component={VillaFilm} durationInFrames={FILM_FRAMES} fps={30} width={1080} height={1920} />
     <Composition id="V-villa-pagina" component={VillaBrand} defaultProps={{variant: 'A' as const}} durationInFrames={villaBrandFrames(VILLA_BRAND.A)} fps={30} width={1080} height={1920} />
