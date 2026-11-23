@@ -38,7 +38,7 @@ const Served: React.FC = () => (
     <Shade />
     <div style={{position: 'absolute', left: 80, right: 80, top: 290, textAlign: 'center'}}>
       <div style={H}>A crab for your glass</div>
-      <div style={{...M, marginTop: 18}}>order one of our two collab cocktails, served with a sėmpre si crab charm</div>
+      <div style={{...M, marginTop: 18}}>order ephyra or levante, served with a sėmpre si crab charm</div>
     </div>
   </AbsoluteFill>
 );
@@ -48,7 +48,7 @@ const Gift: React.FC = () => (
     <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 900, background: 'linear-gradient(to top, rgba(11,11,11,0.85), rgba(11,11,11,0.5) 50%, rgba(11,11,11,0))'}} />
     <div style={{position: 'absolute', left: 80, right: 80, top: 1310, textAlign: 'center'}}>
       <div style={H}>On us</div>
-      <div style={{...M, marginTop: 18}}>with a bill from €130: a collab cocktail and a sėmpre si crab charm</div>
+      <div style={{...M, marginTop: 18}}>with a bill from €130: ephyra or levante and a sėmpre si crab charm</div>
       <div style={{...M, fontSize: 24, marginTop: 18, opacity: 0.85}}>27.11 — 18.12</div>
     </div>
     <Chip label="book a table" />
