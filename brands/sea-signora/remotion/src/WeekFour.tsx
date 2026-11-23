@@ -56,15 +56,15 @@ type Lay = 'low' | 'top' | 'bottom' | 'mid' | 'mark' | 'topLeft' | 'bottomRight'
 const LAY: Record<string, Lay> = {
   'Q2-01p-the-door': 'hours', 'Q2-02p-last-details': 'bottom', 'Q2-03p-the-candle': 'mark', 'Q2-04p-menu': 'topLeft',
   'Q2-05p-blue-room': 'top', 'Q2-06p-neighbours': 'top', 'Q2-07p-duet': 'top', 'Q2-08p-garnish': 'bottomRight',
-  'Q2-09p-something-red': 'topLeft', 'Q2-10p-knives': 'bottom', 'Q2-11p-catch': 'topLeft', 'Q2-12p-tuna-tartare': 'top',
+  'Q2-09p-something-red': 'top', 'Q2-10p-knives': 'bottom', 'Q2-11p-catch': 'topLeft', 'Q2-12p-tuna-tartare': 'bottom',
   'Q2-13p-greek': 'bottom', 'Q2-14p-fish-fillet': 'top', 'Q2-15p-at-the-pass': 'bottomRight', 'Q2-16p-pan': 'top',
-  'Q2-17p-tweezers': 'mid', 'Q2-18p-taste': 'topLeft', 'Q2-19p-two': 'top', 'Q2-20p-between': 'bottom',
+  'Q2-17p-tweezers': 'low', 'Q2-18p-taste': 'topLeft', 'Q2-19p-two': 'top', 'Q2-20p-between': 'bottom',
   'Q2-21p-white': 'top', 'Q2-22p-toast': 'top', 'Q2-23p-round': 'top', 'Q2-24p-tiramisu': 'top',
   'Q2-25p-tarte': 'low', 'Q2-26p-compliment': 'top', 'Q2-27p-every-table': 'mark', 'Q2-28p-long-table': 'bottom',
   'Q2-29p-glass': 'topLeft', 'Q2-30p-see-you': 'mark',
 };
-const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 74, lineHeight: 1.02, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
-const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, lineHeight: 1.35, letterSpacing: 2, textTransform: 'uppercase', color: colors.ivory};
+const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
+const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, lineHeight: 1.35, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
 const BrandView: React.FC<{s: Spec}> = ({s}) => {
   const lay = LAY[s.id] ?? 'top';
   const st: React.CSSProperties = {width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${s.fx ?? 50}% ${s.fy ?? 50}%`};
@@ -73,25 +73,21 @@ const BrandView: React.FC<{s: Spec}> = ({s}) => {
   const head = s.head.replace(/\n/g, ' ').replace(/’/g, "'");
   const block = (align: 'center' | 'left' | 'right') => (
     <div style={{textAlign: align}}>
-      <div style={H}>{head}</div>
-      {s.sub && <div style={{...M, marginTop: 18}}>{s.sub}</div>}
+      {head && <div style={H}>{head}</div>}
+      {s.sub && <div style={{...M, marginTop: head ? 16 : 0}}>{s.sub}</div>}
     </div>
   );
   let body: React.ReactNode;
   if (lay === 'hours') body = (<>{grad('top', 900)}
-    <div style={{position: 'absolute', left: 80, right: 80, top: 300, textAlign: 'center'}}>
-      <div style={{...H, fontSize: 84}}>We are open</div>
-      <div style={{height: 3, width: 120, background: brandPalette.orange158, margin: '26px auto 30px'}} />
-      <div style={{display: 'flex', justifyContent: 'space-between', textAlign: 'left'}}>
-        <div style={M}>monday–friday<br />19:00–00:00</div>
-        <div style={{...M, textAlign: 'right'}}>saturday–sunday<br />12:30–15:30<br />19:00–00:00</div>
-      </div>
+    <div style={{position: 'absolute', left: 80, right: 80, top: 290}}>
+      <div style={{...H, fontSize: 66, textAlign: 'center'}}>We are open</div>
+      <div style={{...M, fontSize: 34, textTransform: 'none', marginTop: 34}}>Monday-Friday<br />19:00-00:00</div>
+      <div style={{...M, fontSize: 34, textTransform: 'none', marginTop: 40, textAlign: 'right'}}>Saturday-Sunday<br />12:30-15:30<br />19:00-00:00</div>
     </div></>);
   else if (lay === 'mark') body = (<>{grad('top', 820)}
     <div style={{position: 'absolute', left: 80, right: 80, top: 300, textAlign: 'center'}}>
-      <div style={{fontFamily: fonts.display, fontSize: 112, lineHeight: 1, color: colors.ivory}}>Sea, Signora</div>
-      <div style={{...M, marginTop: 24}}>{head}</div>
-      {s.sub && <div style={{...M, fontSize: 24, marginTop: 10, opacity: 0.85}}>{s.sub}</div>}
+      <div style={{fontFamily: fonts.display, fontSize: 104, lineHeight: 1, color: colors.ivory}}>Sea, Signora</div>
+      {s.sub && <div style={{...M, marginTop: 22}}>{s.sub}</div>}
     </div></>);
   else if (lay === 'mid') body = (<><AbsoluteFill style={{background: 'rgba(11,11,11,0.28)'}} />
     <div style={{position: 'absolute', left: 80, right: 80, top: 840}}>{block('center')}</div></>);
@@ -115,68 +111,68 @@ const t = (...x: string[]) => ['#seasignora', ...x];
 // three booking chips with different words; classic look, static type, no chapter marks.
 const P = (n: string) => `w24/${n}`;
 const SPECS: Spec[] = [
-  {id: 'Q2-01p-the-door', sec: 1, src: P('A__-3'), fx: 62, side: 'bottom', head: 'We are open', sub: '',
+  {id: 'Q2-01p-the-door', sec: 1, src: P('A__-28'), fx: 50, side: 'bottom', head: 'We are open', sub: '',
     lines: ['mon–fri · 19:00–00:00', 'sat–sun · 12:30–15:30 | 19:00–00:00'],
     caption: 'We are open Monday to Friday 19:00–00:00, Saturday and Sunday 12:30–15:30 | 19:00–00:00. Via Fiori Chiari 32, Brera.', hashtags: t('#brera', '#milan', '#restaurant')},
-  {id: 'Q2-02p-last-details', sec: 1, src: P('A__-89'), side: 'bottom', head: 'The last details', sub: 'before the doors open',
+  {id: 'Q2-02p-last-details', sec: 1, src: P('A__-89'), side: 'bottom', head: 'Getting ready for you', sub: '',
     caption: 'The last details, before the doors open.', hashtags: t('#brera', '#behindthescenes', '#milan')},
-  {id: 'Q2-03p-the-candle', sec: 1, src: P('A__-24'), fx: 55, side: 'top', head: 'Lit for you', sub: 'one candle on every table',
+  {id: 'Q2-03p-the-candle', sec: 1, src: P('A__-24'), fx: 55, side: 'top', head: '', sub: 'lit for the evening',
     caption: 'Lit for you: one candle on every table.', hashtags: t('#candlelight', '#brera', '#dinner')},
-  {id: 'Q2-04p-menu', sec: 1, src: P('A__-7'), fx: 45, side: 'top', head: 'Holy Shell', sub: 'a little piece of the sea, made to stay',
+  {id: 'Q2-04p-menu', sec: 1, src: P('A__-7'), fx: 45, side: 'top', head: 'Details matter', sub: '',
     caption: 'Holy Shell: a little piece of the sea, made to stay. Waiting at your place.', hashtags: t('#holyshell', '#brera', '#milan')},
-  {id: 'Q2-05p-blue-room', sec: 1, src: P('A__-13'), fx: 40, side: 'top', head: 'The blue room', sub: 'tables by the aquarium',
+  {id: 'Q2-05p-blue-room', sec: 1, src: P('A__-13'), fx: 40, side: 'top', head: 'Blue hour at Sea, Signora', sub: '',
     caption: 'The blue room: tables by the aquarium.', hashtags: t('#aquarium', '#interiors', '#brera')},
-  {id: 'Q2-06p-neighbours', sec: 1, src: P('A__-148'), fx: 50, side: 'top', head: 'Candlelight\nand laughter', sub: 'at the long table',
+  {id: 'Q2-06p-neighbours', sec: 1, src: P('A__-148'), fx: 50, side: 'top', head: 'The good kind of noise', sub: '',
     caption: 'Candlelight and laughter at the long table.', hashtags: t('#friends', '#brera', '#milan')},
-  {id: 'Q2-07p-duet', sec: 1, src: P('A__-283'), fx: 50, side: 'top', head: 'In duet', sub: 'two shakers, one rhythm',
+  {id: 'Q2-07p-duet', sec: 1, src: P('A__-283'), fx: 50, side: 'top', head: 'Two shakers, one rhythm', sub: '',
     caption: 'Behind the bar, in duet: two shakers, one rhythm.', hashtags: t('#bar', '#cocktails', '#brera')},
-  {id: 'Q2-08p-garnish', sec: 1, src: P('A__-285'), side: 'top', head: 'Garnished\nby hand', sub: 'one twist at a time',
+  {id: 'Q2-08p-garnish', sec: 1, src: P('A__-285'), side: 'top', head: 'Details, details', sub: '',
     caption: 'Garnished by hand, one twist at a time.', hashtags: t('#cocktails', '#mixology', '#milan')},
-  {id: 'Q2-09p-something-red', sec: 1, src: P('A__-347'), side: 'top', head: 'Something red', sub: 'to open the evening',
+  {id: 'Q2-09p-something-red', sec: 1, src: P('A__-347'), side: 'top', head: 'Start with something red', sub: '',
     caption: 'Something red, to open the evening.', hashtags: t('#cocktails', '#aperitivo', '#brera')},
-  {id: 'Q2-10p-knives', sec: 1, src: P('B_Sea_Signora-40'), side: 'bottom', head: 'The knives\nare ready', sub: 'so is the raw bar',
+  {id: 'Q2-10p-knives', sec: 1, src: P('B_Sea_Signora-40'), side: 'bottom', head: 'The knives are ready', sub: '',
     caption: 'The knives are ready, and so is the raw bar.', hashtags: t('#rawbar', '#openkitchen', '#brera')},
-  {id: 'Q2-11p-catch', sec: 1, src: P('B_Sea_Signora-36'), fx: 40, side: 'top', head: 'Today’s catch', sub: 'whole, fresh, on ice',
+  {id: 'Q2-11p-catch', sec: 1, src: P('B_Sea_Signora-36'), fx: 40, side: 'top', head: 'Look who just arrived', sub: '',
     caption: 'Today’s catch: whole, fresh, on ice.', hashtags: t('#seafood', '#freshfish', '#milan')},
-  {id: 'Q2-12p-tuna-tartare', sec: 1, src: P('B_Sea_Signora-49'), side: 'top', head: 'Tuna tartare', sub: 'with Osetra caviar',
+  {id: 'Q2-12p-tuna-tartare', sec: 1, src: P('B_Sea_Signora-49'), side: 'top', head: '', sub: 'tuna tartare with osetra caviar',
     cta: 'book a table', ctaTop: 1660,
     caption: 'Tuna tartare with Osetra caviar, from our appetizers.', hashtags: t('#tartare', '#caviar', '#brera')},
-  {id: 'Q2-13p-greek', sec: 1, src: P('B_Sea_Signora-67'), side: 'top', head: 'Greek salad', sub: 'bright, simple, Mediterranean',
+  {id: 'Q2-13p-greek', sec: 1, src: P('B_Sea_Signora-67'), side: 'top', head: '', sub: 'greek salad',
     caption: 'Greek salad: bright, simple, Mediterranean.', hashtags: t('#salad', '#mediterranean', '#milan')},
-  {id: 'Q2-14p-fish-fillet', sec: 1, src: P('B_Sea_Signora-73'), fx: 50, side: 'top', head: 'Fish fillet', sub: 'in Mediterranean broth, parsley potatoes',
+  {id: 'Q2-14p-fish-fillet', sec: 1, src: P('B_Sea_Signora-73'), fx: 50, side: 'top', head: '', sub: 'fish fillet in mediterranean broth with parsley potatoes',
     caption: 'Fish fillet in Mediterranean broth with parsley potatoes.', hashtags: t('#fish', '#maincourse', '#brera')},
-  {id: 'Q2-15p-at-the-pass', sec: 1, src: P('A__-132'), side: 'top', head: 'At the pass', sub: 'every plate, checked twice',
+  {id: 'Q2-15p-at-the-pass', sec: 1, src: P('A__-132'), side: 'top', head: 'Every plate, checked twice', sub: '',
     caption: 'At the pass, every plate is checked twice.', hashtags: t('#openkitchen', '#chef', '#brera')},
-  {id: 'Q2-16p-pan', sec: 1, src: P('A__-165'), side: 'top', head: 'In the pan', sub: 'cooked to order, in full view',
+  {id: 'Q2-16p-pan', sec: 1, src: P('A__-165'), side: 'top', head: 'Cooked in front of you', sub: '',
     caption: 'In the pan, cooked to order, in full view of the room.', hashtags: t('#openkitchen', '#chef', '#milan')},
-  {id: 'Q2-17p-tweezers', sec: 1, src: P('A__-450'), side: 'top', head: 'With tweezers', sub: 'the smallest detail matters',
+  {id: 'Q2-17p-tweezers', sec: 1, src: P('A__-450'), side: 'top', head: 'The smallest detail', sub: '',
     caption: 'With tweezers: the smallest detail matters.', hashtags: t('#chef', '#finedining', '#brera')},
-  {id: 'Q2-18p-taste', sec: 1, src: P('B_Sea_Signora-169'), side: 'bottom', head: 'Tasted first', sub: 'by the kitchen, always',
+  {id: 'Q2-18p-taste', sec: 1, src: P('B_Sea_Signora-169'), side: 'bottom', head: 'Taste test: passed', sub: '',
     caption: 'Tasted first by the kitchen, always.', hashtags: t('#chef', '#openkitchen', '#brera')},
-  {id: 'Q2-19p-two', sec: 1, src: P('A__-205'), fx: 50, side: 'top', head: 'A table for two', sub: 'the evening is yours',
+  {id: 'Q2-19p-two', sec: 1, src: P('A__-205'), fx: 50, side: 'top', head: 'Your table for two', sub: '',
     caption: 'A table for two: the evening is yours.', hashtags: t('#datenight', '#brera', '#milan')},
-  {id: 'Q2-20p-between', sec: 1, src: P('A__-363'), side: 'top', head: 'Between courses', sub: 'conversation, and the aquarium glow',
+  {id: 'Q2-20p-between', sec: 1, src: P('A__-363'), side: 'top', head: 'Between courses', sub: '',
     caption: 'Between courses: conversation, and the aquarium glow.', hashtags: t('#dinner', '#aquarium', '#brera')},
-  {id: 'Q2-21p-white', sec: 1, src: P('A__-403'), side: 'top', head: 'A glass of white', sub: 'chosen from our wine list',
+  {id: 'Q2-21p-white', sec: 1, src: P('A__-403'), side: 'top', head: 'A glass of white? Why not', sub: '',
     caption: 'A glass of white, chosen from our wine list.', hashtags: t('#wine', '#winelist', '#milan')},
-  {id: 'Q2-22p-toast', sec: 1, src: P('A__-210'), fx: 55, side: 'top', head: 'To the table', sub: 'and to the people around it',
+  {id: 'Q2-22p-toast', sec: 1, src: P('A__-210'), fx: 55, side: 'top', head: 'Cheers to us', sub: '',
     cta: 'reserve your table', ctaTop: 1640,
     caption: 'To the table, and to the people around it.', hashtags: t('#cheers', '#friends', '#brera')},
-  {id: 'Q2-23p-round', sec: 1, src: P('A__-459'), side: 'top', head: 'A round\nfor the table', sub: 'one for everyone',
+  {id: 'Q2-23p-round', sec: 1, src: P('A__-459'), side: 'top', head: 'One round for the table', sub: '',
     caption: 'A round for the table.', hashtags: t('#cocktails', '#friends', '#milan')},
-  {id: 'Q2-24p-tiramisu', sec: 1, src: P('B_Sea_Signora-183'), side: 'top', head: 'Tiramisu', sub: 'with wild strawberries, served at the table',
+  {id: 'Q2-24p-tiramisu', sec: 1, src: P('B_Sea_Signora-183'), side: 'top', head: '', sub: 'tiramisu with wild strawberries',
     caption: 'Tiramisu with wild strawberries, served at the table.', hashtags: t('#tiramisu', '#dessert', '#brera')},
-  {id: 'Q2-25p-tarte', sec: 1, src: P('B_Sea_Signora-186'), side: 'bottom', textTop: 1560, head: 'Peach Tarte Tatin', sub: 'with Bellini sorbet',
+  {id: 'Q2-25p-tarte', sec: 1, src: P('B_Sea_Signora-186'), side: 'bottom', textTop: 1560, head: '', sub: 'peach tarte tatin with bellini sorbet',
     caption: 'Peach Tarte Tatin with Bellini sorbet.', hashtags: t('#dessert', '#tartetatin', '#milan')},
-  {id: 'Q2-26p-compliment', sec: 1, src: P('B_Sea_Signora-63'), side: 'top', head: 'The best compliment', sub: 'an empty plate',
+  {id: 'Q2-26p-compliment', sec: 1, src: P('B_Sea_Signora-63'), side: 'top', head: 'Clean plate club', sub: '',
     caption: 'The best compliment to the kitchen: an empty plate.', hashtags: t('#finedining', '#brera', '#milan')},
-  {id: 'Q2-27p-every-table', sec: 1, src: P('A__-28'), fx: 50, side: 'top', head: 'Every table, lit', sub: 'late in Brera',
+  {id: 'Q2-27p-every-table', sec: 1, src: P('A__-3'), fx: 62, side: 'top', head: '', sub: 'late in brera',
     caption: 'Every table lit, late in Brera.', hashtags: t('#candlelight', '#brera', '#nightout')},
-  {id: 'Q2-28p-long-table', sec: 1, src: P('A__-72'), side: 'top', head: 'Set for a celebration', sub: 'tell us the occasion',
+  {id: 'Q2-28p-long-table', sec: 1, src: P('A__-72'), side: 'top', head: 'Tell us the occasion', sub: '',
     caption: 'Set for a celebration: tell us the occasion, we prepare the table.', hashtags: t('#celebration', '#privatedining', '#brera')},
-  {id: 'Q2-29p-glass', sec: 1, src: P('A__-231'), side: 'top', head: 'One more glass', sub: 'the aquarium keeps the light',
+  {id: 'Q2-29p-glass', sec: 1, src: P('A__-231'), side: 'top', head: 'One more glass?', sub: '',
     caption: 'One more glass, while the aquarium keeps the light.', hashtags: t('#wine', '#aquarium', '#milan')},
-  {id: 'Q2-30p-see-you', sec: 1, src: P('A__-95'), side: 'top', head: 'See you tonight', sub: 'via fiori chiari 32',
+  {id: 'Q2-30p-see-you', sec: 1, src: P('A__-95'), side: 'top', head: '', sub: 'see you tonight · via fiori chiari, 32',
     cta: 'book your evening', ctaTop: 1660,
     caption: 'See you tonight at Via Fiori Chiari 32.', hashtags: t('#brera', '#milan', '#dinner')},
 ];
