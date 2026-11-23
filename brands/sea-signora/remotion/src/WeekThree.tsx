@@ -11,8 +11,21 @@ loadBrandFonts();
 // 1MZyh2Y…, stabilised (vidstab, two passes); the panettone from the still photos. English only.
 
 const SA = brandPalette.sand454, I = colors.ivory;
-type Spec = {id: string; sec: number; src: string; video?: boolean; at?: number; fy?: number; side: 'top' | 'bottom'; size?: number; textTop?: number; lines?: string[]; kicker?: string; head: string; sub: string;
+type Spec = {id: string; sec: number; src: string; video?: boolean; at?: number; fy?: number; side: 'top' | 'bottom'; size?: number; textTop?: number; lines?: string[]; cta?: string; ctaTop?: number; kicker?: string; head: string; sub: string;
   caption: string; hashtags: string[]};
+
+
+// Instagram-style link chip (BRAND.md: orange chip, link icon, lowercase). Client 23.11: «не вижу ссылок-плашек».
+const LinkChip: React.FC<{label: string; top: number}> = ({label, top}) => (
+  <div style={{position: 'absolute', left: 0, right: 0, top, display: 'flex', justifyContent: 'center'}}>
+    <div style={{display: 'flex', alignItems: 'center', gap: 16, background: brandPalette.orange158, borderRadius: 22, padding: '20px 34px',
+      boxShadow: '0 6px 24px rgba(0,0,0,0.35)'}}>
+      <svg width={38} height={38} viewBox="0 0 24 24" fill="none" stroke={colors.ivory} strokeWidth={2.4} strokeLinecap="round">
+        <path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1" /><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1" /></svg>
+      <span style={{fontFamily: fonts.mono, fontWeight: 600, fontSize: 36, color: colors.ivory, letterSpacing: 1}}>{label}</span>
+    </div>
+  </div>
+);
 
 const StoryView: React.FC<{s: Spec}> = ({s}) => {
   const top = s.side === 'top';
@@ -30,6 +43,7 @@ const StoryView: React.FC<{s: Spec}> = ({s}) => {
         {s.lines && <div style={{marginTop: 30}}>{s.lines.map((l) => <div key={l} style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 28, letterSpacing: 4,
           textTransform: 'uppercase', color: I, lineHeight: 1.6}}>{l}</div>)}</div>}
       </div>
+      {s.cta && <LinkChip label={s.cta} top={s.ctaTop ?? 1500} />}
     </AbsoluteFill>
   );
 };
@@ -47,37 +61,37 @@ const SPECS: Spec[] = [
     caption: 'Candlelight, and a first glass of bubbles.', hashtags: t('#candlelight', '#bubbles', '#brera')},
   {id: 'Z-04p-poured', sec: 1, src: P('A__-87'), side: 'bottom', head: 'Poured for you', sub: 'a wine chosen for the evening',
     caption: 'Poured for you: a wine chosen for the evening.', hashtags: t('#wine', '#sommelier', '#brera')},
-  {id: 'Z-05p-a-few-drops', sec: 1, src: P('B_Sea_Signora-163'), side: 'bottom', textTop: 1500, head: 'A few drops', sub: 'on a freshly opened oyster',
-    caption: 'A few drops, nothing more, on a freshly opened oyster.', hashtags: t('#oysters', '#rawbar', '#brera')},
-  {id: 'Z-06p-raw-bar', sec: 1, src: P('B_Sea_Signora-148'), side: 'top', head: 'From the raw bar', sub: 'oysters, langoustines, red prawns',
-    caption: 'From the raw bar: oysters, langoustines and red prawns.', hashtags: t('#rawbar', '#seafood', '#milan')},
-  {id: 'Z-07p-by-hand', sec: 1, src: P('B_Sea_Signora-57'), side: 'bottom', textTop: 1500, head: 'Three, cut by hand', sub: 'a trio of tartare, to begin',
-    caption: 'Three, cut by hand: a trio of tartare to begin.', hashtags: t('#tartare', '#crudo', '#brera')},
-  {id: 'Z-08p-thinly-sliced', sec: 1, src: P('B_Sea_Signora-8'), side: 'top', head: 'Thinly sliced', sub: 'under a garden of herbs',
-    caption: 'Thinly sliced, under a garden of herbs.', hashtags: t('#carpaccio', '#crudo', '#milan')},
-  {id: 'Z-09p-clings', sec: 1, src: P('B_Sea_Signora-20'), side: 'top', head: 'A sauce that clings', sub: 'shellfish, pasta, a little heat',
-    caption: 'A sauce that clings: shellfish, pasta and a little heat.', hashtags: t('#pasta', '#seafood', '#brera')},
-  {id: 'Z-10p-first-forkful', sec: 1, src: P('B_Sea_Signora-32'), side: 'top', head: 'The first forkful', sub: 'always the best one',
-    caption: 'The first forkful is always the best one.', hashtags: t('#pasta', '#sharing', '#milan')},
+  {id: 'Z-05p-a-few-drops', sec: 1, src: P('B_Sea_Signora-163'), side: 'bottom', textTop: 1500, head: 'Oysters of the day', sub: 'opened on the spot',
+    caption: 'Oysters of the day, selected from our aquariums and opened on the spot: Gillardeau, Tarbouriech, Perlina del Delta.', hashtags: t('#oysters', '#rawbar', '#brera')},
+  {id: 'Z-06p-raw-bar', sec: 1, src: P('B_Sea_Signora-148'), cta: 'book a table', ctaTop: 1620, side: 'top', head: 'The Plateau', sub: 'oysters, langoustines, red prawns from Mazara',
+    caption: 'From the raw bar, the Plateau: oysters, langoustines and red prawns from Mazara.', hashtags: t('#rawbar', '#seafood', '#milan')},
+  {id: 'Z-07p-by-hand', sec: 1, src: P('B_Sea_Signora-57'), side: 'bottom', textTop: 1500, head: 'Tartare', sub: 'three fish and shellfish tartares',
+    caption: 'Tartare: three fish and shellfish tartares, from our raw bar.', hashtags: t('#tartare', '#crudo', '#brera')},
+  {id: 'Z-08p-thinly-sliced', sec: 1, src: P('B_Sea_Signora-8'), side: 'top', head: 'Wagyu carpaccio', sub: 'Vacche Rosse Parmesan, mixed greens',
+    caption: 'Wagyu carpaccio with Vacche Rosse Parmesan and mixed greens.', hashtags: t('#carpaccio', '#crudo', '#milan')},
+  {id: 'Z-09p-clings', sec: 1, src: P('B_Sea_Signora-20'), side: 'top', head: 'Cicatelli\nfrom Puglia', sub: 'King Crab and shellfish sauce',
+    caption: 'Cicatelli pasta from Puglia with King Crab and shellfish sauce.', hashtags: t('#pasta', '#seafood', '#brera')},
+  {id: 'Z-10p-first-forkful', sec: 1, src: P('B_Sea_Signora-32'), side: 'top', head: 'The first forkful', sub: 'cicatelli, King Crab',
+    caption: 'The first forkful of cicatelli with King Crab is always the best one.', hashtags: t('#pasta', '#sharing', '#milan')},
   {id: 'Z-11p-last-second', sec: 1, src: P('A__-167'), side: 'bottom', head: 'At the last second', sub: 'the sauce, spooned at the pass',
     caption: 'At the last second, the sauce is spooned at the pass.', hashtags: t('#openkitchen', '#chef', '#brera')},
-  {id: 'Z-12p-theatre', sec: 1, src: P('A__-389'), side: 'bottom', head: 'A little theatre', sub: 'flames in the middle of the room',
-    caption: 'A little theatre: flames in the middle of the room.', hashtags: t('#flambe', '#brera', '#milan')},
-  {id: 'Z-13p-made-for-sharing', sec: 1, src: P('B_Sea_Signora-84'), side: 'top', head: 'Made for sharing', sub: 'prawns on crisp leaves',
-    caption: 'Made for sharing: prawns on crisp leaves.', hashtags: t('#prawns', '#sharing', '#brera')},
-  {id: 'Z-14p-risotto', sec: 1, src: P('B_Sea_Signora-104'), side: 'top', head: 'Risotto, slowly', sub: 'stirred until it shines',
-    caption: 'Risotto, slowly, stirred until it shines.', hashtags: t('#risotto', '#seafood', '#milan')},
-  {id: 'Z-15p-little-box', sec: 1, src: P('B_Sea_Signora-119'), side: 'top', head: 'A little box', sub: 'golden bites and a tin of caviar',
-    caption: 'A little box: golden bites and a tin of caviar.', hashtags: t('#caviar', '#brera', '#milan')},
+  {id: 'Z-12p-theatre', sec: 1, src: P('A__-389'), side: 'bottom', head: 'Crêpes Suzette', sub: 'flambéed at the table',
+    caption: 'Crêpes Suzette, flambéed at the table.', hashtags: t('#flambe', '#brera', '#milan')},
+  {id: 'Z-13p-made-for-sharing', sec: 1, src: P('B_Sea_Signora-84'), side: 'top', head: 'Caesar salad', sub: 'with prawns',
+    caption: 'Caesar salad with prawns.', hashtags: t('#prawns', '#sharing', '#brera')},
+  {id: 'Z-14p-risotto', sec: 1, src: P('B_Sea_Signora-104'), cta: 'reserve your table', ctaTop: 1640, side: 'top', head: 'Black Cod Cutlet', sub: 'Milanese style, gremolata mayonnaise',
+    caption: 'Black Cod Cutlet, Milanese style, with watercress and gremolata mayonnaise.', hashtags: t('#risotto', '#seafood', '#milan')},
+  {id: 'Z-15p-little-box', sec: 1, src: P('B_Sea_Signora-119'), side: 'top', head: 'Risotto', sub: 'aglio, olio, peperoncino, oysters and lime',
+    caption: 'Risotto with aglio, olio, peperoncino, oysters and lime.', hashtags: t('#caviar', '#brera', '#milan')},
   {id: 'Z-16p-caviar-sweet', sec: 1, src: P('A__-475'), side: 'top', head: 'Caviar,\nunexpectedly', sub: 'on something sweet',
     caption: 'Caviar, unexpectedly, on something sweet.', hashtags: t('#caviar', '#dessert', '#brera')},
   {id: 'Z-17p-the-company', sec: 1, src: P('A__-227'), side: 'top', head: 'The best part', sub: 'is always the company',
     caption: 'The best part of the evening is always the company.', hashtags: t('#friends', '#dinner', '#brera')},
   {id: 'Z-18p-cin-cin', sec: 1, src: P('A__-422'), side: 'bottom', head: 'Cin cin', sub: 'to the evening',
     caption: 'Cin cin, to the evening.', hashtags: t('#cheers', '#cocktails', '#milan')},
-  {id: 'Z-19p-something-sweet', sec: 1, src: P('B_Sea_Signora-176'), side: 'top', textTop: 250, size: 88, head: 'A drizzle of gold', sub: 'over dark chocolate',
-    caption: 'To end on: a drizzle of gold over dark chocolate.', hashtags: t('#dessert', '#brera', '#milan')},
-  {id: 'Z-20p-by-candlelight', sec: 1, src: P('A__-158'), side: 'top', head: 'See you\nby candlelight', sub: 'via fiori chiari 32',
+  {id: 'Z-19p-something-sweet', sec: 1, src: P('B_Sea_Signora-176'), side: 'top', textTop: 250, size: 88, head: 'Chocolate mousse', sub: 'salt and olive oil',
+    caption: 'To end on: chocolate mousse, salt and olive oil.', hashtags: t('#dessert', '#brera', '#milan')},
+  {id: 'Z-20p-by-candlelight', sec: 1, src: P('A__-158'), cta: 'book your evening', ctaTop: 1480, side: 'top', head: 'See you\nby candlelight', sub: 'via fiori chiari 32',
     caption: 'See you by candlelight at Via Fiori Chiari 32.', hashtags: t('#candlelight', '#brera', '#milan')},
 ];
 export const WEEK_THREE = SPECS.map((s) => ({...s, view: () => <StoryView s={s} />}));

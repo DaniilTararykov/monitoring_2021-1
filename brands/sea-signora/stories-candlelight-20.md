@@ -23,33 +23,33 @@
 - #seasignora #wine #sommelier #brera
 
 **Z-05p-a-few-drops** (картинка)
-- На экране: A few drops / on a freshly opened oyster
-- Подпись: A few drops, nothing more, on a freshly opened oyster.
+- На экране: Oysters of the day / opened on the spot
+- Подпись: Oysters of the day, selected from our aquariums and opened on the spot: Gillardeau, Tarbouriech, Perlina del Delta.
 - #seasignora #oysters #rawbar #brera
 
 **Z-06p-raw-bar** (картинка)
-- На экране: From the raw bar / oysters, langoustines, red prawns
-- Подпись: From the raw bar: oysters, langoustines and red prawns.
+- На экране: The Plateau / oysters, langoustines, red prawns from Mazara
+- Подпись: From the raw bar, the Plateau: oysters, langoustines and red prawns from Mazara.
 - #seasignora #rawbar #seafood #milan
 
 **Z-07p-by-hand** (картинка)
-- На экране: Three, cut by hand / a trio of tartare, to begin
-- Подпись: Three, cut by hand: a trio of tartare to begin.
+- На экране: Tartare / three fish and shellfish tartares
+- Подпись: Tartare: three fish and shellfish tartares, from our raw bar.
 - #seasignora #tartare #crudo #brera
 
 **Z-08p-thinly-sliced** (картинка)
-- На экране: Thinly sliced / under a garden of herbs
-- Подпись: Thinly sliced, under a garden of herbs.
+- На экране: Wagyu carpaccio / Vacche Rosse Parmesan, mixed greens
+- Подпись: Wagyu carpaccio with Vacche Rosse Parmesan and mixed greens.
 - #seasignora #carpaccio #crudo #milan
 
 **Z-09p-clings** (картинка)
-- На экране: A sauce that clings / shellfish, pasta, a little heat
-- Подпись: A sauce that clings: shellfish, pasta and a little heat.
+- На экране: Cicatelli from Puglia / King Crab and shellfish sauce
+- Подпись: Cicatelli pasta from Puglia with King Crab and shellfish sauce.
 - #seasignora #pasta #seafood #brera
 
 **Z-10p-first-forkful** (картинка)
-- На экране: The first forkful / always the best one
-- Подпись: The first forkful is always the best one.
+- На экране: The first forkful / cicatelli, King Crab
+- Подпись: The first forkful of cicatelli with King Crab is always the best one.
 - #seasignora #pasta #sharing #milan
 
 **Z-11p-last-second** (картинка)
@@ -58,23 +58,23 @@
 - #seasignora #openkitchen #chef #brera
 
 **Z-12p-theatre** (картинка)
-- На экране: A little theatre / flames in the middle of the room
-- Подпись: A little theatre: flames in the middle of the room.
+- На экране: Crêpes Suzette / flambéed at the table
+- Подпись: Crêpes Suzette, flambéed at the table.
 - #seasignora #flambe #brera #milan
 
 **Z-13p-made-for-sharing** (картинка)
-- На экране: Made for sharing / prawns on crisp leaves
-- Подпись: Made for sharing: prawns on crisp leaves.
+- На экране: Caesar salad / with prawns
+- Подпись: Caesar salad with prawns.
 - #seasignora #prawns #sharing #brera
 
 **Z-14p-risotto** (картинка)
-- На экране: Risotto, slowly / stirred until it shines
-- Подпись: Risotto, slowly, stirred until it shines.
+- На экране: Black Cod Cutlet / Milanese style, gremolata mayonnaise
+- Подпись: Black Cod Cutlet, Milanese style, with watercress and gremolata mayonnaise.
 - #seasignora #risotto #seafood #milan
 
 **Z-15p-little-box** (картинка)
-- На экране: A little box / golden bites and a tin of caviar
-- Подпись: A little box: golden bites and a tin of caviar.
+- На экране: Risotto / aglio, olio, peperoncino, oysters and lime
+- Подпись: Risotto with aglio, olio, peperoncino, oysters and lime.
 - #seasignora #caviar #brera #milan
 
 **Z-16p-caviar-sweet** (картинка)
@@ -93,8 +93,8 @@
 - #seasignora #cheers #cocktails #milan
 
 **Z-19p-something-sweet** (картинка)
-- На экране: A drizzle of gold / over dark chocolate
-- Подпись: To end on: a drizzle of gold over dark chocolate.
+- На экране: Chocolate mousse / salt and olive oil
+- Подпись: To end on: chocolate mousse, salt and olive oil.
 - #seasignora #dessert #brera #milan
 
 **Z-20p-by-candlelight** (картинка)
@@ -102,4 +102,4 @@
 - Подпись: See you by candlelight at Via Fiori Chiari 32.
 - #seasignora #candlelight #brera #milan
 
-## По дням (по 2): 1 Z-01→02 · 2 Z-03→04 · 3 Z-05→06 · 4 Z-07→08 · 5 Z-09→10 · 6 Z-11→12 · 7 Z-13→14 · 8 Z-15→16 · 9 Z-17→18 · 10 Z-19→20 (на Z-20 стикер-ссылка «book your table»)
+Ссылки (оранжевые плашки-стикеры): Z-06 «book a table» · Z-14 «reserve your table» · Z-20 «book your evening». Названия блюд — по меню seasignorarest.com.

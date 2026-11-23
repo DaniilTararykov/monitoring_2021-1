@@ -11,8 +11,21 @@ loadBrandFonts();
 // 1MZyh2Y…, stabilised (vidstab, two passes); the panettone from the still photos. English only.
 
 const SA = brandPalette.sand454, I = colors.ivory;
-type Spec = {id: string; sec: number; src: string; video?: boolean; at?: number; fy?: number; side: 'top' | 'bottom'; size?: number; textTop?: number; lines?: string[]; kicker?: string; head: string; sub: string;
+type Spec = {id: string; sec: number; src: string; video?: boolean; at?: number; fy?: number; side: 'top' | 'bottom'; size?: number; textTop?: number; lines?: string[]; cta?: string; ctaTop?: number; kicker?: string; head: string; sub: string;
   caption: string; hashtags: string[]};
+
+
+// Instagram-style link chip (BRAND.md: orange chip, link icon, lowercase). Client 23.11: «не вижу ссылок-плашек».
+const LinkChip: React.FC<{label: string; top: number}> = ({label, top}) => (
+  <div style={{position: 'absolute', left: 0, right: 0, top, display: 'flex', justifyContent: 'center'}}>
+    <div style={{display: 'flex', alignItems: 'center', gap: 16, background: brandPalette.orange158, borderRadius: 22, padding: '20px 34px',
+      boxShadow: '0 6px 24px rgba(0,0,0,0.35)'}}>
+      <svg width={38} height={38} viewBox="0 0 24 24" fill="none" stroke={colors.ivory} strokeWidth={2.4} strokeLinecap="round">
+        <path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1" /><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1" /></svg>
+      <span style={{fontFamily: fonts.mono, fontWeight: 600, fontSize: 36, color: colors.ivory, letterSpacing: 1}}>{label}</span>
+    </div>
+  </div>
+);
 
 const StoryView: React.FC<{s: Spec}> = ({s}) => {
   const top = s.side === 'top';
@@ -30,6 +43,7 @@ const StoryView: React.FC<{s: Spec}> = ({s}) => {
         {s.lines && <div style={{marginTop: 30}}>{s.lines.map((l) => <div key={l} style={{fontFamily: fonts.mono, fontWeight: 500, fontSize: 28, letterSpacing: 4,
           textTransform: 'uppercase', color: I, lineHeight: 1.6}}>{l}</div>)}</div>}
       </div>
+      {s.cta && <LinkChip label={s.cta} top={s.ctaTop ?? 1500} />}
     </AbsoluteFill>
   );
 };
