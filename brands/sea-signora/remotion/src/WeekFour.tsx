@@ -48,6 +48,67 @@ const StoryView: React.FC<{s: Spec}> = ({s}) => {
   );
 };
 
+
+// Brand layout (BRAND.md «Б»: centred, Skanaus caps ≈72 px + mono caps line, upper third by default, lower third as the
+// alternative, hours in two blocks, the wordmark now and then, soft night gradient only). The position changes from
+// story to story so the feed does not repeat itself (client 23.11: «меняй расположение текста»).
+type Lay = 'low' | 'top' | 'bottom' | 'mid' | 'mark' | 'topLeft' | 'bottomRight' | 'hours';
+const LAY: Record<string, Lay> = {
+  'Q2-01p-the-door': 'hours', 'Q2-02p-last-details': 'bottom', 'Q2-03p-the-candle': 'mark', 'Q2-04p-menu': 'topLeft',
+  'Q2-05p-blue-room': 'top', 'Q2-06p-neighbours': 'top', 'Q2-07p-duet': 'top', 'Q2-08p-garnish': 'bottomRight',
+  'Q2-09p-something-red': 'topLeft', 'Q2-10p-knives': 'bottom', 'Q2-11p-catch': 'topLeft', 'Q2-12p-tuna-tartare': 'top',
+  'Q2-13p-greek': 'bottom', 'Q2-14p-fish-fillet': 'top', 'Q2-15p-at-the-pass': 'bottomRight', 'Q2-16p-pan': 'top',
+  'Q2-17p-tweezers': 'mid', 'Q2-18p-taste': 'topLeft', 'Q2-19p-two': 'top', 'Q2-20p-between': 'bottom',
+  'Q2-21p-white': 'top', 'Q2-22p-toast': 'top', 'Q2-23p-round': 'top', 'Q2-24p-tiramisu': 'top',
+  'Q2-25p-tarte': 'low', 'Q2-26p-compliment': 'top', 'Q2-27p-every-table': 'mark', 'Q2-28p-long-table': 'bottom',
+  'Q2-29p-glass': 'topLeft', 'Q2-30p-see-you': 'mark',
+};
+const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 74, lineHeight: 1.02, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
+const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, lineHeight: 1.35, letterSpacing: 2, textTransform: 'uppercase', color: colors.ivory};
+const BrandView: React.FC<{s: Spec}> = ({s}) => {
+  const lay = LAY[s.id] ?? 'top';
+  const st: React.CSSProperties = {width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${s.fx ?? 50}% ${s.fy ?? 50}%`};
+  const grad = (side: 'top' | 'bottom', h = 780) => <div style={{position: 'absolute', left: 0, right: 0, [side]: 0, height: h,
+    background: `linear-gradient(${side === 'top' ? 'to bottom' : 'to top'}, rgba(11,11,11,0.8) 0%, rgba(11,11,11,0.5) 45%, rgba(11,11,11,0) 100%)`}} />;
+  const head = s.head.replace(/\n/g, ' ').replace(/’/g, "'");
+  const block = (align: 'center' | 'left' | 'right') => (
+    <div style={{textAlign: align}}>
+      <div style={H}>{head}</div>
+      {s.sub && <div style={{...M, marginTop: 18}}>{s.sub}</div>}
+    </div>
+  );
+  let body: React.ReactNode;
+  if (lay === 'hours') body = (<>{grad('top', 900)}
+    <div style={{position: 'absolute', left: 80, right: 80, top: 300, textAlign: 'center'}}>
+      <div style={{...H, fontSize: 84}}>We are open</div>
+      <div style={{height: 3, width: 120, background: brandPalette.orange158, margin: '26px auto 30px'}} />
+      <div style={{display: 'flex', justifyContent: 'space-between', textAlign: 'left'}}>
+        <div style={M}>monday–friday<br />19:00–00:00</div>
+        <div style={{...M, textAlign: 'right'}}>saturday–sunday<br />12:30–15:30<br />19:00–00:00</div>
+      </div>
+    </div></>);
+  else if (lay === 'mark') body = (<>{grad('top', 820)}
+    <div style={{position: 'absolute', left: 80, right: 80, top: 300, textAlign: 'center'}}>
+      <div style={{fontFamily: fonts.display, fontSize: 112, lineHeight: 1, color: colors.ivory}}>Sea, Signora</div>
+      <div style={{...M, marginTop: 24}}>{head}</div>
+      {s.sub && <div style={{...M, fontSize: 24, marginTop: 10, opacity: 0.85}}>{s.sub}</div>}
+    </div></>);
+  else if (lay === 'mid') body = (<><AbsoluteFill style={{background: 'rgba(11,11,11,0.28)'}} />
+    <div style={{position: 'absolute', left: 80, right: 80, top: 840}}>{block('center')}</div></>);
+  else if (lay === 'top') body = (<>{grad('top')}<div style={{position: 'absolute', left: 80, right: 80, top: 300}}>{block('center')}</div></>);
+  else if (lay === 'topLeft') body = (<>{grad('top')}<div style={{position: 'absolute', left: 80, right: 200, top: 300}}>{block('left')}</div></>);
+  else if (lay === 'bottomRight') body = (<>{grad('bottom', 820)}<div style={{position: 'absolute', left: 200, right: 80, bottom: 380}}>{block('right')}</div></>);
+  else if (lay === 'low') body = (<>{grad('bottom', 700)}<div style={{position: 'absolute', left: 80, right: 80, bottom: 250}}>{block('center')}</div></>);
+  else body = (<>{grad('bottom', 820)}<div style={{position: 'absolute', left: 80, right: 80, bottom: 380}}>{block('center')}</div></>);
+  return (
+    <AbsoluteFill style={{background: colors.night}}>
+      <Img src={staticFile(`photos/${s.src}.jpg`)} style={st} />
+      {body}
+      {s.cta && <LinkChip label={s.cta} top={lay === 'bottom' || lay === 'bottomRight' ? 1250 : 1540} />}
+    </AbsoluteFill>
+  );
+};
+
 const t = (...x: string[]) => ['#seasignora', ...x];
 // 30 stories from all the folders (client 23.11: «30 креативов из всех материалов, разнообразие блюд, учитывай весь контекст»).
 // One evening from the door to the last glass; dish names only from the menu on seasignorarest.com; hours once;
@@ -119,4 +180,4 @@ const SPECS: Spec[] = [
     cta: 'book your evening', ctaTop: 1660,
     caption: 'See you tonight at Via Fiori Chiari 32.', hashtags: t('#brera', '#milan', '#dinner')},
 ];
-export const WEEK_FOUR = SPECS.map((s) => ({...s, view: () => <StoryView s={s} />}));
+export const WEEK_FOUR = SPECS.map((s) => ({...s, view: () => <BrandView s={s} />}));
