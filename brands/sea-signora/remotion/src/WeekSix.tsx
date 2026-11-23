@@ -60,8 +60,8 @@ const LAY: Record<string, Lay> = {
   'N2-13p-slow-pour': 'bottom', 'N2-14p-warm-cold': 'top', 'N2-15p-mid-conversation': 'top', 'N2-16p-funny': 'top',
   'N2-17p-two-glasses': 'top', 'N2-18p-long-night': 'mark',
 };
-const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
-const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, lineHeight: 1.35, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
+const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
+const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, lineHeight: 1.35, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
 const BrandView: React.FC<{s: Spec}> = ({s}) => {
   const lay = LAY[s.id] ?? 'top';
   const st: React.CSSProperties = {width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${s.fx ?? 50}% ${s.fy ?? 50}%`};

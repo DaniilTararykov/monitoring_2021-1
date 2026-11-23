@@ -7,7 +7,7 @@ loadBrandFonts();
 
 // Holiday hours (client 23.11): closed 24 & 25 December, 31 December & 1 January. Classic look: photo, night gradient,
 // Skanaus caps + mono lines, static.
-const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 66, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
+const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 66, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
 const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 32, lineHeight: 1.4, letterSpacing: 1, color: colors.ivory};
 const HolidayHours: React.FC = () => (
   <AbsoluteFill style={{background: colors.night}}>

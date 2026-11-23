@@ -9,7 +9,7 @@ loadBrandFonts();
 // clips never used before, stabilised (vidstab). Client 23.11: «3 секунды — нехорошо, минимум 8–10»: each story now
 // runs 8–9 s on one long steady take (or two takes cut straight together). One static line in the brand look; position varies.
 type S = {id: string; n: string; cuts?: [string, number][]; head: string; pos: 'top' | 'bottom' | 'topLeft'; cta?: string; caption: string; hashtags: string[]};
-const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
+const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
 const View: React.FC<{s: S}> = ({s}) => {
   const top = s.pos !== 'bottom';
   return (

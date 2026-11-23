@@ -11,8 +11,8 @@ loadBrandFonts();
 const FPS = 30;
 type Cut = {n: string; at: number; len: number};
 type M = {id: string; cuts: Cut[]; head?: string; sub?: string; side: 'top' | 'bottom'; cta?: string; caption: string; hashtags: string[]};
-const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
-const Mo: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
+const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
+const Mo: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
 const View: React.FC<{m: M}> = ({m}) => {
   let t = 0;
   return (

@@ -57,8 +57,8 @@ const LAY: Record<string, Lay> = {
   'G2-01p-guest': 'top', 'G2-02p-guest': 'top', 'G2-03p-guest': 'top', 'G2-04p-guest': 'top', 'G2-05p-guest': 'top',
   'G2-06p-guest': 'top', 'G2-07p-guest': 'top', 'G2-08p-guest': 'top', 'G2-09p-guest': 'top', 'G2-10p-guest': 'low',
 };
-const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
-const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, lineHeight: 1.35, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory};
+const H: React.CSSProperties = {fontFamily: fonts.display, fontSize: 60, lineHeight: 1.05, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
+const M: React.CSSProperties = {fontFamily: fonts.mono, fontWeight: 500, fontSize: 30, lineHeight: 1.35, letterSpacing: 1, textTransform: 'uppercase', color: colors.ivory, textWrap: 'balance'} as React.CSSProperties;
 const BrandView: React.FC<{s: Spec}> = ({s}) => {
   const lay = LAY[s.id] ?? 'top';
   const st: React.CSSProperties = {width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${s.fx ?? 50}% ${s.fy ?? 50}%`};
