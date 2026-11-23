@@ -56,7 +56,7 @@ type Lay = 'low' | 'top' | 'bottom' | 'mid' | 'mark' | 'topLeft' | 'bottomRight'
 const LAY: Record<string, Lay> = {
   'K-01p-one': 'top', 'K-02p-two': 'top', 'K-03p-three': 'top',
   'K-04p-fast-food': 'top', 'K-05p-our-way': 'top', 'K-06p-worth-it': 'low',
-  'K-07p-make-room': 'top', 'K-08p-plateau': 'list', 'K-09p-share': 'low',
+  'K-07p-make-room': 'low', 'K-08p-plateau': 'list', 'K-09p-share': 'low',
   'K-10p-a-few-drops': 'top', 'K-11p-lift': 'top', 'K-12p-down': 'low',
   'K-13p-forks': 'top', 'K-14p-menu-list': 'list',
   'K-15p-before': 'top', 'K-16p-after': 'top',
