@@ -77,12 +77,20 @@ SPEED = float(os.environ.get("SPEED", "1"))
 # RAMP="t0,t1,x": only between song times t0 and t1 his fall is played x times faster (the impact of the shot),
 # so the falling body clears the doorway one beat earlier; before and after it runs at real speed
 RAMP = [float(v) for v in os.environ.get("RAMP", "").split(",") if v]
+# WARP="5.09:5.26,5.40:5.83": song time -> grey-take time anchors after the switch (piecewise linear, real speed
+# after the last one), so any take's hit lands on the first shot and his fall has cleared the shooter by the second
+WARP = [tuple(float(x) for x in a.split(":")) for a in os.environ.get("WARP", "").split(",") if a]
 
 
 def gmap(k):
     """grey frame shown at output frame k"""
     if k < S:
         return k
+    if WARP:
+        pts = [(S, S)] + [(o * FPS, g * FPS) for o, g in WARP]
+        if k >= pts[-1][0]:
+            return int(round(pts[-1][1] + k - pts[-1][0]))
+        return int(round(np.interp(k, [p[0] for p in pts], [p[1] for p in pts])))
     j = S + (k - S) * SPEED
     if RAMP:
         r0, r1, x = int(round(RAMP[0] * FPS)), int(round(RAMP[1] * FPS)), RAMP[2]
