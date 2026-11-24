@@ -107,6 +107,19 @@ if CURTAIN:
     E2 = C1
     print("curtain at", round(T0 + w0 / FPS, 3), "s, back covers", round(float(masks[w0].mean()), 2), "of the frame")
 
+# DELAY: the pink take is shown this many seconds late from the switch on (a whole number of beats, so his moves
+# stay on the beat), so his finger-gun aim at the door is seen after the grey exit; at DELAY_UNTIL (a beat) it
+# jump-cuts back to real time. FLICKER: on these song times the room light flickers (the shots).
+DELAY = float(os.environ.get("DELAY", "0"))
+DELAY_UNTIL = float(os.environ.get("DELAY_UNTIL", "0"))
+DF = int(round(DELAY * FPS))
+DU = int(round(DELAY_UNTIL * FPS))
+FLICK = {}
+for t in (float(x) for x in os.environ.get("FLICKER", "").split(",") if x):
+    for age, g in enumerate((1.45, 0.82, 1.18, 1.0)):      # flash, dip, smaller flash, back
+        FLICK[int(round(t * FPS)) + age] = g
+pinkbuf = []
+
 shot_frames = {}
 for t, tip in zip(SHOTS, TIPS):
     k0 = int(round(t * FPS))
@@ -117,6 +130,10 @@ greys = []
 grey, pink = reader(G), reader(P)
 for k in range(N):
     p = next(pink)
+    pinkbuf.append(p)
+    pinkbuf = pinkbuf[-(DF + 2):]
+    if DF and S <= k < DU:
+        p = pinkbuf[-1 - DF] if len(pinkbuf) > DF else pinkbuf[0]
     need = (S + int(round((k - S) * SPEED)) if k >= S else k) if k < E2 else -1
     while len(greys) <= min(E - 1, need):
         greys.append(next(grey))
@@ -140,6 +157,9 @@ for k in range(N):
             f = (p * (1 - m) + to_pink(greys[j]) * m).astype(np.uint8)
     else:
         f = p
+    if k in FLICK:
+        g = FLICK[k]
+        f = np.clip(f.astype(np.float32) * g * (np.array([0.97, 1.0, 1.04], np.float32) if g > 1 else 1), 0, 255).astype(np.uint8)
     if k in shot_frames and k >= E2:
         f = flash(f, *shot_frames[k])
     enc.stdin.write(np.ascontiguousarray(f).tobytes())
