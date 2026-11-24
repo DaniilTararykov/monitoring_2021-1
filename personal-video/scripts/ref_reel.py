@@ -56,7 +56,8 @@ def to_pink(img):
                           borderMode=cv2.BORDER_REPLICATE)
 
 
-PINK_BOX = (300, 600, 800, 1700)                  # x0, y0, x1, y1: the pink figure waiting at the door
+# x0, y0, x1, y1: the pink figure waiting at the door (the switch waits until his body hides all of it)
+PINK_BOX = tuple(int(v) for v in os.environ.get("PINK_BOX", "300,600,800,1700").split(","))
 mdir = os.path.join(FR, "m")
 # the model leaves a faint haze over the empty room: keep only confident values, softly
 masks = {int(f[:3]): to_pink(np.clip((cv2.imread(os.path.join(mdir, f), 0).astype(np.float32) / 255 - 0.3) / 0.6, 0, 1))
@@ -77,20 +78,25 @@ SPEED = float(os.environ.get("SPEED", "1"))
 # RAMP="t0,t1,x": only between song times t0 and t1 his fall is played x times faster (the impact of the shot),
 # so the falling body clears the doorway one beat earlier; before and after it runs at real speed
 RAMP = [float(v) for v in os.environ.get("RAMP", "").split(",") if v]
-# WARP="5.09:5.26,5.40:5.83": song time -> grey-take time anchors after the switch (piecewise linear, real speed
-# after the last one), so any take's hit lands on the first shot and his fall has cleared the shooter by the second
+# WARP="4.40:4.40,5.10:5.26,5.40:5.83": song time -> grey-take time anchors (piecewise linear; real speed before
+# the first and after the last; the switch if no anchor precedes it), so any take's hit lands on the first shot and
+# his fall has cleared the shooter by the second. Start it after he has turned away (no lip-sync to break).
 WARP = [tuple(float(x) for x in a.split(":")) for a in os.environ.get("WARP", "").split(",") if a]
 
 
 def gmap(k):
     """grey frame shown at output frame k"""
-    if k < S:
-        return k
     if WARP:
-        pts = [(S, S)] + [(o * FPS, g * FPS) for o, g in WARP]
+        pts = [(o * FPS, g * FPS) for o, g in WARP]
+        if pts[0][0] > S:
+            pts = [(S, S)] + pts
+        if k < pts[0][0]:
+            return k
         if k >= pts[-1][0]:
             return int(round(pts[-1][1] + k - pts[-1][0]))
         return int(round(np.interp(k, [p[0] for p in pts], [p[1] for p in pts])))
+    if k < S:
+        return k
     j = S + (k - S) * SPEED
     if RAMP:
         r0, r1, x = int(round(RAMP[0] * FPS)), int(round(RAMP[1] * FPS)), RAMP[2]
@@ -98,7 +104,9 @@ def gmap(k):
     return int(round(j))
 
 
-E2 = next(k for k in range(S, N) if gmap(k) >= E)
+SO = next(k for k in range(N) if gmap(k) >= S)        # output frame of the switch
+print("switch at", round(SO / FPS, 3), "s on the song")
+E2 = next(k for k in range(SO, N) if gmap(k) >= E)
 # FLASH: muzzle flashes on the beat hits while he aims (times on the song, fingertip position in the frame)
 SHOTS = [float(x) for x in os.environ.get("SHOTS", "").split(",") if x]
 TIPS = [tuple(int(v) for v in xy.split(",")) for xy in os.environ.get("TIPS", "").split(";") if xy]  # one per shot
@@ -159,13 +167,13 @@ for k in range(N):
     p = next(pink)
     pinkbuf.append(p)
     pinkbuf = pinkbuf[-(DF + 2):]
-    if DF and S <= k < DU:
+    if DF and SO <= k < DU:
         p = pinkbuf[-1 - DF] if len(pinkbuf) > DF else pinkbuf[0]
     need = gmap(k) if k < E2 else -1
     while len(greys) <= min(E - 1, need):
         greys.append(next(grey))
-    if k < S:
-        f = to_pink(greys[k])
+    if k < SO:
+        f = to_pink(greys[gmap(k)])
     elif k < E2:
         j = k if CURTAIN else min(E - 1, gmap(k))
         m = cv2.GaussianBlur(masks[j - K0], (0, 0), 1.2)[..., None]
