@@ -21,7 +21,10 @@ import numpy as np
 MINE, REF, LOOPS, FR, OUT = sys.argv[1:6]
 FPS, W, H = 30, 1080, 1920
 L = json.load(open(LOOPS))
-G, P = L["grey"][6], L["pink"][6]                 # chosen takes: loop start times in the source
+# chosen takes (loop start times in the source). Grey 7 is shot at 5.09 s (head thrown back on the beat) and has
+# fallen out of the doorway by 5.6 s, the fastest fall; pink 10 holds the finger-gun aim the longest (to 5.9 s)
+G = L["grey"][int(os.environ.get("GREY", "6"))]
+P = L["pink"][int(os.environ.get("PINK", "6"))]
 DUR = 16.62                                       # one loop of the song (= the reference)
 T0 = 4.0                                          # the transition frames were extracted from here (NNN = 000 at T0)
 N = int(round(DUR * FPS))
