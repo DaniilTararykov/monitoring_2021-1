@@ -61,24 +61,68 @@ masks = {int(f[:3]): to_pink(np.clip((cv2.imread(os.path.join(mdir, f), 0).astyp
 x0, y0, x1, y1 = PINK_BOX
 start = next(i for i in sorted(masks) if masks[i][y0:y1, x0:x1].mean() > 0.97)
 end = next(i for i in sorted(masks) if i > start and (masks[i] > 0.5).mean() < 0.002)
-print("switch at", round(T0 + start / FPS, 3), "s; he has left the frame at", round(T0 + end / FPS, 3), "s")
+print("switch at", round(T0 + start / FPS, 3), "s; he has left the frame at", round(T0 + end / FPS, 3), "s (real time)")
 S, E = K0 + start, K0 + end
 
 enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}",
                         "-r", str(FPS), "-i", "-", "-i", REF, "-map", "0:v", "-map", "1:a", "-t", f"{N / FPS:.3f}",
                         "-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p",
                         "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", OUT], stdin=subprocess.PIPE)
+# SPEED: his exit in the grey tee is played this many times faster (a whip), so the pink take, which aims the
+# finger guns at the door from 3.6 to 5.5 s, is revealed while he is still shooting
+SPEED = float(os.environ.get("SPEED", "1"))
+E2 = S + int(np.ceil((E - S) / SPEED))
+# FLASH: muzzle flashes on the beat hits while he aims (times on the song, fingertip position in the frame)
+SHOTS = [float(x) for x in os.environ.get("SHOTS", "").split(",") if x]
+TIPS = [tuple(int(v) for v in xy.split(",")) for xy in os.environ.get("TIPS", "").split(";") if xy]  # one per shot
+yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+
+
+def flash(f, age, tip):
+    """a muzzle flash pointing at the camera: white core, star rays, orange glow, the room lit for a moment"""
+    a = [1.0, 0.35, 0.1][age]
+    cx, cy = tip
+    r = np.hypot(xx - cx, yy - cy)
+    ang = np.arctan2(yy - cy, xx - cx)
+    core = np.exp(-(r / 12) ** 2)
+    rays = np.exp(-r / 45) * np.clip(np.cos(ang * 4 + 0.4) ** 24 + 0.6 * np.cos(ang * 6 + 1.1) ** 30, 0, 1)
+    glow = np.exp(-(r / 55) ** 2)
+    light = (core * 1.0 + rays * 0.9)[..., None] * np.array([235, 250, 255], np.float32) \
+        + glow[..., None] * np.array([40, 150, 255], np.float32) * 0.9
+    room = 1 + 0.18 * a * np.exp(-(r / 900) ** 2)[..., None] * np.array([0.9, 1.0, 1.1], np.float32)
+    out = f.astype(np.float32) * room
+    out = 255 - (255 - out) * (1 - np.clip(light * a / 255, 0, 1))
+    if age == 0:                                    # recoil: the camera jolts for one frame
+        out = cv2.warpAffine(out, np.float32([[1.006, 0, -3.2], [0, 1.006, -6.0]]), (W, H), borderMode=cv2.BORDER_REPLICATE)
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
+shot_frames = {}
+for t, tip in zip(SHOTS, TIPS):
+    k0 = int(round(t * FPS))
+    for age in range(3):
+        shot_frames[k0 + age] = (age, tip)
+
+greys = []
 grey, pink = reader(G), reader(P)
 for k in range(N):
-    g, p = next(grey), next(pink)
+    p = next(pink)
+    need = (S + int(round((k - S) * SPEED)) if k >= S else k) if k < E2 else -1
+    while len(greys) <= min(E - 1, need):
+        greys.append(next(grey))
     if k < S:
-        f = to_pink(g)
-    elif k < E:
-        m = cv2.GaussianBlur(masks[k - K0], (0, 0), 1.2)[..., None]
-        f = (p * (1 - m) + to_pink(g) * m).astype(np.uint8)
+        f = to_pink(greys[k])
+    elif k < E2:
+        j = min(E - 1, S + int(round((k - S) * SPEED)))
+        m = cv2.GaussianBlur(masks[j - K0], (0, 0), 1.2)[..., None]
+        f = (p * (1 - m) + to_pink(greys[j]) * m).astype(np.uint8)
     else:
         f = p
+    if k in shot_frames and k >= E2:
+        f = flash(f, *shot_frames[k])
     enc.stdin.write(np.ascontiguousarray(f).tobytes())
+    if k == E2:
+        greys = []                                 # he is gone: free the buffered frames
 enc.stdin.close()
 enc.wait()
 print("wrote", OUT, N, "frames")
