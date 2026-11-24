@@ -63,7 +63,10 @@ mdir = os.path.join(FR, "m")
 masks = {int(f[:3]): to_pink(np.clip((cv2.imread(os.path.join(mdir, f), 0).astype(np.float32) / 255 - 0.3) / 0.6, 0, 1))
          for f in sorted(os.listdir(mdir)) if f.endswith(".png")}
 x0, y0, x1, y1 = PINK_BOX
-start = next(i for i in sorted(masks) if masks[i][y0:y1, x0:x1].mean() > 0.97)
+# SWITCH_AFTER: grey-take time before which the switch may not happen (a take whose arm opens a gap over the
+# doorway after first covering it)
+SA = int(round((float(os.environ.get("SWITCH_AFTER", "0")) - T0) * FPS))
+start = next(i for i in sorted(masks) if i >= SA and masks[i][y0:y1, x0:x1].mean() > 0.97)
 end = next(i for i in sorted(masks) if i > start and (masks[i] > 0.5).mean() < 0.002)
 print("switch at", round(T0 + start / FPS, 3), "s; he has left the frame at", round(T0 + end / FPS, 3), "s (real time)")
 S, E = K0 + start, K0 + end
