@@ -74,7 +74,23 @@ enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_f
 # SPEED: his exit in the grey tee is played this many times faster (a whip), so the pink take, which aims the
 # finger guns at the door from 3.6 to 5.5 s, is revealed while he is still shooting
 SPEED = float(os.environ.get("SPEED", "1"))
-E2 = S + int(np.ceil((E - S) / SPEED))
+# RAMP="t0,t1,x": only between song times t0 and t1 his fall is played x times faster (the impact of the shot),
+# so the falling body clears the doorway one beat earlier; before and after it runs at real speed
+RAMP = [float(v) for v in os.environ.get("RAMP", "").split(",") if v]
+
+
+def gmap(k):
+    """grey frame shown at output frame k"""
+    if k < S:
+        return k
+    j = S + (k - S) * SPEED
+    if RAMP:
+        r0, r1, x = int(round(RAMP[0] * FPS)), int(round(RAMP[1] * FPS)), RAMP[2]
+        j += (min(max(k, r0), r1) - r0) * (x - 1)
+    return int(round(j))
+
+
+E2 = next(k for k in range(S, N) if gmap(k) >= E)
 # FLASH: muzzle flashes on the beat hits while he aims (times on the song, fingertip position in the frame)
 SHOTS = [float(x) for x in os.environ.get("SHOTS", "").split(",") if x]
 TIPS = [tuple(int(v) for v in xy.split(",")) for xy in os.environ.get("TIPS", "").split(";") if xy]  # one per shot
@@ -137,13 +153,13 @@ for k in range(N):
     pinkbuf = pinkbuf[-(DF + 2):]
     if DF and S <= k < DU:
         p = pinkbuf[-1 - DF] if len(pinkbuf) > DF else pinkbuf[0]
-    need = (S + int(round((k - S) * SPEED)) if k >= S else k) if k < E2 else -1
+    need = gmap(k) if k < E2 else -1
     while len(greys) <= min(E - 1, need):
         greys.append(next(grey))
     if k < S:
         f = to_pink(greys[k])
     elif k < E2:
-        j = k if CURTAIN else min(E - 1, S + int(round((k - S) * SPEED)))
+        j = k if CURTAIN else min(E - 1, gmap(k))
         m = cv2.GaussianBlur(masks[j - K0], (0, 0), 1.2)[..., None]
         if CURTAIN and k >= C0:
             # the back slides off to the right like a curtain: its left edge sweeps across, soft and blurred
