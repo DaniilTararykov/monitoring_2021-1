@@ -97,6 +97,16 @@ def flash(f, age, tip):
     return np.clip(out, 0, 255).astype(np.uint8)
 
 
+# CURTAIN: real speed; when his back covers the frame the most (4.5-5.0 s) it melts away in a few frames,
+# and behind it the pink take is already aiming at the door
+CURTAIN = int(os.environ.get("CURTAIN", "0"))
+if CURTAIN:
+    win = [i for i in sorted(masks) if 4.5 <= T0 + i / FPS <= 5.0]
+    w0 = max(win, key=lambda i: masks[i].mean())
+    C0, C1 = K0 + w0 - CURTAIN // 2, K0 + w0 - CURTAIN // 2 + CURTAIN
+    E2 = C1
+    print("curtain at", round(T0 + w0 / FPS, 3), "s, back covers", round(float(masks[w0].mean()), 2), "of the frame")
+
 shot_frames = {}
 for t, tip in zip(SHOTS, TIPS):
     k0 = int(round(t * FPS))
@@ -113,9 +123,21 @@ for k in range(N):
     if k < S:
         f = to_pink(greys[k])
     elif k < E2:
-        j = min(E - 1, S + int(round((k - S) * SPEED)))
+        j = k if CURTAIN else min(E - 1, S + int(round((k - S) * SPEED)))
         m = cv2.GaussianBlur(masks[j - K0], (0, 0), 1.2)[..., None]
-        f = (p * (1 - m) + to_pink(greys[j]) * m).astype(np.uint8)
+        if CURTAIN and k >= C0:
+            # the back slides off to the right like a curtain: its left edge sweeps across, soft and blurred
+            cols = np.nonzero(m[..., 0].max(0) > 0.5)[0]
+            lx, rx = (cols.min(), cols.max()) if len(cols) else (0, W)
+            prog = (k - C0 + 1) / (CURTAIN + 1)
+            edge = lx + (rx - lx + 120) * prog
+            sweep = np.clip((xx[0] - edge) / 120 + 0.5, 0, 1)[None, :, None]
+            m = m * sweep
+            kb = np.ones((1, int(40 + 160 * prog)), np.float32) / int(40 + 160 * prog)
+            gw = cv2.filter2D(to_pink(greys[j]), -1, kb, borderType=cv2.BORDER_REPLICATE)
+            f = (p * (1 - m) + gw * m).astype(np.uint8)
+        if not (CURTAIN and k >= C0):
+            f = (p * (1 - m) + to_pink(greys[j]) * m).astype(np.uint8)
     else:
         f = p
     if k in shot_frames and k >= E2:
