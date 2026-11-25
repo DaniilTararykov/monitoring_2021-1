@@ -68,7 +68,7 @@ export type Item =
 
 export type VoicesData = {
   id: string;
-  format: "story" | "question" | "reviews" | "myths" | "paper" | "punch" | "editorial";
+  format: "story" | "question" | "reviews" | "myths" | "paper" | "review";
   title: string;
   // Overrides the title card's kicker for the format.
   kicker?: string | null;

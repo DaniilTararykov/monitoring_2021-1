@@ -29,8 +29,7 @@ const KICKER: Record<VoicesData["format"], string> = {
   reviews: "отзывы студентов",
   myths: "разбираем",
   paper: "отзыв студента",
-  punch: "отзыв студента",
-  editorial: "отзыв студента",
+  review: "отзыв студента",
 };
 
 const Sfx: React.FC<{ at: number; src: string; volume: number }> = ({

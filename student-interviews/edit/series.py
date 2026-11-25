@@ -374,5 +374,28 @@ VIDEOS = {
     ]},
     # Two full-frame looks of Anna's review to compare with the paper desk.
 }
-VIDEOS["A1"] = {**VIDEOS["P1"], "format": "punch"}
-VIDEOS["B1"] = {**VIDEOS["P1"], "format": "editorial"}
+
+# Anna's review told as a story (problem, path, result) in the series'
+# full-frame look, each line's key point as a print card ("kicker|text").
+VIDEOS["R1"] = {"format": "review", "title": "Анна: отзыв о Capitaliano", "music": "lo-fi-02",
+                "cta": "Помогаем поступать в университеты Италии", "endMarco": "open", "items": [
+    {S: "AN", "ranges": [(40.68, 46.70)], "props": [
+        ("мне", "print", "отзыв студентки|Срочно понадобились документы для посольства"),
+        ("через", "clock", "решение|Через пару минут — всё готово")]},
+    {S: "AN", "ranges": [(1.36, 6.30)], "props": [("меня", "name", "студентка|Анна|UNIBO · Чезена|Магистратура")]},
+    {"chapter": "Выбор вуза", "dur": 1.3},
+    {S: "AN", "ranges": [(6.92, 18.94)], "props": [
+        ("рассматривали", "print", "шорт-лист|Вузы на севере Италии"),
+        ("миланский", "checks", "поступила в 2 вуза|Milano-Bicocca;UNIBO"),
+        ("предпочтение", "print", "выбор|Болонский университет")]},
+    {S: "AN", "ranges": [(19.26, 26.94)], "props": [("магистратуры", "print", "программа|Магистратура на английском")]},
+    {"chapter": "Работа с Capitaliano", "dur": 1.3},
+    {S: "AN", "ranges": [(33.42, 37.20), (47.44, 53.10), (53.94, 56.50), (57.54, 61.10), (64.98, 72.00)], "props": [
+        ("связи", "print", "куратор|Всегда на связи"),
+        ("визой", "visa", "виза|Решилась очень быстро"),
+        ("знала", "print", "интервью|Знала, как готовиться"),
+        ("ссылки", "print", "удобно|Прислали ссылки"),
+        ("обсудили", "print", "план|Один разговор — и всё понятно")]},
+    {"chapter": "Итог", "dur": 1.1},
+    {S: "AN", "ranges": [(72.90, 78.66)], "props": [("благодарна", "stars", "итог|Рекомендую Capitaliano")]},
+]}
