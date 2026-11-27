@@ -15,7 +15,7 @@ import {
   INTER_TIGHT,
   TIGHT_TRACKING,
 } from "../Capitaliano/brand";
-import { EndCard } from "./Cards";
+import { EndCard, TitleCard } from "./Cards";
 import { Header } from "./Overlays";
 import { ChapterPage, SLIDE, Sfx } from "./Paper";
 import { Track, Wipe, WIPE_HALF_SEC } from "./Track";
@@ -349,7 +349,10 @@ export const Review: React.FC<{ data: VoicesData; mediaBase: string }> = ({
   const props = data.props ?? [];
   const cards = data.items.filter((it) => it.kind !== "clip");
   const hidden = cards.map((it): [number, number] => [it.start, it.end]);
-  const end = cards.find((it) => it.kind === "end");
+  // Laurel wipes out of the title card and into the end card.
+  const wipes = cards.flatMap((it) =>
+    it.kind === "title" ? [it.end] : it.kind === "end" ? [it.start] : [],
+  );
   let chapter = 0;
   const musicVolume = (f: number) => {
     const t = f / fps;
@@ -409,19 +412,28 @@ export const Review: React.FC<{ data: VoicesData; mediaBase: string }> = ({
             durationInFrames={Math.max(1, sec(it.end) - sec(it.start))}
             layout="none"
           >
-            <EndCard text={it.text} marco={it.marco} />
+            {it.kind === "title" ? (
+              <TitleCard
+                text={it.text}
+                kicker={data.kicker ?? "отзыв студента"}
+                marco={it.marco}
+              />
+            ) : (
+              <EndCard text={it.text} marco={it.marco} />
+            )}
           </Sequence>
         );
       })}
-      {end ? (
+      {wipes.map((at) => (
         <Sequence
-          from={sec(end.start - WIPE_HALF_SEC)}
+          key={`wipe-${at}`}
+          from={Math.max(0, sec(at - WIPE_HALF_SEC))}
           durationInFrames={sec(2 * WIPE_HALF_SEC)}
           layout="none"
         >
           <Wipe />
         </Sequence>
-      ) : null}
+      ))}
 
       {data.music ? (
         <Audio
@@ -450,6 +462,13 @@ export const Review: React.FC<{ data: VoicesData; mediaBase: string }> = ({
             at={it.start - SLIDE}
             src="sfx/gx/paper-riffle.wav"
             volume={0.45}
+          />
+        ) : it.kind === "title" ? (
+          <Sfx
+            key={`ti-${i}`}
+            at={it.end - WIPE_HALF_SEC}
+            src="sfx/whoosh.wav"
+            volume={0.35}
           />
         ) : (
           <Fragment key={`end-${i}`}>
