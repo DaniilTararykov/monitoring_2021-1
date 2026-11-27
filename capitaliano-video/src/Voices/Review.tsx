@@ -33,7 +33,6 @@ const clamp = {
   extrapolateLeft: "clamp",
   extrapolateRight: "clamp",
 } as const;
-const ease = Easing.bezier(0.16, 1, 0.3, 1);
 
 // A print stays up at least this long unless the next one replaces it.
 const MIN_HOLD = 2.2;
@@ -51,32 +50,10 @@ const Camera: React.FC<{ data: VoicesData; mediaBase: string }> = ({
   data,
   mediaBase,
 }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const t = frame / fps;
-  const props = data.props ?? [];
-  const face = data.students[data.order[0]].face;
-  // A gentle push-in as each print lands.
-  let scale = 1;
-  props.forEach((p) => {
-    scale = Math.max(
-      scale,
-      interpolate(
-        t,
-        [p.at - 0.02, p.at + 0.25, p.at + 1.4, p.at + 1.9],
-        [1, 1.07, 1.07, 1],
-        {
-          ...clamp,
-          easing: ease,
-        },
-      ),
-    );
-  });
   return (
-    <AbsoluteFill
-      style={{ scale, transformOrigin: `${face[0]}px ${face[1]}px` }}
-    >
+    <AbsoluteFill>
       <Track
+        soft
         segments={data.segments}
         students={data.students}
         mediaBase={mediaBase}
@@ -164,7 +141,6 @@ const Stars: React.FC = () => {
 };
 
 const Clock: React.FC = () => {
-  const frame = useCurrentFrame();
   return (
     <svg width={58} height={58} viewBox="0 0 48 48">
       <circle
@@ -186,7 +162,7 @@ const Clock: React.FC = () => {
         stroke={COLORS.red}
         strokeWidth={3.5}
         strokeLinecap="round"
-        transform={`rotate(${interpolate(frame, [0, 20], [0, 720], { ...clamp, easing: ease })} 24 24)`}
+        transform="rotate(120 24 24)"
       />
     </svg>
   );
@@ -211,11 +187,7 @@ const Visto: React.FC = () => {
         fontSize: 46,
         letterSpacing: "0.14em",
         rotate: "12deg",
-        opacity: interpolate(frame, [at, at + 2], [0, 1], clamp),
-        scale: interpolate(frame, [at, at + 5], [2.2, 1], {
-          ...clamp,
-          easing: Easing.bezier(0.5, 0, 0.75, 0),
-        }),
+        opacity: interpolate(frame, [at, at + 10], [0, 1], clamp),
       }}
     >
       VISTO
@@ -446,8 +418,12 @@ const Print: React.FC<{ prop: Prop; total: number; top: number }> = ({
   top,
 }) => {
   const frame = useCurrentFrame();
-  const out = interpolate(frame, [total - 6, total], [0, 1], clamp);
-  const enter = interpolate(frame, [0, 7], [0, 1], { ...clamp, easing: ease });
+  const opacity = interpolate(
+    frame,
+    [0, 10, total - 10, total],
+    [0, 1, 1, 0],
+    clamp,
+  );
   return (
     <div
       style={{
@@ -457,9 +433,7 @@ const Print: React.FC<{ prop: Prop; total: number; top: number }> = ({
         right: 0,
         display: "flex",
         justifyContent: "center",
-        opacity: Math.min(1, enter * 1.6) * (1 - out),
-        translate: `0px ${(1 - enter) * -40 - out * 30}px`,
-        scale: 0.92 + enter * 0.08,
+        opacity,
       }}
     >
       <div
@@ -493,22 +467,15 @@ export const Review: React.FC<{ data: VoicesData; mediaBase: string }> = ({
   const hidden = cards.map((it): [number, number] => [it.start, it.end]);
   const student = data.students[data.order[0]];
   const hasSteps = data.items.some((it) => it.kind === "clip" && it.step);
-  // Laurel wipes out of the title card, between story steps and into the
-  // end card.
-  const wipes = data.items.flatMap((it, i) => {
-    const prev = data.items[i - 1];
+  // Laurel wipes out of the title card and into the end card.
+  const wipes = data.items.flatMap((it) => {
     if (it.kind === "title") {
       return [it.end];
     }
     if (it.kind === "end") {
       return [it.start];
     }
-    return it.kind === "clip" &&
-      prev?.kind === "clip" &&
-      it.step &&
-      prev.step !== it.step
-      ? [it.start]
-      : [];
+    return [];
   });
   let chapter = 0;
   const musicVolume = (f: number) => {
@@ -602,36 +569,22 @@ export const Review: React.FC<{ data: VoicesData; mediaBase: string }> = ({
         </Sequence>
       ))}
 
-      {wipes
-        .filter((at) => !cards.some((it) => it.start === at || it.end === at))
-        .map((at) => (
-          <Sfx
-            key={`step-${at}`}
-            at={at - WIPE_HALF_SEC}
-            src="sfx/whoosh.wav"
-            volume={0.3}
-          />
-        ))}
       {data.music ? (
         <Audio
           src={staticFile(`music/${data.music}.mp3`)}
           volume={musicVolume}
         />
       ) : null}
-      {props.map((p, i) => (
-        <Fragment key={`sfx-${i}`}>
-          <Sfx at={p.at} src="sfx/gx/whoosh-cine.wav" volume={0.3} />
-          {p.kind === "visa" ? (
-            <Sfx at={p.at + 8 / fps} src="sfx/gx/impact-1.wav" volume={0.3} />
-          ) : null}
-          {p.kind === "clock" ? (
-            <Sfx at={p.at + 0.05} src="sfx/gx/tick-1.wav" volume={0.4} />
-          ) : null}
-          {p.kind === "stars" ? (
-            <Sfx at={p.at + 0.3} src="sfx/gx/ding-1.wav" volume={0.22} />
-          ) : null}
-        </Fragment>
-      ))}
+      {props.map((p, i) =>
+        p.kind === "stars" ? (
+          <Sfx
+            key={`sfx-${i}`}
+            at={p.at + 0.2}
+            src="sfx/gx/ding-1.wav"
+            volume={0.15}
+          />
+        ) : null,
+      )}
       {cards.map((it, i) =>
         it.kind === "chapter" ? (
           <Sfx

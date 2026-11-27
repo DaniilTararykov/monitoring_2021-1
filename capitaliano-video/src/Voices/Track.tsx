@@ -23,19 +23,36 @@ const SegmentView: React.FC<{
   face: number[];
   mediaBase: string;
   durationInFrames: number;
-}> = ({ seg, index, face, mediaBase, durationInFrames }) => {
+  // Frames this cut starts early, fading in over the previous one.
+  dissolve?: number;
+  steady?: boolean;
+}> = ({
+  seg,
+  index,
+  face,
+  mediaBase,
+  durationInFrames,
+  dissolve = 0,
+  steady,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const tight = seg.cut === "jump" && index % 2 === 1;
+  const tight = !steady && seg.cut === "jump" && index % 2 === 1;
   const base = tight ? 1.12 : 1.02;
-  const muteFrames = seg.muteUntil
-    ? Math.round((seg.muteUntil - seg.from) * fps)
-    : 0;
+  const muteFrames =
+    (seg.muteUntil ? Math.round((seg.muteUntil - seg.from) * fps) : 0) +
+    dissolve;
 
   return (
     <AbsoluteFill
       style={{
         transformOrigin: `${face[0]}px ${face[1]}px`,
+        opacity: dissolve
+          ? interpolate(frame, [0, dissolve], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            })
+          : 1,
         scale: interpolate(frame, [0, durationInFrames], [base, base + 0.04], {
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
@@ -44,7 +61,7 @@ const SegmentView: React.FC<{
     >
       <Video
         src={staticFile(`${mediaBase}/${seg.src}`)}
-        trimBefore={Math.round(seg.from * fps)}
+        trimBefore={Math.max(0, Math.round(seg.from * fps) - dissolve)}
         objectFit="cover"
         style={{ width: "100%", height: "100%" }}
         volume={(f) =>
@@ -71,12 +88,15 @@ export const Track: React.FC<{
   segments: Segment[];
   students: Record<string, StudentInfo>;
   mediaBase: string;
-}> = ({ segments, students, mediaBase }) => {
+  // Calm cuts: one framing for every cut, and a short dissolve into each.
+  soft?: boolean;
+}> = ({ segments, students, mediaBase, soft }) => {
   const { fps } = useVideoConfig();
   return (
     <>
       {segments.map((seg, i) => {
-        const from = Math.round(seg.at * fps);
+        const dissolve = soft && i > 0 ? 3 : 0;
+        const from = Math.round(seg.at * fps) - dissolve;
         const next = segments[i + 1];
         const end = next
           ? Math.round(next.at * fps)
@@ -95,6 +115,8 @@ export const Track: React.FC<{
               face={students[seg.student].face}
               mediaBase={mediaBase}
               durationInFrames={Math.max(1, end - from)}
+              dissolve={dissolve}
+              steady={soft}
             />
           </Sequence>
         );
