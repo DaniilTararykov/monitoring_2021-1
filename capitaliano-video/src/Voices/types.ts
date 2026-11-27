@@ -56,12 +56,16 @@ export type Item =
       bubble?: string;
       bubbleLead?: number;
       truth?: string;
+      // Review edit: the story step the answer belongs to.
+      step?: string;
     }
   | {
       kind: "title" | "myth" | "chapter" | "end";
       text: string;
       // Pose of Marco, the mascot, shown on the card.
       marco?: MarcoPose;
+      // End card: a student photo in the media folder instead of Marco.
+      photo?: string;
       start: number;
       end: number;
     };

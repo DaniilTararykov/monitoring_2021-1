@@ -310,10 +310,13 @@ export const MythCard: React.FC<{ text: string; index: number }> = ({
   );
 };
 
-export const EndCard: React.FC<{ text: string; marco?: MarcoPose }> = ({
-  text,
-  marco,
-}) => {
+export const EndCard: React.FC<{
+  text: string;
+  marco?: MarcoPose;
+  // A photo of the student, shown as a taped polaroid instead of Marco.
+  photo?: string;
+  caption?: string;
+}> = ({ text, marco, photo, caption }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const content = (
@@ -321,7 +324,7 @@ export const EndCard: React.FC<{ text: string; marco?: MarcoPose }> = ({
       <Img
         src={staticFile("logo.png")}
         style={{
-          width: marco ? 640 : 720,
+          width: marco || photo ? 560 : 720,
           opacity: interpolate(frame, [0, 8], [0, 1], clamp),
           scale: interpolate(frame, [0, 0.5 * fps], [0.9, 1], {
             ...clamp,
@@ -331,7 +334,7 @@ export const EndCard: React.FC<{ text: string; marco?: MarcoPose }> = ({
       />
       <div
         style={{
-          fontSize: marco ? 60 : 64,
+          fontSize: marco || photo ? 58 : 64,
           fontWeight: 700,
           lineHeight: 1.1,
           color: COLORS.darkGreen,
@@ -361,6 +364,97 @@ export const EndCard: React.FC<{ text: string; marco?: MarcoPose }> = ({
       </div>
     </>
   );
+  if (photo) {
+    const drop = interpolate(frame, [0, 0.45 * fps], [0, 1], {
+      ...clamp,
+      easing: Easing.bezier(0.34, 1.3, 0.64, 1),
+    });
+    return (
+      <AbsoluteFill
+        style={{
+          ...Dots,
+          fontFamily: INTER_TIGHT,
+          letterSpacing: TIGHT_TRACKING,
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 270,
+            left: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              padding: "18px 18px 0",
+              backgroundColor: COLORS.white,
+              borderRadius: 6,
+              boxShadow:
+                "0 3px 4px rgba(0, 0, 0, 0.12), 0 26px 50px rgba(27, 94, 52, 0.25)",
+              rotate: `${-4 + (1 - drop) * 10}deg`,
+              translate: `0px ${(1 - drop) * -260}px`,
+              opacity: Math.min(1, drop * 3),
+            }}
+          >
+            <Img
+              src={staticFile(photo)}
+              style={{
+                width: 380,
+                height: 506,
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+            <div
+              style={{
+                height: 74,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: CURSIVE,
+                fontWeight: 700,
+                fontSize: 46,
+                color: COLORS.red,
+              }}
+            >
+              {caption}
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                top: -16,
+                left: "50%",
+                width: 150,
+                height: 40,
+                marginLeft: -75,
+                rotate: "3deg",
+                backgroundColor: "rgba(47, 141, 79, 0.32)",
+              }}
+            />
+          </div>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: 940,
+            left: 90,
+            right: 90,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 26,
+            textAlign: "center",
+          }}
+        >
+          {content}
+        </div>
+      </AbsoluteFill>
+    );
+  }
   if (!marco) {
     return <CardFrame>{content}</CardFrame>;
   }

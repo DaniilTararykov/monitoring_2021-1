@@ -41,7 +41,10 @@ WORD_FIX = {
 }
 WORD_AT = {
     # Video reviews
-    ("IMG_2711", 5.82): "Capitaliano.", ("IMG_2711", 13.22): "Бикокка", ("IMG_2711", 14.16): "Болонский.",
+    ("IMG_2711", 50.78): "интервью,", ("IMG_2711", 56.46): "подготовиться.", ("IMG_2711", 68.76): "будущем.",
+    ("IMG_2711", 74.88): "работу.", ("IMG_2711", 76.00): "Всем", ("IMG_2711", 78.06): "Capitaliano.",
+    ("IMG_2711", 78.20): "", ("IMG_2711", 58.66): "Прислали", ("IMG_2711", 35.72): "Всегда",
+    ("IMG_2711", 5.82): "Capitaliano.", ("IMG_2711", 13.22): "Бикокка", ("IMG_2711", 14.16): "Болонский,",
     ("IMG_2711", 15.52): "своё", ("IMG_2711", 44.02): "взять.", ("IMG_2711", 44.46): "Всё,",
     ("IMG_2711", 47.44): "Всё", ("IMG_2711", 50.02): "всё", ("IMG_2711", 33.92): "момент —",
     ("IMG_2711", 78.06): "Capitaliano.", ("IMG_2711", 66.66): "я", ("IMG_2711", 60.62): "удобно.", ("IMG_2711", 64.98): "Мы", ("IMG_2711", 69.76): "всё",
@@ -166,7 +169,8 @@ def build(vid, spec, tdir, photos):
     t = 0.0
     segments, captions, items_out, props_out = [], [], [], []
     prev_student = None
-    items = spec["items"] + [{"end": spec["cta"], "dur": 3.6, "marco": spec.get("endMarco")}]
+    items = spec["items"] + [{"end": spec["cta"], "dur": 3.6, "marco": spec.get("endMarco"),
+                              "photo": spec.get("endPhoto")}]
     for idx, it in enumerate(items):
         if "student" not in it:
             kind = next((k for k in ("end", "myth", "chapter") if k in it), "title")
@@ -174,6 +178,8 @@ def build(vid, spec, tdir, photos):
                               "start": round(t, 3), "end": round(t + it["dur"], 3)})
             if it.get("marco"):
                 items_out[-1]["marco"] = it["marco"]
+            if it.get("photo"):
+                items_out[-1]["photo"] = f"photos/{it['photo']}-passport.jpg"
             t += it["dur"]
             prev_student = None
             continue
@@ -240,7 +246,7 @@ def build(vid, spec, tdir, photos):
             props_out.append({"kind": kind, "label": label, "at": item_caps[hits[0]]["startMs"] / 1000,
                               "until": round(t, 3), "slot": slot % 4})
         item = {"kind": "clip", "student": it["student"], "start": round(item_start, 3), "end": round(t, 3)}
-        for k in ("hook", "passport", "bubble", "bubbleLead", "truth"):
+        for k in ("hook", "passport", "bubble", "bubbleLead", "truth", "step"):
             if k in it:
                 item[k] = it[k]
         items_out.append(item)
